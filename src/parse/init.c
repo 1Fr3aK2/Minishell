@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:25:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 13:15:26 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:17:41 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	fill_builtins(t_info *info)
 	info->builtins->builtins[7] = NULL;
 	info->builtins->f[0] = ft_echo;
 	info->builtins->f[1] = NULL;
-	info->builtins->f[2] = NULL;
+	info->builtins->f[2] = ft_pwd;
 	info->builtins->f[3] = NULL;
 	info->builtins->f[4] = NULL;
 	info->builtins->f[5] = NULL;
