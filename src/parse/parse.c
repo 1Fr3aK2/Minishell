@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 21:03:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/11 21:47:15 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,12 @@ static char	*new_input(char *input)
 
 	j = 0;
 	i = -1;
-	printf("initial input = %s\n", input);
+	/* printf("initial input = %s\n", input); */
 	len = ft_strlen(input);
 	quotes = count_skip_quotes(input);
 	if (quotes == 0)
 		return (input);
+	//handle quotes;
 	if (quotes % 2 != 0)
 	{
 		printf("ERROR\n");
@@ -72,19 +73,19 @@ void	parse(char *input, t_info *info)
 	size_t	size;
 	char	*teste;
 
-	(void)info;
+	/* (void)info; */
 	if (!input)
 		return ;
 	size = ft_strlen(input);
 	if (size > 0)
 	{
 		teste = new_input(input);
-		if (teste)
-			printf("teste: %s\n", teste);
-		/* info->args = ft_split(input);
+		if (!teste)
+			return ;
+		info->args = ft_split(teste);
 		if (!info->args)
 			return ;
-		info->flags = ft_strdup(info->args[1]); */
+		info->flags = ft_strdup(info->args[1]);
 		// printf("1 carater arg 1 -> %c\n", info->args[1][0]);
 	}
 }
