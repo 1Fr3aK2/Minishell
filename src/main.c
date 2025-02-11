@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 15:22:17 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:48:40 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,7 @@ void	start(t_info *info)
 			free(input);
 			continue ; // avoid NULL pointers
 		}
-/* 		pid = fork();
-		if (pid == -1)
-			return ;
-		if (pid == 0) */
-			child_process(info);
-		wait(NULL);
+		child_process(info);
 		free(input);
 	}
 	rl_clear_history();

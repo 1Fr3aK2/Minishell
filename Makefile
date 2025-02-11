@@ -6,6 +6,7 @@ SRCS =  src/main.c \
 		src/builtins/ft_exit.c \
 		src/processes/processes.c\
 		src/processes/custom_split.c\
+		src/processes/utils.c\
 		
 NAME = shellinho
 
