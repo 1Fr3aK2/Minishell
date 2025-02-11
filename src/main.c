@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 12:28:48 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:22:17 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	start(t_info *info)
 {
 	char	*input;
-	pid_t	pid;
+	//pid_t	pid;
 
 	while (1)
 	{
@@ -40,10 +40,10 @@ void	start(t_info *info)
 			free(input);
 			continue ; // avoid NULL pointers
 		}
-		pid = fork();
+/* 		pid = fork();
 		if (pid == -1)
 			return ;
-		if (pid == 0)
+		if (pid == 0) */
 			child_process(info);
 		wait(NULL);
 		free(input);

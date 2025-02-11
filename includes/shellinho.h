@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 18:08:45 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 14:29:54 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:12:03 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct s_info
 	char				**args;
 	char				*flags;
 	char				**my_env;
+	char				*input;
 	t_builtins			*builtins;
 	/* t_type type; */
 }						t_info;
