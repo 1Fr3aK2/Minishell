@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:25:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 16:30:43 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:01:02 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static void	fill_builtins(t_info *info)
 
 static void	init_builtins(t_info *info)
 {
-	int	i;
+/* 	int	i;
 
+	i = 0; */
 	if (!info)
 		return ;
-	i = 0;
 	fill_builtins(info);
 	// while (info->builtins->builtins[i])
 	// {
