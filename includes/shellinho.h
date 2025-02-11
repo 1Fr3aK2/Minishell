@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 18:08:45 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/11 16:09:48 by dsteiger         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 15:52:40 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/02/11 16:30:33 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

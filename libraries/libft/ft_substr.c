@@ -24,6 +24,8 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	size_t	i;
 	char	*str_copied;
 
+	if (!s || start < 0 || len <= 0)
+		return (NULL);
 	i = 0;
 	if (start >= ft_strlen(s))
 		len = 0;

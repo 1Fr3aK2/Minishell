@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/11 15:51:42 by dsteiger         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/02/11 16:31:34 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

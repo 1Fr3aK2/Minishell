@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 16:28:30 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 18:23:13 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,32 @@
 // 		i++;
 // 	}
 // 	return (quotes);
+// }
+
+// static char	*new_input(char *input)
+// {
+// 	int		i;
+// 	char	*new;
+// 	int		len;
+// 	int		j;
+
+// 	i = 0;
+// 	printf("initial input = %s\n", input);
+// 	if (count_skip_quotes(input) == 0)
+// 		return (input);
+// 	if (count_skip_quotes(input) % 2 != 0)
+// 	{
+// 		printf("ERROR\n");
+// 		return (NULL);
+// 	}
+// 	len = ft_strlen(input);
+// 	while (input[i] && !(is_quote(input[i])))
+// 		i++;
+// 	j = ++i;
+// 	new = ft_substr(input, j, (len - j - 1));
+// 	if (!new)
+// 		return (input);
+// 	return (new);
 // }
 
 void	parse(char *input, t_info *info)

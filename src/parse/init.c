@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:25:52 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/11 16:17:41 by dsteiger         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 16:12:35 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/02/11 16:30:43 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
