@@ -1,0 +1,100 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shellinho.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 18:08:45 by raamorim          #+#    #+#             */
+/*   Updated: 2025/02/11 14:29:54 by raamorim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef SHELLINHO_H
+# define SHELLINHO_H
+
+# include "../libraries/libft/libft.h"
+# include <curses.h>
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
+# include <readline/history.h>
+# include <readline/readline.h>
+# include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <term.h>
+# include <termios.h>
+# include <unistd.h>
+
+# define RESET "\033[0m"
+# define GREEN "\033[32m"
+# define YELLOW "\033[33m"
+# define BLUE "\033[34m"
+# define RED "\033[31m"
+# define MAX_BUILTINS 8
+
+# define SPACES " \n\t\v\f\r"
+
+typedef struct s_info	t_info;
+/* typedef enum s_type
+{
+
+}			t_type; */
+
+typedef struct s_builtins
+{
+	char				*builtins[MAX_BUILTINS];
+	void				(*f[MAX_BUILTINS])(t_info *info);
+	// const char			*builtins[MAX_BUILTINS];
+	// void				(*f[MAX_BUILTINS])(t_info *info, char *, unsigned int);
+}						t_builtins;
+
+typedef struct s_info
+{
+	char				**args;
+	char				*flags;
+	char				**my_env;
+	t_builtins			*builtins;
+	/* t_type type; */
+}						t_info;
+
+// utils
+void					close_fds(int i);
+void					print_banner(void);
+void					start(t_info *info);
+void					free_arr(char **arr);
+void					error_exit(char *msg);
+int						check_builtins(t_info *info);
+void					clean(t_info *info);
+
+// echo
+void					ft_echo(t_info *info);
+int						check_flags(char *str);
+void					is_valid(char **argv);
+
+// exit
+// void					ft_exit(t_info *info, char *input,
+							// unsigned int exit_status);
+void					ft_exit(t_info *info);
+void					child_process(t_info *info);
+
+// parse
+void					parse(char *input, t_info *info);
+void					init(t_info *info, char **env);
+bool					is_quote(char c);
+int						count_skip_quotes(char *input);
+
+//processes
+char					**custom_ft_split(char const *s, char c);
+void					exec(t_info *info);
+
+
+
+
+#endif

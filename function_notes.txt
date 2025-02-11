@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <unistd.h> // getcwd(), chdir(), isatty(), ttyname() 
+#include <sys/stat.h> // stat(), lstat(), fstat()
+#include <sys/types.h> // opendir(), closedir()
+#include <dirent.h> // opendir(), readdir(), closedir()
+#include <sys/ioctl.h> // ioctl()
+#include <stdlib.h> // getenv ()
+#include <termios.h> // tcsetattr(), tcgetattr()
+#include <curses.h> // tgetent()
+#include <term.h> // tgetent()
+
+readline() -> Reads a line from the terminal and returns it, using prompt as a prompt. The function allocates memory automatically but does NOT free it.
+              char *readline (const char *prompt);
+
+rl_clear_history() -> Clears the history list by deleting all of the entries (user input, commands etc).
+                    void rl_clear_history(void);
+
+rl_on_new_line() -> Inform the readline library that the cursor has moved to a new, empty line on the terminal1.
+                    Is called after your program has output a newline character or when you want to start fresh on a new line.
+                    int rl_on_new_line(void);
+
+rl_redisplay() -> Change what's displayed on the screen.
+                  EX: The user input is "Rafa is gay". Then the user moves the cursor to the word "gay", using the left key. The user decides to write "very".
+                  Behind the scenes, the editor inserts "very" in the middle of the sentence and updates the buffer and cursor position. The displayed sentence becomes "Rafa is very gay".
+                  int rl_redisplay(void);
+
+add_history() -> Saves the line passed as parameter in the history so it can be retrieved later in the terminal.
+                void add_history(char *s);
+
+getcwd() -> Returns a string containing the absolute pathname that is the current working directory of the calling process.
+            char *getcwd(char *buf, size_t size);
+
+chdir() -> Changes the current working directory of the calling process to the directory specified in the path.
+          int chdir(const char *path);
+
+stat(), lstat(), fstat() -> Return information about a file in the structure pointed to by 'statbuf'.
+                            int stat(const char *restrict pathname, struct stat *restrict statbuf);
+                            int lstat(const char *restrict pathname, struct stat *restrict statbuf);
+                            int fstat(int fd, struct stat *statbuf);
+
+opendir() -> Opens a directory stream corresponding to the directory name, and returns a pointer to the directory stream. The stream is positioned at the first entry in the directory.
+            DIR *opendir(const char *name);
+
+readdir() -> Returns a pointer to a dirent structure representing the next directory entry in the directory stream pointed to by 'dirp'.
+            It returns NULL on reaching the end of the directory stream or if an error occured.
+            struct dirent *readdir(DIR *dirp);
+
+closedir() -> Closes the directory stream associated with dirp.  A successful call to closedir() also closes the underlying file descriptor associated with 'dirp'.
+              The directory stream descriptor 'dirp' is not available after this call.
+              int closedir(DIR *dirp);
+
+isatty() -> Test whether 'fd' is a terminal.
+            EX code: if (isatty(STDIN_FILENO)) printf("it's connected to a terminal")
+                    else printf("it's not connected to a terminal")
+            int isatty(int fd);
+
+ttyname() -> Returns a pointer to the pathname of the terminal device that is open on the file descriptor 'fd', or NULL on error.
+            char **ttyname(int fd);
+
+ioctl() -> System call manipulates the underlying device parameters of a special file.
+          The 1st argument must bean open file descriptor.
+          The 2nd argument is a device-dependent operation code.  
+          The 3rd argument is an untyped pointer to memory.
+          int ioctl(int fd, unsigned long request, ...);
+
+getenv() -> Searches the environment ist to find the environment variable name, and returns a pointer to the corresponding value string.
+            char *getenv(const char *name);
+
+tcsetattr() -> Shall set the parameters associated with the terminal referred to by the open file descriptor 'fildes'
+              from the 'termios' structure referenced by termios_p.
+              int tcsetattr(int fildes, int optional_actions, const struct *termios_p);
+
+tcgetattr() -> Shall get the parameters associated with with the terminal reffered to by 'fildes' and store them in the 'termios' structure referenced by termios_p.
+              int tcgetattr(int fildes, struct termios *termios_p);
