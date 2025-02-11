@@ -6,7 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/11 15:51:42 by dsteiger         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +52,7 @@ void	start(t_info *info)
 int	main(int argc, char **argv, char **env)
 {
 	t_info	info;
-
-	// int i = 0;
+	
 	(void)argc;
 	(void)argv;
 	print_banner();

@@ -6,7 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 13:25:52 by raamorim          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/11 16:17:41 by dsteiger         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/11 16:12:35 by raamorim         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +69,6 @@ static void	copy_env(t_info *info, char **env)
 	while (++j < i)
 	{
 		info->my_env[j] = ft_strdup(env[j]);
-		// printf("%s\n", info->my_env[j]);
 		if (!info->my_env[j])
 		{
 			while (--j >= 0)
