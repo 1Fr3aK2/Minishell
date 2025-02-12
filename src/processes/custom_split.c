@@ -10,21 +10,17 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Description: Allocates (with malloc(3)) and returns an array
-of strings obtained by splitting ’s’ using the
-character ’c’ as a delimiter. The array must end
-with a NULL pointer.
-
-Return value: The array of new strings resulting from the split.
-NULL if the allocation fails. */
-
 #include "../../includes/shellinho.h"
 
-// contar palavras
-static int	count_word(const char *str, char c)
+bool	is_space(char c)
 {
-	int	i;
-	int	words;
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
+static int	count_word(const char *str)
+{
+	int		i;
+	int		words;
 
 	if (!str)
 		return (-1);
@@ -32,18 +28,17 @@ static int	count_word(const char *str, char c)
 	words = 0;
 	while (str[i])
 	{
-		while (str[i] && str[i] == c)
+		while (str[i] && is_space(str[i]))
 			i++;
 		if (str[i])
 			words++;
-		while (str[i] && str[i] != c)
+		while (str[i] && !is_space(str[i]))
 			i++;
 	}
 	return (words);
 }
-// alocar memoria
 
-static char	*word_aloc(const char *str, char c)
+static char	*word_aloc(const char *str)
 {
 	char	*word;
 	int		word_len;
@@ -53,7 +48,7 @@ static char	*word_aloc(const char *str, char c)
 		return (NULL);
 	i = -1;
 	word_len = 0;
-	while (str[word_len] && str[word_len] != c)
+	while (str[word_len] && !is_space(str[word_len]))
 		word_len++;
 	word = (char *)malloc(word_len + 1);
 	if (!word)
@@ -72,7 +67,7 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
-char	**custom_ft_split(char const *s, char c)
+char	**custom_ft_split(char const *s)
 {
 	char	**dest;
 	int		i;
@@ -80,43 +75,22 @@ char	**custom_ft_split(char const *s, char c)
 	i = 0;
 	if (!s)
 		return (NULL);
-	dest = (char **)malloc((count_word(s, c) + 1) * sizeof(char *));
+	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
 	while (*s)
 	{
-		while (*s && *s == c)
+		while (*s && is_space(*s))
 			s++;
 		if (*s)
 		{
-			dest[i] = word_aloc(s, c);
+			dest[i] = word_aloc(s);
 			if (!dest[i++])
 				return (free_str(dest, i - 1), NULL);
 		}
-		while (*s && *s != c)
+		while (*s && !is_space(*s))
 			s++;
 	}
 	dest[i] = 0;
 	return (dest);
 }
-// int main()
-// {
-//     const char *str = "hello  world";
-//     char delimiter = ' ';
-
-//     // Chama a função ft_split para dividir a string
-//     char **tokens = ft_split(str, delimiter);
-
-//     if (tokens)
-// 	{
-//         printf("Tokens:\n");
-//         // Imprime os tokens resultantes
-//         for (int i = 0; tokens[i] != NULL; i++)
-//             printf("%s\n", tokens[i]);
-
-//         // Libera a memória alocada dinamicamente
-//         free_str(tokens, count_word(str, delimiter));
-//     }
-// 	else
-//         printf("Falha ao dividir a string.\n");
-// }

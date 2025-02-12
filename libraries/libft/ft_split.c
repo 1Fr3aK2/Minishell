@@ -20,15 +20,11 @@ NULL if the allocation fails. */
 
 #include "libft.h"
 
-bool	is_space(char c)
+// contar palavras
+static int	count_word(const char *str, char c)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
-}
-
-static int	count_word(const char *str)
-{
-	int		i;
-	int		words;
+	int	i;
+	int	words;
 
 	if (!str)
 		return (-1);
@@ -36,17 +32,18 @@ static int	count_word(const char *str)
 	words = 0;
 	while (str[i])
 	{
-		while (str[i] && is_space(str[i]))
+		while (str[i] && str[i] == c)
 			i++;
 		if (str[i])
 			words++;
-		while (str[i] && !is_space(str[i]))
+		while (str[i] && str[i] != c)
 			i++;
 	}
 	return (words);
 }
+// alocar memoria
 
-static char	*word_aloc(const char *str)
+static char	*word_aloc(const char *str, char c)
 {
 	char	*word;
 	int		word_len;
@@ -56,7 +53,7 @@ static char	*word_aloc(const char *str)
 		return (NULL);
 	i = -1;
 	word_len = 0;
-	while (str[word_len] && !is_space(str[word_len]))
+	while (str[word_len] && str[word_len] != c)
 		word_len++;
 	word = (char *)malloc(word_len + 1);
 	if (!word)
@@ -75,7 +72,7 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
-char	**ft_split(char const *s)
+char	**ft_split(char const *s, char c)
 {
 	char	**dest;
 	int		i;
@@ -83,22 +80,43 @@ char	**ft_split(char const *s)
 	i = 0;
 	if (!s)
 		return (NULL);
-	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+	dest = (char **)malloc((count_word(s, c) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
 	while (*s)
 	{
-		while (*s && is_space(*s))
+		while (*s && *s == c)
 			s++;
 		if (*s)
 		{
-			dest[i] = word_aloc(s);
+			dest[i] = word_aloc(s, c);
 			if (!dest[i++])
 				return (free_str(dest, i - 1), NULL);
 		}
-		while (*s && !is_space(*s))
+		while (*s && *s != c)
 			s++;
 	}
 	dest[i] = 0;
 	return (dest);
 }
+// int main()
+// {
+//     const char *str = "hello  world";
+//     char delimiter = ' ';
+
+//     // Chama a função ft_split para dividir a string
+//     char **tokens = ft_split(str, delimiter);
+
+//     if (tokens)
+// 	{
+//         printf("Tokens:\n");
+//         // Imprime os tokens resultantes
+//         for (int i = 0; tokens[i] != NULL; i++)
+//             printf("%s\n", tokens[i]);
+
+//         // Libera a memória alocada dinamicamente
+//         free_str(tokens, count_word(str, delimiter));
+//     }
+// 	else
+//         printf("Falha ao dividir a string.\n");
+// }

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 21:47:15 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/12 00:27:54 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	count_skip_quotes(char *input)
 	return (quotes);
 }
 
-static char	*new_input(char *input)
+char	*new_input(char *input)
 {
 	char	*new;
 	int		i;
@@ -71,7 +71,7 @@ static char	*new_input(char *input)
 void	parse(char *input, t_info *info)
 {
 	size_t	size;
-	char	*teste;
+/* 	char	*teste; */
 
 	/* (void)info; */
 	if (!input)
@@ -79,12 +79,19 @@ void	parse(char *input, t_info *info)
 	size = ft_strlen(input);
 	if (size > 0)
 	{
-		teste = new_input(input);
+		/* teste = new_input(input);
 		if (!teste)
 			return ;
-		info->args = ft_split(teste);
+		printf("teste : %s\n", teste); */
+		info->args = custom_ft_split(new_input(input));
 		if (!info->args)
 			return ;
+		/* int i = 0; 
+		while(info->args[i])
+		{
+			printf("%s\n", info->args[i]);
+			i++;
+		} */
 		info->flags = ft_strdup(info->args[1]);
 		// printf("1 carater arg 1 -> %c\n", info->args[1][0]);
 	}

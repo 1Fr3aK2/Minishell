@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 18:08:45 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/11 16:30:33 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/11 22:41:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ bool					is_quote(char c);
 int						count_skip_quotes(char *input);
 
 // processes/custom_split
-char					**custom_ft_split(char const *s, char c);
+char					**custom_ft_split(char const *s);
 
 // processes
 void					child_process(t_info *info);
