@@ -7,7 +7,11 @@
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/12 13:55:38 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
+>>>>>>> Stashed changes
 =======
 /*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
 >>>>>>> Stashed changes
