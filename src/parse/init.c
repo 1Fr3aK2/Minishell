@@ -25,7 +25,7 @@ static void	fill_builtins(t_info *info)
 	info->builtins->f[0] = ft_echo;
 	info->builtins->f[1] = NULL;
 	info->builtins->f[2] = ft_pwd;
-	info->builtins->f[3] = NULL;
+	info->builtins->f[3] = ft_export;
 	info->builtins->f[4] = NULL;
 	info->builtins->f[5] = NULL;
 	info->builtins->f[6] = ft_exit;
