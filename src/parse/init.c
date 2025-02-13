@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:26:07 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/12 23:26:10 by rafael           ###   ########.fr       */
+/*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
+/*   Updated: 2025/02/13 12:55:02 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../../includes/shellinho.h"
 

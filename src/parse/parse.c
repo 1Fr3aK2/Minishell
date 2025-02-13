@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 01:31:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/13 12:54:34 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,13 @@ void	process_input(char *input, char **new)
 	j = 0;
 	while (input[i])
 	{
-		while (input[i] && is_space(input[i]))
-			// Ignorar espaços antes da palavra
+		while (input[i] && is_space(input[i])) // Ignorar espaços antes da palavra
 			i++;
 		if (!input[i]) // Se chegou ao final da string
 			break ;
 		k = 0;
 		in_quotes = 0;
-		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
-			// Buffer temporário para remover aspas
+		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));// Buffer temporário para remover aspas
 		if (!temp)
 		{
 			while (j > 0) // Liberar memória alocada anteriormente
@@ -91,8 +89,7 @@ void	process_input(char *input, char **new)
 			free(new);
 			return ;
 		}
-		while (input[i] && (in_quotes == 1 || !is_space(input[i])))
-			// Copiar mantendo espaços dentro de aspas
+		while (input[i] && (in_quotes == 1 || !is_space(input[i])))// Copiar mantendo espaços dentro de aspas
 		{
 			if (is_quote(input[i])) // Alternar estado de "dentro das aspas"
 				in_quotes = !in_quotes;
