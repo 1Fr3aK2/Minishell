@@ -1,115 +1,145 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include "../../includes/shellinho.h"
 
-bool is_quote(char c)
+bool	is_space(char c)
 {
-    return (c == '\'' || c == '\"');
+	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-bool is_space(char c)
+bool	is_quote(char c)
 {
-    return ((c >= 9 && c <= 13) || c == 32);
+	return ((c == '\'' || c == '\"'));
 }
 
-int count_skip_quotes(char *input)
+static int count_word(char *str)
 {
-    int quotes = 0;
     int i = 0;
+    int words = 0;
+    int in_word = 0;
+    int in_quotes = 0;
+    char quote_type = 0; // Guarda se estamos em aspas simples ou duplas
 
-    if (!input)
-        return 0;
-    
-    while (input[i])
+    if (!str)
+        return -1;
+
+    while (str[i])
     {
-        while (is_space(input[i]))
-            i++;
-        
-        if (is_quote(input[i]))
+        if (is_quote(str[i]))
         {
+            if (in_quotes && str[i] == quote_type) // Fechando aspas
+                in_quotes = 0;
+            else if (!in_quotes) // Abrindo aspas
+            {
+                in_quotes = 1;
+                quote_type = str[i]; // Guarda qual aspas foi usada
+                words++; // Conta o conteúdo entre aspas como uma única palavra
+            }
             i++;
-            quotes++;
+            continue;
         }
+
+        if (!is_space(str[i]) || in_quotes) // Se não for espaço OU estiver dentro de aspas
+        {
+            if (!in_word && !in_quotes) // Só conta palavras fora das aspas
+            {
+                words++;
+                in_word = 1;
+            }
+        }
+        else
+            in_word = 0; // Saiu de uma palavra
+
         i++;
     }
-    return quotes;
-}
-size_t	ft_strlen(const char *str)
-{
-	size_t	length;
 
-	if (!str)
-		return (-1);
-	length = 0;
-	while (str[length])
-		length++;
-	return (length);
+    return words;
 }
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	size_t	i;
-	char	*str_copied;
 
-	if (!s || start < 0 || len <= 0)
-		return (NULL);
-	i = 0;
-	if (start >= ft_strlen(s))
-		len = 0;
-	else if (start + len >= ft_strlen(s))
-		len = ft_strlen(s) - start;
-	str_copied = (char *)malloc(sizeof(char) * ft_strlen(s) + 1);
-	if (!str_copied)
-		return (NULL);
-	while (i < len && s[i])
+int main(int argc, char *argv[])
+{
+	int i = 1;
+	int j = 0;
+	while(argv[i])
 	{
-		str_copied[i] = s[start + i];
+		printf("%s\n", argv[i]);
+		j += count_word(argv[i]);
 		i++;
 	}
-	str_copied[i] = '\0';
-	return (str_copied);
+	printf("%d\n", j);
 }
 
-static char *new_input(char *input)
-{
-    int i;
-	char *new = NULL;
-    int len;
-    int j;
+// static char	*word_aloc(const char *str)
+// {
+// 	char	*word;
+// 	int		word_len;
+// 	int		i;
 
-	// new = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
-	// if (!new)
-	// 	return (NULL);
-    i = 0;
-    printf("initial input =\n %s", input);
-	if (count_skip_quotes(input) % 2 != 0)
-	{
-		printf("ERROR\n");
-		return (NULL);
-	}
-	len = ft_strlen(input);
-	while(!(is_quote(input[i])))
-		i++;
-	j = i + 1;
-    // printf("%d\n", i);   
-	new = ft_substr(input, j, (len - j - 1));
-	if (!new)
-		return (input);
-	else
-        printf("estou aqui adsd%s\n", new);
-    return (new);		
-}
+// 	if (!str)
+// 		return (NULL);
+// 	i = -1;
+// 	word_len = 0;
+// 	while (str[word_len] && !is_space(str[word_len]))
+// 		word_len++;
+// 	word = (char *)malloc(word_len + 1);
+// 	if (!word)
+// 		return (NULL);
+// 	while (++i < word_len)
+// 		word[i] = str[i];
+// 	word[i] = '\0';
+// 	return (word);
+// }
 
-int main()
-{
-    char *str = "asdasdasdasdasD";
-    char *e = new_input(str);
-    
-    if (e)
-        printf("%s\n", e);
-    else
-        printf("Erro ao processar a string\n");
+// static void	*free_str(char **dest, int i)
+// {
+// 	while (i >= 0)
+// 		free(dest[i--]);
+// 	free(dest);
+// 	return (NULL);
+// }
 
-    free(e);  // Libera a memória alocada
+// char	**custome_ft_split(char *s)
+// {
+// 	char	**dest;
+// 	int		i;
 
-    return 0;
-}
+// 	i = 0;
+// 	if (!s)
+// 		return (NULL);
+// 	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+// 	if (!dest)
+// 		return (NULL);
+// 	while (*s)
+// 	{
+// 		while (*s && is_space(*s))
+// 			s++;
+// 		if (*s)
+// 		{
+// 			dest[i] = word_aloc(s);
+// 			if (!dest[i++])
+// 				return (free_str(dest, i - 1), NULL);
+// 		}
+// 		while (*s && !is_space(*s))
+// 			s++;
+// 	}
+// 	dest[i] = 0;
+// 	return (dest);
+// }
+
+// int main() {
+//     char *input = "hello 'this is a test' world";
+// 	printf("initial string : %s\n\n", input);
+//     char **split_output = custome_ft_split(input);
+//     if (!split_output) {
+//         printf("Error allocating memory\n");
+//         return 1;
+//     }
+//     printf("Splitting input using custome_ft_split:\n");
+//     for (int i = 0; split_output[i]; i++) {
+//         printf("Word: %s\n", split_output[i]);
+//         free(split_output[i]);
+//     }
+//     free(split_output);
+//     return 0;
+// }
