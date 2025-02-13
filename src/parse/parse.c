@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 12:54:34 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/13 13:48:23 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,33 +75,33 @@ void	process_input(char *input, char **new)
 	j = 0;
 	while (input[i])
 	{
-		while (input[i] && is_space(input[i])) // Ignorar espaços antes da palavra
+		while (input[i] && is_space(input[i]))
 			i++;
-		if (!input[i]) // Se chegou ao final da string
+		if (!input[i])
 			break ;
 		k = 0;
 		in_quotes = 0;
-		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));// Buffer temporário para remover aspas
+		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
 		if (!temp)
 		{
-			while (j > 0) // Liberar memória alocada anteriormente
+			while (j > 0)
 				free(new[--j]);
 			free(new);
 			return ;
 		}
-		while (input[i] && (in_quotes == 1 || !is_space(input[i])))// Copiar mantendo espaços dentro de aspas
+		while (input[i] && (in_quotes == 1 || !is_space(input[i])))
 		{
-			if (is_quote(input[i])) // Alternar estado de "dentro das aspas"
+			if (is_quote(input[i]))
 				in_quotes = !in_quotes;
 			else
-				temp[k++] = input[i]; // Adicionar caractere se não for uma aspa
+				temp[k++] = input[i];
 			i++;
 		}
-		temp[k] = '\0';             // Finaliza a string sem aspas
-		new[j++] = ft_strdup(temp); // Aloca a palavra final sem aspas
+		temp[k] = '\0';
+		new[j++] = ft_strdup(temp);
 		free(temp);
 	}
-	new[j] = NULL; // Finalizar o array de strings
+	new[j] = NULL;
 }
 
 char	**new_input(char *input)
@@ -115,7 +115,7 @@ char	**new_input(char *input)
 	new = (char **)malloc(sizeof(char *) * (counte_word(input) + 1));
 	if (!new)
 		return (NULL);
-	process_input(input, new); // Chamar a função sem precisar de retorno
+	process_input(input, new);
 	if (!new)
 		return (NULL);
 	return (new);
