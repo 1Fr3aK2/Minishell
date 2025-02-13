@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/13 16:52:55 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:31:34 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 // set env variables to be exported to child processes.
 // Export makes a variable available to any child process.
+
+// TODO - "a b" - nao e suposto funcionar
+// 		- a b - suposto criar 2 variaveis a, b
+//		- essencialmente, nao pode ter espacos quando uso aspas
+
+//		- o meu aceita espacos quando ha aspas
 void	sort_env(char **args)
 {
 	int		i;
@@ -42,40 +48,75 @@ void	sort_env(char **args)
 	}
 }
 
-void	ft_export(t_info *info)
+void	add_to_my_env(t_info *info, char *str)
+{
+	int i;
+	char **new_env;
+	
+	i = 0;
+	new_env = NULL;
+	while (info->my_env[i])
+		i++;
+	new_env = (char **)malloc(sizeof(char *) * (i + 2));
+	if (!new_env)
+		return ;
+	i = 0;
+	while (info->my_env[i])
+	{
+		new_env[i] = info->my_env[i];
+		i++;
+	}
+	new_env[i] = ft_strdup(str); // add o que vem dps de export
+	new_env[i + 1] = NULL;
+	free(info->my_env);
+	info->my_env = new_env;
+}
+
+char	**create_sorted_env_copy(char **args)
 {
 	int		i;
 	char	**dest;
 
 	i = 0;
-	dest = NULL;
-	while (info->my_env[i])
+	while (args[i])
 		i++;
 	dest = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!dest)
-		return ;
+		return (NULL);
 	i = 0;
-	while (info->my_env[i])
+	while (args[i])
 	{
-		dest[i] = ft_strdup(info->my_env[i]);
+		dest[i] = ft_strdup(args[i]);
 		i++;
 	}
-	if (info->args[1] != NULL)
+	dest[i] = NULL;
+	sort_env(dest);
+	return (dest);
+}
+
+void	ft_export(t_info *info)
+{
+	char	**sorted_env;
+	int		i;
+
+	i = 1;
+	if (info->args[i] != NULL) // ve se ha algo depois do export
 	{
-		dest[i] = ft_strjoin("declare -x ", info->args[1]);
-		if (!dest[i])
+		while (info->args[i])
+			add_to_my_env(info, info->args[i++]);
+	}
+	else
+	{
+		sorted_env = create_sorted_env_copy(info->my_env);
+		if (!sorted_env)  // talvez desnecessario... ja faco isto na outra funcao
 			return ;
-		i++;
-		dest[i] = NULL;
-	}
-	else // se o input for so "export"
-	{
 		i = 0;
-		sort_env(dest);
-		while (dest[i])
+		while (sorted_env[i])
 		{
+			printf("declare -x %s\n", sorted_env[i]);
+			free(sorted_env[i]);
 			i++;
-			printf("%s %s\n", "declare -x", dest[i]);
 		}
+		free(sorted_env);
 	}
-} 
+}

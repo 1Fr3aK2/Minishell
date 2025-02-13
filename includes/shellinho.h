@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/13 15:26:48 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/13 18:27:51 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,11 @@ void					ft_echo(t_info *info);
 void					ft_exit(t_info *info);
 void					ft_pwd(t_info *info);
 void					sort_env(char **args);
+
+// export
+void					sort_env(char **args);
+void					add_to_my_env(t_info *info, char *str);
+char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
 
 // parse/init
