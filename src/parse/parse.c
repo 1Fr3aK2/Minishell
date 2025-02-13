@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 16:55:09 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:30:00 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,35 @@ int	count_quotes(char *input)
 	}
 	return (quotes);
 }
+
+// static int	counte_word(char *str)
+// {
+// 	int		i;
+// 	int		words;
+// 	int		in_word;
+
+// 	if (!str)
+// 		return (-1);
+// 	i = -1;
+// 	words = 0;
+// 	in_word = 0;
+// 	while (str[++i])
+// 	{
+// 		if (is_quote(str[i]))
+// 			continue;
+// 		if (!is_space(str[i])) // Encontrou uma palavra
+// 		{
+// 			if (in_word == 0)
+// 			{
+// 				words++;
+// 				in_word = 1;
+// 			}
+// 		}
+// 		else
+// 			continue; // Saiu de uma palavra
+// 	}
+// 	return (words);
+// }
 static int	counte_word(char *str)
 {
 	int	i;
