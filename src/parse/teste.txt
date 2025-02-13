@@ -1,0 +1,11 @@
+erros parsing quotes : 
+echo "texto" 'outro "texto';
+echo `yes "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"`
+echo "Aspas duplas\" escapadas dentro de um texto"
+echo "Mistura de aspas """" dentro de "um" texto 'estranho'"
+echo '"Aspas dentro de aspas" dentro de aspas'
+echo '""Aspas dentro de aspas"" dentro de aspas'
+echo "Texto com 'aspas simples' dentro de aspas duplas"
+echo 'Texto com "aspas duplas" dentro de aspas simples'
+echo "Texto com 'aspas simples' e "mistura" de "aspas duplas""
+echo 'Texto com "aspas duplas" e '"mistura"' de 'aspas simples' dentro'

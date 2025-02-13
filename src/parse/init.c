@@ -5,18 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 13:25:52 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/11 20:01:02 by rafael           ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 16:12:35 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
-=======
-/*   Updated: 2025/02/11 16:12:35 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/02/12 23:26:07 by rafael            #+#    #+#             */
+/*   Updated: 2025/02/12 23:26:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../../includes/shellinho.h"
 

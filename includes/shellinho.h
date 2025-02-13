@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 18:08:45 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/12 14:36:58 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 15:52:40 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
-=======
-/*   Updated: 2025/02/11 15:52:40 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
+/*   Updated: 2025/02/12 23:25:51 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +79,7 @@ void					is_valid(char **argv);
 // exit
 void					ft_exit(t_info *info);
 void					ft_pwd(t_info *info);
+void					ft_export(t_info *info);
 // parse/init
 void					init(t_info *info, char **env);
 

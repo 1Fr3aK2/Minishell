@@ -3,18 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 12:00:55 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/12 13:55:38 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
-=======
-/*   Updated: 2025/02/11 16:06:34 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Created: 2025/02/12 23:22:56 by rafael            #+#    #+#             */
+/*   Updated: 2025/02/12 23:23:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

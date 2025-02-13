@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/02/12 19:11:42 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/02/11 16:28:30 by raamorim         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/02/13 01:31:21 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +36,9 @@ int	count_quotes(char *input)
 }
 static int	counte_word(char *str)
 {
-	int		i;
-	int		words;
-	int		in_word;
+	int	i;
+	int	words;
+	int	in_word;
 
 	if (!str)
 		return (-1);
@@ -52,7 +48,7 @@ static int	counte_word(char *str)
 	while (str[++i])
 	{
 		if (is_quote(str[i]))
-			continue;
+			continue ;
 		if (!is_space(str[i])) // Encontrou uma palavra
 		{
 			if (in_word == 0)
@@ -67,65 +63,71 @@ static int	counte_word(char *str)
 	return (words);
 }
 
+void	process_input(char *input, char **new)
+{
+	int		i;
+	int		j;
+	int		k;
+	int		in_quotes;
+	char	*temp;
+
+	i = 0;
+	j = 0;
+	while (input[i])
+	{
+		while (input[i] && is_space(input[i]))
+			// Ignorar espaços antes da palavra
+			i++;
+		if (!input[i]) // Se chegou ao final da string
+			break ;
+		k = 0;
+		in_quotes = 0;
+		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
+			// Buffer temporário para remover aspas
+		if (!temp)
+		{
+			while (j > 0) // Liberar memória alocada anteriormente
+				free(new[--j]);
+			free(new);
+			return ;
+		}
+		while (input[i] && (in_quotes == 1 || !is_space(input[i])))
+			// Copiar mantendo espaços dentro de aspas
+		{
+			if (is_quote(input[i])) // Alternar estado de "dentro das aspas"
+				in_quotes = !in_quotes;
+			else
+				temp[k++] = input[i]; // Adicionar caractere se não for uma aspa
+			i++;
+		}
+		temp[k] = '\0';             // Finaliza a string sem aspas
+		new[j++] = ft_strdup(temp); // Aloca a palavra final sem aspas
+		free(temp);
+	}
+	new[j] = NULL; // Finalizar o array de strings
+}
 
 char	**new_input(char *input)
 {
 	char	**new;
-	int		i;
-	int		j;
-	int		start;
-	int		k;
-	int		in_quotes;
-	char	quote_char;
-	char	*temp;
 
-	j = 0;
-	i = 0;
-	printf("initial input = %s\n", input);
+	if (count_quotes(input) % 2 != 0)
+		return (printf("ERROR\n"), NULL);
+	if (count_quotes(input) == 0)
+		return (custom_ft_split(input));
 	new = (char **)malloc(sizeof(char *) * (counte_word(input) + 1));
 	if (!new)
 		return (NULL);
-	if (count_quotes(input) == 0)
-		new = custom_ft_split(input);
-	else
-	{	
-		while (input[i])
-		{
-			while (input[i] && is_space(input[i])) // Ignorar espaços antes da palavra
-				i++;
-			if (!input[i]) // Se chegou ao final da string
-				break;
-			start = i;
-			k = 0;
-			in_quotes = 0;
-			temp = (char *)malloc(ft_strlen(input) + 1); // Buffer temporário para remover aspas
-			if (!temp)
-				return (NULL);
-			while (input[i] && (in_quotes || !is_space(input[i]))) // Copiar mantendo espaços dentro de aspas
-			{
-				if (is_quote(input[i])) // Alternar estado de "dentro das aspas"
-				{
-					if (!in_quotes)
-						quote_char = input[i];
-					in_quotes = !in_quotes;
-				}
-				else
-					temp[k++] = input[i]; // Adicionar caractere se não for uma aspa
-				i++;
-			}
-			temp[k] = '\0'; // Finaliza a string sem aspas
-			new[j++] = ft_strdup(temp); // Aloca a palavra final sem aspas
-			free(temp);
-		}
-		new[j] = NULL; // Finalizar o array de strings
-	}
+	process_input(input, new); // Chamar a função sem precisar de retorno
+	if (!new)
+		return (NULL);
 	return (new);
 }
-
 
 void	parse(char *input, t_info *info)
 {
 	size_t	size;
+
 	if (!input)
 		return ;
 	size = ft_strlen(input);
@@ -137,17 +139,3 @@ void	parse(char *input, t_info *info)
 		info->flags = ft_strdup(info->args[1]);
 	}
 }
-
-		// int i = 0; 
-		// while(info->args[i])
-		// {
-		// 	printf("arg[%d] = %s\n",i,  info->args[i]);
-		// 	i++;
-		// }
-		// teste = new_input(input);
-		// if (!teste)
-		// 	return ;
-		// printf("teste : %s\n", teste);
-	// char	*teste;
-
-	/* (void)info; */
