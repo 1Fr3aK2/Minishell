@@ -3,23 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/10 18:51:18 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:43:34 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-void	is_valid(char **argv)
-{
-	if (!argv[2])
-		write(1, "\n", 1);
-}
-
 int	check_flags(char *str)
 {
+	if (ft_strlen(str) != 2)
+		return (1);
 	if (ft_strncmp(str, "-n", 2) == 0)
 		return (0);
 	return (1);

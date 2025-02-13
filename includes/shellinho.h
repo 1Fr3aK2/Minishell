@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/12 23:25:51 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/13 15:26:48 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,17 @@ int						check_builtins(t_info *info);
 void					clean(t_info *info);
 
 // echo
-void					ft_echo(t_info *info);
 int						check_flags(char *str);
-void					is_valid(char **argv);
+void					ft_echo(t_info *info);
 
 // exit
 void					ft_exit(t_info *info);
 void					ft_pwd(t_info *info);
+void					sort_env(char **args);
 void					ft_export(t_info *info);
+
 // parse/init
+void					copy_env(t_info *info, char **env);
 void					init(t_info *info, char **env);
 
 // parse/parse

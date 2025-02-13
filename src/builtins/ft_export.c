@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/11 16:39:42 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:52:55 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,20 +44,38 @@ void	sort_env(char **args)
 
 void	ft_export(t_info *info)
 {
-	int	i;
+	int		i;
+	char	**dest;
 
-	if (info->args[1] == NULL) // se o input for so "export"
+	i = 0;
+	dest = NULL;
+	while (info->my_env[i])
+		i++;
+	dest = (char **)malloc(sizeof(char *) * (i + 1));
+	if (!dest)
+		return ;
+	i = 0;
+	while (info->my_env[i])
 	{
-		sort_env(info->my_env);
+		dest[i] = ft_strdup(info->my_env[i]);
+		i++;
+	}
+	if (info->args[1] != NULL)
+	{
+		dest[i] = ft_strjoin("declare -x ", info->args[1]);
+		if (!dest[i])
+			return ;
+		i++;
+		dest[i] = NULL;
+	}
+	else // se o input for so "export"
+	{
 		i = 0;
-		while (info->my_env[i])
+		sort_env(dest);
+		while (dest[i])
 		{
-			printf("%s %s\n", "declare -x", info->my_env[i]);
 			i++;
+			printf("%s %s\n", "declare -x", dest[i]);
 		}
 	}
-	else
-	{
-		
-	}
-}
+} 

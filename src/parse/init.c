@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 12:55:02 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:27:45 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	init_builtins(t_info *info)
 	printf("\n");
 }
 
-static void	copy_env(t_info *info, char **env)
+void	copy_env(t_info *info, char **env)
 {
 	int	i;
 	int	j;
