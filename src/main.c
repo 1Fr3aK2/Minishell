@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 12:55:43 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/14 17:21:41 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	start(t_info *info)
 			return ;
 		}
 		if (*input)
-			add_history(input); // add to history promt
+			add_history(input);
 		if (info->args)
 		{
 			free_arr(info->args);
@@ -37,7 +37,7 @@ void	start(t_info *info)
 		if (!info->args || !info->args[0])
 		{
 			free(input);
-			continue ; // avoid NULL pointers
+			continue ;
 		}
 		child_process(info);
 		free(input);

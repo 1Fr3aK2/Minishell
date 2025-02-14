@@ -12,12 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-bool	is_space(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
-}
-
-static int	count_word(const char *str)
+static int	counte_word(const char *str)
 {
 	int		i;
 	int		words;
@@ -75,7 +70,7 @@ char	**custom_ft_split(char const *s)
 	i = 0;
 	if (!s)
 		return (NULL);
-	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+	dest = (char **)malloc((counte_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
 	while (*s)

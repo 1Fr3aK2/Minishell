@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/14 03:44:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/14 16:30:17 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,13 @@ int						check_builtins(t_info *info);
 void					clean(t_info *info);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
+// utils/utils_bools
+bool					is_quote(char c);
+
+// utils/ft_split_quotes
+char					**ft_split_quotes(char *s);
+int						count_word(char *str);
+
 // echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
@@ -93,7 +100,6 @@ void					init(t_info *info, char **env);
 
 // parse/parse
 void					parse(char *input, t_info *info);
-bool					is_quote(char c);
 int						count_quotes(char *input);
 
 // processes/custom_split

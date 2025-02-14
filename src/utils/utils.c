@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/14 03:43:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/14 17:22:43 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,6 @@ static void	check_open_fds(void)
 	}
 } */
 
-void	close_fds(int i)
-{
-	i = 3;
-	while (i < FOPEN_MAX)
-	{
-		close(i);
-		i++;
-	}
-}
-
 void	print_banner(void)
 {
     printf(GREEN
@@ -55,6 +45,16 @@ void	print_banner(void)
         " ___/ / __  / /___/ /___/ /____/ // /|  / __  / /_/ /  \n"
         "/____/_/ /_/_____/_____/_____/___/_/ |_/_/ /_/\\____/   \n"
         "\n" RESET"\n");
+}
+
+void	close_fds(int i)
+{
+	i = 3;
+	while (i < FOPEN_MAX)
+	{
+		close(i);
+		i++;
+	}
 }
 
 void	error_exit(char *msg)
@@ -105,7 +105,7 @@ int	check_builtins(t_info *info)
 	return (1);
 }
 
-void clean(t_info *info)
+void	clean(t_info *info)
 {
 	if (!info)
 		return ;

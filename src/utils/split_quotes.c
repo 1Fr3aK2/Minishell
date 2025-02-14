@@ -1,26 +1,31 @@
 #include "../../includes/shellinho.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-bool	is_space(char c)
+int	count_quotes(char *input)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
+	int	quotes;
+	int	i;
+
+	if (!input)
+		return (0);
+	i = 0;
+	quotes = 0;
+	while (input[i])
+	{
+		if (is_quote(input[i]))
+			quotes++;
+		i++;
+	}
+	return (quotes);
 }
 
-bool	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
-
-static int	count_word(char *str)
+int	count_word(char *str)
 {
 	int		i;
-    int     words;
+	int		words;
 	char	quote;
 
 	i = 0;
-    words = 0;
+	words = 0;
 	quote = 0;
 	while (str[i])
 	{
@@ -31,7 +36,7 @@ static int	count_word(char *str)
 			quote = str[i++];
 			while (str[i] && str[i] != quote)
 				i++;
-			if (str[i] == quote) // Fechou aspas
+			if (str[i] == quote)
 				i++;
 		}
 		else
@@ -40,23 +45,6 @@ static int	count_word(char *str)
 		words++;
 	}
 	return (words);
-}
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
-		i++;
-	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
 }
 
 static char	*word_aloc(char **str)
@@ -87,7 +75,6 @@ static char	*word_aloc(char **str)
 	return (word);
 }
 
-
 static void	*free_str(char **dest, int i)
 {
 	while (i >= 0)
@@ -96,7 +83,7 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
-char	**custome_ft_split(char *s)
+char	**ft_split_quotes(char *s)
 {
 	char	**dest;
 	int		i;
@@ -120,20 +107,4 @@ char	**custome_ft_split(char *s)
 	}
 	dest[i] = NULL;
 	return (dest);
-}
-
-int	main(int argc, char **argv)
-{
-	char	**teste;
-	char	*str;
-	int		i;
-
-	str = "   \"asdas \"\"asdasd\" dasdasd1\"   654  \"        \"    rafaada s \" asdasd     ''    asdasd\" asd";
-	teste = custome_ft_split(str);
-	i = 0;
-	while (teste[i])
-	{
-		printf("teste[%d] = %s\n", i, teste[i]);
-		i++;
-	}
 }
