@@ -13,7 +13,6 @@ bool	is_quote(char c)
 	return (c == '\'' || c == '\"');
 }
 
-// Conta quantas palavras existem na string,considerando espaços e aspas corretamente
 static int	count_word(char *str)
 {
 	int		i;
@@ -23,14 +22,10 @@ static int	count_word(char *str)
 	i = 0;
     words = 0;
 	quote = 0;
-	if (!str)
-		return (-1);
 	while (str[i])
 	{
-		while (is_space(str[i])) // Ignorar espaços
+		while (str[i] && is_space(str[i]))
 			i++;
-		if (!str[i])
-			break ;
 		if (is_quote(str[i]))
 		{
 			quote = str[i++];
@@ -40,55 +35,58 @@ static int	count_word(char *str)
 				i++;
 		}
 		else
-		{
 			while (str[i] && !is_space(str[i]) && !is_quote(str[i]))
 				i++;
-		}
 		words++;
 	}
 	return (words);
 }
+char	*ft_strncpy(char *dest, char *src, unsigned int n)
+{
+	unsigned int	i;
 
-// Aloca memória e extrai a próxima palavra considerando aspas corretamente
+	i = 0;
+	while (i < n && src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	while (i < n)
+	{
+		dest[i] = '\0';
+		i++;
+	}
+	return (dest);
+}
+
 static char	*word_aloc(char **str)
 {
 	char	*word;
 	int		start;
-    int     end;
 	char	quote;
-	int		i;
 
 	start = 0;
-    end = 0;
 	quote = 0;
-	// Se começar com aspas, encontrar a aspa correspondente
 	if (is_quote((*str)[start]))
 	{
-		quote = (*str)[start]; // Captura a aspa inicial
-		end++;
-		while ((*str)[end] && (*str)[end] != quote)
-			end++;
-		if ((*str)[end] == quote) // Se encontrar a aspa de fechamento
-			end++;
+		quote = (*str)[start];
+		while ((*str)[++start] && (*str)[start] != quote)
+			;
+		if ((*str)[start] == quote)
+			start++;
 	}
 	else
-	{
-		while ((*str)[end] && !is_space((*str)[end]))
-			end++;
-	}
-	// Alocar memória para a palavra e copiar os caracteres, incluindo as aspas
-	word = (char *)malloc(end - start + 1);
+		while ((*str)[start] && !is_space((*str)[start]))
+			start++;
+	word = (char *)malloc(sizeof(char) * (start + 1));
 	if (!word)
 		return (NULL);
-	i = 0;
-	while (start < end)
-	{
-		word[i++] = (*str)[start++];
-	}
-	word[i] = '\0';
-	*str += end; // Avançar o ponteiro da string original para o próximo token
+	ft_strncpy(word, *str, start);
+	word[start] = '\0';
+	*str += start;
 	return (word);
 }
+
 
 static void	*free_str(char **dest, int i)
 {
@@ -98,7 +96,6 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
-// Função principal que divide a string em palavras corretamente
 char	**custome_ft_split(char *s)
 {
 	char	**dest;
@@ -131,7 +128,7 @@ int	main(int argc, char **argv)
 	char	*str;
 	int		i;
 
-	str = "      654  \"        \"    rafaada s \" asdasd     ''    asdasd\" asd";
+	str = "   \"asdas \"\"asdasd\" dasdasd1\"   654  \"        \"    rafaada s \" asdasd     ''    asdasd\" asd";
 	teste = custome_ft_split(str);
 	i = 0;
 	while (teste[i])

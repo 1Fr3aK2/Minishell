@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/13 18:27:51 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/14 03:44:16 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void					free_arr(char **arr);
 void					error_exit(char *msg);
 int						check_builtins(t_info *info);
 void					clean(t_info *info);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
 // echo
 int						check_flags(char *str);

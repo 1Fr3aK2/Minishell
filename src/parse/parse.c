@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 17:30:00 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/14 04:43:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,102 +35,95 @@ int	count_quotes(char *input)
 	return (quotes);
 }
 
-// static int	counte_word(char *str)
-// {
-// 	int		i;
-// 	int		words;
-// 	int		in_word;
-
-// 	if (!str)
-// 		return (-1);
-// 	i = -1;
-// 	words = 0;
-// 	in_word = 0;
-// 	while (str[++i])
-// 	{
-// 		if (is_quote(str[i]))
-// 			continue;
-// 		if (!is_space(str[i])) // Encontrou uma palavra
-// 		{
-// 			if (in_word == 0)
-// 			{
-// 				words++;
-// 				in_word = 1;
-// 			}
-// 		}
-// 		else
-// 			continue; // Saiu de uma palavra
-// 	}
-// 	return (words);
-// }
-static int	counte_word(char *str)
+static int	count_word(char *str)
 {
-	int	i;
-	int	words;
-	int	in_word;
+	int		i;
+	int		words;
+	char	quote;
 
-	if (!str)
-		return (-1);
-	i = -1;
+	i = 0;
 	words = 0;
-	in_word = 0;
-	while (str[++i])
+	quote = 0;
+	while (str[i])
 	{
+		while (str[i] && is_space(str[i]))
+			i++;
 		if (is_quote(str[i]))
-			continue ;
-		if (!is_space(str[i])) // Encontrou uma palavra
 		{
-			if (in_word == 0)
-			{
-				words++;
-				in_word = 1;
-			}
+			quote = str[i++];
+			while (str[i] && str[i] != quote)
+				i++;
+			if (str[i] == quote)
+				i++;
 		}
 		else
-			in_word = 0; // Saiu de uma palavra
+			while (str[i] && !is_space(str[i]) && !is_quote(str[i]))
+				i++;
+		words++;
 	}
 	return (words);
 }
 
-void	process_input(char *input, char **new)
+static char	*word_aloc(char **str)
 {
+	char	*word;
+	int		start;
+	char	quote;
+
+	start = 0;
+	quote = 0;
+	if (is_quote((*str)[start]))
+	{
+		quote = (*str)[start];
+		while ((*str)[++start] && (*str)[start] != quote)
+			;
+		if ((*str)[start] == quote)
+			start++;
+	}
+	else
+		while ((*str)[start] && !is_space((*str)[start]))
+			start++;
+	word = (char *)malloc(sizeof(char) * (start + 1));
+	if (!word)
+		return (NULL);
+	ft_strncpy(word, *str, start);
+	word[start] = '\0';
+	*str += start;
+	return (word);
+}
+
+static void	*free_str(char **dest, int i)
+{
+	while (i >= 0)
+		free(dest[i--]);
+	free(dest);
+	return (NULL);
+}
+
+char	**custome_ft_split(char *s)
+{
+	char	**dest;
 	int		i;
-	int		j;
-	int		k;
-	int		in_quotes;
-	char	*temp;
 
 	i = 0;
-	j = 0;
-	while (input[i])
+	if (!s)
+		return (NULL);
+	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+	if (!dest)
+		return (NULL);
+	while (*s)
 	{
-		while (input[i] && is_space(input[i]))
-			i++;
-		if (!input[i])
-			break ;
-		k = 0;
-		in_quotes = 0;
-		temp = (char *)malloc(sizeof(char) * (ft_strlen(input) + 1));
-		if (!temp)
+		while (*s && is_space(*s))
+			s++;
+		if (*s)
 		{
-			while (j > 0)
-				free(new[--j]);
-			free(new);
-			return ;
+			dest[i] = word_aloc(&s);
+			if (!dest[i++])
+				return (free_str(dest, i - 1));
 		}
-		while (input[i] && (in_quotes == 1 || !is_space(input[i])))
-		{
-			if (is_quote(input[i]))
-				in_quotes = !in_quotes;
-			else
-				temp[k++] = input[i];
-			i++;
-		}
-		temp[k] = '\0';
-		new[j++] = ft_strdup(temp);
-		free(temp);
 	}
-	new[j] = NULL;
+	dest[i] = NULL;
+	return (dest);
 }
 
 char	**new_input(char *input)
@@ -141,10 +134,10 @@ char	**new_input(char *input)
 		return (printf("ERROR\n"), NULL);
 	if (count_quotes(input) == 0)
 		return (custom_ft_split(input));
-	new = (char **)malloc(sizeof(char *) * (counte_word(input) + 1));
+	new = (char **)malloc(sizeof(char *) * (count_word(input) + 1));
 	if (!new)
 		return (NULL);
-	process_input(input, new);
+	new = custome_ft_split(input);
 	if (!new)
 		return (NULL);
 	return (new);
