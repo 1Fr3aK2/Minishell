@@ -1,65 +1,60 @@
 #include "../../includes/shellinho.h"
-#include <stdbool.h>
-#include <stdio.h>
-#include <stdlib.h>
 
-bool	is_space(char c)
+int	count_quotes(char *input)
 {
-	return ((c >= 9 && c <= 13) || c == 32);
-}
+	int	quotes;
+	int	i;
 
-bool	is_quote(char c)
-{
-	return (c == '\'' || c == '\"');
-}
-
-static int	count_word(char *str)
-{
-	int		i;
-    int     words;
-	char	quote;
-
+	if (!input)
+		return (0);
 	i = 0;
-    words = 0;
-	quote = 0;
-	while (str[i])
+	quotes = 0;
+	while (input[i])
 	{
-		while (str[i] && is_space(str[i]))
-			i++;
-		if (is_quote(str[i]))
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				i++;
-			if (str[i] == quote) // Fechou aspas
-				i++;
-		}
-		else
-			while (str[i] && !is_space(str[i]) && !is_quote(str[i]))
-				i++;
-		words++;
-	}
-	return (words);
-}
-char	*ft_strncpy(char *dest, char *src, unsigned int n)
-{
-	unsigned int	i;
-
-	i = 0;
-	while (i < n && src[i] != '\0')
-	{
-		dest[i] = src[i];
+		if (is_quote(input[i]))
+			quotes++;
 		i++;
 	}
-	while (i < n)
-	{
-		dest[i] = '\0';
-		i++;
-	}
-	return (dest);
+	return (quotes);
 }
 
-static char	*word_aloc(char **str)
+int count_word(char *str)
+{
+    int i = 0;
+    int words = 0;
+    char quote = 0;
+    int in_quotes = 0;
+
+    while (str[i])
+    {
+        while (str[i] && is_space(str[i]))
+            i++;
+        if (str[i])
+        {
+            words++;
+            while (str[i] && (!is_space(str[i]) || in_quotes))
+            {
+                if (is_quote(str[i]))
+                {
+                    if (!in_quotes)
+                    {
+                        in_quotes = 1;
+                        quote = str[i];
+                    }
+                    else if (str[i] == quote)
+                    {
+                        in_quotes = 0;
+                    }
+                }
+                i++;
+            }
+        }
+    }
+    return words;
+}
+
+
+/* static char	*word_aloc(char **str)
 {
 	char	*word;
 	int		start;
@@ -85,8 +80,7 @@ static char	*word_aloc(char **str)
 	word[start] = '\0';
 	*str += start;
 	return (word);
-}
-
+} */
 
 static void	*free_str(char **dest, int i)
 {
@@ -96,44 +90,57 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
-char	**custome_ft_split(char *s)
+char **ft_split_quotes(char *s)
 {
-	char	**dest;
-	int		i;
+    char **dest;
+    int i, j, len;
+    char quote;
+    int in_quotes = 0;
 
-	i = 0;
-	if (!s)
-		return (NULL);
-	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
-	if (!dest)
-		return (NULL);
-	while (*s)
-	{
-		while (*s && is_space(*s))
-			s++;
-		if (*s)
-		{
-			dest[i] = word_aloc(&s);
-			if (!dest[i++])
-				return (free_str(dest, i - 1));
-		}
-	}
-	dest[i] = NULL;
-	return (dest);
+    if (!s)
+        return (NULL);
+
+    dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+    if (!dest)
+        return (NULL);
+
+    i = 0;
+    j = 0;
+    while (s[i])
+    {
+        while (s[i] && is_space(s[i]))
+            i++;
+        if (s[i])
+        {
+            len = 0;
+            quote = 0;
+            in_quotes = 0;
+            while (s[i + len] && (!is_space(s[i + len]) || in_quotes))
+            {
+                if (is_quote(s[i + len]))
+                {
+                    if (!in_quotes)
+                    {
+                        in_quotes = 1;
+                        quote = s[i + len];
+                    }
+                    else if (s[i + len] == quote)
+                    {
+                        in_quotes = 0;
+                    }
+                }
+                len++;
+            }
+            dest[j] = (char *)malloc(sizeof(char) * (len + 1));
+            if (!dest[j])
+                return (free_str(dest, j));
+            strncpy(dest[j], s + i, len);
+            dest[j][len] = '\0';
+            j++;
+            i += len;
+        }
+    }
+    dest[j] = NULL;
+    return (dest);
 }
 
-int	main(int argc, char **argv)
-{
-	char	**teste;
-	char	*str;
-	int		i;
-
-	str = "   \"asdas \"\"asdasd\" dasdasd1\"   654  \"        \"    rafaada s \" asdasd     ''    asdasd\" asd";
-	teste = custome_ft_split(str);
-	i = 0;
-	while (teste[i])
-	{
-		printf("teste[%d] = %s\n", i, teste[i]);
-		i++;
-	}
-}
