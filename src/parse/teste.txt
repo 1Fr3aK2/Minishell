@@ -88,3 +88,8 @@ void	ft_export(t_info *info)
 		}
 	}
 } 
+
+
+se for (") -> e a seguir -> $ 
+$ -> info->my_env
+$[1] -> get_env(arg[1])

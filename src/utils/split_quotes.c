@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:09 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/17 18:12:02 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/17 18:52:30 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,3 @@ char	**ft_split_quotes(char *s)
 	dest[j] = NULL;
 	return (dest);
 }
-handle echo - asdasd
