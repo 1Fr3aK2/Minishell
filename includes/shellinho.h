@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/14 16:30:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/17 16:55:48 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ bool					is_quote(char c);
 
 // utils/ft_split_quotes
 char					**ft_split_quotes(char *s);
+
+// utils/utils_split_quotes
 int						count_word(char *str);
+int						count_quotes(char *input);
 
 // echo
 int						check_flags(char *str);
@@ -100,7 +103,6 @@ void					init(t_info *info, char **env);
 
 // parse/parse
 void					parse(char *input, t_info *info);
-int						count_quotes(char *input);
 
 // processes/custom_split
 char					**custom_ft_split(char const *s);

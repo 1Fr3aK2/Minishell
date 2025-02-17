@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/17 14:02:51 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/17 14:09:46 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,8 +89,8 @@ char	**new_input(char *input)
 {
 	char	**new;
 
-	if (count_quotes(input) % 2 != 0)
-		return (printf("ERROR\n"), NULL);
+	// if (count_quotes(input) % 2 != 0)
+	// 	return (printf("ERROR\n"), NULL);
 	if (count_quotes(input) == 0)
 		return (custom_ft_split(input));
 	new = (char **)malloc(sizeof(char *) * (count_word(input) + 1));

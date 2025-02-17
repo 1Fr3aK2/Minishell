@@ -2,6 +2,7 @@ SRCS =  src/main.c \
 		src/utils/utils.c \
 		src/utils/utils_bools.c \
 		src/utils/split_quotes.c \
+		src/utils/utils_split_quotes.c \
 		src/builtins/ft_echo.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \

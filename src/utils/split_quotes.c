@@ -1,79 +1,16 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_quotes.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/17 14:23:09 by raamorim          #+#    #+#             */
+/*   Updated: 2025/02/17 18:12:02 by raamorim         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../includes/shellinho.h"
-
-int	count_quotes(char *input)
-{
-	int	quotes;
-	int	i;
-
-	if (!input)
-		return (0);
-	i = 0;
-	quotes = 0;
-	while (input[i])
-	{
-		if (is_quote(input[i]))
-			quotes++;
-		i++;
-	}
-	return (quotes);
-}
-
-int	count_word(char *str)
-{
-	int		i;
-	int		words;
-	char	quote;
-
-	i = 0;
-	words = 0;
-	quote = 0;
-	while (str[i])
-	{
-		while (str[i] && is_space(str[i]))
-			i++;
-		if (is_quote(str[i]))
-		{
-			quote = str[i++];
-			while (str[i] && str[i] != quote)
-				i++;
-			if (str[i] == quote)
-				i++;
-		}
-		else
-			while (str[i] && !is_space(str[i]) && !is_quote(str[i]))
-				i++;
-		words++;
-	}
-	return (words);
-}
-
-static char	*word_aloc(char **str)
-{
-	char	*word;
-	int		start;
-	char	quote;
-
-	start = 0;
-	quote = 0;
-	if (is_quote((*str)[start]))
-	{
-		quote = (*str)[start];
-		while ((*str)[++start] && (*str)[start] != quote)
-			;
-		if ((*str)[start] == quote)
-			start++;
-	}
-	else
-		while ((*str)[start] && !is_space((*str)[start]))
-			start++;
-	word = (char *)malloc(sizeof(char) * (start + 1));
-	if (!word)
-		return (NULL);
-	ft_strncpy(word, *str, start);
-	word[start] = '\0';
-	*str += start;
-	return (word);
-}
 
 static void	*free_str(char **dest, int i)
 {
@@ -83,28 +20,67 @@ static void	*free_str(char **dest, int i)
 	return (NULL);
 }
 
+static int	get_word_length(char *str)
+{
+	int			len;
+	char		quote;
+	static int	in_quotes;
+
+	len = 0;
+	quote = 0;
+	while (str[len] && (!is_space(str[len]) || in_quotes == 1))
+	{
+		if (is_quote(str[len]))
+		{
+			if (!in_quotes)
+			{
+				in_quotes = 1;
+				quote = str[len];
+			}
+			else if (str[len] == quote)
+				in_quotes = 0;
+		}
+		len++;
+	}
+	return (len);
+}
+
+static int	word_alloc(char **dest, char *s, int len, int j)
+{
+	if (!dest)
+		return (-1);
+	dest[j] = (char *)malloc(sizeof(char) * (len + 1));
+	if (!dest[j])
+		return (0);
+	ft_strncpy(dest[j], s, len);
+	dest[j][len] = '\0';
+	return (1);
+}
+
 char	**ft_split_quotes(char *s)
 {
 	char	**dest;
 	int		i;
+	int		j;
 
 	i = 0;
-	if (!s)
-		return (NULL);
+	j = 0;
 	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
-	while (*s)
+	while (s[i])
 	{
-		while (*s && is_space(*s))
-			s++;
-		if (*s)
+		while (s[i] && is_space(s[i]))
+			i++;
+		if (s[i])
 		{
-			dest[i] = word_aloc(&s);
-			if (!dest[i++])
-				return (free_str(dest, i - 1));
+			if (!word_alloc(dest, s + i, get_word_length(s + i), j))
+				return (free_str(dest, j));
+			j++;
+			i += get_word_length(s + i);
 		}
 	}
-	dest[i] = NULL;
+	dest[j] = NULL;
 	return (dest);
 }
+handle echo - asdasd

@@ -1,5 +1,15 @@
 #include "../../includes/shellinho.h"
 
+bool	is_quote(char c)
+{
+	return ((c == '\'' || c == '\"'));
+}
+
+bool	is_space(char c)
+{
+	return ((c >= 9 && c <= 13) || c == 32);
+}
+
 int	count_quotes(char *input)
 {
 	int	quotes;
@@ -53,6 +63,35 @@ int count_word(char *str)
     return words;
 }
 
+int main()
+{
+    char *test_strings[] = {
+        "\"Hello world\"",
+        "\"  Spaces   at   start and end  \"",
+        "\"Quoted string\"",
+        "Mixed \"quoted and\" unquoted",
+        "\"Unclosed quote",
+        "Multiple 'single' and \"double\" quotes",
+        "Empty \"\" quotes",
+        "\"Nested \"quotes\"\"",
+        "",  // Empty string
+        "One",
+        "   ",  // Only spaces
+        NULL
+    };
+
+    int i = 0;
+    while (test_strings[i] != NULL)
+    {
+        int word_count = count_word(test_strings[i]);
+        printf("String: \"%s\"\n", test_strings[i]);
+        printf("Word count: %d\n\n", word_count);
+        i++;
+    }
+
+    return 0;
+}
+
 
 /* static char	*word_aloc(char **str)
 {
@@ -82,13 +121,13 @@ int count_word(char *str)
 	return (word);
 } */
 
-static void	*free_str(char **dest, int i)
-{
-	while (i >= 0)
-		free(dest[i--]);
-	free(dest);
-	return (NULL);
-}
+// static void	*free_str(char **dest, int i)
+// {
+// 	while (i >= 0)
+// 		free(dest[i--]);
+// 	free(dest);
+// 	return (NULL);
+// }
 
 char **ft_split_quotes(char *s)
 {
