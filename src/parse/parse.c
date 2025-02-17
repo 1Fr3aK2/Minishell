@@ -3,109 +3,80 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/15 02:53:13 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/17 14:02:51 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-/* char	*remove_quotes(char *str)
+static int	size_woutquotes(char *str)
 {
 	int		i;
-	int		start;
 	char	quote;
-	char	*new;
+	int		count;
 
 	if (!str)
-		return (NULL);
-	if (count_quotes(str) == 0)
-		return (str);
+		return (-1);
 	i = 0;
-	while (str[i] && is_quote(str[i]))
-	{
-		quote = str[i];
-		i++;
-	}
-	start = i;
-	while (str[i] && str[i] != quote)
-		i++;
-	new = (char *)malloc(sizeof(char) * (i - start + 1));
-	if (!new)
-		return (NULL);
-	ft_strncpy(new, &str[start], i - start);
-	new[i - start] = '\0';
-	return (new);
-} */
-/* char	*remove_quotes(char *str)
-{
-	int		i;
-	int		start;
-	char	quote;
-	char	*new;
-	int is__quote = 0;
-
-	i = 0;
-	start = 0;
 	quote = 0;
-	if (!str)
-		return (NULL);
-	if (count_quotes(str) == 0)
-		return (str);
-	while(str[i])
+	count = 0;
+	if (str[i] && is_quote(str[i]))
 	{
-		if (str[i] && is__quote == 0 && is_quote(str[i]))
-		{
-			quote = str[i];
-			is__quote = 1;
-			i++;
-		}
-		else if (str[i] && is__quote == 1 && str[i] = quote)
-		{
-			is__quote = 0;
-			i++;
-		}
-		
+		i++;
+		quote = str[i];
 	}
-	
-} */
+	while (str[i])
+	{
+		if (str[i] && str[i] != quote)
+		{
+			i++;
+			count++;
+		}
+		else if (str[i] && str[i] == quote)
+			i++;
+	}
+	return (count);
+}
+static int	handle_quotes(char *str, char *new, int i, int *j)
+{
+	static int	in_quotes;
+	static char	quote_char;
+
+	if (in_quotes == 0)
+	{
+		in_quotes = 1;
+		quote_char = str[i];
+	}
+	else if (str[i] == quote_char)
+		in_quotes = 0;
+	else
+		new[(*j)++] = str[i];
+	return (in_quotes);
+}
 
 
 char	*remove_quotes(char *str)
 {
 	char	*new;
-	int		len;
 	int		i;
 	int		j;
 	int		in_quotes;
-	char	quote_char;
 
 	if (!str)
 		return (NULL);
-	len = strlen(str);
-	new = malloc(len + 1);
+	new = (char *)malloc(sizeof(char) * (size_woutquotes(str) + 1));
 	if (!new)
 		return (NULL);
 	i = 0;
 	j = 0;
 	in_quotes = 0;
-	quote_char = 0;
 	while (str[i])
 	{
 		if (is_quote(str[i]))
-		{
-			if (in_quotes == 0)
-			{
-				in_quotes = 1;
-				quote_char = str[i];
-			}
-			else if (str[i] == quote_char)
-				in_quotes = 0;
-			else
-				new[j++] = str[i];
-		}
+			in_quotes = handle_quotes(str, new, i, &j);
 		else
 			new[j++] = str[i];
 		i++;
