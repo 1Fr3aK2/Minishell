@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 15:49:10 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:29:12 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,10 @@ char	**new_input(char *input)
 {
 	char	**new;
 
-	if (check_quotes(input) == -1)
-		return (printf("ERROR\n"), NULL);
 	if (count_quotes(input) == 0)
 		return (custom_ft_split(input));
+	if (check_quotes(input) == -1)
+		return (printf("ERROR\n"), NULL);
 	new = (char **)malloc(sizeof(char *) * (count_word(input) + 1));
 	if (!new)
 		return (NULL);
@@ -104,6 +104,7 @@ char	**new_input(char *input)
 void	parse(char *input, t_info *info)
 {
 	size_t	size;
+	int	i;
 
 	if (!input)
 		return ;
@@ -114,5 +115,12 @@ void	parse(char *input, t_info *info)
 		if (!info->args)
 			return ;
 		info->flags = ft_strdup(info->args[1]);
+	}
+	i = 0;
+	while (info->args[i])
+	{
+		info->args[i] = remove_quotes(info->args[i]);
+		// printf("after remove info->args[%d] = %s\n", i, info->args[i]);
+		i++;
 	}
 }
