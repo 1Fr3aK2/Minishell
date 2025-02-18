@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 17:46:48 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:00:04 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**new_input(char *input)
 void	parse(char *input, t_info *info)
 {
 	size_t	size;
-	int	i;
+	int		i;
 
 	if (!input)
 		return ;
@@ -114,13 +114,13 @@ void	parse(char *input, t_info *info)
 		info->args = new_input(input);
 		if (!info->args)
 			return ;
+		i = 0;
+		while (info->args[i])
+		{
+			info->args[i] = remove_quotes(info->args[i]);
+			// printf("after remove info->args[%d] = %s\n", i, info->args[i]);
+			i++;
+		}
 		info->flags = ft_strdup(info->args[1]);
-	}
-	i = 0;
-	while (info->args[i])
-	{
-		info->args[i] = remove_quotes(info->args[i]);
-		// printf("after remove info->args[%d] = %s\n", i, info->args[i]);
-		i++;
 	}
 }
