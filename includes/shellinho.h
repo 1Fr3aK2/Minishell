@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/17 16:55:48 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:07:13 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ char					**ft_split_quotes(char *s);
 // utils/utils_split_quotes
 int						count_word(char *str);
 int						count_quotes(char *input);
+
+// utils/quotes
+int						check_quotes(char *input);
 
 // echo
 int						check_flags(char *str);
