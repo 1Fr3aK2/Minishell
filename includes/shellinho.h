@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/18 14:07:13 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:43:58 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,39 +62,16 @@ typedef struct s_info
 	/* t_type type; */
 }						t_info;
 
-// utils
-void					close_fds(int i);
-void					print_banner(void);
-void					start(t_info *info);
-void					free_arr(char **arr);
-void					error_exit(char *msg);
-int						check_builtins(t_info *info);
-void					clean(t_info *info);
-char					*ft_strncpy(char *dest, char *src, unsigned int n);
-
-// utils/utils_bools
-bool					is_quote(char c);
-
-// utils/ft_split_quotes
-char					**ft_split_quotes(char *s);
-
-// utils/utils_split_quotes
-int						count_word(char *str);
-int						count_quotes(char *input);
-
-// utils/quotes
-int						check_quotes(char *input);
-
-// echo
+// builtins/echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
 
-// exit
+// builtins/exit
 void					ft_exit(t_info *info);
 void					ft_pwd(t_info *info);
 void					sort_env(char **args);
 
-// export
+// builtins/export
 void					sort_env(char **args);
 void					add_to_my_env(t_info *info, char *str);
 char					**create_sorted_env_copy(char **args);
@@ -105,10 +82,12 @@ void					copy_env(t_info *info, char **env);
 void					init(t_info *info, char **env);
 
 // parse/parse
+char					*remove_quotes(char *str);
+char					**new_input(char *input);
 void					parse(char *input, t_info *info);
 
-// processes/custom_split
-char					**custom_ft_split(char const *s);
+// parse/quotes
+int						check_quotes(char *input);
 
 // processes
 void					child_process(t_info *info);
@@ -116,5 +95,30 @@ void					exec(t_info *info);
 
 // processes/utils
 char					*find_path(t_info *info);
+
+// splits/custom_split
+char					**custom_ft_split(char const *s);
+
+// splits/split_quotes
+char					**ft_split_quotes(char *s);
+
+// splits/utils_split_quotes
+int						count_word(char *str);
+int						count_quotes(char *input);
+
+// utils/utils_bools
+bool					is_quote(char c);
+
+// utils
+void					close_fds(int i);
+void					print_banner(void);
+void					error_exit(char *msg);
+void					free_arr(char **arr);
+int						check_builtins(t_info *info);
+void					clean(t_info *info);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
+
+//main
+void					start(t_info *info);
 
 #endif

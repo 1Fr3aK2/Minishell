@@ -1,18 +1,18 @@
 SRCS =  src/main.c \
-		src/utils/utils.c \
-		src/utils/utils_bools.c \
-		src/utils/split_quotes.c \
-		src/utils/quotes.c \
-		src/utils/utils_split_quotes.c \
 		src/builtins/ft_echo.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
-		src/parse/parse.c \
 		src/parse/init.c \
+		src/parse/parse.c \
+		src/parse/quotes.c \
 		src/processes/processes.c\
-		src/processes/custom_split.c\
 		src/processes/utils.c\
+		src/splits/custom_split.c\
+		src/splits/split_quotes.c \
+		src/splits/utils_split_quotes.c \
+		src/utils/utils.c \
+		src/utils/utils_bools.c \
 		
 NAME = shellinho
 
