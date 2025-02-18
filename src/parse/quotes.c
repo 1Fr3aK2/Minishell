@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:05:59 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 18:49:09 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 23:32:17 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,11 @@ static int	check_close(char *input, int *i, char quote)
 int	check_quotes(char *input)
 {
 	int		i;
-	int		count;
 	char	quote;
 
 	if (!input)
 		return (-1);
 	i = 0;
-	count = 0;
 	quote = 0;
 	while (input[i])
 	{
@@ -64,7 +62,6 @@ static char	*remove_quotes(char *str)
 	char	*new;
 	int		i;
 	int		j;
-	int		in_quotes;
 
 	if (!str)
 		return (NULL);
@@ -73,11 +70,10 @@ static char	*remove_quotes(char *str)
 		return (NULL);
 	i = 0;
 	j = 0;
-	in_quotes = 0;
 	while (str[i])
 	{
 		if (is_quote(str[i]))
-			in_quotes = handle_quotes(str, new, i, &j);
+			handle_quotes(str, new, i, &j);
 		else
 			new[j++] = str[i];
 		i++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 18:57:11 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 23:19:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,33 +56,6 @@ int	handle_quotes(char *str, char *new, int i, int *j)
 	else
 		new[(*j)++] = str[i];
 	return (in_quotes);
-}
-
-char	*remove_quotes(char *str)
-{
-	char	*new;
-	int		i;
-	int		j;
-	int		in_quotes;
-
-	if (!str)
-		return (NULL);
-	new = (char *)malloc(sizeof(char) * (size_woutquotes(str) + 1));
-	if (!new)
-		return (NULL);
-	i = 0;
-	j = 0;
-	in_quotes = 0;
-	while (str[i])
-	{
-		if (is_quote(str[i]))
-			in_quotes = handle_quotes(str, new, i, &j);
-		else
-			new[j++] = str[i];
-		i++;
-	}
-	new[j] = '\0';
-	return (new);
 }
 
 char	**new_input(char *input)
