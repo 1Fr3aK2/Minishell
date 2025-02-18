@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:05:59 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 15:47:44 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:49:09 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,51 @@ int	check_quotes(char *input)
 		}
 	}
 	return (0);
+}
+
+static char	*remove_quotes(char *str)
+{
+	char	*new;
+	int		i;
+	int		j;
+	int		in_quotes;
+
+	if (!str)
+		return (NULL);
+	new = (char *)malloc(sizeof(char) * (size_woutquotes(str) + 1));
+	if (!new)
+		return (NULL);
+	i = 0;
+	j = 0;
+	in_quotes = 0;
+	while (str[i])
+	{
+		if (is_quote(str[i]))
+			in_quotes = handle_quotes(str, new, i, &j);
+		else
+			new[j++] = str[i];
+		i++;
+	}
+	new[j] = '\0';
+	return (new);
+}
+
+void	remove_all_quotes(t_info *info)
+{
+	int		i;
+	char	*temp;
+
+	if (!info)
+		return ;
+	i = 0;
+	while (info->args[i])
+	{
+		temp = remove_quotes(info->args[i]);
+		if (temp)
+		{
+			free(info->args[i]);
+			info->args[i] = temp;
+		}
+		i++;
+	}
 }

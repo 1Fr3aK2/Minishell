@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 17:46:50 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 19:06:01 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,7 @@ int	main(int argc, char **argv, char **env)
 	init(&info, env);
 	start(&info);
 	free_arr(info.args);
+	free_arr(info.my_env);
+	free(info.builtins);
 	return (0);
 }

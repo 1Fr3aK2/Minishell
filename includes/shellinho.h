@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/18 16:43:58 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/18 18:51:04 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,14 @@ void					copy_env(t_info *info, char **env);
 void					init(t_info *info, char **env);
 
 // parse/parse
-char					*remove_quotes(char *str);
+int						size_woutquotes(char *str);
+int						handle_quotes(char *str, char *new, int i, int *j);
 char					**new_input(char *input);
 void					parse(char *input, t_info *info);
 
 // parse/quotes
 int						check_quotes(char *input);
+void					remove_all_quotes(t_info *info);
 
 // processes
 void					child_process(t_info *info);
@@ -118,7 +120,7 @@ int						check_builtins(t_info *info);
 void					clean(t_info *info);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
 
-//main
+// main
 void					start(t_info *info);
 
 #endif
