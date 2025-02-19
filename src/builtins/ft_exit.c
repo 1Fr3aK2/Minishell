@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/18 17:26:37 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:05:37 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	ft_exit(t_info *info)
 			free(info->flags);
 		info->args = NULL;
 	}
+	free_arr(info->my_env);
 	rl_clear_history();
 	// clean(info);
 	close_fds(0);

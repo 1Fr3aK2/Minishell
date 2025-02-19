@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/13 15:27:45 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:08:39 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,9 @@ static void	fill_builtins(t_info *info)
 
 static void	init_builtins(t_info *info)
 {
-/* 	int	i;
-
-	i = 0; */
 	if (!info)
 		return ;
 	fill_builtins(info);
-	// while (info->builtins->builtins[i])
-	// {
-	// 	printf("\n%s", info->builtins->builtins[i]);
-	// 	i++;
-	// }
-	printf("\n");
 }
 
 void	copy_env(t_info *info, char **env)
@@ -58,7 +49,7 @@ void	copy_env(t_info *info, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	info->my_env = ft_calloc(sizeof(char **), (i + 1));
+	info->my_env = ft_calloc((i + 1), sizeof(char **));
 	if (!info->my_env)
 		return ;
 	j = -1;

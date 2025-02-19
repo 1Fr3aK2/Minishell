@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 19:06:01 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:09:08 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	start(t_info *info)
 int	main(int argc, char **argv, char **env)
 {
 	t_info	info;
-	
+
 	(void)argc;
 	(void)argv;
 	print_banner();
