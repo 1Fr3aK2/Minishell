@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/19 12:41:43 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:20:41 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,12 @@ void	start(t_info *info)
 	rl_clear_history();
 }
 
-void free_builtins(t_builtins *builtins)
+void	free_builtins(t_builtins *builtins)
 {
-    if (!builtins)
-        return;
-    free(builtins);
+	if (!builtins)
+		return ;
+	free(builtins);
 }
-
 
 int	main(int argc, char **argv, char **env)
 {

@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/19 13:26:27 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/19 14:20:37 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	exec(t_info *info)
 		free_arr(info->my_env);
 		free_builtins(info->builtins);
 		exit(127);
-		//libertar tudo pois esta num child process que herda tudo do 
-		//pai incluindo memoria e deve ser tudo libertado ao sair
+		// libertar tudo pois esta num child process que herda tudo do
+		// pai incluindo memoria e deve ser tudo libertado ao sair
 	}
 	if (execve(path, info->args, info->my_env) == -1)
 	{

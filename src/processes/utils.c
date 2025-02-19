@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:15 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/14 16:45:53 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/19 14:20:34 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,11 +86,15 @@ char	*find_path(t_info *info)
 
 	if (!info)
 		return (NULL);
+	if (!info->args[0])
+		return (NULL);
 	if (access(info->args[0], F_OK | X_OK) == 0)
 		return (info->args[0]);
 	paths = ft_split(get_env("PATH", info->my_env), ':');
 	if (!paths)
 		return (NULL);
 	path = check_paths(paths, info->args[0]);
+	if (!path)
+		return (NULL);
 	return (path);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 23:46:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/19 13:45:57 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	size_woutquotes(char *str)
 	count = 0;
 	if (str[i] && is_quote(str[i]))
 	{
-		i++;
 		quote = str[i];
+		i++;
 	}
 	while (str[i])
 	{
