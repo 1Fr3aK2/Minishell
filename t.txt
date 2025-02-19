@@ -1,0 +1,16 @@
+==44169== Invalid write of size 8
+==44169==    at 0x401847: add_to_my_env (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4019B5: ft_export (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4034F0: check_builtins (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x402414: child_process (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4012EE: start (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x401364: main (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==  Address 0x4b63428 is 0 bytes after a block of size 472 alloc'd
+==44169==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==44169==    by 0x4017C5: add_to_my_env (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4019B5: ft_export (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4034F0: check_builtins (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x402414: child_process (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x4012EE: start (in /home/raamorim/commoncore/Shellinho/shellinho)
+==44169==    by 0x401364: main (in /home/raamorim/commoncore/Shellinho/shellinho)
+
