@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/18 23:19:26 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/18 23:46:17 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	size_woutquotes(char *str)
 	return (count);
 }
 
-int	handle_quotes(char *str, char *new, int i, int *j)
+void	handle_quotes(char *str, char *new, int i, int *j)
 {
 	static int	in_quotes;
 	static char	quote_char;
@@ -55,7 +55,6 @@ int	handle_quotes(char *str, char *new, int i, int *j)
 		in_quotes = 0;
 	else
 		new[(*j)++] = str[i];
-	return (in_quotes);
 }
 
 char	**new_input(char *input)
