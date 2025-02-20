@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/19 13:45:57 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:40:10 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ void	parse(char *input, t_info *info)
 			return ;
 		remove_all_quotes(info);
 		info->flags = ft_strdup(info->args[1]);
+		
 	}
 }

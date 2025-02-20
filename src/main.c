@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/19 14:20:41 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/20 18:13:09 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,19 @@ int	main(int argc, char **argv, char **env)
 	free_builtins(info.builtins);
 	return (0);
 }
+
+// static char *handle_dollar(char *str, char **env)
+// {
+// 	int i = 0;
+// 	char *teste;
+// 	while(str)
+// 	{
+// 		if (str[i] && str[i] == '$')
+// 		{
+// 			teste = get_env(&str[++i],env);
+// 			return(teste);
+// 		}
+//         i++;
+// 	}
+// 	return (NULL);	
+// }

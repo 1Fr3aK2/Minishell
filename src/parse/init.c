@@ -6,7 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/20 17:40:30 by dsteiger         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/20 15:09:59 by raamorim         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +78,32 @@ void	init(t_info *info, char **env)
 		return ;
 	init_builtins(info);
 	copy_env(info, env);
+	// init_types(info);
 }
+
+// static void	init_types(t_info *info)
+// {
+// 	if (!info)
+// 		return ;
+// 	fill_types(info);
+// }
+
+/* static void	fill_types(t_info *info)
+{
+	info->builtins->builtins[0] = "|";
+	info->builtins->builtins[1] = "||";
+	info->builtins->builtins[2] = "&&";
+	info->builtins->builtins[3] = ">";
+	info->builtins->builtins[4] = "<";
+	info->builtins->builtins[5] = "<<";
+	info->builtins->builtins[6] = ">>";
+	info->builtins->builtins[7] = NULL;
+	info->builtins->f[0] = ft_echo;
+	info->builtins->f[1] = NULL;
+	info->builtins->f[2] = ft_pwd;
+	info->builtins->f[3] = ft_export;
+	info->builtins->f[4] = NULL;
+	info->builtins->f[5] = NULL;
+	info->builtins->f[6] = ft_exit;
+	info->builtins->f[7] = NULL;
+} */

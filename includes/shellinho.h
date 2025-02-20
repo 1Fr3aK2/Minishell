@@ -6,7 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/02/20 17:40:57 by dsteiger         ###   ########.fr       */
+=======
+/*   Updated: 2025/02/20 15:14:58 by raamorim         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +42,16 @@
 # define BLUE "\033[34m"
 # define RED "\033[31m"
 # define MAX_BUILTINS 8
+# define MAX_TYPES 8
 
 # define SPACES " \n\t\v\f\r"
 
 typedef struct s_info	t_info;
-/* typedef enum s_type
-{
-
-}			t_type; */
+// typedef struct s_type
+// {
+// 	char	*types[MAX_TYPES];
+// 	void	(*f[MAX_TYPES])(t_info *info);
+// }			t_type;
 
 typedef struct s_builtins
 {
@@ -53,13 +59,20 @@ typedef struct s_builtins
 	void				(*f[MAX_BUILTINS])(t_info *info);
 }						t_builtins;
 
+/* typedef struct s_args
+{
+	char **args;
+	t_type
+
+}			t_args; */
+
 typedef struct s_info
 {
 	char				**args;
 	char				*flags;
 	char				**my_env;
 	t_builtins			*builtins;
-	/* t_type type; */
+	// t_type *types;
 }						t_info;
 
 // builtins/echo
@@ -102,6 +115,7 @@ void					exec(t_info *info);
 
 // processes/utils
 char					*find_path(t_info *info);
+char					*get_env(char *variable_name, char **env);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

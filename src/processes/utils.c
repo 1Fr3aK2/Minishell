@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:15 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/19 21:22:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/02/20 15:14:44 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-static char	*get_env(char *variable_name, char **env)
+char	*get_env(char *variable_name, char **env)
 {
 	int		i;
 	int		len;
