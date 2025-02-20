@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/19 13:29:27 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:40:57 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,11 @@ typedef struct s_info
 // builtins/echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
+
+// builtins/cd
+void    				ft_cd_doispontos(t_info *info);
+void					ft_cd_simples(t_info *info);
+void					ft_cd(t_info *info);
 
 // builtins/exit
 void					ft_exit(t_info *info);
