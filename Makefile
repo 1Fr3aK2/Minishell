@@ -9,6 +9,7 @@ SRCS =  src/main.c \
 		src/parse/quotes.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
+		src/redirections/redirections.c\
 		src/splits/custom_split.c\
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \

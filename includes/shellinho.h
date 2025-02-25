@@ -39,6 +39,7 @@
 # define RED "\033[31m"
 # define MAX_BUILTINS 8
 # define MAX_TYPES 8
+# define MAX_REDS 5
 
 # define SPACES " \n\t\v\f\r"
 
@@ -48,6 +49,8 @@ typedef struct s_info	t_info;
 // 	char	*types[MAX_TYPES];
 // 	void	(*f[MAX_TYPES])(t_info *info);
 // }			t_type;
+
+typedef struct s_io t_io;
 
 typedef struct s_builtins
 {
@@ -62,12 +65,30 @@ typedef struct s_builtins
 
 }			t_args; */
 
+typedef struct s_reds
+{
+	char				*reds[MAX_REDS];
+	void				(*f[MAX_REDS])(t_io *io);
+}						t_reds;
+
+typedef struct s_io
+{
+    int     fd_in; // this is the new STDIN_FILENO. Any input written to STDIN, will go to fd_in
+    int     fd_out; // this is the new STDOUT_FILENO. Any output written to STDOUT, will go to fd_out
+    int     stdin_backup;
+    int     stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
+    char    *in_file; // alocar memoria pra ambos: infile e outfile
+    char    *out_file; // ex: echo "Hello" > outfile.txt   -> hello will be written in outfile.txt, instead of the terminal as STDOUT
+    t_reds  *redirections;
+}              t_io;
+
 typedef struct s_info
 {
 	char				**args;
 	char				*flags;
 	char				**my_env;
 	t_builtins			*builtins;
+    t_io                io;
 	// t_type *types;
 }						t_info;
 
@@ -112,6 +133,14 @@ void					exec(t_info *info);
 // processes/utils
 char					*find_path(t_info *info);
 char					*get_env(char *variable_name, char **env);
+
+// redirections
+void	                fill_redirections(t_io *io);
+void                    handle_input_redirection(t_io *io);
+void                    handle_output_redirection(t_io *io);
+void                    storing_backup(t_io *io);
+void                    restore_io(t_io *io);
+void                    execute_command(t_info *info);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

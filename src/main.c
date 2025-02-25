@@ -40,6 +40,7 @@ void	start(t_info *info)
 			free(input);
 			continue ;
 		}
+        execute_command(info); // so pra testar redirections
 		child_process(info);
 		free(input);
 	}
