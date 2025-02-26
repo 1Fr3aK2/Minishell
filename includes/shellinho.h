@@ -73,8 +73,8 @@ typedef struct s_reds
 
 typedef struct s_io
 {
-    int     fd_in; // this is the new STDIN_FILENO. Any input written to STDIN, will go to fd_in
-    int     fd_out; // this is the new STDOUT_FILENO. Any output written to STDOUT, will go to fd_out
+    int     fd_in; // this is the new STDIN_FILENO.  It represents the opened file in_file
+    int     fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
     int     stdin_backup;
     int     stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
     char    *in_file; // alocar memoria pra ambos: infile e outfile
@@ -138,6 +138,7 @@ char					*get_env(char *variable_name, char **env);
 void	                fill_redirections(t_io *io);
 void                    handle_input_redirection(t_io *io);
 void                    handle_output_redirection(t_io *io);
+void                    handle_append_redirection(t_io *io);
 void                    storing_backup(t_io *io);
 void                    restore_io(t_io *io);
 void                    execute_command(t_info *info);
