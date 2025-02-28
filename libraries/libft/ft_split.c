@@ -66,7 +66,7 @@ static char	*word_aloc(const char *str, char c)
 
 static void	*free_str(char **dest, int i)
 {
-	while (i >= 0)
+	while (i > 0)
 		free(dest[i--]);
 	free(dest);
 	return (NULL);

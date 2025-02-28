@@ -1,104 +1,100 @@
-#include "../../includes/shellinho.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
+CORRIGIR TESTES
 
-size_t	ft_strlen(const char *str)
+
+echo "O meu user é $USER e estou em $PWD" -> correto : O meu user é rafael e estou em /home/rafael
+echo "$HOME$USER" -> correto : /home/rafaelrafael
+echo "$HOME$NAO_EXISTE" -> correto : /home/rafael
+echo "User: $USER, Desconhecido: $NAO_EXISTE" -> correto : User: rafael, Desconhecido:
+
+echo $123ABC -> bash -> 23ABC
+            -> zsh -> zsh: command not found: 23ABC
+            outros(nos) -> \n 
+
+echo $HOME!USER -> bash -> bash: !USER: event not found
+                -> ZSH -> zsh: event not found: USER
+                outros(nos) -> /home/rafael!USER
+
+
+echo "'$HOME'" -> correto -> '/home/rafael'
+echo "asd"'$HOME'"asd" -> asd$HOMEasd
+ echo "Inicio"'$PWD'"Fim" -> Inicio$PWDFim
+
+
+
+
+
+ static char	*handle_dollar(char *str, char **env)
+ {
+     char	*teste;
+     char	*final;
+     char	*new;
+     int		len;
+     char	*temp;
+ 
+     if (check_translate(str) == 0)
+         return (NULL);
+     new = ft_strdup("");
+     while (*str)
+     {
+         temp = ft_substr(str, 0, size_to_var(str));
+         teste = expand(str);
+         final = translate(teste, env);
+         new = ft_strjoin(new, temp);
+         if (final) 
+             new = ft_strjoin(new, final);
+         len = size_to_var(str) + get_varname_len(str) + 1;
+         str += len;
+     }
+     return (new);
+ }
+
+ static char *handle_dollar(char *str, char **env)
 {
-	size_t	length;
+    char *var_name;
+    char *var_value;
+    char *new;
+    int len;
+    char *temp;
+	char *new_temp;
+    int i = 0;
+	char *new_value;
 
-	if (!str)
-		return (-1);
-	length = 0;
-	while (str[length])
-		length++;
-	return (length);
-}
-char	*ft_strchr(const char *str, int c)
-{
-	char	*s;
-
-	if (!str)
-		return (NULL);
-	s = (char *)str;
-	while (*s)
-	{
-		if (*s == (char)c)
-			return (s);
-		s++;
-	}
-	if (*s == '\0' && c == '\0')
-		return (s);
-	return (NULL);
-}
-
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
-{
-	size_t	i;
-
-	if (!s1 || !s2)
-		return (-1);
-	i = 0;
-	if (n == 0)
-		return (0);
-	while (i < n - 1 && (s1[i] || s2[i]) && s1[i] == s2[i])
-		i++;
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
-}
-
-char	*get_env(char *variable_name, char **env)
-{
-	int		i;
-	int		len;
-	char	*value;
-
-	if (!variable_name || !env || !*env)
-		return (NULL);
-	i = 0;
-	len = ft_strlen(variable_name);
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], variable_name, len) == 0 && env[i][len] == '=')
+    if (check_translate(str) == 0)
+        return (NULL);
+    new = ft_strdup("");
+    if (!new)
+        return NULL;
+		while (str[i])
 		{
-			value = ft_strchr(env[i], '=');
-			if (!value)
-				return (NULL);
-			else
-				return (value + 1);
+			len = size_to_var(str + i);
+			temp = ft_substr(str, i, len);
+			new_temp = ft_strjoin(new, temp);
+			/* free(new);
+			free(temp); */
+			new = new_temp;
+	
+			i += len;
+			if (str[i] == '$')
+			{
+				var_name = expand(str + i);
+				if (var_name)
+				{
+					var_value = translate(var_name, env);
+				   /*  free(var_name); */
+					if (var_value)
+					{
+						new_value = ft_strjoin(new, var_value);
+						/* free(new);
+						free(var_value); */
+						new = new_value;
+					}
+					i += get_varname_len(str + i) + 1; // +1 para o '$'
+				}
+				else
+				{
+					i++; // Avança pelo '$' se não houver expansão
+				}
+			}
 		}
-		i++;
-	}
-	return (NULL);
-}
-
-char *handle_dollar(char *str, char **env)
-{
-	int i = 0;
-	char *teste;
-	while(str)
-	{
-		if (str[i] && str[i] == '$')
-		{
-			teste = get_env(&str[++i],env);
-			return(teste);
-		}
-        i++;
-	}
-	return (NULL);	
-}
-
-int main(int argc, char **argv, char **envp)
-{
-    if (argc != 2)
-    {
-        printf("Usage: %s \"$VARIABLE\"\n", argv[0]);
-        return (1);
-    }
-    
-    char *result = handle_dollar(argv[1], envp);
-    if (result)
-        printf("Resolved value: %s\n", result);
-    else
-        printf("Variable not found or invalid input.\n");
-    return (0);
+		return new;
 }

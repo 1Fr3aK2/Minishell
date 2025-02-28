@@ -3,6 +3,7 @@
         "libft.h": "c",
         "shellinho.h": "c",
         "termios.h": "c",
-        "cstdlib": "c"
+        "cstdlib": "c",
+        "random": "c"
     }
 }

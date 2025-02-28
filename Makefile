@@ -4,6 +4,8 @@ SRCS =  src/main.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
+		src/parse/expander/handle_dollar.c\
+		src/parse/expander/expander.c\
 		src/parse/init.c \
 		src/parse/parse.c \
 		src/parse/quotes.c \
@@ -24,7 +26,7 @@ RM = rm -f
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 RDL_FLAGS = -lreadline 
 

@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 	if (!gnl)
 		return (NULL);
 	gnl[0] = '\0';
-	gnl = ft_strjoin(gnl, line);
+	gnl = ft_strjoin_gnl(gnl, line);
 	if (check_and_clear(line) == 1)
 		return (gnl);
 	bytes_read = read(fd, line, BUFFER_SIZE);
@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 	while (bytes_read > 0)
 	{
 		line[bytes_read] = '\0';
-		gnl = ft_strjoin(gnl, line);
+		gnl = ft_strjoin_gnl(gnl, line);
 		if (check_and_clear(line) == 1)
 			break ;
 		bytes_read = read(fd, line, BUFFER_SIZE);

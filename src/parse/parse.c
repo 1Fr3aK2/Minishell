@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/21 14:15:16 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:17:24 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,48 +70,30 @@ char	**new_input(char *input)
 		return (free_arr(new), NULL);
 	return (new);
 }
-// static char	*handle_dollar(char *str, char **env)
-// {
-// 	int		i;
-// 	char	*teste;
-// 	char	*new;
-	
-// 	i = 0;
-// 	while (str)
-// 	{
-// 		if (str[i] && str[i] == '$')
-// 		{
-// 			teste = get_env(&str[++i], env);
-// 			new = ft_strdup(teste);
-// 			if (!new)
-// 				return (NULL);
-// 			return (new);
-// 		}
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
-// static void	check_dollar(t_info *info)
-// {
-// 	int		i;
-// 	char	*new;
 
-// 	if (!info)
-// 		return ;
-// 	i = 1;
-// 	while (info->args[i])
-// 	{
-// 		new = handle_dollar(info->args[i], info->my_env);
-// 		if (!new)
-// 			return ;
-// 		if (new && new != info->args[i]	)
-// 		{
-// 			free(info->args[i]);
-// 			info->args[i] = new;
-// 		}
-// 		i++;
-// 	}
-// }
+static void	check_dollar(t_info *info)
+{
+	int		i;
+	char	*new;
+
+	if (!info)
+		return ;
+	i = 1;
+	while (info->args[i])
+	{
+		new = handle_dollar(info->args[i], info->my_env);
+		if (!new)
+			return ;
+		if (ft_strncmp(new, info->args[i], ft_strlen(info->args[i])) != 0)
+		{
+			free(info->args[i]);
+			info->args[i] = new;
+		}
+		else
+			free(new);
+		i++;
+	}
+}
 
 void	parse(char *input, t_info *info)
 {
@@ -127,8 +109,8 @@ void	parse(char *input, t_info *info)
 		info->args = new_input(input);
 		if (!info->args)
 			return ;
+		check_dollar(info);
 		remove_all_quotes(info);
-		// check_dollar(info);
 		info->flags = ft_strdup(info->args[1]);
 	}
 }

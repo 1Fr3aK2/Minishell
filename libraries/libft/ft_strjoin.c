@@ -2,9 +2,12 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
 /*   Created: 2024/04/15 12:10:19 by raamorim          #+#    #+#             */
 /*   Updated: 2024/04/18 14:15:06 by raamorim         ###   ########.fr       */
 /*                                                                            */
@@ -25,7 +28,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	int		i;
 	int		j;
 
-	i = 0;
+	i = -1;
 	j = 0;
 	if (!s1 || !s2)
 		return (NULL);
@@ -33,11 +36,8 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	dest = (char *)malloc(sizeof(char) * (len + 1));
 	if (dest == NULL)
 		return (NULL);
-	while (s1[i])
-	{
+	while (s1[++i])
 		dest[i] = s1[i];
-		i++;
-	}
 	while (s2[j])
 	{
 		dest[i + j] = s2[j];
@@ -51,10 +51,10 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char *test;
 
- 	test = ft_strjoin("test", "string");
- 	printf("%s\n", test);
+	test = ft_strjoin("test", "string");
+	printf("%s\n", test);
 
- 	free(test);
+	free(test);
 } */
 
 /* int main()

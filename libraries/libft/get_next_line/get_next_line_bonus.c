@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 02:22:01 by marvin            #+#    #+#             */
-/*   Updated: 2024/05/30 18:58:56 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/28 03:38:16 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*get_next_line(int fd)
 	if (!gnl)
 		return (NULL);
 	gnl[0] = '\0';
-	gnl = ft_strjoin(gnl, line[fd]);
+	gnl = ft_strjoin_gnl(gnl, line[fd]);
 	if (check_and_clear(line[fd]) == 1)
 		return (gnl);
 	bytes_read = read(fd, line[fd], BUFFER_SIZE);
@@ -33,7 +33,7 @@ char	*get_next_line(int fd)
 	while (bytes_read > 0)
 	{
 		line[fd][bytes_read] = '\0';
-		gnl = ft_strjoin(gnl, line[fd]);
+		gnl = ft_strjoin_gnl(gnl, line[fd]);
 		if (check_and_clear(line[fd]) == 1)
 			break ;
 		bytes_read = read(fd, line[fd], BUFFER_SIZE);

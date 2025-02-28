@@ -22,7 +22,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-char	*ft_strjoin(char *s1, char *s2);
+char	*ft_strjoin_gnl(char *s1, char *s2);
 size_t	ft_strlen(char *s);
 int		check_and_clear(char *line);
 char	*free_gnl(char *gnl);

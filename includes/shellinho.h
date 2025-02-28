@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/21 12:13:06 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:19:06 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,16 @@ void					sort_env(char **args);
 void					add_to_my_env(t_info *info, char *str);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
+
+// parse/handle_dollar
+char					*handle_dollar(char *str, char **env);
+
+// parse/expander
+int						get_varname_len(char *str);
+char					*expand(char *str);
+char					*translate(char *str, char **env);
+int						size_to_var(char *str);
+bool					check_translate(char *str);
 
 // parse/init
 void					copy_env(t_info *info, char **env);
