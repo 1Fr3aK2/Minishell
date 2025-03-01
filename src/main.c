@@ -21,6 +21,7 @@ void	start(t_info *info)
 		input = readline("shellinho$> ");
 		if (!input)
 		{
+            // a funcao pra tratar do CTRL D tem de ser chamada aqui, pois nao é um sinal mas uma condicao EOF
 			rl_clear_history();
 			return ;
 		}

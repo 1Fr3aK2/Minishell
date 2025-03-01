@@ -80,6 +80,16 @@ void    handle_append_redirection(t_io *io)
     close (io->fd_out);
 }
 
+
+
+
+
+
+
+
+
+
+
 void    handle_heredoc_redirection(t_io *io)
 {
     if (!io && !io->in_file)
@@ -106,6 +116,30 @@ void    heredoc_prompt(t_info *info)
         printf(">");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*
     Backs up the standard input and output before replacing them, in order
     to restore them after execution.
