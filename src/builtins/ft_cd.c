@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/20 18:10:31 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/04 18:30:08 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_cd_simples(t_info *info)
 
 	// check if there's an info struct,
 	// if arg list in NULL and if there's no arg after cd
-	if (!info || !info->args || !info->args[1])
+	if (info || info->args || info->args[1])
 	{
 		home_path = getenv("HOME");
 		if (!home_path)

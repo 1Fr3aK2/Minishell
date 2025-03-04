@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/21 12:13:20 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/04 19:09:46 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void	fill_builtins(t_info *info)
 	info->builtins->f[1] = ft_cd;
 	info->builtins->f[2] = ft_pwd;
 	info->builtins->f[3] = ft_export;
-	info->builtins->f[4] = NULL;
-	info->builtins->f[5] = NULL;
+	//info->builtins->f[4] = ft_unset;
+	info->builtins->f[5] = ft_env;
 	info->builtins->f[6] = ft_exit;
 	info->builtins->f[7] = NULL;
 }

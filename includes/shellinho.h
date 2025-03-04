@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/02/28 21:19:06 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/04 19:09:23 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include <signal.h>
+# include <string.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -50,7 +52,7 @@ typedef struct s_info	t_info;
 // 	void	(*f[MAX_TYPES])(t_info *info);
 // }			t_type;
 
-typedef struct s_io t_io;
+typedef struct s_io		t_io;
 
 typedef struct s_builtins
 {
@@ -73,14 +75,14 @@ typedef struct s_reds
 
 typedef struct s_io
 {
-    int     fd_in; // this is the new STDIN_FILENO.  It represents the opened file in_file
-    int     fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
-    int     stdin_backup;
-    int     stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
-    char    *in_file; // alocar memoria pra ambos: infile e outfile
-    char    *out_file; // ex: echo "Hello" > outfile.txt   -> hello will be written in outfile.txt, instead of the terminal as STDOUT
-    t_reds  *redirections;
-}              t_io;
+	int fd_in;  // this is the new STDIN_FILENO.  It represents the opened file in_file
+	int fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
+	int					stdin_backup;
+	int stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
+	char *in_file;     // alocar memoria pra ambos: infile e outfile
+	char *out_file;    // ex: echo "Hello" > outfile.txt  -> hello will be written in outfile.txt,instead of the terminal as STDOUT
+	t_reds				*redirections;
+}						t_io;
 
 typedef struct s_info
 {
@@ -88,13 +90,20 @@ typedef struct s_info
 	char				*flags;
 	char				**my_env;
 	t_builtins			*builtins;
-    t_io                io;
+	t_io				io;
 	// t_type *types;
 }						t_info;
+
+
+extern					int command_running;
+
 
 // builtins/echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
+
+// builtins/env
+void    				ft_env(t_info *info);
 
 // builtins/cd
 void					ft_cd_doispontos(t_info *info);
@@ -111,6 +120,9 @@ void					sort_env(char **args);
 void					add_to_my_env(t_info *info, char *str);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
+
+// builtins/unset
+void					ft_unset(t_info *info);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);
@@ -145,13 +157,18 @@ char					*find_path(t_info *info);
 char					*get_env(char *variable_name, char **env);
 
 // redirections
-void	                fill_redirections(t_io *io);
-void                    handle_input_redirection(t_io *io);
-void                    handle_output_redirection(t_io *io);
-void                    handle_append_redirection(t_io *io);
-void                    storing_backup(t_io *io);
-void                    restore_io(t_io *io);
-void                    execute_command(t_info *info);
+void					fill_redirections(t_io *io);
+void					handle_input_redirection(t_io *io);
+void					handle_output_redirection(t_io *io);
+void					handle_append_redirection(t_io *io);
+void					storing_backup(t_io *io);
+void					restore_io(t_io *io);
+void					execute_command(t_info *info);
+
+// signals
+void					handle_sigint(int sig);
+void					handle_sigquit(int sig);
+void					set_signals(void);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

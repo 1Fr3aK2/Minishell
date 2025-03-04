@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/21 13:42:00 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/04 17:39:40 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
+int command_running = 0;
+
 void	start(t_info *info)
 {
 	char	*input;
 
+	set_signals();
 	while (1)
 	{
 		input = readline("shellinho$> ");
@@ -41,8 +44,10 @@ void	start(t_info *info)
 			free(input);
 			continue ;
 		}
-        execute_command(info); // so pra testar redirections
+		command_running = 1;
+        //execute_command(info); // so pra testar redirections
 		child_process(info);
+		command_running = 0;
 		free(input);
 	}
 	rl_clear_history();

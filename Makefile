@@ -1,9 +1,11 @@
 SRCS =  src/main.c \
 		src/builtins/ft_echo.c \
+		src/builtins/ft_env.c \
 		src/builtins/ft_cd.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
+		src/builtins/ft_unset.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
 		src/parse/init.c \
@@ -12,6 +14,7 @@ SRCS =  src/main.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
 		src/redirections/redirections.c\
+		src/redirections/signals/signal_handle.c\
 		src/splits/custom_split.c\
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \
