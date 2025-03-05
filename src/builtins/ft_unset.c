@@ -16,21 +16,32 @@ void    ft_unset(t_info *info)
 {
     int i;
     int j;
+    int k;
+    size_t len;
 
-    i = 0;
-    j = 0;
     if (info->args[1] == NULL)
         return ;
-    while (info->args[i + 1])
+    i = 1;
+    while (info->args[i])
     {
+        j = 0;
+        len = ft_strlen(info->args[i]);
         while (info->my_env[j])
         {
-            if (ft_strncmp(info->args[i + 1], info->my_env[j], sizeof(info->my_env[j]) == 0)
+            if (ft_strncmp(info->args[i], info->my_env[j], len) == 0 && info->my_env[j][len] == '=')
             {
-                ft_memset(
+                free(info->my_env);
+                k = j;
+                while (info->my_env[k])
+                {
+                    info->my_env[k] = info->my_env[k + 1];
+                    k++;
+                }
+                info->my_env[k] = NULL;
             }
+            else
+                j++;
         }
-        j++;
     }
     i++;
 }
