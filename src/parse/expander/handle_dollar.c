@@ -39,7 +39,7 @@ char	*handle_dollar(char *str, char **env)
 	int		i;
 
 	if (check_translate(str) == 0)
-		return (NULL);
+		return (ft_strdup(str));
 	new = ft_strdup("");
 	if (!new)
 		return (NULL);
