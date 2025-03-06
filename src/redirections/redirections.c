@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/04 16:28:46 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:20:22 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,3 +246,4 @@ else // Parent process
     restore_io(&info->io);
 }
 */
+

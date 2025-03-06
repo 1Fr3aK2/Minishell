@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/04 19:09:23 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/06 19:10:04 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,7 @@ typedef struct s_info
 	// t_type *types;
 }						t_info;
 
-
 extern					int command_running;
-
 
 // builtins/echo
 int						check_flags(char *str);
@@ -106,6 +104,7 @@ void					ft_echo(t_info *info);
 void    				ft_env(t_info *info);
 
 // builtins/cd
+void 					cd_with_arg(const char *path);
 void					ft_cd_doispontos(t_info *info);
 void					ft_cd_simples(t_info *info);
 void					ft_cd(t_info *info);
