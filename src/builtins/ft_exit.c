@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/19 12:30:16 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:48:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	ft_exit(t_info *info)
 
 	status = 0;
 	exit_flags = ft_atoi(info->flags);
+	//caso (!info->flags) tens de tornar info->flags para 0, testa quando nao passas nada e fazes echo $?
+
+	
 	if (isatty(STDIN_FILENO)) // returns 1 if the fd is a terminal
 		printf("exit\n");     // exit -> terminal. echo ola | exit -> not terminal
 	if (exit_flags)
