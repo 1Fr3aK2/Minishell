@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/05 21:00:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/06 17:14:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,12 @@ int	check_builtins(t_info *info)
 	{
 		if (ft_strncmp(cmd, info->builtins->builtins[i], ft_strlen(info->builtins->builtins[i])) == 0)
 		{
-			if (info->builtins->f[i])
-				info->builtins->f[i](info);
-			return (0);
+			if (ft_strlen(cmd) == ft_strlen(info->builtins->builtins[i]))
+			{
+				if (info->builtins->f[i])
+					info->builtins->f[i](info);
+				return (0);
+			}
 		}
 		i++;
 	}
