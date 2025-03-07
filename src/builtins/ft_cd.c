@@ -63,20 +63,19 @@ void ft_cd_doispontos(t_info *info, int levels)
         error_exit("Error: getcwd");
     while (i < levels)
     {
-        last_slash = ft_strrchr(cur_dir, '/');
+        last_slash = ft_strrchr(cur_dir, '/'); // find the last / in cur_dir
         if (last_slash == NULL)
-            error_exit("Error: Already at the root directory");
-        if (last_slash == cur_dir)
+            error_exit("Error: Invalid directory path");
+        if (last_slash == cur_dir) // the last slash if the 1st character (/)
         {
             *last_slash = '\0';
             break;
         }
-        *last_slash = '\0';
+        *last_slash = '\0'; // changes the / to a null byte, that makes everything after the / disappear
         i++;
     }
-
     if (chdir(cur_dir) != 0)
-            error_exit("Error: chdir");
+        error_exit("Error: chdir");
 }
 
 // all good, vai pra HOME
@@ -105,8 +104,8 @@ void	ft_cd(t_info *info)
 {
 	char	*oldpwd;
     int levels;
-    levels = count_levels(info->args[1]);
 
+    levels = count_levels(info->args[1]);
 	if (info && info->args && info->args[1] && ft_strncmp(info->args[1], "..", 2) == 0)
 		ft_cd_doispontos(info, levels);
 	else if (info && info->args && (!info->args[1] || ft_strncmp(info->args[1], "~", 1) == 0))
