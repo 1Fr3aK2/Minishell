@@ -27,62 +27,60 @@ void	cd_with_arg(const char *path)
 	else
 		error_exit("Error: chdir");
 }
-// so funciona se tiver no shellinho ou antes. Se fizer cd src, cd .. ja nao funciona
-/* void	ft_cd_doispontos(t_info *info)
-{
-	static char	*cur_dir;
-	char		*new_dir;
-	int			len;
 
-	len = 0;
-	cur_dir = getcwd(NULL, PATH_MAX); // /home/dsteiger/shellinho
-	while (cur_dir[len])
-		len++;
-	while (cur_dir[len] != '/') // len = /home/dsteiger/
-		len--;
-	new_dir = malloc(sizeof(char) * (len + 1));
-	if (!new_dir)
-		return ;
-	if (!cur_dir[len - 1]) // Se so houver uma barra '/'
-		ft_strncpy(new_dir, cur_dir, len + 1);
-	else
-		ft_strncpy(new_dir, cur_dir, len);
-	new_dir[++len] = '\0';
-	if (ft_strncmp(info->args[1], "..", 2) == 0)
-		chdir(new_dir);
-	free(new_dir);
-} */
-
-void ft_cd_doispontos(t_info *info)
+// all good
+int count_levels(const char *arg)
 {
-	(void)info;
-    char cur_dir[PATH_MAX];
-    if (getcwd(cur_dir, sizeof(cur_dir)) != NULL)
+    int levels;
+    const char *ptr;
+    size_t len;
+    
+    levels = 0;
+    ptr = arg;
+    len = ft_strlen(ptr);
+    // Count how many "../" there is
+    while ((ptr = ft_strnstr(ptr, "..", len))) // find the 1st occurence of "..". Pointer points to the beginning of ".."
     {
-        // Find the last occurrence of '/'
-        char *last_slash = strrchr(cur_dir, '/');
-        if (last_slash != NULL)
-        {
-            *last_slash = '\0'; // Terminate the string at the last '/'
-            if (chdir(cur_dir) != 0)
-            {
-                perror("chdir");
-            }
-        }
-        else
-        {
-            // Already at the root directory
-            fprintf(stderr, "Already at the root directory.\n");
-        }
+        levels++;
+        ptr += 2; // Move past the ".."
+        if (*ptr == '/')
+            ptr++; // Move past the "/"
+        len = ft_strlen(ptr); // updates the len to exclude the "../" that have been iterated
     }
-    else
-    {
-        perror("getcwd");
-    }
+    return (levels);
 }
 
-// funciona, vai pra HOME
-void	ft_cd_simples(t_info *info)
+// all good
+void ft_cd_doispontos(t_info *info, int levels)
+{
+    (void)info;
+    char cur_dir[PATH_MAX];
+    char *last_slash;
+    int i;
+
+    i = 0;
+    if (getcwd(cur_dir, sizeof(cur_dir)) == NULL)
+        error_exit("Error: getcwd");
+    while (i < levels)
+    {
+        last_slash = ft_strrchr(cur_dir, '/');
+        if (last_slash == NULL)
+            error_exit("Error: Already at the root directory");
+        if (last_slash == cur_dir)
+        {
+            *last_slash = '\0';
+            break;
+        }
+        *last_slash = '\0';
+        i++;
+    }
+
+    if (chdir(cur_dir) != 0)
+            error_exit("Error: chdir");
+}
+
+// all good, vai pra HOME
+void	ft_cd_home(t_info *info)
 {
 	char	*home_path;
 
@@ -102,15 +100,17 @@ void	ft_cd_simples(t_info *info)
 	}
 	return ;
 }
-// usar strncmp is not good because it need to work with cd (space after)
+
 void	ft_cd(t_info *info)
 {
 	char	*oldpwd;
+    int levels;
+    levels = count_levels(info->args[1]);
 
 	if (info && info->args && info->args[1] && ft_strncmp(info->args[1], "..", 2) == 0)
-		ft_cd_doispontos(info);
+		ft_cd_doispontos(info, levels);
 	else if (info && info->args && (!info->args[1] || ft_strncmp(info->args[1], "~", 1) == 0))
-		ft_cd_simples(info);
+		ft_cd_home(info);
 	else if (info && info->args && info->args[1] && ft_strncmp(info->args[1], "-", 1) == 0) // this does not work
 	{
 		oldpwd = getenv("OLDPWD");

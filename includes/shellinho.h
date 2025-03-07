@@ -105,8 +105,9 @@ void    				ft_env(t_info *info);
 
 // builtins/cd
 void 					cd_with_arg(const char *path);
-void					ft_cd_doispontos(t_info *info);
-void					ft_cd_simples(t_info *info);
+int                     count_levels(const char *arg);
+void					ft_cd_doispontos(t_info *info, int levels);
+void					ft_cd_home(t_info *info);
 void					ft_cd(t_info *info);
 
 // builtins/exit
