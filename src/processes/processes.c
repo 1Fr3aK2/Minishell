@@ -25,7 +25,12 @@ void	child_process(t_info *info)
 			return ;
 		if (pid == 0)
 			exec(info);
-		wait(NULL);
+        else
+        {
+            command_running = 1;
+            waitpid(pid, NULL, 0);
+            command_running = 0;
+        }
 	}
 }
 

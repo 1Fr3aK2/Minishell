@@ -22,8 +22,6 @@ void	handle_sigint(int sig)
 		rl_replace_line("", 0); // delete the input
 		rl_redisplay(); // redisplay prompt
 	}
-	else
-		printf("\n");
 }
 
 void	handle_sigquit(int sig)
@@ -34,22 +32,29 @@ void	handle_sigquit(int sig)
 		write(STDERR_FILENO, "Quit (core dumped)\n", 19);
 		exit(1);
 	}
-	else
-		return ;
+    else
+        return ;
 }
 
 void	set_signals(void)
 {
-	struct sigaction sa_sint;
-	struct sigaction sa_squit;
+	struct sigaction sa_int;
+	struct sigaction sa_quit;
 
-	sa_sint.sa_handler = handle_sigint;
-	sa_sint.sa_flags = SA_RESTART;
-	if (sigaction(SIGINT, &sa_sint, NULL) == -1)
+	sa_int.sa_handler = handle_sigint;
+    sigemptyset(&sa_int.sa_mask);
+	sa_int.sa_flags = SA_RESTART; // quando estou na 3a instancia, escreve so shellinho$> 1x em vez de repetir varias vezes
+	if (sigaction(SIGINT, &sa_int, NULL) == -1)
+    {
 		error_exit("SIGINT failed");
-
-	sa_squit.sa_handler = handle_sigquit;
-	sa_squit.sa_flags = SA_RESTART;
-	if (sigaction(SIGQUIT, &sa_squit, NULL) == -1)
+        exit(EXIT_FAILURE);
+    }
+	sa_quit.sa_handler = handle_sigquit;
+    sigemptyset(&sa_quit.sa_mask);
+	sa_quit.sa_flags = SA_RESTART;
+	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
+    {
 		error_exit("SIGQUIT failed");
+        exit(EXIT_FAILURE);
+    }
 }

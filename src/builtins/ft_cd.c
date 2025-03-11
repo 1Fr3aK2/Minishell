@@ -13,14 +13,19 @@
 #include "../../includes/shellinho.h"
 
 // all good
-void	cd_with_arg(const char *path)
+void	cd_with_arg(const char *path) // path-> is the path the user wants to change to
 {
 	char	current_dir[PATH_MAX];
 
-	if (chdir(path) == 0)
+    if (!path)
 	{
-		if (getcwd(current_dir, sizeof(current_dir)) != NULL)
-			;
+		error_exit("Error: path is NULL");
+		return;
+	}
+	if (chdir(path) == 0) // this changed the dir to what I wanted
+	{
+		if (getcwd(current_dir, sizeof(current_dir)) != NULL) // this retrieved the path I wanted
+            ;
 		else
 			error_exit("Error: getcwd");
 	}
@@ -81,43 +86,52 @@ void ft_cd_doispontos(t_info *info, int levels)
 // all good, vai pra HOME
 void	ft_cd_home(t_info *info)
 {
-	char	*home_path;
+    char *home_path;
 
-	if (info || info->args || !info->args[1])
-	{
-		home_path = getenv("HOME");
-		if (!home_path)
-		{
-			printf("HOME not set\n");
-			return ;
-		}
-		if (chdir(home_path) == -1)
-		{
-			printf("cd: Directory change failed");
-			return ;
-		}
-	}
-	return ;
+    if (!info || !info->args)
+    {
+        printf("Error: Invalid info or args\n");
+        return;
+    }
+    home_path = getenv("HOME");
+    if (!home_path)
+    {
+        printf("HOME not set\n");
+        return;
+    }
+    if (chdir(home_path) == -1)
+    {
+        printf("cd: Directory change failed\n");
+        return;
+    }
 }
+
 
 void	ft_cd(t_info *info)
 {
 	char	*oldpwd;
-    int levels;
+    int     levels;
 
-    levels = count_levels(info->args[1]);
-	if (info && info->args && info->args[1] && ft_strncmp(info->args[1], "..", 2) == 0)
-		ft_cd_doispontos(info, levels);
-	else if (info && info->args && (!info->args[1] || ft_strncmp(info->args[1], "~", 1) == 0))
-		ft_cd_home(info);
-	else if (info && info->args && info->args[1] && ft_strncmp(info->args[1], "-", 1) == 0) // this does not work
+    if (!info || !info->args)
+    {
+        printf("Error: Invalid info or args\n");
+        return;
+    }
+	if ((!info->args[1] || ft_strncmp(info->args[1], "~", 1) == 0))
+        ft_cd_home(info);
+    else if (info->args[1] && ft_strncmp(info->args[1], "..", 2) == 0)
+    {
+        levels = count_levels(info->args[1]);
+        ft_cd_doispontos(info, levels);
+    }
+	else if (info->args[1] && ft_strncmp(info->args[1], "-", 1) == 0) // this does not work
 	{
 		oldpwd = getenv("OLDPWD");
 		if (oldpwd)
-			cd_with_arg(oldpwd);
+            cd_with_arg(oldpwd);
 		else
 			error_exit("Error: OLDPWD not set");
 	}
-	else if (info && info->args && info->args[1])
+	else if (info->args[1])
 		cd_with_arg(info->args[1]);
 }

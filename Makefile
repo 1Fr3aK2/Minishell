@@ -14,6 +14,7 @@ SRCS =  src/main.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
 		src/redirections/redirections.c\
+		src/redirections/redir_utils.c\
 		src/redirections/signals/signal_handle.c\
 		src/splits/custom_split.c\
 		src/splits/split_quotes.c \

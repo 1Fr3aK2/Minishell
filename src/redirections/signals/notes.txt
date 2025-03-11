@@ -1,5 +1,0 @@
-TRAP COMMANDS
-
-SIGINT = CTRL C;
-SIGTERM ??? = CTRL D; -> triggers EOF condition
-SIGQUIT = CTRL \;

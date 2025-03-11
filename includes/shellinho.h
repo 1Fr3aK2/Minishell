@@ -70,7 +70,7 @@ typedef struct s_builtins
 typedef struct s_reds
 {
 	char				*reds[MAX_REDS];
-	void				(*f[MAX_REDS])(t_io *io);
+	void				(*f[MAX_REDS])(t_io *io, char *);
 }						t_reds;
 
 typedef struct s_io
@@ -79,8 +79,8 @@ typedef struct s_io
 	int fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
 	int					stdin_backup;
 	int stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
-	char *in_file;     // alocar memoria pra ambos: infile e outfile
-	char *out_file;    // ex: echo "Hello" > outfile.txt  -> hello will be written in outfile.txt,instead of the terminal as STDOUT
+	//char *in_file;     // alocar memoria pra ambos: infile e outfile
+	//char *out_file;    // ex: echo "Hello" > outfile.txt  -> hello will be written in outfile.txt,instead of the terminal as STDOUT
 	t_reds				*redirections;
 }						t_io;
 
@@ -158,17 +158,25 @@ char					*get_env(char *variable_name, char **env);
 
 // redirections
 void					fill_redirections(t_io *io);
-void					handle_input_redirection(t_io *io);
-void					handle_output_redirection(t_io *io);
-void					handle_append_redirection(t_io *io);
+void					handle_input_redirection(t_io *io, char *infile);
+void					handle_output_redirection(t_io *io, char *outfile);
+void					handle_append_redirection(t_io *io, char *infile);
+void                    handle_heredoc_redirection(t_io *io, char *delimiter);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
-void					execute_command(t_info *info);
+void                    handle_redirections(t_io *io, char **args);
+void	                handle_ctrl_d(t_info *info);
 
 // signals
 void					handle_sigint(int sig);
 void					handle_sigquit(int sig);
 void					set_signals(void);
+
+void	signal_reset_prompt(int signal);
+void	signal_print_newline(int signal);
+void	ignore_sigquit(void);
+void	set_signals_interactive(void);
+void	set_signals_noninteractive(void);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

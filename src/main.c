@@ -24,7 +24,7 @@ void	start(t_info *info)
 		input = readline("shellinho$> ");
 		if (!input)
 		{
-            // a funcao pra tratar do CTRL D tem de ser chamada aqui, pois nao é um sinal mas uma condicao EOF
+            handle_ctrl_d(info); // ainda por testar nos pcs da escola.
 			rl_clear_history();
 			return ;
 		}
@@ -45,7 +45,6 @@ void	start(t_info *info)
 			continue ;
 		}
 		command_running = 1;
-        //execute_command(info); // so pra testar redirections
 		child_process(info);
 		command_running = 0;
 		free(input);
