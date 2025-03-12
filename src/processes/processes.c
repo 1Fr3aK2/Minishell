@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/06 17:34:45 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:51:49 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 void	child_process(t_info *info)
 {
 	pid_t	pid;
+	int		status;
 
+	status = 0;
 	if (!info)
 		return ;
 	if (check_builtins(info) == 1)
@@ -25,12 +27,12 @@ void	child_process(t_info *info)
 			return ;
 		if (pid == 0)
 			exec(info);
-        else
-        {
-            command_running = 1;
-            waitpid(pid, NULL, 0);
-            command_running = 0;
-        }
+		else
+		{
+			command_running = 1;
+			waitpid(pid, NULL, 0);
+			command_running = 0;
+		}
 	}
 }
 

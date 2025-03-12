@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/06 19:10:04 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:36:59 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,18 +165,12 @@ void                    handle_heredoc_redirection(t_io *io, char *delimiter);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 void                    handle_redirections(t_io *io, char **args);
-void	                handle_ctrl_d(t_info *info);
 
 // signals
 void					handle_sigint(int sig);
 void					handle_sigquit(int sig);
 void					set_signals(void);
-
-void	signal_reset_prompt(int signal);
-void	signal_print_newline(int signal);
-void	ignore_sigquit(void);
-void	set_signals_interactive(void);
-void	set_signals_noninteractive(void);
+void	                handle_ctrl_d(t_info *info);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

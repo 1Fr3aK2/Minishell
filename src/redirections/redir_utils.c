@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/06 15:20:22 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/12 14:52:08 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,20 +48,3 @@ void restore_io(t_io *io)
     }
 }
 
-void	handle_ctrl_d(t_info *info)
-{
-	// If the input line is empty, exit the shell
-	if (rl_end == 0) // rl_end is a variable of readline that contains the length of the current input line
-	{
-		printf("exit\n");
-		rl_clear_history();
-		free_arr(info->args);
-		if (info->flags)
-			free(info->flags);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
-		exit(0);
-	}
-	else
-		return ;
-}

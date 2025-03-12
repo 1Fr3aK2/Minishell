@@ -6,13 +6,13 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/06 17:34:51 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/12 18:45:35 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
-int command_running = 0;
+int		command_running = 0;
 
 void	start(t_info *info)
 {
@@ -24,7 +24,7 @@ void	start(t_info *info)
 		input = readline("shellinho$> ");
 		if (!input)
 		{
-            handle_ctrl_d(info); // ainda por testar nos pcs da escola.
+			handle_ctrl_d(info);
 			rl_clear_history();
 			return ;
 		}
