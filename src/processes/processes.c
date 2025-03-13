@@ -15,9 +15,7 @@
 void	child_process(t_info *info)
 {
 	pid_t	pid;
-	int		status;
 
-	status = 0;
 	if (!info)
 		return ;
 	if (check_builtins(info) == 1)
