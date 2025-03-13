@@ -15,56 +15,28 @@
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	if (!command_running)
-	{
-		printf("\n");
-		rl_on_new_line();
-		rl_replace_line("", 0); // delete the input
-		rl_redisplay();         // redisplay prompt
-	}
-	if (command_running)
-		printf("\n");
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }
 
+// ver comportamento sem input, mas na 3a instancia
 void	handle_sigquit(int sig)
 {
 	(void)sig;
-	if (command_running)
-	{
-		write(1, "Quit (core dumped)\n", 19);
-		exit(1);
-	}
-	else
-	{
-		rl_on_new_line();
-		rl_replace_line("", 0); // delete the input
-		rl_redisplay();
-	}
+	write(1, "Quit (Core dumped)\n", 19);
+	exit(131);
 }
 
 void	set_signals(void)
 {
-	struct sigaction	sa_int;
-	struct sigaction	sa_quit;
-	
-	sa_int.sa_handler = handle_sigint;
-	sigemptyset(&sa_int.sa_mask);
-	sa_int.sa_flags = SA_RESTART; // quando estou na 3a instancia, escreve so shellinho$> 1x em vez de repetir varias vezes
-	if (sigaction(SIGINT, &sa_int, NULL) == -1)
-	{
-		error_exit("SIGINT failed");
-		exit(EXIT_FAILURE);
-	}
-	sa_quit.sa_handler = handle_sigquit;
-	sigemptyset(&sa_quit.sa_mask);
-	sa_quit.sa_flags = SA_RESTART;
-	if (sigaction(SIGQUIT, &sa_quit, NULL) == -1)
-	{
-		error_exit("SIGQUIT failed");
-		exit(EXIT_FAILURE);
-	}
+    signal(SIGINT, handle_sigint);
+	signal(SIGQUIT, SIG_IGN);
+    write(1, "\n", 1);
 }
 
+// ver se est rl_end é necessaria
 void	handle_ctrl_d(t_info *info)
 {
 	// If the input line is empty, exit the shell

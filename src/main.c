@@ -18,10 +18,10 @@ void	start(t_info *info)
 {
 	char	*input;
 
-	set_signals();
 	while (1)
 	{
-		input = readline("shellinho$> ");
+        rl_on_new_line();
+        input = readline("shellinho$> ");
 		if (!input)
 		{
 			handle_ctrl_d(info);
@@ -44,9 +44,7 @@ void	start(t_info *info)
 			free(input);
 			continue ;
 		}
-		command_running = 1;
 		child_process(info);
-		command_running = 0;
 		free(input);
 	}
 	rl_clear_history();
@@ -67,6 +65,7 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	print_banner();
 	init(&info, env);
+    set_signals();
 	start(&info);
 	free_arr(info.args);
 	free_arr(info.my_env);

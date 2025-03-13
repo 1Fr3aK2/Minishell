@@ -15,22 +15,31 @@
 void	child_process(t_info *info)
 {
 	pid_t	pid;
+    struct sigaction sa;
 
 	if (!info)
 		return ;
 	if (check_builtins(info) == 1)
 	{
+        sa.sa_handler = handle_sigquit;
+        sa.sa_flags = SA_RESTART; // Ensure the signal handler is restarted automatically
+        sigemptyset(&sa.sa_mask);  // No additional signals to block
+        sigaction(SIGQUIT, &sa, NULL); 
 		pid = fork();
 		if (pid == -1)
 			return ;
 		if (pid == 0)
-			exec(info);
-		else
-		{
-			command_running = 1;
-			waitpid(pid, NULL, 0);
-			command_running = 0;
-		}
+        {
+            exec(info);
+        }
+        else
+        {
+            int	status;
+            // Ignore SIGINT while waiting to prevent duplicate prompts
+            signal(SIGINT, SIG_IGN);
+            waitpid(pid, &status, 0);
+            set_signals();  // Restore SIGINT handling after child exits
+        }
 	}
 }
 
@@ -40,6 +49,8 @@ void	exec(t_info *info)
 
 	if (!info)
 		return ;
+    signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 	path = find_path(info);
 	if (!path)
 	{
