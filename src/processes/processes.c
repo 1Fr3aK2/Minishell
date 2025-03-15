@@ -16,6 +16,7 @@ void	child_process(t_info *info)
 {
 	pid_t	pid;
     struct sigaction sa;
+    int	status;
 
 	if (!info)
 		return ;
@@ -29,14 +30,10 @@ void	child_process(t_info *info)
 		if (pid == -1)
 			return ;
 		if (pid == 0)
-        {
             exec(info);
-        }
         else
         {
-            int	status;
-            // Ignore SIGINT while waiting to prevent duplicate prompts
-            signal(SIGINT, SIG_IGN);
+            signal(SIGINT, SIG_IGN); // Ignore SIGINT while waiting to prevent duplicate prompts
             waitpid(pid, &status, 0);
             set_signals();  // Restore SIGINT handling after child exits
         }

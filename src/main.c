@@ -20,7 +20,7 @@ void	start(t_info *info)
 
 	while (1)
 	{
-        rl_on_new_line();
+        rl_on_new_line(); // necessario??
         input = readline("shellinho$> ");
 		if (!input)
 		{
