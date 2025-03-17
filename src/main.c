@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/12 18:45:35 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:36:26 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void	start(t_info *info)
 
 	while (1)
 	{
-        rl_on_new_line(); // necessario??
-        input = readline("shellinho$> ");
+		rl_on_new_line(); // necessario??
+		input = readline("shellinho$> ");
 		if (!input)
 		{
 			handle_ctrl_d(info);
@@ -30,16 +30,13 @@ void	start(t_info *info)
 		}
 		if (*input)
 			add_history(input);
-		if (info->args)
+		if (info->cmd_tree)
 		{
-			free_arr(info->args);
-			// printf("ola1\n");
-			if (info->flags)
-				free(info->flags);
-			info->args = NULL;
+			free_tree(info->cmd_tree);
+			info->cmd_tree = NULL;
 		}
 		parse(input, info);
-		if (!info->args || !info->args[0])
+		if (!info->cmd_tree->args || !info->cmd_tree->args[0])
 		{
 			free(input);
 			continue ;
@@ -56,6 +53,16 @@ void	free_builtins(t_builtins *builtins)
 		return ;
 	free(builtins);
 }
+void	print_banner(void)
+{
+    printf(GREEN
+        "   _____ __  __________    __    _____   ____  ______ \n"
+        "  / ___// / / / ____/ /   / /   /  _/ | / / / / / __ \\ \n"
+        "  \\__ \\/ /_/ / __/ / /   / /    / //  |/ / /_/ / / / / \n"
+        " ___/ / __  / /___/ /___/ /____/ // /|  / __  / /_/ /  \n"
+        "/____/_/ /_/_____/_____/_____/___/_/ |_/_/ /_/\\____/   \n"
+        "\n" RESET"\n");
+}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -65,9 +72,8 @@ int	main(int argc, char **argv, char **env)
 	(void)argv;
 	print_banner();
 	init(&info, env);
-    set_signals();
+	set_signals();
 	start(&info);
-	free_arr(info.args);
 	free_arr(info.my_env);
 	free_builtins(info.builtins);
 	return (0);

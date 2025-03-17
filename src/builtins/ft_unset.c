@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/04 19:15:14 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void    ft_unset(t_info *info)
     int k;
     size_t len;
 
-    if (info->args[1] == NULL)
+    if (info->cmd_tree->args[1] == NULL)
         return ;
     i = 1;
-    while (info->args[i])
+    while (info->cmd_tree->args[i])
     {
         j = 0;
-        len = ft_strlen(info->args[i]);
+        len = ft_strlen(info->cmd_tree->args[i]);
         while (info->my_env[j])
         {
-            if (ft_strncmp(info->args[i], info->my_env[j], len) == 0 && info->my_env[j][len] == '=')
+            if (ft_strncmp(info->cmd_tree->args[i], info->my_env[j], len) == 0 && info->my_env[j][len] == '=')
             {
                 free(info->my_env);
                 k = j;

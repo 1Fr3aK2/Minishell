@@ -6,11 +6,14 @@ SRCS =  src/main.c \
 		src/builtins/ft_pwd.c \
 		src/builtins/ft_export.c \
 		src/builtins/ft_unset.c \
+		src/builtins/ft_pipe.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
 		src/parse/init.c \
 		src/parse/parse.c \
 		src/parse/quotes.c \
+		src/parse/tree.c \
+		src/parse/utils_tree.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
 		src/redirections/redirections.c\

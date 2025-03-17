@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/12 18:51:08 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	handle_ctrl_d(t_info *info)
 	{
 		printf("exit\n");
 		rl_clear_history();
-		free_arr(info->args);
+		free_arr(info->cmd_tree->args);
 		exit(0);
 	}
 }

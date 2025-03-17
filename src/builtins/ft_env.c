@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:55:29 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/06 18:12:04 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void    ft_env(t_info *info)
     int i;
 
     i = 0;
-    if (info->args && info->args[0] && info->args[1])
+    if (info->cmd_tree->args && info->cmd_tree->args[0] && info->cmd_tree->args[1])
         return ;
     while (info->my_env && info->my_env[i])
     {

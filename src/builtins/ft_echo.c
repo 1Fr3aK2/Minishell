@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/02/20 13:45:19 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ void	ft_echo(t_info *info)
 
 	i = 1;
 	j = 0;
-	if (check_flags(info->args[i]) == 0)
+	if (check_flags(info->cmd_tree->args[i]) == 0)
 		++i;
-	while (info->args[i])
+	while (info->cmd_tree->args[i])
 	{
-		while (info->args[i][j])
+		while (info->cmd_tree->args[i][j])
 		{
-			write(1, &info->args[i][j], 1);
+			write(1, &info->cmd_tree->args[i][j], 1);
 			j++;
 		}
-		if ((info->args[i + 1])) // espaco entre comandos
+		if ((info->cmd_tree->args[i + 1])) // espaco entre comandos
 			write(1, " ", 1);
 		j = 0;
 		i++;

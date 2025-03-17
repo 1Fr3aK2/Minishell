@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/06 17:48:39 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	ft_exit(t_info *info)
 		else
 			status = exit_flags;
 	}
-	if (info->args)
+	if (info->cmd_tree->args)
 	{
-		free_arr(info->args);
+		free_arr(info->cmd_tree->args);
 		if (info->flags)
 			free(info->flags);
-		info->args = NULL;
+		info->cmd_tree->args = NULL;
 	}
 	free_builtins(info->builtins);
 	free_arr(info->my_env);

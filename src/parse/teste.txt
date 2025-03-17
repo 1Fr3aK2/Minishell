@@ -69,9 +69,9 @@ void	ft_export(t_info *info)
 		dest[i] = ft_strdup(info->my_env[i]);
 		i++;
 	}
-	if (info->args[1] != NULL)
+	if (info->cmd_tree->args[1] != NULL)
 	{
-		dest[i] = ft_strjoin("declare -x ", info->args[1]);
+		dest[i] = ft_strjoin("declare -x ", info->cmd_tree->args[1]);
 		if (!dest[i])
 			return ;
 		i++;

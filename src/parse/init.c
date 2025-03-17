@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/04 19:09:46 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:53:57 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,10 @@ static void	fill_builtins(t_info *info)
 	info->builtins->f[1] = ft_cd;
 	info->builtins->f[2] = ft_pwd;
 	info->builtins->f[3] = ft_export;
-	//info->builtins->f[4] = ft_unset;
+	// info->builtins->f[4] = ft_unset;
 	info->builtins->f[5] = ft_env;
 	info->builtins->f[6] = ft_exit;
 	info->builtins->f[7] = NULL;
-}
-
-static void	init_builtins(t_info *info)
-{
-	if (!info)
-		return ;
-	fill_builtins(info);
 }
 
 void	copy_env(t_info *info, char **env)
@@ -66,40 +59,31 @@ void	copy_env(t_info *info, char **env)
 	}
 }
 
-void	init(t_info *info, char **env)
+static void	fill_types(t_info *info)
 {
-	info->args = NULL;
-	info->builtins = malloc(sizeof(t_builtins));
-	if (!info->builtins)
-		return ;
-	init_builtins(info);
-	copy_env(info, env);
-	// init_types(info);
+	info->types->types[0] = "|";
+	info->types->types[1] = "||";
+	info->types->types[2] = "&&";
+	info->types->types[3] = NULL;
+	info->types->f[0] = ft_pipe_wrapper;
+	info->types->f[1] = /* ft_or */ NULL;
+	info->types->f[2] = /* ft_and */ NULL;
+	info->types->f[3] = NULL;
 }
 
-// static void	init_types(t_info *info)
-// {
-// 	if (!info)
-// 		return ;
-// 	fill_types(info);
-// }
-
-/* static void	fill_types(t_info *info)
+void	init(t_info *info, char **env)
 {
-	info->builtins->builtins[0] = "|";
-	info->builtins->builtins[1] = "||";
-	info->builtins->builtins[2] = "&&";
-	info->builtins->builtins[3] = ">";
-	info->builtins->builtins[4] = "<";
-	info->builtins->builtins[5] = "<<";
-	info->builtins->builtins[6] = ">>";
-	info->builtins->builtins[7] = NULL;
-	info->builtins->f[0] = ft_echo;
-	info->builtins->f[1] = NULL;
-	info->builtins->f[2] = ft_pwd;
-	info->builtins->f[3] = ft_export;
-	info->builtins->f[4] = NULL;
-	info->builtins->f[5] = NULL;
-	info->builtins->f[6] = ft_exit;
-	info->builtins->f[7] = NULL;
-} */
+	info->cmd_tree = NULL;
+	info->flags = NULL;
+	info->builtins = malloc(sizeof(t_builtins));
+	if (!info->builtins)
+	{
+		return ;
+	}
+	info->types = malloc(sizeof(t_types));
+	if (!info->types)
+		return (free(info->builtins));
+	fill_builtins(info);
+	fill_types(info);
+	copy_env(info, env);
+}

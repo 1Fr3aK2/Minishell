@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/04 19:10:38 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,10 +100,10 @@ void	ft_export(t_info *info)
 	int		i;
 
 	i = 1;
-	if (info->args[i] != NULL) // ve se ha algo depois do export
+	if (info->cmd_tree->args[i] != NULL) // ve se ha algo depois do export
 	{
-		while (info->args[i])
-			add_to_my_env(info, info->args[i++]);
+		while (info->cmd_tree->args[i])
+			add_to_my_env(info, info->cmd_tree->args[i++]);
 	}
 	else
 	{

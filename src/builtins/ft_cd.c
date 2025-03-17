@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/06 19:27:13 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	ft_cd_home(t_info *info)
 {
     char *home_path;
 
-    if (!info || !info->args)
+    if (!info || !info->cmd_tree->args)
     {
         printf("Error: Invalid info or args\n");
         return;
@@ -112,19 +112,19 @@ void	ft_cd(t_info *info)
 	char	*oldpwd;
     int     levels;
 
-    if (!info || !info->args)
+    if (!info || !info->cmd_tree->args)
     {
         printf("Error: Invalid info or args\n");
         return;
     }
-	if ((!info->args[1] || ft_strncmp(info->args[1], "~", 1) == 0))
+	if ((!info->cmd_tree->args[1] || ft_strncmp(info->cmd_tree->args[1], "~", 1) == 0))
         ft_cd_home(info);
-    else if (info->args[1] && ft_strncmp(info->args[1], "..", 2) == 0)
+    else if (info->cmd_tree->args[1] && ft_strncmp(info->cmd_tree->args[1], "..", 2) == 0)
     {
-        levels = count_levels(info->args[1]);
+        levels = count_levels(info->cmd_tree->args[1]);
         ft_cd_doispontos(info, levels);
     }
-	else if (info->args[1] && ft_strncmp(info->args[1], "-", 1) == 0) // this does not work
+	else if (info->cmd_tree->args[1] && ft_strncmp(info->cmd_tree->args[1], "-", 1) == 0) // this does not work
 	{
 		oldpwd = getenv("OLDPWD");
 		if (oldpwd)
@@ -132,6 +132,6 @@ void	ft_cd(t_info *info)
 		else
 			error_exit("Error: OLDPWD not set");
 	}
-	else if (info->args[1])
-		cd_with_arg(info->args[1]);
+	else if (info->cmd_tree->args[1])
+		cd_with_arg(info->cmd_tree->args[1]);
 }

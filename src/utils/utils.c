@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/06 17:14:26 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/17 11:18:51 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	check_open_fds(void)
 		}
 	}
 } */
-
 void	close_fds(int i)
 {
 	i = 3;
@@ -46,15 +45,10 @@ void	close_fds(int i)
 	}
 }
 
-void	print_banner(void)
+void close_pipe_fds(int fd[2])
 {
-    printf(GREEN
-        "   _____ __  __________    __    _____   ____  ______ \n"
-        "  / ___// / / / ____/ /   / /   /  _/ | / / / / / __ \\ \n"
-        "  \\__ \\/ /_/ / __/ / /   / /    / //  |/ / /_/ / / / / \n"
-        " ___/ / __  / /___/ /___/ /____/ // /|  / __  / /_/ /  \n"
-        "/____/_/ /_/_____/_____/_____/___/_/ |_/_/ /_/\\____/   \n"
-        "\n" RESET"\n");
+	close(fd[0]);
+	close(fd[1]);
 }
 
 void	error_exit(char *msg)
@@ -90,11 +84,12 @@ int	check_builtins(t_info *info)
 	char	*cmd;
 	int		i;
 
-	cmd = info->args[0];
+	cmd = info->cmd_tree->args[0];
 	i = 0;
 	while (info->builtins->builtins[i])
 	{
-		if (ft_strncmp(cmd, info->builtins->builtins[i], ft_strlen(info->builtins->builtins[i])) == 0)
+		if (ft_strncmp(cmd, info->builtins->builtins[i],
+				ft_strlen(info->builtins->builtins[i])) == 0)
 		{
 			if (ft_strlen(cmd) == ft_strlen(info->builtins->builtins[i]))
 			{
@@ -108,12 +103,38 @@ int	check_builtins(t_info *info)
 	return (1);
 }
 
-void clean(t_info *info)
+int	check_operators(t_info *info)
+{
+	char	*cmd;
+	int		i;
+
+	if (!info || !info->cmd_tree)
+		return (1);
+	i = 0;
+	cmd = info->cmd_tree->args[0];
+	while (info->types->types[i])
+	{
+		if (ft_strncmp(cmd, info->types->types[i],
+				ft_strlen(info->types->types[i])) == 0)
+		{
+			if (ft_strlen(cmd) == ft_strlen(info->types->types[i]))
+			{
+				if (info->types->f[i])
+					info->types->f[i](info);
+				return (0);
+			}
+		}
+		i++;
+	}
+	return (1);
+}
+
+void	clean(t_info *info)
 {
 	if (!info)
 		return ;
-	if (info->args)
-		free_arr(info->args);
+	if (info->cmd_tree->args)
+		free_arr(info->cmd_tree->args);
 	if (info->flags)
 		free(info->flags);
 	// if (info->builtins)
@@ -124,4 +145,20 @@ void clean(t_info *info)
 	// }
 	close_fds(3);
 	rl_clear_history();
+}
+void	free_tree(t_tree *node)
+{
+	if (!node)
+		return ;
+	if (node->args)
+		free_arr(node->args);
+	free_tree(node->left);
+	free_tree(node->right);
+	free(node);
+}
+void	free_types(t_types *types)
+{
+	if (!types)
+		return ;
+	free(types);
 }

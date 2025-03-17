@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/12 18:36:59 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/17 11:57:00 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <signal.h>
-# include <string.h>
 # include <stdbool.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <string.h>
 # include <sys/ioctl.h>
 # include <sys/stat.h>
 # include <sys/types.h>
@@ -46,26 +46,19 @@
 # define SPACES " \n\t\v\f\r"
 
 typedef struct s_info	t_info;
-// typedef struct s_type
-// {
-// 	char	*types[MAX_TYPES];
-// 	void	(*f[MAX_TYPES])(t_info *info);
-// }			t_type;
-
 typedef struct s_io		t_io;
+
+typedef struct s_types
+{
+	char				*types[MAX_TYPES];
+	void				(*f[MAX_TYPES])(t_info *info);
+}						t_types;
 
 typedef struct s_builtins
 {
 	char				*builtins[MAX_BUILTINS];
 	void				(*f[MAX_BUILTINS])(t_info *info);
 }						t_builtins;
-
-/* typedef struct s_args
-{
-	char **args;
-	t_type
-
-}			t_args; */
 
 typedef struct s_reds
 {
@@ -84,28 +77,49 @@ typedef struct s_io
 	t_reds				*redirections;
 }						t_io;
 
-typedef struct s_info
+typedef enum s_node_type
+{
+	AND,
+	PIPE,
+	OR,
+	CMD
+}						t_node_type;
+
+typedef struct s_tree
 {
 	char				**args;
+	t_node_type			type;
+	struct s_tree		*left;
+	struct s_tree		*right;
+}						t_tree;
+
+typedef struct s_info
+{
 	char				*flags;
 	char				**my_env;
 	t_builtins			*builtins;
 	t_io				io;
-	// t_type *types;
+	t_types				*types;
+	t_tree				*cmd_tree;
 }						t_info;
 
-extern					int command_running;
+extern int				command_running;
+
+
+//to_remove
+void print_node_type(t_node_type type);
+
 
 // builtins/echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
 
 // builtins/env
-void    				ft_env(t_info *info);
+void					ft_env(t_info *info);
 
 // builtins/cd
-void 					cd_with_arg(const char *path);
-int                     count_levels(const char *arg);
+void					cd_with_arg(const char *path);
+int						count_levels(const char *arg);
 void					ft_cd_doispontos(t_info *info, int levels);
 void					ft_cd_home(t_info *info);
 void					ft_cd(t_info *info);
@@ -123,6 +137,9 @@ void					ft_export(t_info *info);
 
 // builtins/unset
 void					ft_unset(t_info *info);
+
+//builtins/pipe
+void					ft_pipe_wrapper(t_info *info);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);
@@ -146,8 +163,14 @@ void					parse(char *input, t_info *info);
 
 // parse/quotes
 int						check_quotes(char *input);
-void					remove_all_quotes(t_info *info);
+void					remove_all_quotes(char **tokens);
 
+//parse/tree
+t_tree					*parse_tokens(char **tokens);
+
+//parse/utils_tree
+int						search_ops(char **tokens);
+t_node_type				find_type(char **tokens, int i);
 // processes
 void					child_process(t_info *info);
 void					exec(t_info *info);
@@ -155,22 +178,23 @@ void					exec(t_info *info);
 // processes/utils
 char					*find_path(t_info *info);
 char					*get_env(char *variable_name, char **env);
+void					free_types(t_types *types);
 
 // redirections
 void					fill_redirections(t_io *io);
 void					handle_input_redirection(t_io *io, char *infile);
 void					handle_output_redirection(t_io *io, char *outfile);
 void					handle_append_redirection(t_io *io, char *infile);
-void                    handle_heredoc_redirection(t_io *io, char *delimiter);
+void					handle_heredoc_redirection(t_io *io, char *delimiter);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
-void                    handle_redirections(t_io *io, char **args);
+void					handle_redirections(t_io *io, char **args);
 
 // signals
 void					handle_sigint(int sig);
 void					handle_sigquit(int sig);
 void					set_signals(void);
-void	                handle_ctrl_d(t_info *info);
+void					handle_ctrl_d(t_info *info);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);
@@ -187,12 +211,15 @@ bool					is_quote(char c);
 
 // utils
 void					close_fds(int i);
+void					close_pipe_fds(int fd[2]);
 void					print_banner(void);
 void					error_exit(char *msg);
 void					free_arr(char **arr);
 int						check_builtins(t_info *info);
+int						check_operators(t_info *info);
 void					clean(t_info *info);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
+void					free_tree(t_tree *node);
 
 // main
 void					start(t_info *info);

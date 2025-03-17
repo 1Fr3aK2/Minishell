@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/28 21:17:24 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/17 11:56:44 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,46 +71,115 @@ char	**new_input(char *input)
 	return (new);
 }
 
-static void	check_dollar(t_info *info)
+static void	check_dollar(char **args, t_info *info)
 {
 	int		i;
 	char	*new;
 
-	if (!info)
+	if (!info || !args)
 		return ;
 	i = 1;
-	while (info->args[i])
+	while (args[i])
 	{
-		new = handle_dollar(info->args[i], info->my_env);
+		new = handle_dollar(args[i], info->my_env);
 		if (!new)
 			return ;
-		if (ft_strncmp(new, info->args[i], ft_strlen(info->args[i])) != 0)
+		if (ft_strncmp(new, args[i], ft_strlen(args[i])) != 0)
 		{
-			free(info->args[i]);
-			info->args[i] = new;
+			free(args[i]);
+			args[i] = new;
 		}
 		else
 			free(new);
 		i++;
 	}
 }
-
-void	parse(char *input, t_info *info)
+void print_node_type(t_node_type type)
 {
-	size_t	size;
-
-	if (!input)
-		return ;
-	size = ft_strlen(input);
-	if (size > 0)
+	switch (type)
 	{
-		if (info->args)
-			free_arr(info->args);
-		info->args = new_input(input);
-		if (!info->args)
-			return ;
-		check_dollar(info);
-		remove_all_quotes(info);
-		info->flags = ft_strdup(info->args[1]);
+		case AND:
+		printf("AND");
+		break;
+		case PIPE:
+		printf("PIPE");
+		break;
+		case OR:
+		printf("OR");
+		break;
+		case CMD:
+		printf("CMD");
+		break;
+		default:
+		printf("UNKNOWN");
+		break;
 	}
+}
+
+t_tree *build_tree_tokens(char **tokens)
+{
+	if (!tokens)
+		return (NULL);
+	return (parse_tokens(tokens));
+}
+
+void print_tree(t_tree *node, int level)
+{
+    if (node == NULL)
+        return;
+
+    // Imprimir o nó direito
+    print_tree(node->right, level + 1);
+
+    // Imprimir o espaço para representar o nível da árvore
+    for (int i = 0; i < level; i++)
+        printf("\t");
+
+    // Imprimir o tipo do nó
+    printf("Type: ");
+    print_node_type(node->type);
+
+    // Imprimir os argumentos do nó, se existirem
+    if (node->args != NULL)
+    {
+        printf(", Args: ");
+        for (int i = 0; node->args[i] != NULL; i++)
+        {
+            printf("%s ", node->args[i]);
+        }
+    }
+
+    printf("\n");
+
+    // Imprimir o nó esquerdo
+    print_tree(node->left, level + 1);
+}
+
+void parse(char *input, t_info *info)
+{
+	char **tokens;
+    
+	if (!input || !info)
+        return;
+    tokens = NULL;
+	if (info->cmd_tree)
+    {
+        free_tree(info->cmd_tree);
+    }
+    tokens = new_input(input);
+    if (!tokens)
+        return;
+    printf("Tokens after split:\n");
+    for (int i = 0; tokens[i] != NULL; i++) {
+        printf("Token[%d]: %s\n", i, tokens[i]);
+    }
+    check_dollar(tokens, info);
+    remove_all_quotes(tokens);    
+    info->cmd_tree = build_tree_tokens(tokens);
+    if (info->cmd_tree)
+    {
+        printf("Binary Tree Structure:\n");
+        print_tree(info->cmd_tree, 0);
+    }
+    free_arr(tokens);
 }
