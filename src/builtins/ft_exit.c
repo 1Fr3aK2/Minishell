@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/24 17:03:47 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:02:44 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit(t_info *info)
 {
 	int				exit_flags;
 
-	exit_flags = ft_atoi(info->flags);
+	exit_flags = ft_atoi(info->flags);	
 	if (isatty(STDIN_FILENO)) // returns 1 if the fd is a terminal
 		printf("exit\n");     // exit -> terminal. echo ola | exit -> not terminal
 	if (exit_flags)

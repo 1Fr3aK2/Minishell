@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/24 15:07:09 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:35:38 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,20 @@ static void	fill_types(t_info *info)
 	info->types->f[3] = NULL;
 }
 
+static void	fill_redirections(t_info *info)
+{
+	info->redirections->reds[0] = ">";
+	info->redirections->reds[1] = "<";
+	info->redirections->reds[2] = ">>";
+	info->redirections->reds[3] = "<<";
+	info->redirections->reds[4] = NULL;
+    info->redirections->f[0] = handle_output_redirection; // >
+    info->redirections->f[1] = handle_input_redirection;  // <
+    info->redirections->f[2] = handle_append_redirection; // >>
+    info->redirections->f[3] = handle_heredoc_redirection; // <<
+    info->redirections->f[4] = NULL;
+}
+
 void	init(t_info *info, char **env)
 {
 	info->cmd_tree = NULL;
@@ -83,7 +97,15 @@ void	init(t_info *info, char **env)
 	info->types = malloc(sizeof(t_types));
 	if (!info->types)
 		return (free(info->builtins));
+	info->redirections = malloc(sizeof(t_reds));
+    if (!info->redirections)
+    {
+		free(info->builtins);
+		free(info->types);
+        return ;
+    }
 	fill_builtins(info);
 	fill_types(info);
+	fill_redirections(info);
 	copy_env(info, env);
 }

@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/06 15:20:22 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:54:30 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
-
-void	fill_redirections(t_io *io)
-{
-    if (!io)
-        return;
-    io->redirections = malloc(sizeof(t_reds));
-    if (!io->redirections)
-    {
-        error_exit("Memory allocation failed for redirections");
-    }
-	io->redirections->reds[0] = ">";
-	io->redirections->reds[1] = "<";
-	io->redirections->reds[2] = ">>";
-	io->redirections->reds[3] = "<<";
-	io->redirections->reds[4] = NULL;
-    io->redirections->f[0] = handle_output_redirection; // >
-    io->redirections->f[1] = handle_input_redirection;  // <
-    io->redirections->f[2] = handle_append_redirection; // >>
-    io->redirections->f[3] = handle_heredoc_redirection; // <<
-    io->redirections->f[4] = NULL;
-}
 
 void    handle_input_redirection(t_io *io, char *infile)
 {

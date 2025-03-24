@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/24 15:16:30 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 18:00:21 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,8 @@ typedef struct s_info
 	char				*flags;
 	char				**my_env;
 	t_builtins			*builtins;
-	t_io				io;
+	t_io				*io;
+	t_reds				*redirections;
 	t_types				*types;
 	t_tree				*cmd_tree;
 }						t_info;
@@ -108,7 +109,7 @@ extern unsigned int				exit_status;
 
 //to_remove
 void print_node_type(t_node_type type);
-
+void handle_redirections(t_io *io, char **args);
 
 // builtins/echo
 int						check_flags(char *str);
@@ -181,14 +182,12 @@ char					*get_env(char *variable_name, char **env);
 void					free_types(t_types *types);
 
 // redirections
-void					fill_redirections(t_io *io);
 void					handle_input_redirection(t_io *io, char *infile);
 void					handle_output_redirection(t_io *io, char *outfile);
 void					handle_append_redirection(t_io *io, char *infile);
 void					handle_heredoc_redirection(t_io *io, char *delimiter);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
-void					handle_redirections(t_io *io, char **args);
 
 // signals
 void					handle_sigint(int sig);
