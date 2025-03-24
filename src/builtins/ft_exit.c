@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/24 15:22:02 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 17:03:47 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_exit(t_info *info)
 {
 	int				exit_flags;
 
-	exit_flags = ft_atoi(info->flags);	
+	exit_flags = ft_atoi(info->flags);
 	if (isatty(STDIN_FILENO)) // returns 1 if the fd is a terminal
 		printf("exit\n");     // exit -> terminal. echo ola | exit -> not terminal
 	if (exit_flags)
@@ -28,13 +28,7 @@ void	ft_exit(t_info *info)
 		else
 			exit_status = exit_flags;
 	}
-	if (info->cmd_tree->args)
-	{
-		free_arr(info->cmd_tree->args);
-		if (info->flags)
-			free(info->flags);
-		info->cmd_tree->args = NULL;
-	}
+	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);
 	rl_clear_history();
