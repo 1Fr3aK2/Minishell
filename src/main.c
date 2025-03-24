@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/17 10:36:26 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:17:13 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
-int		command_running = 0;
+unsigned int		exit_status = 0;
 
 void	start(t_info *info)
 {
@@ -53,16 +53,6 @@ void	free_builtins(t_builtins *builtins)
 		return ;
 	free(builtins);
 }
-void	print_banner(void)
-{
-    printf(GREEN
-        "   _____ __  __________    __    _____   ____  ______ \n"
-        "  / ___// / / / ____/ /   / /   /  _/ | / / / / / __ \\ \n"
-        "  \\__ \\/ /_/ / __/ / /   / /    / //  |/ / /_/ / / / / \n"
-        " ___/ / __  / /___/ /___/ /____/ // /|  / __  / /_/ /  \n"
-        "/____/_/ /_/_____/_____/_____/___/_/ |_/_/ /_/\\____/   \n"
-        "\n" RESET"\n");
-}
 
 int	main(int argc, char **argv, char **env)
 {
@@ -70,7 +60,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	print_banner();
 	init(&info, env);
 	set_signals();
 	start(&info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/24 14:56:36 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ void	set_signals(void)
     write(1, "\n", 1);
 }
 
-// ver se est rl_end é necessaria
 void	handle_ctrl_d(t_info *info)
 {
-	// If the input line is empty, exit the shell
+	(void)info;
 	if (rl_end == 0) // rl_end is a variable of readline that contains the length of the current input line
 	{
 		printf("exit\n");
 		rl_clear_history();
-		free_arr(info->cmd_tree->args);
 		exit(0);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/17 11:56:44 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:14:49 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,5 +181,6 @@ void parse(char *input, t_info *info)
         printf("Binary Tree Structure:\n");
         print_tree(info->cmd_tree, 0);
     }
+	info->flags = ft_strdup(info->cmd_tree->args[1]);
     free_arr(tokens);
 }

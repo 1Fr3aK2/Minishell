@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/19 18:47:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/24 14:50:00 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	child_process(t_info *info)
 	{
 		sa.sa_handler = handle_sigquit;
 		sa.sa_flags = SA_RESTART;
-			// Ensure the signal handler is restarted automatically
 		sigemptyset(&sa.sa_mask); // No additional signals to block
 		sigaction(SIGQUIT, &sa, NULL);
 		pid = fork();
@@ -36,8 +35,7 @@ void	child_process(t_info *info)
 			exec(info);
 		else
 		{
-			signal(SIGINT, SIG_IGN);
-				// Ignore SIGINT while waiting to prevent duplicate prompts
+			signal(SIGQUIT, SIG_IGN);
 			waitpid(pid, &status, 0);
 			set_signals(); // Restore SIGINT handling after child exits
 		}
