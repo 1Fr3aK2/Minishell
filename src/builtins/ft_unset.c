@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:26:22 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void    ft_unset(t_info *info)
     int k;
     size_t len;
 
-    if (info->cmd_tree->args[1] == NULL)
+    if (!info->cmd_tree->args[1])
         return ;
     i = 1;
     while (info->cmd_tree->args[i])
