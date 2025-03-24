@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/24 15:17:13 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:31:16 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	start(t_info *info)
 
 	while (1)
 	{
-		rl_on_new_line(); // necessario??
+		// rl_on_new_line(); // necessario??
 		input = readline("shellinho$> ");
 		if (!input)
 		{

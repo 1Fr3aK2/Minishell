@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/24 14:56:36 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/24 15:34:01 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-// ver comportamento sem input, mas na 3a instancia
 void	handle_sigquit(int sig)
 {
 	(void)sig;
@@ -33,7 +32,6 @@ void	set_signals(void)
 {
     signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-    write(1, "\n", 1);
 }
 
 void	handle_ctrl_d(t_info *info)
