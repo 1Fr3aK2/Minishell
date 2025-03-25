@@ -12,11 +12,13 @@
 
 #include "../../includes/shellinho.h"
 
-void    handle_input_redirection(t_io *io, char *infile)
+
+// TO DO = parse the infile and outfile
+void    handle_input_redirection(t_io *io)
 {
-    if (!io && !infile)
+    if (!io && !io->infile)
         return ;
-    io->fd_in = open(infile, O_RDONLY);
+    io->fd_in = open(io->infile, O_RDONLY);
     if (io->fd_in == -1)
         error_exit("open failed in fd_in");
     if (dup2(io->fd_in, STDIN_FILENO) == -1)
@@ -27,11 +29,11 @@ void    handle_input_redirection(t_io *io, char *infile)
     close(io->fd_in);
 }
 
-void    handle_output_redirection(t_io *io, char *outfile)
+void    handle_output_redirection(t_io *io)
 {
-    if (!io && !outfile)
+    if (!io && !io->outfile)
         return ;
-    io->fd_out = open(outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644); // O_TRUNC will overwritten the content
+    io->fd_out = open(io->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644); // O_TRUNC will overwritten the content
     if (io->fd_out == -1)
         error_exit("open failed in fd_out");
     if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -42,11 +44,11 @@ void    handle_output_redirection(t_io *io, char *outfile)
     close(io->fd_out);
 }
 
-void    handle_append_redirection(t_io *io, char *outfile)
+void    handle_append_redirection(t_io *io)
 {
-    if (!io && !outfile)
+    if (!io && !io->outfile)
         return ;
-    io->fd_out = open(outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    io->fd_out = open(io->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (io->fd_out == -1)
         error_exit("open failed in fd_out append");
     if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -57,19 +59,19 @@ void    handle_append_redirection(t_io *io, char *outfile)
     close (io->fd_out);
 }
 
-void    handle_heredoc_redirection(t_io *io, char *delimiter)
+void    handle_heredoc_redirection(t_io *io)
 {
     char    *line;
     int     pipe_fd[2];
 
-    if (!io || !delimiter)
+    if (!io || !io->delimiter)
         return ;
     if (pipe(pipe_fd) == -1)
         error_exit("pipe failed for heredoc");
     while (1)
     {
         line = readline("> ");
-        if (!line || ft_strncmp(line, delimiter, ft_strlen(delimiter)) == 0)
+        if (!line || ft_strncmp(line, io->delimiter, ft_strlen(io->delimiter)) == 0)
         {
             free(line);
             break;
@@ -89,14 +91,16 @@ void    handle_heredoc_redirection(t_io *io, char *delimiter)
 
 void handle_redirections(t_io *io, char **args)
 {
-    int i = 0;
+    int i;
+    
+    i = 0;
     while (args[i])
     {
         if (strcmp(args[i], ">") == 0)
         {
             if (args[i + 1])
             {
-                handle_output_redirection(io, args[i + 1]);
+                handle_output_redirection(io);
                 i++; // Skip the next argument as it's the filename
             }
         }
@@ -104,7 +108,7 @@ void handle_redirections(t_io *io, char **args)
         {
             if (args[i + 1])
             {
-                handle_append_redirection(io, args[i + 1]);
+                handle_append_redirection(io);
                 i++;
             }
         }
@@ -112,7 +116,7 @@ void handle_redirections(t_io *io, char **args)
         {
             if (args[i + 1])
             {
-                handle_input_redirection(io, args[i + 1]);
+                handle_input_redirection(io);
                 i++;
             }
         }
@@ -120,7 +124,7 @@ void handle_redirections(t_io *io, char **args)
         {
             if (args[i + 1])
             {
-                handle_heredoc_redirection(io, args[i + 1]);
+                handle_heredoc_redirection(io);
                 i++;
             }
         }

@@ -70,11 +70,12 @@ typedef struct s_io
 {
 	int fd_in;  // this is the new STDIN_FILENO.  It represents the opened file in_file
 	int fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
-	int					stdin_backup;
+	int	stdin_backup;
 	int stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
-	//char *in_file;     // alocar memoria pra ambos: infile e outfile
-	//char *out_file;    // ex: echo "Hello" > outfile.txt  -> hello will be written in outfile.txt,instead of the terminal as STDOUT
-	t_reds				*redirections;
+	char *in_file;     // alocar memoria pra ambos: infile e outfile
+	char *out_file;    // ex: echo "Hello" > outfile.txt  -> hello will be written in outfile.txt,instead of the terminal as STDOUT
+	char *here_delimiter;
+    t_reds				*redirections;
 }						t_io;
 
 typedef enum s_node_type
