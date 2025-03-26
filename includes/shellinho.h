@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/24 18:00:21 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 19:02:17 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,6 @@ void					restore_io(t_io *io);
 void					handle_sigint(int sig);
 void					handle_sigquit(int sig);
 void					set_signals(void);
-void					handle_ctrl_d(t_info *info);
 
 // splits/custom_split
 char					**custom_ft_split(char const *s);

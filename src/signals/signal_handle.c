@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/26 18:15:14 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 19:01:59 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,4 @@ void	set_signals(void)
 {
     signal(SIGINT, handle_sigint);
 	signal(SIGQUIT, SIG_IGN);
-}
-
-void	handle_ctrl_d(t_info *info)
-{
-	(void)info;
-	if (rl_end == 0) // rl_end is a variable of readline that contains the length of the current input line
-	{
-		printf("exit\n");
-		rl_clear_history();
-		exit(0);
-	}
 }
