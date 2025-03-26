@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 03:46:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/26 18:21:18 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,7 @@ void parse(char *input, t_info *info)
 	if (info->cmd_tree)
     {
         free_tree(info->cmd_tree);
+		free(info->flags);
     }
     tokens = new_input(input);
     if (!tokens)
@@ -173,14 +174,20 @@ void parse(char *input, t_info *info)
     for (int i = 0; tokens[i] != NULL; i++) {
         printf("Token[%d]: %s\n", i, tokens[i]);
     }
-    check_dollar(tokens, info);
-    remove_all_quotes(tokens);    
+	if (tokens)
+	{
+    	check_dollar(tokens, info);
+    	remove_all_quotes(tokens);
+	}
     info->cmd_tree = build_tree_tokens(tokens);
+	if (!info->cmd_tree)
+		return ; 
     if (info->cmd_tree)
     {
         printf("Binary Tree Structure:\n");
         print_tree(info->cmd_tree, 0);
     }
-	info->flags = ft_strdup(info->cmd_tree->args[1]);
+	if (info->cmd_tree->args[1])
+		info->flags = ft_strdup(info->cmd_tree->args[1]);
     free_arr(tokens);
 }

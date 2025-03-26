@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 04:10:00 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/26 16:29:48 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ char	*translate(char *str, char **env)
 		var_value = get_env(str, env);
 		if (!var_value)
 			return (NULL);
+		var_value = ft_strdup(var_value);
 	}
 	return (var_value);
 }

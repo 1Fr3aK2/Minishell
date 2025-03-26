@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 03:47:15 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/26 18:32:56 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,18 @@ void	start(t_info *info)
 	{
 		input = readline("shellinho$> ");
 		if (!input)
+			ft_exit(info);
+		if (!*input)
 		{
-			handle_ctrl_d(info);
-			rl_clear_history();
-			return ;
+			free(input);	
+			continue ; 
 		}
 		if (*input)
 			add_history(input);
 		if (info->cmd_tree)
 		{
 			free_tree(info->cmd_tree);
-			free(info->flags);
+			// free(info->flags);
 			info->cmd_tree = NULL;
 		}
 		parse(input, info);
@@ -60,6 +61,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
+	// handle_ctrl_d(&info);
 	init(&info, env);
 	set_signals();
 	start(&info);
