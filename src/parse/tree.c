@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/17 11:56:40 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:37:29 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 	if (!node)
 		return (NULL);
 	node->type = find_type(tokens, *index);
-	printf("Creating operator node. Operator: %s, Type: ", tokens[*index]);
-	print_node_type(node->type);
-	printf("\n");
+	//printf("Creating operator node. Operator: %s, Type: ", tokens[*index]);
+	//print_node_type(node->type);
+	//printf("\n");
 	node->args = malloc(sizeof(char *) * 2);
 	if (!node->args)
 	{
@@ -61,17 +61,17 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 	}
 	node->args[0] = ft_strdup(tokens[*index]);
 	node->args[1] = NULL;
-	printf("Operator '%s' copied to args\n", node->args[0]);
+	//printf("Operator '%s' copied to args\n", node->args[0]);
 	left_tokens = sub_tokens(tokens, 0, *index);
-	printf("Left tokens for operator '%s':\n", tokens[*index]);
-	for (int i = 0; left_tokens[i] != NULL; i++)
-		printf("  %s\n", left_tokens[i]);
+	//printf("Left tokens for operator '%s':\n", tokens[*index]);
+	//for (int i = 0; left_tokens[i] != NULL; i++)
+	//	printf("  %s\n", left_tokens[i]);
 	node->left = parse_tokens(left_tokens);
 	free_arr(left_tokens);
 	right_tokens = sub_tokens(tokens, *index + 1, total);
-	printf("Right tokens for operator '%s':\n", tokens[*index]);
-	for (int i = 0; right_tokens[i] != NULL; i++)
-		printf("  %s\n", right_tokens[i]);
+	//printf("Right tokens for operator '%s':\n", tokens[*index]);
+	//for (int i = 0; right_tokens[i] != NULL; i++)
+	//	printf("  %s\n", right_tokens[i]);
 	node->right = parse_tokens(right_tokens);
 	free_arr(right_tokens);
 	return (node);

@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/03/26 19:06:31 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/03/26 19:24:28 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
-unsigned int		exit_status = 0;
+unsigned int	exit_status = 0;
 
 void	start(t_info *info)
 {
@@ -22,11 +26,13 @@ void	start(t_info *info)
 	{
 		input = readline("shellinho$> ");
 		if (!input)
+		{
 			ft_exit(info);
+		}
 		if (!*input)
 		{
-			free(input);	
-			continue ; 
+			free(input);
+			continue ;
 		}
 		if (*input)
 			add_history(input);
