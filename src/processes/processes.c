@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/24 18:00:02 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 19:42:01 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	child_process(t_info *info)
 		{
 			signal(SIGQUIT, SIG_IGN);
 			waitpid(pid, &status, 0);
+			if (WIFEXITED(status)) //Verifica se o processo terminou normalmente
+				exit_status = WEXITSTATUS(status); //Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
 			set_signals(); // Restore SIGINT handling after child exits
 		}
 	}
