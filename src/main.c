@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 18:32:56 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 18:39:32 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void	start(t_info *info)
 		if (info->cmd_tree)
 		{
 			free_tree(info->cmd_tree);
-			// free(info->flags);
 			info->cmd_tree = NULL;
 		}
 		parse(input, info);
