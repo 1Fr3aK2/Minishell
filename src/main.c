@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/24 17:59:07 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 03:47:15 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	start(t_info *info)
 		if (info->cmd_tree)
 		{
 			free_tree(info->cmd_tree);
+			free(info->flags);
 			info->cmd_tree = NULL;
 		}
 		parse(input, info);

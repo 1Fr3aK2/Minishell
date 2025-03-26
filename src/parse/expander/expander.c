@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 00:37:18 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/26 04:10:00 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ int	get_varname_len(char *str)
 	{
 		if (str[i] && str[i] == '$')
 		{
-			start = ++i;
+			i++;
+			if (str[i] == '?')
+				return (i);
+			start = i;
 			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 				i++;
 			return (i - start);
@@ -36,8 +39,8 @@ int	get_varname_len(char *str)
 char	*expand(char *str)
 {
 	int		i;
-	char	*var_name;
 
+	char	*var_name;
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -46,10 +49,20 @@ char	*expand(char *str)
 		if (str[i] && str[i] == '$')
 		{
 			i++;
-			var_name = ft_substr(str, i, get_varname_len(str));
-			if (!var_name)
-				return (NULL);
-			return (var_name);
+			if (str[i] && str[i] == '?')
+			{
+				var_name = ft_substr(str, i, ft_strlen(str) - i);
+				if (!var_name)
+					return (NULL);
+				return (var_name);
+			}
+			else
+			{
+				var_name = ft_substr(str, i, get_varname_len(str));
+				if (!var_name)
+					return (NULL);
+				return (var_name);
+			}
 		}
 		i++;
 	}
@@ -75,8 +88,6 @@ char	*translate(char *str, char **env)
 		var_value = get_env(str, env);
 		if (!var_value)
 			return (NULL);
-		else
-			free(str);
 	}
 	return (var_value);
 }
