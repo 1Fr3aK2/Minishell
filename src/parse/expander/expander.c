@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/17 10:39:53 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/26 00:37:18 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,27 @@ char	*expand(char *str)
 
 char	*translate(char *str, char **env)
 {
-	char	*var_name;
+	char	*var_value;
+	int		i;
 
+	i = 0;
 	if (!str)
 		return (NULL);
-	var_name = get_env(str, env);
-	if (var_name)
-		free(str);
-	return (var_name);
+	if (str[i] && str[i] == '?')
+	{
+		var_value = ft_itoa(exit_status);
+		if (!var_value)
+			return (NULL);
+	}
+	else 
+	{
+		var_value = get_env(str, env);
+		if (!var_value)
+			return (NULL);
+		else
+			free(str);
+	}
+	return (var_value);
 }
 
 int	size_to_var(char *str)
