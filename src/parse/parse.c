@@ -6,11 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/03/26 18:39:34 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/03/26 18:38:23 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/03/26 19:56:15 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
