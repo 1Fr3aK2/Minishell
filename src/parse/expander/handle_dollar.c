@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 04:16:55 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/26 14:57:18 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static char	*join_and_free(char *s1, char *s2)
 
 	new = ft_strjoin(s1, s2);
 	free(s1);
-	free(s2);
+	// free(s2);
 	return (new);
 }
 
