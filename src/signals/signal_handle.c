@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../includes/shellinho.h"
 
 void	handle_sigint(int sig)
 {

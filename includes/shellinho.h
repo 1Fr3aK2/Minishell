@@ -63,7 +63,7 @@ typedef struct s_builtins
 typedef struct s_reds
 {
 	char				*reds[MAX_REDS];
-	void				(*f[MAX_REDS])(t_io *io, char *);
+	void				(*f[MAX_REDS])(t_io *io);
 }						t_reds;
 
 typedef struct s_io
@@ -183,10 +183,10 @@ char					*get_env(char *variable_name, char **env);
 void					free_types(t_types *types);
 
 // redirections
-void					handle_input_redirection(t_io *io, char *infile);
-void					handle_output_redirection(t_io *io, char *outfile);
-void					handle_append_redirection(t_io *io, char *infile);
-void					handle_heredoc_redirection(t_io *io, char *delimiter);
+void					handle_input_redirection(t_io *io);
+void					handle_output_redirection(t_io *io);
+void					handle_append_redirection(t_io *io);
+void					handle_heredoc_redirection(t_io *io);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 

@@ -13,12 +13,12 @@
 #include "../../includes/shellinho.h"
 
 
-// TO DO = parse the infile and outfile
+// TO DO = parse the in_file and outfile
 void    handle_input_redirection(t_io *io)
 {
-    if (!io && !io->infile)
+    if (!io && !io->in_file)
         return ;
-    io->fd_in = open(io->infile, O_RDONLY);
+    io->fd_in = open(io->in_file, O_RDONLY);
     if (io->fd_in == -1)
         error_exit("open failed in fd_in");
     if (dup2(io->fd_in, STDIN_FILENO) == -1)
@@ -31,9 +31,9 @@ void    handle_input_redirection(t_io *io)
 
 void    handle_output_redirection(t_io *io)
 {
-    if (!io && !io->outfile)
+    if (!io && !io->out_file)
         return ;
-    io->fd_out = open(io->outfile, O_WRONLY | O_CREAT | O_TRUNC, 0644); // O_TRUNC will overwritten the content
+    io->fd_out = open(io->out_file, O_WRONLY | O_CREAT | O_TRUNC, 0644); // O_TRUNC will overwritten the content
     if (io->fd_out == -1)
         error_exit("open failed in fd_out");
     if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -46,9 +46,9 @@ void    handle_output_redirection(t_io *io)
 
 void    handle_append_redirection(t_io *io)
 {
-    if (!io && !io->outfile)
+    if (!io && !io->out_file)
         return ;
-    io->fd_out = open(io->outfile, O_WRONLY | O_CREAT | O_APPEND, 0644);
+    io->fd_out = open(io->out_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
     if (io->fd_out == -1)
         error_exit("open failed in fd_out append");
     if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -64,14 +64,14 @@ void    handle_heredoc_redirection(t_io *io)
     char    *line;
     int     pipe_fd[2];
 
-    if (!io || !io->delimiter)
+    if (!io || !io->here_delimiter)
         return ;
     if (pipe(pipe_fd) == -1)
         error_exit("pipe failed for heredoc");
     while (1)
     {
         line = readline("> ");
-        if (!line || ft_strncmp(line, io->delimiter, ft_strlen(io->delimiter)) == 0)
+        if (!line || ft_strncmp(line, io->here_delimiter, ft_strlen(io->here_delimiter)) == 0)
         {
             free(line);
             break;
