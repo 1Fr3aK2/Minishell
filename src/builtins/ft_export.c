@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/27 15:45:53 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,45 @@ char	**create_sorted_env_copy(char **args)
 	return (dest);
 }
 
+static bool check_valid_input(char *str)
+{
+	int i;
+	
+	if (!str)
+		return (false);
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] && str[i] == '=')
+			return (true);
+		i++;
+	}
+	return (false);
+}
+
+static bool check_env(char **env, char *str)
+{
+	int i;
+	
+	if (!env || !*env || !str)
+		return (false);
+	i = 0;
+	while(env[i])
+	{
+		if (ft_strncmp(str, env[i], (ft_strlen(str) - ft_strlen(ft_strrchr(str, '=')))) == 0)
+		{
+			free(env[i]);
+			char *teste = ft_strdup(str);
+			env[i] = teste;
+			i++;
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+
+}
+
 void	ft_export(t_info *info)
 {
 	char	**sorted_env;
@@ -102,11 +141,23 @@ void	ft_export(t_info *info)
 	i = 1;
 	if (info->cmd_tree->args[i] != NULL) // ve se ha algo depois do export
 	{
-		while (info->cmd_tree->args[i])
-			add_to_my_env(info, info->cmd_tree->args[i++]);
+		if (check_valid_input(info->cmd_tree->args[i]) == true)
+		{
+			if (check_env(info->my_env, info->cmd_tree->args[i]) == false)
+			{
+				printf("string %s\n", info->cmd_tree->args[i]);
+				while (info->cmd_tree->args[i])
+				{
+					add_to_my_env(info, info->cmd_tree->args[i++]);
+				}
+			}
+		}
+		else
+			return ;
 	}
 	else
 	{
+		printf("aqui\n");
 		sorted_env = create_sorted_env_copy(info->my_env);
 		if (!sorted_env)  // talvez desnecessario... ja faco isto na outra funcao
 			return ;

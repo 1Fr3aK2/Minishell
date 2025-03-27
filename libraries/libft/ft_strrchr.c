@@ -31,18 +31,18 @@ char	*ft_strrchr(const char *s, int c)
 	}
 	return (NULL);
 }
-/* int	main(void)
-{
-	char *str = "teste string";
-	int c = 'p';
-	char *result;
+// int	main(void)
+// {
+// 	char *str = "teste string";
+// 	int c = 's';
+// 	char *result;
 
-	result = ft_strrchr(str, c);
-	if (result)
-		printf("O carater '%c' foi encontrado na string, resultado: %s\n", c,
-			result);
-	else
-		printf("O carater '%c' nao foi encontrado na string, resultado: %s\n",
-			c, result);
-	return (0);
-} */
+// 	result = ft_strrchr(str, c);
+// 	if (result)
+// 		printf("O carater '%c' foi encontrado na string, resultado: %s\n", c,
+// 			result);
+// 	else
+// 		printf("O carater '%c' nao foi encontrado na string, resultado: %s\n",
+// 			c, result);
+// 	return (0);
+// }

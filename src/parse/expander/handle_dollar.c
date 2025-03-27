@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 16:54:35 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/27 13:30:20 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static int	process_variable(char *str, char **env, char **new, int i)
 		}
 		*new = temp;
 	}
-	printf("var value: %s\n", var_value);
 	if (var_name)
 		free(var_name);
 	if (var_value)

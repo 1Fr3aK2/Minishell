@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 19:55:13 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:12:29 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	child_process(t_info *info)
 			signal(SIGINT, handle_sigint);
 			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 				write(1, "Quit (Core dumped)\n", 19);
-			else
-				write (1, "\n", 1);		
+			else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+				write (1, "\n", 1);
 		}
 	}
 }
