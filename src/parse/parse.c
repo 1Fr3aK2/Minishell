@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 19:56:15 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/27 16:58:54 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,9 +163,14 @@ void parse(char *input, t_info *info)
         return;
     tokens = NULL;
 	if (info->cmd_tree)
+	{
+        free_tree(info->cmd_tree); 
+		info->cmd_tree = NULL;
+	}
+    if (info->flags)
     {
-        free_tree(info->cmd_tree);
-		free(info->flags);
+        free(info->flags);
+        info->flags = NULL;
     }
     tokens = new_input(input);
     //if (!tokens)

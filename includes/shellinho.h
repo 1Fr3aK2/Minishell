@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/26 19:55:49 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/03/27 18:19:51 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,8 @@ void					sort_env(char **args);
 
 // builtins/export
 void					sort_env(char **args);
-void					add_to_my_env(t_info *info, char *str);
+// void					add_to_my_env(t_info *info, char *str);
+void	add_to_my_env(char **my_env, char *str);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
 
