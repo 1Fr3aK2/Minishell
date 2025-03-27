@@ -1,3 +1,0 @@
-ctrl D ta 100% certo
-ctrl \ functiona bem com comando a funcionar mas ta estranho sem comando
-ctrl C ta bom na 1a instancia mas mal nas outras
