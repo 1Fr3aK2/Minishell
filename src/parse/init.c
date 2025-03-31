@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/27 18:12:47 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/31 17:58:25 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void	init(t_info *info, char **env)
 {
 	info->cmd_tree = NULL;
 	info->flags = NULL;
+	info->export_env = NULL;
 	info->builtins = malloc(sizeof(t_builtins));
 	if (!info->builtins)
 	{

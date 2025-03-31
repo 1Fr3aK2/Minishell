@@ -6,81 +6,69 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/27 19:06:33 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/31 18:16:02 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-// set env variables to be exported to child processes.
-// Export makes a variable available to any child process.
-
-// TODO - "a b" - nao e suposto funcionar
-// 		- a b - suposto criar 2 variaveis a, b
-//		- essencialmente, nao pode ter espacos quando uso aspas
-
-//		- o meu aceita espacos quando ha aspas
-
-static bool check_valid_input(char *str)
+static bool has_equal_sign(char *str)
 {
-	int i;
-	
-	if (!str)
-		return (false);
-	i = 0;
-	while(str[i])
-	{
-		if (str[i] && str[i] == '=')
-			return (true);
-		i++;
-	}
-	return (false);
+    int i = 0;
+    if (!str)
+        return false;
+    while (str[i])
+    {
+        if (str[i] == '=')
+            return true;
+        i++;
+    }
+    return false;
 }
+
 static bool check_env(char **env, char *str)
 {
-	int i;
-	char *new_str;
+    int i;
+    char *new_str;
 	
-	if (!env || !*env || !str)
-		return (false);
 	i = 0;
-	while(env[i])
-	{
-		if (ft_strncmp(str, env[i], (ft_strlen(str) - ft_strlen(ft_strrchr(str, '=')))) == 0)
-		{
-			free(env[i]);
-			new_str = ft_strdup(str);
-			env[i] = new_str;
-			i++;
-			return (true);
-		}
-		i++;
-	}
-	return (false);
+    if (!env || !*env || !str)
+        return false;
+    while (env[i])
+    {
+        if (ft_strncmp(str, env[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
+        {
+            free(env[i]);
+            new_str = ft_strdup(str);
+            env[i] = new_str;
+            return true;
+        }
+        i++;
+    }
+    return false;
 }
 
-void	add_to_my_env(char **my_env, char *str)
+void add_to_env(char ***env, char *str)
 {
-	int i;
-	char **new_env;
+    int i;
+    char **new_env;
 	
 	i = 0;
-	new_env = NULL;
-	while (my_env[i])
-		i++;
-	new_env = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-		return ;
-	i = 0;
-	while (my_env[i])
-	{
-		new_env[i] = my_env[i];
-		i++;
-	}
-	new_env[i] = ft_strdup(str); // add o que vem dps de export
-	new_env[i + 1] = NULL;
-	free(my_env);
-	my_env = new_env;
+    while ((*env) && (*env)[i])
+        i++;
+    new_env = (char **)malloc(sizeof(char *) * (i + 2));
+    if (!new_env)
+        return;
+    i = 0;
+    while ((*env) && (*env)[i])
+    {
+        new_env[i] = (*env)[i];
+        i++;
+    }
+    new_env[i] = ft_strdup(str);
+    new_env[i + 1] = NULL;
+    free(*env);
+    *env = new_env;
 }
 void	sort_env(char **args)
 {
@@ -110,27 +98,24 @@ void	sort_env(char **args)
 	}
 }
 
-
-char	**create_sorted_env_copy(char **args)
+char **create_sorted_env_copy(char **env)
 {
-	int		i;
-	char	**dest;
-
-	i = 0;
-	while (args[i])
-		i++;
-	dest = (char **)malloc(sizeof(char *) * (i + 1));
-	if (!dest)
-		return (NULL);
-	i = 0;
-	while (args[i])
-	{
-		dest[i] = ft_strdup(args[i]);
-		i++;
-	}
-	dest[i] = NULL;
-	sort_env(dest);
-	return (dest);
+    int i = 0;
+    char **copy;
+    while (env && env[i])
+        i++;
+    copy = (char **)malloc(sizeof(char *) * (i + 1));
+    if (!copy)
+        return NULL;
+    i = 0;
+    while (env && env[i])
+    {
+        copy[i] = ft_strdup(env[i]);
+        i++;
+    }
+    copy[i] = NULL;
+    sort_env(copy);
+    return copy;
 }
 
 static char **copy_myenv(char **my_env, char *str)
@@ -168,53 +153,47 @@ static char **copy_myenv(char **my_env, char *str)
 	return (new_env);	
 }
 
-void	ft_export(t_info *info)
-{
-	char	**sorted_env;
-	char	**my_env;
-	static bool aqui;
-	int		i;
 
-	my_env = NULL;
-	i = 1;
-	if (info->cmd_tree->args[i] != NULL) // ve se ha algo depois do export
-	{
-		if (check_valid_input(info->cmd_tree->args[i]) == true)
-		{
-			if (check_env(info->my_env, info->cmd_tree->args[i]) == false)
-			{
-				while (info->cmd_tree->args[i])
-					add_to_my_env(info->my_env, info->cmd_tree->args[i++]);
-			}
-		}
-		else
-		{
-			my_env = copy_myenv(info->my_env, info->cmd_tree->args[i]);
-			if (!my_env)
-			{
-				printf("fck\n");
-				return ;
-			}
-			free(info->my_env);
-			info->my_env = my_env;
-			aqui = true;
-		}
-	}
-	else
-	{
-		if (aqui == true)
-			sorted_env = create_sorted_env_copy(my_env);
-		else
-			sorted_env = create_sorted_env_copy(info->my_env);
-		if (!sorted_env)
-			return ;
-		i = 0;
-		while (sorted_env[i])
-		{
-			printf("declare -x %s\n", sorted_env[i]);
-			free(sorted_env[i]);
-			i++;
-		}
-		free(sorted_env);
-	}
+void ft_export(t_info *info)
+{
+    char **sorted_env;
+    int i = 1;
+
+    if (info->cmd_tree->args[i] != NULL)
+    {
+        while (info->cmd_tree->args[i])
+        {
+            if (has_equal_sign(info->cmd_tree->args[i]))
+            {
+                if (!check_env(info->my_env, info->cmd_tree->args[i]))
+                    add_to_env(&(info->my_env), info->cmd_tree->args[i]);
+				info->export_env = copy_myenv(info->my_env, info->cmd_tree->args[i]);
+            }
+            else
+            {
+                if (!check_env(info->export_env, info->cmd_tree->args[i]))
+                    add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+            }
+            i++;
+        }
+    }
+    else
+    {
+        if (info->export_env)
+            sorted_env = create_sorted_env_copy(info->export_env);
+        else
+            sorted_env = create_sorted_env_copy(info->my_env);
+
+        if (!sorted_env)
+            return;
+
+        i = 0;
+        while (sorted_env[i])
+        {
+            printf("declare -x %s\n", sorted_env[i]);
+            free(sorted_env[i]);
+            i++;
+        }
+        free(sorted_env);
+    }
 }
