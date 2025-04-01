@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/01 17:53:08 by raamorim         ###   ########.fr       */
+/*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
+/*   Updated: 2025/04/01 18:19:12 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool check_env(char ***env, char *str)
         {
             if (ft_strncmp(str, (*env)[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
             {
-                if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0)
+                if (ft_strncmp(str, (*env)[i], ft_strlen(str) == 0))
                 {
                     printf("aquo\n");
                     return (true);
@@ -135,38 +135,36 @@ char **create_sorted_env_copy(char **env)
     return copy;
 }
 
-static char **copy_myenv(char **my_env, char *str)
+static char **copy_myenv(char ***my_env, char *str)
 {
-	int i;
-	char **new_env = NULL;
-	
-	if (!my_env || !str)
-		return (NULL);
-	i = 0;
-	while(my_env[i])
-		i++;
-	new_env = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-		return (NULL);
-	i = 0;
-	while(my_env[i])
-	{
-		new_env[i] = ft_strdup(my_env[i]);
-		if (!new_env[i])
-			return (NULL);
-		i++;
-	}
-	// new_env[i] = ft_strdup(str);
-	// if (!new_env[i])
-	// 	return (NULL);
-	new_env[++i] = NULL;
-	while(new_env[i])
-	{
-		printf("%s\n", new_env[i]);
-		i++;
-	}
-	return (new_env);	
+    int i;
+    char **new_env = NULL;
+
+    if (!my_env || !str)
+        return (NULL);
+    i = 0;
+    while ((*my_env)[i])
+        i++;
+    new_env = (char **)malloc(sizeof(char *) * (i + 2));
+    if (!new_env)
+        return (NULL);
+    i = 0;
+    while ((*my_env)[i])
+    {
+        new_env[i] = ft_strdup((*my_env)[i]);
+        if (!new_env[i])
+            return (NULL);
+        i++;
+    }
+    new_env[i] = NULL;
+    while (new_env[i]) {
+        printf("%s\n", new_env[i]);
+        i++;
+    }
+
+    return (new_env);    
 }
+
 
 
 void ft_export(t_info *info)
@@ -186,7 +184,7 @@ void ft_export(t_info *info)
                     printf("args[i]: %s\n", info->cmd_tree->args[i]);
                     add_to_env(&(info->my_env), info->cmd_tree->args[i]);
 				    if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-                        info->export_env = copy_myenv(info->my_env, info->cmd_tree->args[i]);
+                        info->export_env = copy_myenv(&info->my_env, info->cmd_tree->args[i]);
                 }
             }
             else
