@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/01 00:43:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/03/27 18:12:47 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	fill_builtins(t_info *info)
 	info->builtins->f[7] = NULL;
 }
 
-void	copy_env(char ***my_env, char **env)
+void	copy_env(t_info *info, char **env)
 {
 	int	i;
 	int	j;
@@ -42,23 +42,22 @@ void	copy_env(char ***my_env, char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	*my_env = ft_calloc((i + 1), sizeof(char *));
-	if (!*my_env)
+	info->my_env = ft_calloc((i + 1), sizeof(char *));
+	if (!info->my_env)
 		return ;
 	j = -1;
 	while (++j < i)
 	{
-		(*my_env)[j] = ft_strdup(env[j]);
-		if (!(*my_env)[j])
+		info->my_env[j] = ft_strdup(env[j]);
+		if (!info->my_env[j])
 		{
 			while (--j >= 0)
-				free((*my_env)[j]);
-			free(*my_env);
+				free(info->my_env[j]);
+			free(info->my_env);
 			return ;
 		}
 	}
 }
-
 
 static void	fill_types(t_info *info)
 {
@@ -90,7 +89,6 @@ void	init(t_info *info, char **env)
 {
 	info->cmd_tree = NULL;
 	info->flags = NULL;
-	info->export_env = NULL;
 	info->builtins = malloc(sizeof(t_builtins));
 	if (!info->builtins)
 	{
@@ -109,6 +107,5 @@ void	init(t_info *info, char **env)
 	fill_builtins(info);
 	fill_types(info);
 	fill_redirections(info);
-	copy_env(&info->my_env, env);
-	copy_env(&info->export_env, env);
+	copy_env(info, env);
 }

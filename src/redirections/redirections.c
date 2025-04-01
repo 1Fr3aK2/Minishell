@@ -12,7 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-// TO DO = parse the in_file and outfile
+// TO DO = parse the in_file and out_file
 /*
 Nota: o dup2 e necessario pra duplicar o fd, porque,
 no caso do STDOUT, por exemplo, queremos redirecionar
