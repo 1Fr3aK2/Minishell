@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/01 03:09:52 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/01 15:19:52 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ static char **copy_myenv(char **my_env, char *str)
 
 void ft_export(t_info *info)
 {
-    char **sorted_env;
+    char **sorted_env = NULL;
     int i;
 
     i = 1;
@@ -184,8 +184,7 @@ void ft_export(t_info *info)
     }
     else
     {
-        if (info->export_env)
-            sorted_env = create_sorted_env_copy(info->export_env);
+        sorted_env = create_sorted_env_copy(info->export_env);
         if (!sorted_env)
             return;
 
