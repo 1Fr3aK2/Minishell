@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/27 16:58:54 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:28:11 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ t_tree *build_tree_tokens(char **tokens)
 	return (parse_tokens(tokens));
 }
 
-/* void print_tree(t_tree *node, int level)
+void print_tree(t_tree *node, int level)
 {
     if (node == NULL)
         return;
@@ -153,7 +153,7 @@ t_tree *build_tree_tokens(char **tokens)
 
     // Imprimir o nó esquerdo
     print_tree(node->left, level + 1);
-} */
+}
 
 void parse(char *input, t_info *info)
 {
@@ -173,12 +173,12 @@ void parse(char *input, t_info *info)
         info->flags = NULL;
     }
     tokens = new_input(input);
-    //if (!tokens)
-    //    return;
-    //printf("Tokens after split:\n");
-    //for (int i = 0; tokens[i] != NULL; i++) {
-     //   printf("Token[%d]: %s\n", i, tokens[i]);
-    //}
+    if (!tokens)
+       return;
+    printf("Tokens after split:\n");
+    for (int i = 0; tokens[i] != NULL; i++) {
+       printf("Token[%d]: %s\n", i, tokens[i]);
+    }
 	if (tokens)
 	{
     	check_dollar(tokens, info);
@@ -187,11 +187,11 @@ void parse(char *input, t_info *info)
     info->cmd_tree = build_tree_tokens(tokens);
 	if (!info->cmd_tree)
 		return ; 
-    //if (info->cmd_tree)
-    //{
-    //    printf("Binary Tree Structure:\n");
-    //    print_tree(info->cmd_tree, 0);
-    //}
+    if (info->cmd_tree)
+    {
+       printf("Binary Tree Structure:\n");
+       print_tree(info->cmd_tree, 0);
+    }
 	if (info->cmd_tree->args[1])
 		info->flags = ft_strdup(info->cmd_tree->args[1]);
     free_arr(tokens);

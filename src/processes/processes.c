@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/27 16:12:29 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:57:33 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ void	child_process(t_info *info)
 			set_signals(); // Restore SIGINT handling after child exits
 			signal(SIGINT, handle_sigint);
 			if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+			{
+				exit_status = 131;
 				write(1, "Quit (Core dumped)\n", 19);
+			}
 			else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			{
+				exit_status = 130;
 				write (1, "\n", 1);
+			}
 		}
 	}
 }

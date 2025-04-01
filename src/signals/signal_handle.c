@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/26 19:56:21 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/01 15:58:39 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,7 @@ void	handle_sigint(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
-}
-
-void	handle_sigquit(int sig)
-{
-	(void)sig;
-	write(1, "Quit (Core dumped)\n", 19);
+	exit_status = 130;
 }
 
 void	set_signals(void)

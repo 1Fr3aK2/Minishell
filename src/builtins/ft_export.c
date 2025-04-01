@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/01 15:19:52 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:19:05 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,25 @@ static bool check_env(char ***env, char *str)
         return (false);
     while ((*env)[i]) 
     {
-        if (ft_strncmp(str, (*env)[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
+        if (check_valid_input(str) == true)
         {
-            free((*env)[i]);
-            (*env)[i] = ft_strdup(str);
-            return (true);
+            if (ft_strncmp(str, (*env)[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
+            {
+                if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0)
+                    return (true);
+                else
+                {
+                    free((*env)[i]);
+                    (*env)[i] = ft_strdup(str);
+                    return (true);
+                }
+            }    
         }
-        //dar handle em caso de ser tudo igual
+        else
+        {
+            if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0)
+                return (true);
+        }
         i++;
     }
     return (false);
@@ -175,9 +187,7 @@ void ft_export(t_info *info)
             else
             {
                 if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-                {
                     add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-                }
             }
             i++;
         }
@@ -187,7 +197,6 @@ void ft_export(t_info *info)
         sorted_env = create_sorted_env_copy(info->export_env);
         if (!sorted_env)
             return;
-
         i = 0;
         while (sorted_env[i])
         {

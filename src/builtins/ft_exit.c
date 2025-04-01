@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/27 16:36:50 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/01 16:00:36 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,3 +35,4 @@ void	ft_exit(t_info *info)
 	close_fds(0);
 	exit(exit_status);
 }
+// verificar exit status ctrl+d
