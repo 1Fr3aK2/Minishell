@@ -3,10 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
+<<<<<<< Updated upstream
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
 /*   Updated: 2025/04/01 18:19:12 by raamorim         ###   ########.fr       */
+=======
+/*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
+/*   Updated: 2025/04/01 17:56:32 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 

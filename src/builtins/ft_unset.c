@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/01 17:41:32 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/01 17:59:59 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,15 @@ void	ft_unset(t_info *info)
 					|| info->export_env[j][len] == '\0'))
 			{
 				free(info->export_env[j]);
-                free(info->my_env[j]);
+				free(info->my_env[j]);
 				while (info->export_env[j + 1])
 				{
 					info->export_env[j] = info->export_env[j + 1];
-                    info->my_env[j] = info->my_env[j + 1];
+					info->my_env[j] = info->my_env[j + 1];
 					j++;
 				}
 				info->export_env[j] = NULL;
+				info->my_env[j] = NULL;
 				break ;
 			}
 			j++;
