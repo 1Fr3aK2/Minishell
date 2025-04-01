@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/03/31 18:01:16 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/03/31 23:14:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,9 +156,9 @@ int						size_to_var(char *str);
 bool					check_translate(char *str);
 
 // parse/init
-void					copy_env(t_info *info, char **env);
+/* void					copy_env(t_info *info, char **env); */
 void					init(t_info *info, char **env);
-
+void	copy_env(char ***my_env, char **env);
 // parse/parse
 int						size_woutquotes(char *str);
 void					handle_quotes(char *str, char *new, int i, int *j);

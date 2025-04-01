@@ -3,50 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:26:00 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/31 18:16:02 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/01 03:09:52 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-static bool has_equal_sign(char *str)
+static bool check_valid_input(char *str)
 {
-    int i = 0;
-    if (!str)
-        return false;
-    while (str[i])
-    {
-        if (str[i] == '=')
-            return true;
-        i++;
-    }
-    return false;
+	int i;
+	
+	if (!str)
+		return (false);
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] && str[i] == '=')
+			return (true);
+		i++;
+	}
+	return (false);
 }
 
-static bool check_env(char **env, char *str)
+static bool check_env(char ***env, char *str)
 {
     int i;
-    char *new_str;
 	
 	i = 0;
     if (!env || !*env || !str)
-        return false;
-    while (env[i])
+        return (false);
+    while ((*env)[i]) 
     {
-        if (ft_strncmp(str, env[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
+        if (ft_strncmp(str, (*env)[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
         {
-            free(env[i]);
-            new_str = ft_strdup(str);
-            env[i] = new_str;
-            return true;
+            free((*env)[i]);
+            (*env)[i] = ft_strdup(str);
+            return (true);
         }
+        //dar handle em caso de ser tudo igual
         i++;
     }
-    return false;
-}
+    return (false);
+}    
 
 void add_to_env(char ***env, char *str)
 {
@@ -130,9 +131,7 @@ static char **copy_myenv(char **my_env, char *str)
 		i++;
 	new_env = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!new_env)
-	{
 		return (NULL);
-	}
 	i = 0;
 	while(my_env[i])
 	{
@@ -157,22 +156,28 @@ static char **copy_myenv(char **my_env, char *str)
 void ft_export(t_info *info)
 {
     char **sorted_env;
-    int i = 1;
+    int i;
 
+    i = 1;
     if (info->cmd_tree->args[i] != NULL)
     {
         while (info->cmd_tree->args[i])
         {
-            if (has_equal_sign(info->cmd_tree->args[i]))
-            {
-                if (!check_env(info->my_env, info->cmd_tree->args[i]))
+            if (check_valid_input(info->cmd_tree->args[i]) == true)
+		    {
+			    if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
+			    {
                     add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-				info->export_env = copy_myenv(info->my_env, info->cmd_tree->args[i]);
+				    if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+                        info->export_env = copy_myenv(info->my_env, info->cmd_tree->args[i]);
+                }
             }
             else
             {
-                if (!check_env(info->export_env, info->cmd_tree->args[i]))
+                if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+                {
                     add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+                }
             }
             i++;
         }
@@ -181,9 +186,6 @@ void ft_export(t_info *info)
     {
         if (info->export_env)
             sorted_env = create_sorted_env_copy(info->export_env);
-        else
-            sorted_env = create_sorted_env_copy(info->my_env);
-
         if (!sorted_env)
             return;
 
