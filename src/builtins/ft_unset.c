@@ -26,21 +26,20 @@ void	ft_unset(t_info *info)
 		j = 0;
 		while (info->export_env[j])
 		{
-			len = ft_strlen(info->cmd_tree->args[i]);
+            len = ft_strlen(info->cmd_tree->args[i]);
 			if (ft_strncmp(info->cmd_tree->args[i], info->export_env[j],
-					len) == 0 && (info->export_env[j][len] == '='
-					|| info->export_env[j][len] == '\0'))
+					len) == 0) //  && (info->export_env[j][len] == '='|| info->export_env[j][len] == '\0')
 			{
 				free(info->export_env[j]);
-				free(info->my_env[j]);
+				//free(info->my_env[j]);
 				while (info->export_env[j + 1])
 				{
 					info->export_env[j] = info->export_env[j + 1];
-					info->my_env[j] = info->my_env[j + 1];
+					//info->my_env[j] = info->my_env[j + 1];
 					j++;
 				}
 				info->export_env[j] = NULL;
-				info->my_env[j] = NULL;
+				//info->my_env[j] = NULL;
 				break ;
 			}
 			j++;
