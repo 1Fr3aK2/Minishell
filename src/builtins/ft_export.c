@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/01 18:39:05 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/02 03:38:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,13 @@ static bool check_env(char ***env, char *str)
         {
             if (ft_strncmp(str, (*env)[i], ft_strlen(str) - ft_strlen(ft_strrchr(str, '='))) == 0)
             {
-                if (ft_strncmp(str, (*env)[i], ft_strlen(str) == 0))
-                {
-                    printf("aquo\n");
+                if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0 && (ft_strlen(str) == ft_strlen((*env)[i])))
                     return (true);
-                }
                 else
                 {
-                    printf("aquii\n");
                     free((*env)[i]);
-                    (*env)[i] = ft_strdup(str);
+                    char *name = ft_strdup(str);
+                    (*env)[i] = name;
                     return (true);
                 }
             }    
@@ -63,7 +60,7 @@ static bool check_env(char ***env, char *str)
         i++;
     }
     return (false);
-}    
+}
 
 void add_to_env(char ***env, char *str)
 {
@@ -181,10 +178,21 @@ void ft_export(t_info *info)
 		    {
 			    if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
 			    {
-                    printf("args[i]: %s\n", info->cmd_tree->args[i]);
                     add_to_env(&(info->my_env), info->cmd_tree->args[i]);
 				    if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+                    {
+                        free_arr(info->export_env);
                         info->export_env = copy_myenv(&info->my_env, info->cmd_tree->args[i]);
+                        if (!info->export_env)
+                            return ;
+                    }
+                }
+                else
+                {
+                    free_arr(info->export_env);
+                    info->export_env = copy_myenv(&info->my_env, info->cmd_tree->args[i]);
+                    if (!info->export_env)
+                        return ;
                 }
             }
             else

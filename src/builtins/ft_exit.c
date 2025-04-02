@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/01 16:00:36 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/02 03:00:33 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ void	ft_exit(t_info *info)
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);
+	free_arr(info->export_env);
 	rl_clear_history();
 	close_fds(0);
 	exit(exit_status);
