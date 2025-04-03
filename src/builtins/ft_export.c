@@ -6,13 +6,13 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/02 18:22:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/03 03:40:47 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-static bool	check_valid_input(char *str)
+static bool	check_equal_sign(char *str)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ static bool	check_env(char ***env, char *str)
 		return (false);
 	while ((*env)[i])
 	{
-		if (check_valid_input(str) == true)
+		if (check_equal_sign(str) == true)
 		{
 			if (ft_strncmp(str, (*env)[i], ft_strlen(str)
 					- ft_strlen(ft_strrchr(str, '='))) == 0)
@@ -57,13 +57,13 @@ static bool	check_env(char ***env, char *str)
 		}
 		else
 		{
-			if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0)
+			if (ft_strncmp(str, (*env)[i], ft_strlen(str) == 0))
 				return (true);
 		}
 		i++;
 	}
 	return (false);
-}
+} // dar fix no else export teste=teste || export te . || export te=teste .
 
 void	add_to_env(char ***env, char *str)
 {
@@ -179,13 +179,13 @@ static void format_str(char **str)
     value = ft_strchr(*str, '=');
     if (!value)
         return;
-    key_len = value - *str + 1; // Comprimento da chave incluindo '=' subtrair atraves de memory adresses, usamos + 1 para contar o =
+    key_len = value - *str + 1;
     value++;
-    total_len = key_len + 2 + ft_strlen(value) + 1; // "chave=" + "\"" + "valor" + "\"" + '\0'
+    total_len = key_len + ft_strlen(value) + 3;
     new = (char *)malloc(sizeof(char) * total_len);
     if (!new)
         return;
-    ft_strlcpy(new, *str, key_len + 1); // Copia "chave="
+    ft_strlcpy(new, *str, key_len + 1);
     ft_strlcat(new, "\"", total_len);
     ft_strlcat(new, value, total_len);
     ft_strlcat(new, "\"", total_len);
@@ -193,19 +193,54 @@ static void format_str(char **str)
     *str = new;
 }
 
-//dar fix nos invalid chars
+static bool check_pos(char *str, char c)
+{
+	if (!str)
+		return (false);	
+	if ((ft_strchr(str, c) && (ft_strchr(str, c) < ft_strchr(str, '=')))  
+		|| (ft_strchr(str, c) && !ft_strchr(str, '=')))
+		return (true);
+	return (false);
+}
+
+bool check_valid_input(char *str, int *exit)
+{
+	if (!str)
+		return (false);
+	if (*str == '\0' || *str == '=' || ft_isdigit(*str) == 1 || check_pos(str, '-') || check_pos(str, '.')
+		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?'))
+	{
+		ft_putstr_fd("shellinho: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		*exit = 1;
+		return (false);
+	}
+	/* else if (*str == '_' && (*str + 1 == '\0' || *str + 1 == '='))
+		return (false); */
+	return (true);
+}
+//fix export _=T 
+//fazer add export (export teste+=teste) adiciona o que vem a seguir ao igual ao que ja existe
 void	ft_export(t_info *info)
 {
 	char	**sorted_env;
+	int		exit;
 	int		i;
-
+	
 	sorted_env = NULL;
 	i = 1;
+	exit = 0;
 	if (info->cmd_tree->args[i] != NULL)
 	{
 		while (info->cmd_tree->args[i])
 		{
-			if (check_valid_input(info->cmd_tree->args[i]) == true)
+			if (!check_valid_input(info->cmd_tree->args[i], &exit))
+			{
+	 			i++;
+				continue;
+			}
+			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
                 format_str(&info->cmd_tree->args[i]);
 				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
@@ -253,4 +288,5 @@ void	ft_export(t_info *info)
 		}
 		free(sorted_env);
 	}
+	exit_status = exit;
 }
