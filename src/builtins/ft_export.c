@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/03 03:40:47 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/05 02:22:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,11 +216,11 @@ bool check_valid_input(char *str, int *exit)
 		*exit = 1;
 		return (false);
 	}
-	/* else if (*str == '_' && (*str + 1 == '\0' || *str + 1 == '='))
-		return (false); */
+	else if (*str == '_' && (*(str + 1) == '\0' || *(str + 1) == '='))
+		return (false);
 	return (true);
 }
-//fix export _=T 
+
 //fazer add export (export teste+=teste) adiciona o que vem a seguir ao igual ao que ja existe
 void	ft_export(t_info *info)
 {
