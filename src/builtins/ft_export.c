@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/05 02:22:59 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/07 02:33:01 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,8 @@ static void format_str(char **str)
 {
     char *value;
     char *new;
-    int key_len, total_len;
+    int key_len;
+	int total_len;
 
     if (!str || !*str)
         return;
@@ -220,7 +221,132 @@ bool check_valid_input(char *str, int *exit)
 		return (false);
 	return (true);
 }
+static bool check_plus_sign(char *str)
+{
+	if (!str)
+		return (false);
+	int i;
+	i = 0;
+	while(str[i])
+	{
+		if (str[i] && str[i] == '+')
+		{
+			if (str[i + 1] && str[i + 1] == '=')
+				return (true);
+			return (false);
+		}
+		i++;			
+	}
+	return (false);
+}
 
+/* int find_index(char **arr, char *str)
+{
+	int i;
+	if (!arr || !str)
+		return (-1);
+	i = 0;
+	while(arr[i])
+	{
+		if (ft_strncmp(str, arr[i], ft_strlen(arr[i])
+					- ft_strlen(ft_strrchr(arr[i], '='))) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+} */
+
+char *reverse_strchr(char *str, int c)
+{
+	char *pos;
+	char *new;
+	int len;
+
+	if (!str)
+		return NULL;
+	pos = ft_strchr(str, c);
+	if (!pos)
+		return (NULL);
+	len = pos - str;
+	new = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	ft_strncpy(new, str, len);
+	new[len] = '\0';
+	return (new);	
+}
+
+int find_index(char **arr, char *str)
+{
+	int i;
+	char *key;
+
+	if (!arr || !str)
+		return (-1);
+	
+	// Se tiver '+=' ou '=', corta antes
+	if (ft_strchr(str, '+'))
+		key = reverse_strchr(str, '+');
+	else
+		key = reverse_strchr(str, '=');
+	
+	if (!key)
+		return (-1);
+
+	i = 0;
+	while (arr[i])
+	{
+		if (ft_strncmp(key, arr[i], ft_strlen(key)) == 0 && arr[i][ft_strlen(key)] == '=')
+		{
+			free(key);
+			return (i);
+		}
+		i++;
+	}
+	free(key);
+	return (-1);
+}
+
+
+
+void add_check(char ***arr, char *str)
+{
+    char *name;
+    char *new;
+	char *value;
+    int i;
+
+    if (!str || !*arr)
+        return;
+    name = reverse_strchr(str, '+');
+    if (name) 
+	{
+        printf("Parte antes do '+': %s\n", name);
+    }
+	else
+		return ;
+	value = ft_strchr(str, '=');
+	value++;
+    i = find_index(*arr, name);
+    if (i == -1)
+    {
+        free(name);
+        return;
+    }
+    else
+    {
+        new = ft_strjoin(*arr[i], value);
+        if (!new)
+        {
+            free(name);
+            return;
+        }
+    }
+    free(*arr[i]);
+    *arr[i] = new;
+    printf("export_env[i]: %s\n", *arr[i]);
+    free(name);
+}
 //fazer add export (export teste+=teste) adiciona o que vem a seguir ao igual ao que ja existe
 void	ft_export(t_info *info)
 {
@@ -242,6 +368,8 @@ void	ft_export(t_info *info)
 			}
 			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
+				if (check_plus_sign(info->cmd_tree->args[i]))
+					add_check(&info->export_env, info->cmd_tree->args[i]);
                 format_str(&info->cmd_tree->args[i]);
 				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
 				{
