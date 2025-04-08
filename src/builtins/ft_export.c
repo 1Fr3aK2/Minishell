@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/08 15:53:32 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/08 16:02:27 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,16 +245,13 @@ int find_index(char **arr, char *str)
 
 	if (!arr || !str)
 		return (-1);
-	
 	// Se tiver '+=' ou '=', corta antes
 	if (ft_strchr(str, '+'))
 		key = reverse_strchr(str, '+');
 	else
 		key = reverse_strchr(str, '=');
-	
 	if (!key)
 		return (-1);
-
 	i = 0;
 	while (arr[i])
 	{
@@ -268,8 +265,6 @@ int find_index(char **arr, char *str)
 	free(key);
 	return (-1);
 }
-
-
 
 void add_check(char ***arr, char *str)
 {
@@ -331,20 +326,22 @@ void	ft_export(t_info *info)
 			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
 				if (check_equal_sign(info->cmd_tree->args[i]) == true)
+				{
 					if (check_plus_sign(info->cmd_tree->args[i]) == true)
         				add_check(&info->export_env, info->cmd_tree->args[i]);
-    			format_str(&info->cmd_tree->args[i]);
-				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
-    			{
-        			add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    			}
-    			else
-    			{
-        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    			}
+    				format_str(&info->cmd_tree->args[i]);
+					if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
+    				{
+        				add_to_env(&(info->my_env), info->cmd_tree->args[i]);
+        				if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            				add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    				}
+    				else
+    				{
+        				if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            				add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    				}
+				}
 			}
 			else
 			{
