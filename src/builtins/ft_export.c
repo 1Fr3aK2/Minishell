@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/08 16:02:27 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:26:06 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,23 +166,6 @@ static bool check_pos(char *str, char c)
 	return (false);
 }
 
-bool check_valid_input(char *str, int *exit)
-{
-	if (!str)
-		return (false);
-	if (*str == '\0' || *str == '=' || ft_isdigit(*str) == 1 || check_pos(str, '-') || check_pos(str, '.')
-		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?'))
-	{
-		ft_putstr_fd("shellinho: export: `", 2);
-		ft_putstr_fd(str, 2);
-		ft_putendl_fd("': not a valid identifier", 2);
-		*exit = 1;
-		return (false);
-	}
-	else if (*str == '_' && (*(str + 1) == '\0' || *(str + 1) == '='))
-		return (false);
-	return (true);
-}
 static bool check_plus_sign(char *str)
 {
 	if (!str)
@@ -201,22 +184,23 @@ static bool check_plus_sign(char *str)
 	}
 	return (false);
 }
-
-/* int find_index(char **arr, char *str)
+bool check_valid_input(char *str, int *exit)
 {
-	int i;
-	if (!arr || !str)
-		return (-1);
-	i = 0;
-	while(arr[i])
+	if (!str)
+		return (false);
+	if (*str == '\0' || *str == '=' || *str == '+'|| ft_isdigit(*str) == 1 || check_pos(str, '-') || check_pos(str, '.')
+		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?'))
 	{
-		if (ft_strncmp(str, arr[i], ft_strlen(arr[i])
-					- ft_strlen(ft_strrchr(arr[i], '='))) == 0)
-			return (i);
-		i++;
+		ft_putstr_fd("shellinho: export: `", 2);
+		ft_putstr_fd(str, 2);
+		ft_putendl_fd("': not a valid identifier", 2);
+		*exit = 1;
+		return (false);
 	}
-	return (-1);
-} */
+	else if (*str == '_' && (*(str + 1) == '\0' || *(str + 1) == '='))
+		return (false);
+	return (true);
+}
 
 char *reverse_strchr(char *str, int c)
 {
@@ -241,31 +225,25 @@ char *reverse_strchr(char *str, int c)
 int find_index(char **arr, char *str)
 {
 	int i;
-	char *key;
 
 	if (!arr || !str)
 		return (-1);
-	// Se tiver '+=' ou '=', corta antes
-	if (ft_strchr(str, '+'))
-		key = reverse_strchr(str, '+');
-	else
-		key = reverse_strchr(str, '=');
-	if (!key)
-		return (-1);
+	printf("str in fi: %s\n", str);
 	i = 0;
 	while (arr[i])
 	{
-		if (ft_strncmp(key, arr[i], ft_strlen(key)) == 0 && arr[i][ft_strlen(key)] == '=')
+		if (ft_strncmp(str, arr[i], ft_strlen(str)) == 0)
 		{
-			free(key);
+			printf("str: %s\n", str);
+			printf("i: %d\n", i);
 			return (i);
 		}
 		i++;
 	}
-	free(key);
+	// free(str);
 	return (-1);
 }
-
+//fix export teste+a
 void add_check(char ***arr, char *str)
 {
     char *name;
@@ -277,33 +255,36 @@ void add_check(char ***arr, char *str)
         return;
     name = reverse_strchr(str, '+');
     if (name) 
-	{
         printf("Parte antes do '+': %s\n", name);
-    }
 	else
 		return ;
 	value = ft_strchr(str, '=');
 	value++;
+	printf("value: %s\n", value);
     i = find_index(*arr, name);
+	printf("iiii: %d\n", i);
     if (i == -1)
     {
+		printf("aqui %d\n", i);
         free(name);
         return;
     }
     else
     {
-        new = ft_strjoin(*arr[i], value);
+		printf("export_env[i]: %s\n", (*arr)[i]);
+        new = ft_strjoin((*arr)[i], value);
         if (!new)
         {
             free(name);
             return;
         }
+		printf("new: %s\n", new);
     }
-    free(*arr[i]);
-    *arr[i] = new;
-    printf("export_env[i]: %s\n", *arr[i]);
+    free((*arr)[i]);
+    (*arr)[i] = new;
     free(name);
 }
+
 //fazer add export (export teste+=teste) adiciona o que vem a seguir ao igual ao que ja existe
 void	ft_export(t_info *info)
 {
@@ -325,23 +306,24 @@ void	ft_export(t_info *info)
 			}
 			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
-				if (check_equal_sign(info->cmd_tree->args[i]) == true)
+				if (check_plus_sign(info->cmd_tree->args[i]) == true)
 				{
-					if (check_plus_sign(info->cmd_tree->args[i]) == true)
-        				add_check(&info->export_env, info->cmd_tree->args[i]);
-    				format_str(&info->cmd_tree->args[i]);
-					if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
-    				{
-        				add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-        				if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            				add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    				}
-    				else
-    				{
-        				if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            				add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    				}
+        			add_check(&info->export_env, info->cmd_tree->args[i]);
+					i++;
+					continue;
 				}
+    			format_str(&info->cmd_tree->args[i]);
+				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
+    			{
+        			add_to_env(&(info->my_env), info->cmd_tree->args[i]);
+        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    			}
+    			else
+    			{
+        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    			}
 			}
 			else
 			{
