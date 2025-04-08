@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/04/08 18:21:15 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/04/08 18:07:56 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/04/08 18:57:56 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

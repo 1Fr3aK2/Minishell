@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/08 18:52:00 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/08 19:10:21 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,29 +131,28 @@ int	check_operators(t_info *info)
 
 int	check_redirections(t_info *info)
 {
-	int	i;
-	int j;
+	char	*cmd;
+	int		i;
 
+	cmd = info->cmd_tree->args[0];
 	i = 0;
-	while (info->cmd_tree->args[i])
+	while (info->redirections->reds[i])
 	{
-		j = 0;
-		while (info->redirections->reds[j])
+		if (ft_strncmp(cmd, info->redirections->reds[i],
+				ft_strlen(info->redirections->reds[i])) == 0)
 		{
-			if (ft_strncmp(info->cmd_tree->args[i], info->redirections->reds[j],
-					ft_strlen(info->redirections->reds[j])) == 0)
+			if (ft_strlen(cmd) == ft_strlen(info->redirections->reds[i]))
 			{
-				info->io->file = info->cmd_tree->args[i + 1];
-				info->redirections->f[j](info->io);
-				i++;
-				break ;
+				if (info->redirections->f[i])
+					info->redirections->f[i](info->io);
+				return (0);
 			}
-			j++;
 		}
 		i++;
 	}
 	return (1);
 }
+
 
 
 void	clean(t_info *info)
