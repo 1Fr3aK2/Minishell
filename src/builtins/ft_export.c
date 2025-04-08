@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/07 02:33:01 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/08 15:53:32 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,33 @@ static bool	check_equal_sign(char *str)
 
 static bool	check_env(char ***env, char *str)
 {
-	int		i;
-	char	*name;
-
+	int i;
+	char *equal_pos;
+	size_t name_len;
+	
 	i = 0;
 	if (!env || !*env || !str)
 		return (false);
+	equal_pos = ft_strchr(str, '=');
+	name_len = ft_strlen(str);
+	if (equal_pos)
+		name_len = equal_pos - str;
 	while ((*env)[i])
 	{
-		if (check_equal_sign(str) == true)
+		if (ft_strncmp(str, (*env)[i], name_len) == 0
+			&& ((*env)[i][name_len] == '=' || (*env)[i][name_len] == '\0'))
 		{
-			if (ft_strncmp(str, (*env)[i], ft_strlen(str)
-					- ft_strlen(ft_strrchr(str, '='))) == 0)
-			{
-				if (ft_strncmp(str, (*env)[i], ft_strlen(str)) == 0
-					&& (ft_strlen(str) == ft_strlen((*env)[i])))
-					return (true);
-				else
-				{
-					free((*env)[i]);
-					name = ft_strdup(str);
-					(*env)[i] = name;
-					return (true);
-				}
-			}
-		}
-		else
-		{
-			if (ft_strncmp(str, (*env)[i], ft_strlen(str) == 0))
-				return (true);
+			if (!equal_pos)
+				return (true); // existe o nome da variavel sem o igual retorna nao necessita de nada
+			free((*env)[i]);
+			(*env)[i] = ft_strdup(str);
+			return (true);
 		}
 		i++;
 	}
 	return (false);
-} // dar fix no else export teste=teste || export te . || export te=teste .
+}
+// dar fix no else export teste=teste || export te . || export te=teste .
 
 void	add_to_env(char ***env, char *str)
 {
@@ -135,37 +128,6 @@ char	**create_sorted_env_copy(char **env)
 	copy[i] = NULL;
 	sort_env(copy);
 	return (copy);
-}
-
-static char	**copy_myenv(char ***my_env, char *str)
-{
-	int		i;
-	char	**new_env;
-
-	new_env = NULL;
-	if (!my_env || !str)
-		return (NULL);
-	i = 0;
-	while ((*my_env)[i])
-		i++;
-	new_env = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!new_env)
-		return (NULL);
-	i = 0;
-	while ((*my_env)[i])
-	{
-		new_env[i] = ft_strdup((*my_env)[i]);
-		if (!new_env[i])
-			return (NULL);
-		i++;
-	}
-	new_env[i] = NULL;
-	while (new_env[i])
-	{
-		printf("%s\n", new_env[i]);
-		i++;
-	}
-	return (new_env);
 }
 
 static void format_str(char **str)
@@ -368,30 +330,21 @@ void	ft_export(t_info *info)
 			}
 			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
-				if (check_plus_sign(info->cmd_tree->args[i]))
-					add_check(&info->export_env, info->cmd_tree->args[i]);
-                format_str(&info->cmd_tree->args[i]);
+				if (check_equal_sign(info->cmd_tree->args[i]) == true)
+					if (check_plus_sign(info->cmd_tree->args[i]) == true)
+        				add_check(&info->export_env, info->cmd_tree->args[i]);
+    			format_str(&info->cmd_tree->args[i]);
 				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
-				{
-					add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-					if (check_env(&info->export_env,
-							info->cmd_tree->args[i]) == false)
-					{
-						free_arr(info->export_env);
-						info->export_env = copy_myenv(&info->my_env,
-								info->cmd_tree->args[i]);
-						if (!info->export_env)
-							return ;
-					}
-				}
-				else
-				{
-					free_arr(info->export_env);
-					info->export_env = copy_myenv(&info->my_env,
-							info->cmd_tree->args[i]);
-					if (!info->export_env)
-						return ;
-				}
+    			{
+        			add_to_env(&(info->my_env), info->cmd_tree->args[i]);
+        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    			}
+    			else
+    			{
+        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+    			}
 			}
 			else
 			{
