@@ -6,7 +6,11 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/04/08 18:21:15 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/04/08 18:07:56 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +30,7 @@ void	ft_unset(t_info *info)
 		j = 0;
 		while (info->export_env[j])
 		{
-            len = ft_strlen(info->cmd_tree->args[i]);
+            len = ft_strlen(info->export_env[j]);
 			if (ft_strncmp(info->cmd_tree->args[i], info->export_env[j],
 					len) == 0)
 			{

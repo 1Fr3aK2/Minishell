@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/01 20:03:52 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:50:20 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	child_process(t_info *info)
 		{
 			signal(SIGINT, SIG_DFL); // processo filho tem comportamento padrao,
 			signal(SIGQUIT, SIG_DFL);// independentemente das definicoes do processo pai
+			storing_backup(info->io);
+			check_redirections(info);
+			restore_io(info->io);
 			exec(info);
 		}
 		else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/17 11:18:51 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/08 18:52:00 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,33 @@ int	check_operators(t_info *info)
 	}
 	return (1);
 }
+
+int	check_redirections(t_info *info)
+{
+	int	i;
+	int j;
+
+	i = 0;
+	while (info->cmd_tree->args[i])
+	{
+		j = 0;
+		while (info->redirections->reds[j])
+		{
+			if (ft_strncmp(info->cmd_tree->args[i], info->redirections->reds[j],
+					ft_strlen(info->redirections->reds[j])) == 0)
+			{
+				info->io->file = info->cmd_tree->args[i + 1];
+				info->redirections->f[j](info->io);
+				i++;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
 
 void	clean(t_info *info)
 {

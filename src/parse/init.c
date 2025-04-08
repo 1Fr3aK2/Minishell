@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/01 00:43:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/08 18:01:19 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ void	copy_env(char ***my_env, char **env)
 	}
 }
 
-
 static void	fill_types(t_info *info)
 {
 	info->types->types[0] = "|";
@@ -86,6 +85,19 @@ static void	fill_redirections(t_info *info)
     info->redirections->f[4] = NULL;
 }
 
+void init_io(t_io *io)
+{
+	if (!io)
+		return ;
+	io->fd_in = -1;
+	io->fd_out = -1;
+	io->stdin_backup = -1;
+	io->stdin_backup = -1;
+	io->file = NULL;
+	io->redirections=NULL;
+}
+
+
 void	init(t_info *info, char **env)
 {
 	info->cmd_tree = NULL;
@@ -106,6 +118,15 @@ void	init(t_info *info, char **env)
 		free(info->types);
         return ;
     }
+	info->io = malloc(sizeof(t_io));
+	if (!info->io)
+	{
+		free(info->builtins);
+		free(info->types);
+		free(info->redirections);
+        return ;
+	}
+	init_io(info->io);
 	fill_builtins(info);
 	fill_types(info);
 	fill_redirections(info);

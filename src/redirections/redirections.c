@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/27 17:32:18 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/08 17:38:13 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ o output pra um ficheiro outfile.txt, inves do terminal.
 */ 
 void	handle_input_redirection(t_io *io)
 {
-	if (!io && !io->in_file)
+	if (!io && !io->file)
 		return ;
-	io->fd_in = open(io->in_file, O_RDONLY);
+	io->fd_in = open(io->file, O_RDONLY);
 	if (io->fd_in == -1)
 		error_exit("open failed in fd_in");
 	if (dup2(io->fd_in, STDIN_FILENO) == -1)
@@ -35,9 +35,9 @@ void	handle_input_redirection(t_io *io)
 
 void	handle_output_redirection(t_io *io)
 {
-	if (!io && !io->out_file)
+	if (!io && !io->file)
 		return ;
-	io->fd_out = open(io->out_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (io->fd_out == -1)
 		error_exit("open failed in fd_out");
 	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -50,9 +50,9 @@ void	handle_output_redirection(t_io *io)
 
 void	handle_append_redirection(t_io *io)
 {
-	if (!io && !io->out_file)
+	if (!io && !io->file)
 		return ;
-	io->fd_out = open(io->out_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (io->fd_out == -1)
 		error_exit("open failed in fd_out append");
 	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
@@ -68,15 +68,15 @@ void	handle_heredoc_redirection(t_io *io)
 	char	*line;
 	int		fd[2];
 
-	if (!io || !io->here_delimiter)
+	if (!io || !io->file)
 		return ;
 	if (pipe(fd) == -1)
 		error_exit("pipe failed for heredoc");
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strncmp(line, io->here_delimiter,
-				ft_strlen(io->here_delimiter)) == 0)
+		if (!line || ft_strncmp(line, io->file,
+				ft_strlen(io->file)) == 0)
 		{
 			free(line);
 			break ;
@@ -92,47 +92,4 @@ void	handle_heredoc_redirection(t_io *io)
 		error_exit("dup2 failed: Could not redirect heredoc");
 	}
 	close(fd[0]);
-}
-
-void	handle_redirections(t_io *io, char **args)
-{
-	int	i;
-
-	i = 0;
-	while (args[i])
-	{
-		if (strcmp(args[i], ">") == 0)
-		{
-			if (args[i + 1])
-			{
-				handle_output_redirection(io);
-				i++; // Skip the next argument as it's the filename
-			}
-		}
-		else if (strcmp(args[i], ">>") == 0)
-		{
-			if (args[i + 1])
-			{
-				handle_append_redirection(io);
-				i++;
-			}
-		}
-		else if (strcmp(args[i], "<") == 0)
-		{
-			if (args[i + 1])
-			{
-				handle_input_redirection(io);
-				i++;
-			}
-		}
-		else if (strcmp(args[i], "<<") == 0)
-		{
-			if (args[i + 1])
-			{
-				handle_heredoc_redirection(io);
-				i++;
-			}
-		}
-		i++;
-	}
 }
