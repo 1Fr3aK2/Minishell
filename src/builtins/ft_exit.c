@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/02 03:00:33 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/09 16:02:44 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,15 @@
 
 void	ft_exit(t_info *info)
 {
-	int				exit_flags;
+	int	exit_flags;
 
-	exit_flags = ft_atoi(info->flags);	
+	exit_flags = ft_atoi(info->flags);
+	if (info->cmd_tree->args[2])
+	{
+		printf("exit\nshellinho: exit: too many arguments\n");
+		exit_status = 1;
+		return ;
+	}	
 	if (isatty(STDIN_FILENO)) // returns 1 if the fd is a terminal
 		printf("exit\n");     // exit -> terminal. echo ola | exit -> not terminal
 	if (exit_flags)
@@ -36,4 +42,3 @@ void	ft_exit(t_info *info)
 	close_fds(0);
 	exit(exit_status);
 }
-// verificar exit status ctrl+d
