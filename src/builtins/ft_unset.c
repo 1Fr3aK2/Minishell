@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:16:58 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/08 18:57:56 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/09 19:21:23 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_unset(t_info *info)
 	int		i;
 	int		j;
 	size_t	len;
+	char	*str;
 
 	if (!info->cmd_tree->args[1])
 		return ;
@@ -26,9 +27,13 @@ void	ft_unset(t_info *info)
 		j = 0;
 		while (info->export_env[j])
 		{
-            len = ft_strlen(info->export_env[j]);
-			if (ft_strncmp(info->cmd_tree->args[i], info->export_env[j],
-					len) == 0)
+			str = reverse_strchr(info->export_env[j], '=');
+			if (!str)
+				str = info->export_env[j];
+			len = ft_strlen(str);
+			if (ft_strncmp(info->cmd_tree->args[i], str, len) == 0
+				&& (info->cmd_tree->args[i][len] == '\0'
+					|| info->cmd_tree->args[i][len] == '='))
 			{
 				free(info->export_env[j]);
 				while (info->export_env[j + 1])
@@ -38,24 +43,33 @@ void	ft_unset(t_info *info)
 				}
 				info->export_env[j] = NULL;
 				break ;
-            }
-            j++;
-        }
-        j = 0;
-        while (info->my_env[j])
-        {
-            if (ft_strncmp(info->cmd_tree->args[i], info->my_env[j], len) == 0)
-            {
-                free(info->my_env[j]);
-                while (info->my_env[j + 1])
-                {
-                    info->my_env[j] = info->my_env[j + 1];
-                    j++;
-                }
-                info->my_env[j] = NULL;
-                break ;
-            }
-		    j++;
+			}
+			if (str != info->export_env[j])  // Only free str if it was allocated by reverse_strchr
+				free(str);
+			j++;
+		}
+		j = 0;
+		while (info->my_env[j])
+		{
+			str = reverse_strchr(info->my_env[j], '=');
+			if (!str)
+				str = info->my_env[j];
+			if (ft_strncmp(info->cmd_tree->args[i], str, ft_strlen(str)) == 0
+				&& (info->cmd_tree->args[i][len] == '\0'
+					|| info->cmd_tree->args[i][len] == '='))
+			{
+				free(info->my_env[j]);
+				while (info->my_env[j + 1])
+				{
+					info->my_env[j] = info->my_env[j + 1];
+					j++;
+				}
+				info->my_env[j] = NULL;
+				break ;
+			}
+			if (str != info->my_env[j])
+				free(str);
+			j++;
 		}
 		i++;
 	}
