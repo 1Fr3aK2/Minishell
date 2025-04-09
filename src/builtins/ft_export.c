@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/08 18:26:06 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:32:19 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ static bool	check_env(char ***env, char *str)
 	}
 	return (false);
 }
-// dar fix no else export teste=teste || export te . || export te=teste .
 
 void	add_to_env(char ***env, char *str)
 {
@@ -184,12 +183,13 @@ static bool check_plus_sign(char *str)
 	}
 	return (false);
 }
+
 bool check_valid_input(char *str, int *exit)
 {
 	if (!str)
 		return (false);
 	if (*str == '\0' || *str == '=' || *str == '+'|| ft_isdigit(*str) == 1 || check_pos(str, '-') || check_pos(str, '.')
-		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?'))
+		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?') || (ft_strchr(str, '+') && !check_plus_sign(str)))
 	{
 		ft_putstr_fd("shellinho: export: `", 2);
 		ft_putstr_fd(str, 2);
@@ -228,64 +228,47 @@ int find_index(char **arr, char *str)
 
 	if (!arr || !str)
 		return (-1);
-	printf("str in fi: %s\n", str);
 	i = 0;
 	while (arr[i])
 	{
 		if (ft_strncmp(str, arr[i], ft_strlen(str)) == 0)
-		{
-			printf("str: %s\n", str);
-			printf("i: %d\n", i);
 			return (i);
-		}
 		i++;
 	}
-	// free(str);
 	return (-1);
 }
-//fix export teste+a
+
 void add_check(char ***arr, char *str)
 {
-    char *name;
-    char *new;
-	char *value;
+    char *var_name;
+    char *temp;
+	char *var_value;
+	char *new_var;
     int i;
 
     if (!str || !*arr)
         return;
-    name = reverse_strchr(str, '+');
-    if (name) 
-        printf("Parte antes do '+': %s\n", name);
-	else
+    var_name = reverse_strchr(str, '+');
+	if (!var_name)
 		return ;
-	value = ft_strchr(str, '=');
-	value++;
-	printf("value: %s\n", value);
-    i = find_index(*arr, name);
-	printf("iiii: %d\n", i);
+	var_value = ft_strchr(str, '=');
+	if (!var_value)
+        return (free(var_name));
+	var_value++;
+    i = find_index(*arr, var_name);
     if (i == -1)
-    {
-		printf("aqui %d\n", i);
-        free(name);
-        return;
-    }
-    else
-    {
-		printf("export_env[i]: %s\n", (*arr)[i]);
-        new = ft_strjoin((*arr)[i], value);
-        if (!new)
-        {
-            free(name);
-            return;
-        }
-		printf("new: %s\n", new);
-    }
+        return (free(var_name));
+    temp = ft_strjoin((*arr)[i], var_value);
+    if (!temp)
+        return (free(var_name));
     free((*arr)[i]);
-    (*arr)[i] = new;
-    free(name);
+	new_var = remove_quotes(temp);
+	free(temp);
+	format_str(&new_var);
+    (*arr)[i] = new_var;
+    free(var_name);
 }
 
-//fazer add export (export teste+=teste) adiciona o que vem a seguir ao igual ao que ja existe
 void	ft_export(t_info *info)
 {
 	char	**sorted_env;
@@ -308,6 +291,7 @@ void	ft_export(t_info *info)
 			{
 				if (check_plus_sign(info->cmd_tree->args[i]) == true)
 				{
+					add_check(&info->my_env, info->cmd_tree->args[i]);
         			add_check(&info->export_env, info->cmd_tree->args[i]);
 					i++;
 					continue;
@@ -350,3 +334,5 @@ void	ft_export(t_info *info)
 	}
 	exit_status = exit;
 }
+
+//env nao tem aspas ao contrario de export 

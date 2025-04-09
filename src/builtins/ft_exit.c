@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/09 16:02:44 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/09 17:26:18 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-// sai do processo filo dentro de pipes cat Markefile | exit
+// sai do processo filo dentro de pipes cat Markefile | exit || CORRIGIT CTRL + D
 
 void	ft_exit(t_info *info)
 {
