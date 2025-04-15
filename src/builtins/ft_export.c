@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/09 17:32:19 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/15 20:15:21 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,15 @@ static bool	check_env(char ***env, char *str)
 	name_len = ft_strlen(str);
 	if (equal_pos)
 		name_len = equal_pos - str;
+	else
+		return (true); // existe o nome da variavel sem o igual retorna nao necessita de nada
 	while ((*env)[i])
 	{
 		if (ft_strncmp(str, (*env)[i], name_len) == 0
 			&& ((*env)[i][name_len] == '=' || (*env)[i][name_len] == '\0'))
 		{
-			if (!equal_pos)
-				return (true); // existe o nome da variavel sem o igual retorna nao necessita de nada
-			free((*env)[i]);
-			(*env)[i] = ft_strdup(str);
+				free((*env)[i]);
+				(*env)[i] = ft_strdup(str);
 			return (true);
 		}
 		i++;
@@ -222,6 +222,7 @@ char *reverse_strchr(char *str, int c)
 	return (new);	
 }
 
+
 int find_index(char **arr, char *str)
 {
 	int i;
@@ -238,6 +239,33 @@ int find_index(char **arr, char *str)
 	return (-1);
 }
 
+void create_var(char ***env, char *str)
+{
+	int len;
+	char *new_str;
+	char *var_name;
+	char *var_value;
+
+	var_name = reverse_strchr(str, '+');
+	var_value = ft_strchr(str, '=');
+	if (!var_name || !var_value)
+		return ;
+	len = ft_strlen(var_name) + ft_strlen(var_value) + 1;
+	new_str = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new_str)
+	{
+		free(var_name);
+		return;
+	}
+	new_str[0] = '\0';
+	ft_strlcpy(new_str, var_name, ft_strlen(var_name) + 1);
+	ft_strlcat(new_str, var_value, len + 1);
+	format_str(&new_str);
+	add_to_env(env, new_str);
+	free(new_str);
+	free(var_name);
+}
+
 void add_check(char ***arr, char *str)
 {
     char *var_name;
@@ -246,8 +274,6 @@ void add_check(char ***arr, char *str)
 	char *new_var;
     int i;
 
-    if (!str || !*arr)
-        return;
     var_name = reverse_strchr(str, '+');
 	if (!var_name)
 		return ;
@@ -257,7 +283,11 @@ void add_check(char ***arr, char *str)
 	var_value++;
     i = find_index(*arr, var_name);
     if (i == -1)
-        return (free(var_name));
+	{
+		create_var(arr, str);
+		free(var_name);
+		return ;
+	}
     temp = ft_strjoin((*arr)[i], var_value);
     if (!temp)
         return (free(var_name));
@@ -268,6 +298,7 @@ void add_check(char ***arr, char *str)
     (*arr)[i] = new_var;
     free(var_name);
 }
+
 
 void	ft_export(t_info *info)
 {

@@ -26,4 +26,3 @@ FAZER || E &&
 NORMINETE
 
 verificar ordem de env
-fix quando fazemos export += sem ter adicionado a variavel anteriormente
