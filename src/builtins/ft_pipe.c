@@ -6,13 +6,13 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/20 23:27:12 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/16 18:06:41 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-static void	exec_command(t_info *info, t_tree *node)
+void	exec_command(t_info *info, t_tree *node)
 {
 	if (!info || !node)
 		return ;

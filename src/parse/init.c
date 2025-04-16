@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/08 18:01:19 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:43:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static void	fill_types(t_info *info)
 	info->types->types[2] = "&&";
 	info->types->types[3] = NULL;
 	info->types->f[0] = ft_pipe_wrapper;
-	info->types->f[1] = /* ft_or */ NULL;
-	info->types->f[2] = /* ft_and */ NULL;
+	info->types->f[1] = ft_or;
+	info->types->f[2] = ft_and;
 	info->types->f[3] = NULL;
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 18:37:29 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/16 23:48:34 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 		free(node);
 		return (NULL);
 	}
-	node->args[0] = ft_strdup(tokens[*index]);
+	node->args[0] = ft_strdup(tokens[*index]); //erro aqui
 	node->args[1] = NULL;
 	//printf("Operator '%s' copied to args\n", node->args[0]);
 	left_tokens = sub_tokens(tokens, 0, *index);

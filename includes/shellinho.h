@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/09 16:55:32 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/16 18:58:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,13 @@ void					ft_unset(t_info *info);
 
 //builtins/pipe
 void					ft_pipe_wrapper(t_info *info);
+
+//builtins/and
+void	exec_command(t_info *info, t_tree *node);
+void	ft_and(t_info *info);
+
+//builtins/or
+void ft_or(t_info *info);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);
