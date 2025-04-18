@@ -131,26 +131,40 @@ int	check_operators(t_info *info)
 
 int	check_redirections(t_info *info)
 {
-	char	*cmd;
 	int		i;
+	int		j;
+	char	**args = info->cmd_tree->args;
 
-	cmd = info->cmd_tree->args[0];
 	i = 0;
-	while (info->redirections->reds[i])
+	while (args && args[i])
 	{
-		if (ft_strncmp(cmd, info->redirections->reds[i],
-				ft_strlen(info->redirections->reds[i])) == 0)
+		j = 0;
+		while (info->redirections->reds[j])
 		{
-			if (ft_strlen(cmd) == ft_strlen(info->redirections->reds[i]))
+			if (strcmp(args[i], info->redirections->reds[j]) == 0)
 			{
-				if (info->redirections->f[i])
-					info->redirections->f[i](info->io);
-				return (0);
+				info->io->file = ft_strdup(args[i + 1]);
+				info->redirections->f[j](info->io);
+				remove_redir_tokens(args, i);
+				break ;
 			}
+			j++;
 		}
 		i++;
 	}
 	return (1);
+}
+
+void	remove_redir_tokens(char **args, int i)
+{
+	free(args[i]);
+	free(args[i + 1]);
+	while (args[i + 2])
+	{
+		args[i] = args[i + 2];
+		i++;
+	}
+	args[i] = NULL;
 }
 
 

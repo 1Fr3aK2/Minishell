@@ -14,35 +14,18 @@
 
 void	storing_backup(t_io *io)
 {
-	if (!io)
-		return ;
-	io->stdin_backup = dup(STDIN_FILENO);   // Backup stdin
-	io->stdout_backup = dup(STDOUT_FILENO); // Backup stdout
-	if (io->stdin_backup == -1 || io->stdout_backup == -1)
-		error_exit("dup failed: Could not backup stdin or stdout");
+	io->stdin_backup = dup(STDIN_FILENO);
+	io->stdout_backup = dup(STDOUT_FILENO);
 }
 
-/*
-	Restores the original standard input and output
-	to their original fds of 0 and 1.
-*/
 void	restore_io(t_io *io)
 {
-	if (!io)
-		return ;
-	if (dup2(io->stdin_backup, STDIN_FILENO) == -1)
-	// STDIN now points to whatever file is stored in backup (which is fd(0))
-	{
-		close(io->stdin_backup);
-		close(io->stdout_backup);
-		error_exit("dup2 failed: Could not restore STDIN");
-	}
-	if (dup2(io->stdout_backup, STDOUT_FILENO) == -1)
-	{
-		close(io->stdin_backup);
-		close(io->stdout_backup);
-		error_exit("dup2 failed: Could not restore STDOUT");
-	}
+	dup2(io->stdin_backup, STDIN_FILENO);
+	dup2(io->stdout_backup, STDOUT_FILENO);
 	close(io->stdin_backup);
 	close(io->stdout_backup);
+	if (io->fd_in > 0)
+		close(io->fd_in);
+	if (io->fd_out > 0)
+		close(io->fd_out);
 }

@@ -18,35 +18,22 @@ Nota: o dup2 e necessario pra duplicar o fd, porque,
 no caso do STDOUT, por exemplo, queremos redirecionar
 o output pra um ficheiro outfile.txt, inves do terminal.
 */ 
-void	handle_input_redirection(t_io *io)
-{
-	if (!io && !io->file)
-		return ;
-	io->fd_in = open(io->file, O_RDONLY);
-	if (io->fd_in == -1)
-		error_exit("open failed in fd_in");
-	if (dup2(io->fd_in, STDIN_FILENO) == -1)
-	{
-		close(io->fd_in);
-		error_exit("dup2 failed: Could not redirect STDIN");
-	}
-	close(io->fd_in);
-}
-
 void	handle_output_redirection(t_io *io)
 {
-	if (!io && !io->file)
-		return ;
-	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	io->fd_out = open(io->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (io->fd_out == -1)
-		error_exit("open failed in fd_out");
-	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-	{
-		close(io->fd_out);
-		error_exit("dup2 failed: Could not redirect STDOUT");
-	}
-	close(io->fd_out);
+		perror("open");
+	dup2(io->fd_out, STDOUT_FILENO);
 }
+
+void	handle_input_redirection(t_io *io)
+{
+	io->fd_in = open(io->file, O_RDONLY);
+	if (io->fd_in == -1)
+		perror("open");
+	dup2(io->fd_in, STDIN_FILENO);
+}
+
 
 void	handle_append_redirection(t_io *io)
 {

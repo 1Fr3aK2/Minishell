@@ -111,6 +111,7 @@ extern unsigned int				exit_status;
 void print_node_type(t_node_type type);
 void init_io(t_io *io);
 int	check_redirections(t_info *info);
+void	remove_redir_tokens(char **args, int i);
 
 // builtins/echo
 int						check_flags(char *str);
