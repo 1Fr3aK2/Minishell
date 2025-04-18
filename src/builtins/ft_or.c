@@ -15,7 +15,6 @@ void ft_or_wrapper(t_info *info, t_tree *node)
     }
     else
     {
-        info->cmd_tree = node;
         if (check_builtins(info) == 0)
             return ;
         pid = fork();
