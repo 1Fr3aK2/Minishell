@@ -33,7 +33,4 @@ void ft_or(t_info *info)
     if (!info)
         return ;
     ft_or_wrapper(info, info->cmd_tree);
-    free_tree(info->cmd_tree);  // ✅ liberta após uso
-	info->cmd_tree = NULL;
-    
 }
