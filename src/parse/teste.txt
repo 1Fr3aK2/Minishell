@@ -22,7 +22,12 @@ estas aspas -> (``) -> usadas para executar comandos
 
 DAR FIX NO CRTL + d
 FAZER SUBLVL DO Shell
-FAZER || E && 
+FAZER || E && -> verificar em caso de erro 
 NORMINETE
 
-verificar ordem de env
+|| -> erros 
+|| apenas;
+|| sem comando da esquerda ou direita
+
+&& -> sozinho
+&& -> sem comando da esquerda ou direita 
