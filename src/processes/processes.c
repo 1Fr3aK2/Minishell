@@ -20,8 +20,8 @@ void	child_process(t_info *info)
 
 	if (!info)
 		return ;
-	if (check_operators(info) == 0)
-		return ;
+    if (check_operators(info) == 0)
+    return ;
 
     storing_backup(info->io);
     check_redirections(info);
@@ -31,12 +31,9 @@ void	child_process(t_info *info)
         restore_io(info->io);
         return;
     }
-	if (check_builtins(info) == 1)
-	{
-        pid = fork();
-		if (pid == -1)
-            return ;
-    }
+    pid = fork();
+	if (pid == -1)
+        return ;
     if (pid == 0)
     {
         signal(SIGINT, SIG_DFL); // processo filho tem comportamento padrao,
@@ -44,13 +41,14 @@ void	child_process(t_info *info)
         storing_backup(info->io);
         check_redirections(info);
         exec(info);
+        restore_io(info->io);
     }
     else
     {
         signal(SIGINT, SIG_IGN);
         waitpid(pid, &status, 0);
         if (WIFEXITED(status)) //Verifica se o processo terminou normalmente
-        exit_status = WEXITSTATUS(status); //Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
+            exit_status = WEXITSTATUS(status); //Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
         set_signals(); // Restore SIGINT handling after child exits
         signal(SIGINT, handle_sigint);
         if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)

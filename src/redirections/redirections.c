@@ -12,7 +12,6 @@
 
 #include "../../includes/shellinho.h"
 
-// TO DO = parse the in_file and out_file
 /*
 Nota: o dup2 e necessario pra duplicar o fd, porque,
 no caso do STDOUT, por exemplo, queremos redirecionar
@@ -20,35 +19,43 @@ o output pra um ficheiro outfile.txt, inves do terminal.
 */ 
 void	handle_output_redirection(t_io *io)
 {
+	if (!io || !io->file)
+		return ;
 	io->fd_out = open(io->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (io->fd_out == -1)
-		perror("open");
-	dup2(io->fd_out, STDOUT_FILENO);
+		error_exit("open failed in fd_out"); // fixed error message
+	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
+		error_exit("dup2 failed in output redirection");
+	close(io->fd_out); // Always close after dup2
 }
+
 
 void	handle_input_redirection(t_io *io)
 {
+	if (!io || !io->file)
+		return ;
 	io->fd_in = open(io->file, O_RDONLY);
 	if (io->fd_in == -1)
-		perror("open");
-	dup2(io->fd_in, STDIN_FILENO);
+		error_exit("open failed in fd_in"); // fixed error message
+	if (dup2(io->fd_in, STDIN_FILENO) == -1)
+		error_exit("dup2 failed in input redirection");
+	close(io->fd_in);
 }
+
 
 
 void	handle_append_redirection(t_io *io)
 {
-	if (!io && !io->file)
+	if (!io || !io->file)
 		return ;
 	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (io->fd_out == -1)
 		error_exit("open failed in fd_out append");
 	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
-	{
-		close(io->fd_out);
-		error_exit("dup2 failed: Could not redirect STDOUT append");
-	}
+		error_exit("dup2 failed in append redirection");
 	close(io->fd_out);
 }
+
 
 void	handle_heredoc_redirection(t_io *io)
 {
