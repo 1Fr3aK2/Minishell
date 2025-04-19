@@ -33,3 +33,4 @@ NORMINETE
 && -> sem comando da esquerda ou direita 
 
 melhorar mensagens de erro 
+verificar create op node 

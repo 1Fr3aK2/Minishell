@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/19 19:02:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/19 21:21:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ static char	**sub_tokens(char **tokens, int start, int end)
 
 static t_tree	*creat_op_node(char **tokens, int *index)
 {
-	printf("aquin\n");
 	t_tree	*node;
 	char	**left_tokens;
 	char	**right_tokens;
@@ -51,40 +50,52 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 	if (!node)
 		return (NULL);
 	node->type = find_type(tokens, *index);
-	//printf("Creating operator node. Operator: %s, Type: ", tokens[*index]);
-	//print_node_type(node->type);
-	//printf("\n");
 	node->args = malloc(sizeof(char *) * 2);
 	if (!node->args)
 	{
 		free(node);
 		return (NULL);
 	}
-	node->args[0] = ft_strdup(tokens[*index]); //erro aqui
+	node->args[0] = ft_strdup(tokens[*index]);
 	node->args[1] = NULL;
-	//printf("Operator '%s' copied to args\n", node->args[0]);
 	left_tokens = sub_tokens(tokens, 0, *index);
-	//printf("Left tokens for operator '%s':\n", tokens[*index]);
-	//for (int i = 0; left_tokens[i] != NULL; i++)
-	//	printf("  %s\n", left_tokens[i]);
 	node->left = parse_tokens(left_tokens);
 	free_arr(left_tokens);
+	if (node->left == NULL || node->left->args == NULL
+		|| node->left->args[0] == NULL)
+	{
+		ft_putstr_fd("Shellinho: syntax error\n", 2);
+		exit_status = 2;
+		if (node->args)
+		{
+			if (node->args[0])
+				free(node->args[0]);
+			free(node->args);
+		}
+		free(node);
+		return (NULL);
+	}
 	right_tokens = sub_tokens(tokens, *index + 1, total);
-	//printf("Right tokens for operator '%s':\n", tokens[*index]);
-	//for (int i = 0; right_tokens[i] != NULL; i++)
-	//	printf("  %s\n", right_tokens[i]);
 	node->right = parse_tokens(right_tokens);
-	if (!node->right->args || !node->right->args[0])
-{
-	ft_putstr_fd("Shellinho: syntax error\n", 2);
-    exit_status = 2;
-	free_tree(node->right);     // <- Libera árvore direita
-	free(node->args[0]);        // <- Libera string do operador
-	free(node->args);
-	free(node);                 // <- Libera o próprio nó
-	free_arr(right_tokens);     // <- Se ainda não foi liberado
-	return (NULL);
-}
+	if (node->right == NULL || node->right->args == NULL
+		|| node->right->args[0] == NULL)
+	{
+		ft_putstr_fd("Shellinho: syntax error\n", 2);
+		exit_status = 2;
+		if (node->right)
+			free_tree(node->right);
+		if (node->left)
+			free_tree(node->left);
+		if (node->args)
+		{
+			if (node->args[0])
+				free(node->args[0]);
+			free(node->args);
+		}
+		free(node);
+		free_arr(right_tokens);
+		return (NULL);
+	}
 	free_arr(right_tokens);
 	return (node);
 }
@@ -95,7 +106,6 @@ static t_tree	*create_node(char **tokens)
 	int		total;
 	int		i;
 
-	printf("aqi\n");
 	if (!tokens)
 		return (NULL);
 	total = 0;
@@ -126,7 +136,7 @@ t_tree	*parse_tokens(char **tokens)
 	op_index = -1;
 	total = 0;
 	node = NULL;
-	if (!tokens)
+	if (!tokens || !tokens[0])
 		return (NULL);
 	while (tokens[total])
 		total++;
