@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/16 23:48:34 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/19 19:02:19 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static char	**sub_tokens(char **tokens, int start, int end)
 
 static t_tree	*creat_op_node(char **tokens, int *index)
 {
+	printf("aquin\n");
 	t_tree	*node;
 	char	**left_tokens;
 	char	**right_tokens;
@@ -73,6 +74,17 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 	//for (int i = 0; right_tokens[i] != NULL; i++)
 	//	printf("  %s\n", right_tokens[i]);
 	node->right = parse_tokens(right_tokens);
+	if (!node->right->args || !node->right->args[0])
+{
+	ft_putstr_fd("Shellinho: syntax error\n", 2);
+    exit_status = 2;
+	free_tree(node->right);     // <- Libera árvore direita
+	free(node->args[0]);        // <- Libera string do operador
+	free(node->args);
+	free(node);                 // <- Libera o próprio nó
+	free_arr(right_tokens);     // <- Se ainda não foi liberado
+	return (NULL);
+}
 	free_arr(right_tokens);
 	return (node);
 }
@@ -83,6 +95,7 @@ static t_tree	*create_node(char **tokens)
 	int		total;
 	int		i;
 
+	printf("aqi\n");
 	if (!tokens)
 		return (NULL);
 	total = 0;

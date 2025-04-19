@@ -9,9 +9,19 @@ void ft_or_wrapper(t_info *info, t_tree *node)
 		return ;
     if (node->type == OR)
     {
-        ft_or_wrapper(info, node->left);
-        if (exit_status != 0)   
-            ft_or_wrapper(info, node->right);
+        if (node->left && node->left->type == CMD && node->right && node->right->type == CMD)
+        {
+            ft_or_wrapper(info, node->left);
+            if (exit_status != 0)   
+                ft_or_wrapper(info, node->right);
+        }
+        else
+        {
+            ft_putstr_fd("Shellinho: syntax error\n", 2);
+            exit_status = 2;
+            free_tree(node);
+            return ;
+        }
     }
     else
     {

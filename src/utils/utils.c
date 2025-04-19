@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/16 23:48:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:17:42 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,12 @@ void	free_tree(t_tree *node)
 		return ;
 	if (node->args)
 		free_arr(node->args);
-	free_tree(node->left);
-	free_tree(node->right);
-	free(node);
+	if (node->left)
+		free_tree(node->left);
+	if (node->right)
+		free_tree(node->right);
+	if (node)
+		free(node);
 }
 void	free_types(t_types *types)
 {

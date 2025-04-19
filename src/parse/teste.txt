@@ -31,3 +31,5 @@ NORMINETE
 
 && -> sozinho
 && -> sem comando da esquerda ou direita 
+
+melhorar mensagens de erro 

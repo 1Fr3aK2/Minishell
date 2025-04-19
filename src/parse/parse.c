@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/16 23:29:47 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/19 18:59:38 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,10 @@ void parse(char *input, t_info *info)
 	}
     info->cmd_tree = build_tree_tokens(tokens);
 	if (!info->cmd_tree)
+	{
+		free_arr(tokens); 
 		return ; 
+	}
 	if (info->cmd_tree->args[1])
 		info->flags = ft_strdup(info->cmd_tree->args[1]);
     free_arr(tokens);
