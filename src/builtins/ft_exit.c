@@ -25,8 +25,8 @@ void	ft_exit(t_info *info)
 		exit_status = 1;
 		return ;
 	}	 */
-	if (isatty(STDIN_FILENO)) // returns 1 if the fd is a terminal
-		printf("exit\n");     // exit -> terminal. echo ola | exit -> not terminal
+	if (isatty(STDIN_FILENO)) // checks if stdin is connected to a terminal. Ex: in input redirections, stdin is connected to a file
+		printf("exit\n");
 	if (exit_flags)
 	{
 		if (exit_flags > 255)

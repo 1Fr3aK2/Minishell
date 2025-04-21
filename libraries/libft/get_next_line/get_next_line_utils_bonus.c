@@ -12,7 +12,7 @@
 
 #include "get_next_line_bonus.h"
 
-size_t	ft_strlen(char *s)
+size_t	ft_strlen1(char *s)
 {
 	int	i;
 
@@ -38,7 +38,7 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 		return (free_gnl(s1));
 	i = -1;
 	j = 0;
-	str = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	str = malloc(ft_strlen1(s1) + ft_strlen1(s2) + 1);
 	if (!str)
 		return (free_gnl(s1));
 	while (s1[++i])

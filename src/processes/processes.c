@@ -22,7 +22,6 @@ void	child_process(t_info *info)
 		return ;
     if (check_operators(info) == 0)
         return ;
-
     storing_backup(info->io);
     check_redirections(info);
     is_builtin = check_builtins(info);
@@ -47,6 +46,7 @@ void	child_process(t_info *info)
     {
         signal(SIGINT, SIG_IGN);
         waitpid(pid, &status, 0);
+        restore_io(info->io);
         if (WIFEXITED(status)) //Verifica se o processo terminou normalmente
             exit_status = WEXITSTATUS(status); //Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
         set_signals(); // Restore SIGINT handling after child exits
