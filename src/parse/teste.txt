@@ -38,3 +38,5 @@ verificar comportamento com varios pipes
 verificar ls | cat || pwd 
 
 o || e o && n esta a funcionar
+
+verificar precedencias dos operadores ou seja que esta maior na hierarquia
