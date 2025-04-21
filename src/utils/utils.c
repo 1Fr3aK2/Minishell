@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/19 18:17:42 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/21 20:50:47 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	free_arr(char **arr)
 		arr[i] = NULL;
 		i++;
 	}
-	free(arr);
+ 	free(arr);
 	arr = NULL;
 }
 
@@ -153,7 +153,7 @@ int	check_redirections(t_info *info)
 		i++;
 	}
 	return (1);
-}
+} // corrigir strcmp
 
 void	remove_redir_tokens(char **args, int i)
 {

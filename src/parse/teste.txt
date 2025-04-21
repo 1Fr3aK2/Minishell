@@ -34,3 +34,7 @@ NORMINETE
 
 melhorar mensagens de erro 
 verificar create op node 
+verificar comportamento com varios pipes
+verificar ls | cat || pwd 
+
+o || e o && n esta a funcionar

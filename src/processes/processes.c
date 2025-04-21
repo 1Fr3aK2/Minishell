@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/19 16:22:33 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/21 19:15:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	child_process(t_info *info)
         signal(SIGQUIT, SIG_DFL);// independentemente das definicoes do processo pai
         storing_backup(info->io);
         check_redirections(info);
-        exec(info);
+        exec(info, info->cmd_tree);
         restore_io(info->io);
     }
     else
@@ -64,25 +64,25 @@ void	child_process(t_info *info)
     }
 }
 
-void	exec(t_info *info)
+void	exec(t_info *info, t_tree *node)
 {
 	char	*path;
 
 	if (!info)
 		return ;
-	path = find_path(info);
+	path = find_path(info, node->args[0]);
 	if (!path)
 	{
-		ft_putstr_fd(info->cmd_tree->args[0], 2);
+		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free_arr(info->cmd_tree->args);
 		free_arr(info->my_env);
 		free_builtins(info->builtins);
 		exit(127);
 	}
-	if (execve(path, info->cmd_tree->args, info->my_env) == -1)
+	if (execve(path, node->args, info->my_env) == -1)
 	{
-		ft_putstr_fd(info->cmd_tree->args[0], 2);
+		ft_putstr_fd(node->args[0], 2);
 		ft_putstr_fd(": command not found\n", 2);
 		free_arr(info->cmd_tree->args);
 		free_arr(info->my_env);

@@ -9,7 +9,7 @@ void	ft_and_wrapper(t_info *info, t_tree *node)
 		return ;
     if (node->type == AND)
     {
-        if (node->left && node->left->type == CMD && node->right && node->right->type == CMD)
+        if (node->left && node->right)
         {
             ft_and_wrapper(info, node->left);
             if (exit_status == 0)   
@@ -19,6 +19,7 @@ void	ft_and_wrapper(t_info *info, t_tree *node)
         {
             ft_putstr_fd("Shellinho: syntax error\n", 2);
             exit_status = 2;
+            free_tree(node);
         }
     }
     else
