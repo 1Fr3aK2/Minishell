@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/21 21:15:04 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/21 21:56:05 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	ft_pipe(t_info *info, t_tree *node, int infile)
 
 	if (!node)
 		return ;
-
 	if (node->type == PIPE)
 	{
 		if (pipe(fd) == -1)
@@ -58,7 +57,6 @@ void	ft_pipe(t_info *info, t_tree *node, int infile)
 			close(fd[1]);
             
 			ft_pipe(info, node->left, -1); // Recurse left
-			exit(1); // Nunca deveria chegar aqui se exec funcionar
 		}
 		if (infile != -1)
 			close(infile);
@@ -82,7 +80,6 @@ void	ft_pipe(t_info *info, t_tree *node, int infile)
 				close(infile);
 			}
 			exec_command(info, node); // Apenas CMD chega aqui
-			exit(1);
 		}
 		if (infile != -1)
 			close(infile);
