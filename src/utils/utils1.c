@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 15:40:38 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/23 20:07:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_operators(t_info *info)
 	return (1);
 }
 
-int	check_redirections(t_info *info)
+int		check_redirections(t_info *info)
 {
 	int		i;
 	int		j;
@@ -78,7 +78,8 @@ int	check_redirections(t_info *info)
 			if (ft_strncmp(args[i], info->redirections->reds[j],
 					ft_strlen(args[i])) == 0)
 			{
-				info->io->file = ft_strdup(args[i + 1]);
+				
+				info->io->file = ft_strdup(args[i + 1]);				
 				info->redirections->f[j](info->io);
 				remove_redir_tokens(args, i);
 				break ;
@@ -92,8 +93,16 @@ int	check_redirections(t_info *info)
 
 void	remove_redir_tokens(char **args, int i)
 {
-	free(args[i]);
-	free(args[i + 1]);
+	if (args[i])
+	{
+		free(args[i]);
+		args[i] = NULL;
+	}
+	if (args[i + 1])
+	{
+		free(args[i + 1]);
+		args[i + 1] = NULL;
+	}
 	while (args[i + 2])
 	{
 		args[i] = args[i + 2];

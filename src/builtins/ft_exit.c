@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 14:58:39 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:59:49 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_exit(t_info *info)
         j = 0;
         if (info->cmd_tree->args[2] && ft_strisnum(info->cmd_tree->args[1]))
         {
-            printf("exit\nshellinho: exit: too many arguments\n");
+            ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
             exit_status = 1;
             return;
         }
@@ -52,7 +52,9 @@ void	ft_exit(t_info *info)
         {
             if (!ft_isdigit(info->cmd_tree->args[i][j]))
             {
-                printf("exit\nshellinho: exit: %s: numeric argument required\n", info->cmd_tree->args[i]);
+				ft_putstr_fd("exit\nshellinho: exit:", 2);
+                ft_putstr_fd(info->cmd_tree->args[i], 2);
+				ft_putstr_fd(" numeric argument required\n", 2);
                 exit_status = 2;
                 exit(exit_status);
             }

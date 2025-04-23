@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/23 15:57:02 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:54:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	child_process(t_info *info)
 		return ;
 	storing_backup(info->io);
 	check_redirections(info);
+	if (info->io->file)
+	{
+		free(info->io->file);
+		info->io->file = NULL;
+	}
 	if (check_operators(info) == 0)
 		return ;
 	if (check_builtins(info) == 0)

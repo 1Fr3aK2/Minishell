@@ -19,37 +19,11 @@ echo & asdasd
 zsh: command not found: asdasd
 
 estas aspas -> (``) -> usadas para executar comandos
-
 DAR FIX NO CRTL + d
 FAZER SUBLVL DO Shell
-FAZER || E && -> verificar em caso de erro 
 NORMINETE
-
-|| -> erros 
-|| apenas;
-|| sem comando da esquerda ou direita
-
-&& -> sozinho
-&& -> sem comando da esquerda ou direita 
-
-melhorar mensagens de erro 
-verificar create op node 
-verificar comportamento com varios pipes
-verificar ls | cat || pwd 
-
-o || e o && n esta a funcionar
-
-verificar precedencias dos operadores ou seja que esta maior na hierarquiac
-
-Redirections 
-input tem prioridade -> "<"
-
-sort > a.t < t.txt
-
-1-o conteudo de t.txt sofre a execucao do primeiro comando e passa para o ficheiro do meio
-
+melhorar mensagens de erro  ~
 
 ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status 
-
 echo z as>> t.txt
 problema parsing -> nao assume redirections

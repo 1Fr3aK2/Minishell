@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/21 17:56:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/23 18:21:35 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void print_node_type(t_node_type type);
 void init_io(t_io *io);
 int	check_redirections(t_info *info);
 void	remove_redir_tokens(char **args, int i);
+void	remove_operator_tokens(char **args, int i);
 
 // builtins/echo
 int						check_flags(char *str);

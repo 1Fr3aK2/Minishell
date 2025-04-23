@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/23 15:19:07 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/23 19:44:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	start(t_info *info)
 		{
 			free_tree(info->cmd_tree);
 			info->cmd_tree = NULL;
+
 		}
 		parse(input, info);
 		if (!info->cmd_tree || !info->cmd_tree->args
