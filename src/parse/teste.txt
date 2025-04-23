@@ -39,4 +39,17 @@ verificar ls | cat || pwd
 
 o || e o && n esta a funcionar
 
-verificar precedencias dos operadores ou seja que esta maior na hierarquia
+verificar precedencias dos operadores ou seja que esta maior na hierarquiac
+
+Redirections 
+input tem prioridade -> "<"
+
+sort > a.t < t.txt
+
+1-o conteudo de t.txt sofre a execucao do primeiro comando e passa para o ficheiro do meio
+
+
+ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status 
+
+echo z as>> t.txt
+problema parsing -> nao assume redirections

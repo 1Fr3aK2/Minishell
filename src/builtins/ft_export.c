@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/15 20:15:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/23 17:37:40 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,6 +309,7 @@ void	ft_export(t_info *info)
 	sorted_env = NULL;
 	i = 1;
 	exit = 0;
+	check_redirections(info);
 	if (info->cmd_tree->args[i] != NULL)
 	{
 		while (info->cmd_tree->args[i])
