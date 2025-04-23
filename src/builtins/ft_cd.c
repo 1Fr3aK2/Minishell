@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/03/17 10:28:24 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:18:58 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-// all good
 void	cd_with_arg(const char *path) // path-> is the path the user wants to change to
 {
 	char	current_dir[PATH_MAX];
@@ -33,7 +32,6 @@ void	cd_with_arg(const char *path) // path-> is the path the user wants to chang
 		error_exit("Error: chdir");
 }
 
-// all good
 int count_levels(const char *arg)
 {
     int levels;
@@ -55,7 +53,6 @@ int count_levels(const char *arg)
     return (levels);
 }
 
-// all good
 void ft_cd_doispontos(t_info *info, int levels)
 {
     (void)info;
@@ -83,7 +80,6 @@ void ft_cd_doispontos(t_info *info, int levels)
         error_exit("Error: chdir");
 }
 
-// all good, vai pra HOME
 void	ft_cd_home(t_info *info)
 {
     char *home_path;
@@ -105,7 +101,6 @@ void	ft_cd_home(t_info *info)
         return;
     }
 }
-
 
 void	ft_cd(t_info *info)
 {

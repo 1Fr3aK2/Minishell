@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/21 17:52:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/23 15:19:07 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@ void	start(t_info *info)
 		}
 		if (*input)
 			add_history(input);
-		if (info->cmd_tree)	
+		if (info->cmd_tree)
 		{
 			free_tree(info->cmd_tree);
 			info->cmd_tree = NULL;
 		}
 		parse(input, info);
-		if (!info->cmd_tree || !info->cmd_tree->args || !info->cmd_tree->args[0])
+		if (!info->cmd_tree || !info->cmd_tree->args
+			|| !info->cmd_tree->args[0])
 		{
 			free(input);
 			continue ;

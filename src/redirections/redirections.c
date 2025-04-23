@@ -6,29 +6,23 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/08 17:38:13 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/04/23 15:20:24 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-/*
-Nota: o dup2 e necessario pra duplicar o fd, porque,
-no caso do STDOUT, por exemplo, queremos redirecionar
-o output pra um ficheiro outfile.txt, inves do terminal.
-*/ 
 void	handle_output_redirection(t_io *io)
 {
 	if (!io || !io->file)
 		return ;
 	io->fd_out = open(io->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (io->fd_out == -1)
-		error_exit("open failed in fd_out"); // fixed error message
+		error_exit("open failed in fd_out");
 	if (dup2(io->fd_out, STDOUT_FILENO) == -1)
 		error_exit("dup2 failed in output redirection");
-	close(io->fd_out); // Always close after dup2
+	close(io->fd_out);
 }
-
 
 void	handle_input_redirection(t_io *io)
 {
@@ -36,13 +30,11 @@ void	handle_input_redirection(t_io *io)
 		return ;
 	io->fd_in = open(io->file, O_RDONLY);
 	if (io->fd_in == -1)
-		error_exit("open failed in fd_in"); // fixed error message
+		error_exit("open failed in fd_in");
 	if (dup2(io->fd_in, STDIN_FILENO) == -1)
 		error_exit("dup2 failed in input redirection");
 	close(io->fd_in);
 }
-
-
 
 void	handle_append_redirection(t_io *io)
 {
@@ -56,7 +48,6 @@ void	handle_append_redirection(t_io *io)
 	close(io->fd_out);
 }
 
-
 void	handle_heredoc_redirection(t_io *io)
 {
 	char	*line;
@@ -69,8 +60,7 @@ void	handle_heredoc_redirection(t_io *io)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strncmp(line, io->file,
-				ft_strlen(io->file)) == 0)
+		if (!line || ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
 		{
 			free(line);
 			break ;
@@ -78,12 +68,9 @@ void	handle_heredoc_redirection(t_io *io)
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
 		free(line);
-    }
+	}
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
-	{
 		close(fd[0]);
-		error_exit("dup2 failed: Could not redirect heredoc");
-	}
 	close(fd[0]);
 }

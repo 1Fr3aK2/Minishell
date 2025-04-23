@@ -25,6 +25,7 @@ SRCS =  src/main.c \
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \
 		src/utils/utils.c \
+		src/utils/utils1.c \
 		src/utils/utils_bools.c \
 		
 NAME = shellinho
