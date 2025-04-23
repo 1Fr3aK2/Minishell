@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/15 19:44:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/23 14:58:39 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_exit(t_info *info)
             {
                 printf("exit\nshellinho: exit: %s: numeric argument required\n", info->cmd_tree->args[i]);
                 exit_status = 2;
-                return;
+                exit(exit_status);
             }
             j++;
         }
