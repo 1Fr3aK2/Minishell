@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/25 03:57:34 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/25 03:59:07 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ void	change_shlvl(char ***env, char *name)
 		}
 		i++;
 	}
-	printf("value: %s\n", new_val);
 }
 
 int	main(int argc, char **argv, char **env)
