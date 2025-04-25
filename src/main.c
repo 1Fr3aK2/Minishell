@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/24 03:02:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/25 03:57:34 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	start(t_info *info)
 		{
 			free_tree(info->cmd_tree);
 			info->cmd_tree = NULL;
-
 		}
 		parse(input, info);
 		if (!info->cmd_tree || !info->cmd_tree->args
@@ -58,14 +57,39 @@ void	free_builtins(t_builtins *builtins)
 	free(builtins);
 }
 
+void	change_shlvl(char ***env, char *name)
+{
+	int		i;
+	char	*value;
+	char	*new_val;
+
+	if (!env || !*env)
+		return ;
+	i = 0;
+	value = (ft_itoa(ft_atoi(get_env(name, *env)) + 1)); // value
+	new_val = ft_strjoin("SHLVL=", value);
+	free(value);
+	while ((*env)[i])
+	{
+		if (ft_strncmp("SHLVL=", (*env)[i], ft_strlen("SHLVL=")) == 0)
+		{
+			free((*env)[i]);
+			(*env)[i] = new_val;
+		}
+		i++;
+	}
+	printf("value: %s\n", new_val);
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	t_info	info;
 
 	(void)argc;
 	(void)argv;
-	/* implementar strjoin do shlvl aqui */
-	init(&info, env);
+	copy_env(&info.my_env, env);
+	change_shlvl(&info.my_env, "SHLVL");
+	init(&info);
 	set_signals();
 	start(&info);
 	free_arr(info.my_env);

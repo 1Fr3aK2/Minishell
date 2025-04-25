@@ -4,6 +4,7 @@
         "shellinho.h": "c",
         "termios.h": "c",
         "cstdlib": "c",
-        "random": "c"
+        "random": "c",
+        "*.tcc": "c"
     }
 }

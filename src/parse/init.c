@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/16 18:43:36 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/25 03:57:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,14 @@ static void	fill_redirections(t_info *info)
 	info->redirections->reds[2] = ">>";
 	info->redirections->reds[3] = "<<";
 	info->redirections->reds[4] = NULL;
-    info->redirections->f[0] = handle_output_redirection; // >
-    info->redirections->f[1] = handle_input_redirection;  // <
-    info->redirections->f[2] = handle_append_redirection; // >>
-    info->redirections->f[3] = handle_heredoc_redirection; // <<
-    info->redirections->f[4] = NULL;
+	info->redirections->f[0] = handle_output_redirection;  // >
+	info->redirections->f[1] = handle_input_redirection;   // <
+	info->redirections->f[2] = handle_append_redirection;  // >>
+	info->redirections->f[3] = handle_heredoc_redirection; // <<
+	info->redirections->f[4] = NULL;
 }
 
-void init_io(t_io *io)
+void	init_io(t_io *io)
 {
 	if (!io)
 		return ;
@@ -94,11 +94,10 @@ void init_io(t_io *io)
 	io->stdin_backup = -1;
 	io->stdin_backup = -1;
 	io->file = NULL;
-	io->redirections=NULL;
+	io->redirections = NULL;
 }
 
-
-void	init(t_info *info, char **env)
+void	init(t_info *info)
 {
 	info->cmd_tree = NULL;
 	info->flags = NULL;
@@ -112,24 +111,23 @@ void	init(t_info *info, char **env)
 	if (!info->types)
 		return (free(info->builtins));
 	info->redirections = malloc(sizeof(t_reds));
-    if (!info->redirections)
-    {
+	if (!info->redirections)
+	{
 		free(info->builtins);
 		free(info->types);
-        return ;
-    }
+		return ;
+	}
 	info->io = malloc(sizeof(t_io));
 	if (!info->io)
 	{
 		free(info->builtins);
 		free(info->types);
 		free(info->redirections);
-        return ;
+		return ;
 	}
 	init_io(info->io);
 	fill_builtins(info);
 	fill_types(info);
 	fill_redirections(info);
-	copy_env(&info->my_env, env);
-	copy_env(&info->export_env, env);
+	copy_env(&info->export_env, info->my_env);
 }

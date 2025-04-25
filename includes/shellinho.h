@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/23 18:21:35 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/25 03:54:02 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,6 @@ void					sort_env(char **args);
 // builtins/export
 void					sort_env(char **args);
 char					*reverse_strchr(char *str, int c);
-// void					add_to_my_env(t_info *info, char *str);
-// void	add_to_my_env(char **my_env, char *str);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
 
@@ -165,9 +163,8 @@ int						size_to_var(char *str);
 bool					check_translate(char *str);
 
 // parse/init
-/* void					copy_env(t_info *info, char **env); */
-void					init(t_info *info, char **env);
-void	copy_env(char ***my_env, char **env);
+void					init(t_info *info);
+void					copy_env(char ***my_env, char **env);
 // parse/parse
 int						size_woutquotes(char *str);
 char					*remove_quotes(char *str);
