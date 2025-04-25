@@ -19,10 +19,9 @@ echo & asdasd
 zsh: command not found: asdasd
 
 estas aspas -> (``) -> usadas para executar comandos
-DAR FIX NO CRTL + d
-NORMINETE
-melhorar mensagens de erro  ~
 
+NORMINETE
+melhorar mensagens de erro
 ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status 
 echo z as>> t.txt
 problema parsing -> nao assume redirections

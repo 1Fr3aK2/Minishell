@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 19:59:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/25 17:48:42 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	ft_exit(t_info *info)
 
 	exit_flags = ft_atoi(info->flags);
     i = 1;
-    if (info->cmd_tree->args[i])
+    if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[i])
     {
         j = 0;
         if (info->cmd_tree->args[2] && ft_strisnum(info->cmd_tree->args[1]))
