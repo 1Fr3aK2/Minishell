@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/25 03:54:02 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:18:40 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ typedef struct s_reds
 
 typedef struct s_io
 {
-	int fd_in;  // this is the new STDIN_FILENO.  It represents the opened file in_file
-	int fd_out; // this is the new STDOUT_FILENO. It represents the opened file out_file
-	int	stdin_backup;
-	int stdout_backup; // Backup and restore original file descriptors to prevent unwanted redirections for the next command.
-	char *file;
-    t_reds				*redirections;
+	char	*file;
+	int		fd_in;
+	int		fd_out;
+	int		stdin_backup;
+	int		stdout_backup;
+	t_reds	*redirections;
 }						t_io;
 
 typedef enum s_node_type
@@ -104,15 +104,14 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-extern unsigned int				exit_status;
+extern unsigned int		g_exit_status;
 
-
-//to_remove
-void print_node_type(t_node_type type);
-void init_io(t_io *io);
-int	check_redirections(t_info *info);
-void	remove_redir_tokens(char **args, int i);
-void	remove_operator_tokens(char **args, int i);
+// to_remove
+void					print_node_type(t_node_type type);
+void					init_io(t_io *io);
+int						check_redirections(t_info *info);
+void					remove_redir_tokens(char **args, int i);
+void					remove_operator_tokens(char **args, int i);
 
 // builtins/echo
 int						check_flags(char *str);
@@ -142,15 +141,15 @@ void					ft_export(t_info *info);
 // builtins/unset
 void					ft_unset(t_info *info);
 
-//builtins/pipe
+// builtins/pipe
 void					ft_pipe_wrapper(t_info *info);
 
-//builtins/and
-void	exec_command(t_info *info, t_tree *node);
-void	ft_and(t_info *info);
+// builtins/and
+void					exec_command(t_info *info, t_tree *node);
+void					ft_and(t_info *info);
 
-//builtins/or
-void ft_or(t_info *info);
+// builtins/or
+void					ft_or(t_info *info);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);
@@ -176,16 +175,16 @@ void					parse(char *input, t_info *info);
 int						check_quotes(char *input);
 void					remove_all_quotes(char **tokens);
 
-//parse/tree
+// parse/tree
 t_tree					*parse_tokens(char **tokens);
 
-//parse/utils_tree
+// parse/utils_tree
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
 // processes
 void					child_process(t_info *info);
 /* void					exec(t_info *info); */
-void	exec(t_info *info, t_tree *node);
+void					exec(t_info *info, t_tree *node);
 
 // processes/utils
 /* char					*find_path(t_info *info); */
