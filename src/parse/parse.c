@@ -6,13 +6,13 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/23 17:03:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 19:17:18 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-int size_woutquotes(char *str)
+int	size_woutquotes(char *str)
 {
 	int		i;
 	char	quote;
@@ -41,7 +41,7 @@ int size_woutquotes(char *str)
 	return (count);
 }
 
-void handle_quotes(char *str, char *new, int i, int *j)
+void	handle_quotes(char *str, char *new, int i, int *j)
 {
 	static int	in_quotes;
 	static char	quote_char;
@@ -57,9 +57,9 @@ void handle_quotes(char *str, char *new, int i, int *j)
 		new[(*j)++] = str[i];
 }
 
-char **new_input(char *input)
+char	**new_input(char *input)
 {
-	char **new;
+	char	**new;
 
 	if (count_quotes(input) == 0)
 		return (custom_ft_split(input));
@@ -71,12 +71,12 @@ char **new_input(char *input)
 	return (new);
 }
 
-static void check_dollar(char **args, t_info *info)
+static void	check_dollar(char **args, t_info *info)
 {
 	int		i;
 	char	*new;
 
-	if (!info || !args)
+	if (!info || !info->my_env || !args)
 		return ;
 	i = 1;
 	while (args[i])
@@ -95,71 +95,19 @@ static void check_dollar(char **args, t_info *info)
 	}
 }
 
-void print_node_type(t_node_type type)
-{
-	switch (type)
-	{
-		case AND:
-			printf("AND");
-			break;
-		case PIPE:
-			printf("PIPE");
-			break;
-		case OR:
-			printf("OR");
-			break;
-		case CMD:
-			printf("CMD");
-			break;
-		default:
-			printf("UNKNOWN");
-			break;
-	}
-}
-
-void print_tokens(char **tokens)
-{
-	printf("Tokens after split:\n");
-	for (int i = 0; tokens && tokens[i]; i++)
-		printf("[%d]: %s\n", i, tokens[i]);
-}
-
-void print_tree(t_tree *node, int level)
-{
-	if (node == NULL)
-		return;
-
-	print_tree(node->right, level + 1);
-
-	for (int i = 0; i < level; i++)
-		printf("\t");
-
-	printf("Type: ");
-	print_node_type(node->type);
-	if (node->args)
-	{
-		printf(", Args: ");
-		for (int i = 0; node->args[i]; i++)
-			printf("%s ", node->args[i]);
-	}
-	printf("\n");
-
-	print_tree(node->left, level + 1);
-}
-
-t_tree *build_tree_tokens(char **tokens)
+t_tree	*build_tree_tokens(char **tokens)
 {
 	if (!tokens)
 		return (NULL);
 	return (parse_tokens(tokens));
 }
 
-void parse(char *input, t_info *info)
+void	parse(char *input, t_info *info)
 {
-	char **tokens;
+	char	**tokens;
 
 	if (!input || !info)
-		return;
+		return ;
 	tokens = NULL;
 	if (info->cmd_tree)
 	{
@@ -173,11 +121,7 @@ void parse(char *input, t_info *info)
 	}
 	tokens = new_input(input);
 	if (!tokens)
-		return;
-
-	// Debug tokens
-/* 	print_tokens(tokens); */
-
+		return ;
 	if (tokens)
 	{
 		check_dollar(tokens, info);
@@ -185,16 +129,8 @@ void parse(char *input, t_info *info)
 	}
 	info->cmd_tree = build_tree_tokens(tokens);
 	if (!info->cmd_tree)
-	{
-		free_arr(tokens);
-		return ;
-	}
+		return (free_arr(tokens));
 	if (info->cmd_tree->args && info->cmd_tree->args[1])
 		info->flags = ft_strdup(info->cmd_tree->args[1]);
-/* 
-	// Debug tree
-	printf("\nCommand Tree Structure:\n");
-	print_tree(info->cmd_tree, 0); */
-
 	free_arr(tokens);
 }

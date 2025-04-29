@@ -14,6 +14,7 @@ SRCS =  src/main.c \
 		src/parse/init.c \
 		src/parse/utils_init.c \
 		src/parse/parse.c \
+		src/parse/parse_utils.c \
 		src/parse/quotes.c \
 		src/parse/tree.c \
 		src/parse/utils_tree.c \

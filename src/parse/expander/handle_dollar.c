@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/09 16:55:52 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/29 18:38:08 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,6 @@ char	*handle_dollar(char *str, char **env)
 	char	*temp;
 	int		i;
 
-	if (!str)
-		return (NULL);
 	if (check_translate(str) == 0)
 		return (ft_strdup(str));
 	new = ft_strdup("");

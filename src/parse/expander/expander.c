@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 16:46:11 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 18:46:45 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int	get_varname_len(char *str)
 char	*expand(char *str)
 {
 	int		i;
-
 	char	*var_name;
+
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -83,7 +83,7 @@ char	*translate(char *str, char **env)
 		if (!var_value)
 			return (NULL);
 	}
-	else 
+	else
 	{
 		var_value = get_env(str, env);
 		if (!var_value)

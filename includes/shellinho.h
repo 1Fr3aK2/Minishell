@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/29 16:51:26 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 18:57:33 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,9 @@ char					*remove_quotes(char *str);
 void					handle_quotes(char *str, char *new, int i, int *j);
 char					**new_input(char *input);
 void					parse(char *input, t_info *info);
+
+//parse/parse_utils.c
+void	ft_free(void **ptr);
 
 // parse/quotes
 int						check_quotes(char *input);

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 16:35:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 18:52:29 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,10 @@ static void	fill_redirections(t_info *info)
 	info->redirections->f[4] = NULL;
 }
 
-
-void fill_all(t_info *info)
+void	fill_all(t_info *info)
 {
-    fill_builtins(info);
-    fill_builtins(info);
+	fill_builtins(info);
+	fill_builtins(info);
 	fill_types(info);
 	fill_redirections(info);
 	copy_env(&info->export_env, info->my_env);
