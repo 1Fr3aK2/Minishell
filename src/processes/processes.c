@@ -39,6 +39,7 @@ void	child_process(t_info *info)
 		signal(SIGQUIT, SIG_DFL);
 		storing_backup(info->io);
 		check_redirections(info);
+		handle_heredoc_redirection(info->io);
 		exec(info, info->cmd_tree);
 		restore_io(info->io);
 	}
@@ -47,11 +48,11 @@ void	child_process(t_info *info)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		restore_io(info->io);
-		if (WIFEXITED(status))                
+		if (WIFEXITED(status))
 			// Verifica se o processo terminou normalmente
 			g_exit_status = WEXITSTATUS(status);
 				// Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
-		set_signals();                        
+		set_signals();
 			// Restore SIGINT handling after child exits
 		signal(SIGINT, handle_sigint);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)

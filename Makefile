@@ -25,9 +25,10 @@ SRCS =  src/main.c \
 		src/splits/custom_split.c\
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \
-		src/utils/utils.c \
-		src/utils/utils1.c \
+		src/utils/checks.c \
+		src/utils/free.c \
 		src/utils/utils_bools.c \
+		src/utils/utils.c \
 		
 NAME = shellinho
 

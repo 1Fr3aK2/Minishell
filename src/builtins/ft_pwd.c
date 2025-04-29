@@ -14,9 +14,10 @@
 
 void	ft_pwd(t_info *info)
 {
-	char	buf[PATH_MAX]; // buffer to store the current directory
+	char	buf[PATH_MAX];
+
 	(void)info;
-	getcwd(buf, PATH_MAX); // Get the current working dir and store it in 'buf'
+	getcwd(buf, PATH_MAX);
 	printf("%s\n", buf);
 	return ;
 }

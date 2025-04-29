@@ -39,7 +39,7 @@ void	ft_echo(t_info *info)
 			write(1, &info->cmd_tree->args[i][j], 1);
 			j++;
 		}
-		if ((info->cmd_tree->args[i + 1])) // espaco entre comandos
+		if ((info->cmd_tree->args[i + 1]))
 			write(1, " ", 1);
 		j = 0;
 		i++;

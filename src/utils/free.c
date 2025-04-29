@@ -1,30 +1,51 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   utils1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/04 18:55:29 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/25 03:57:17 by rafael           ###   ########.fr       */
+/*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
+/*   Updated: 2025/04/23 20:07:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-void	ft_env(t_info *info)
+void	free_arr(char **arr)
 {
-	int i;
+	int	i;
 
-	i = 0;
-	if (info->cmd_tree->args && info->cmd_tree->args[0]
-		&& info->cmd_tree->args[1])
+	if (!arr)
 		return ;
-	remove_all_quotes(info->my_env);
-	while (info->my_env && info->my_env[i])
+	i = 0;
+	while (arr[i])
 	{
-		write(1, info->my_env[i], ft_strlen(info->my_env[i]));
-		write(1, "\n", 1);
+		free(arr[i]);
+		arr[i] = NULL;
 		i++;
 	}
+	free(arr);
+	arr = NULL;
+}
+
+void	free_tree(t_tree *node)
+{
+	if (!node)
+		return ;
+	if (node->args)
+		free_arr(node->args);
+	if (node->left)
+		free_tree(node->left);
+	if (node->right)
+		free_tree(node->right);
+	if (node)
+		free(node);
+}
+
+void	free_types(t_types *types)
+{
+	if (!types)
+		return ;
+	free(types);
 }

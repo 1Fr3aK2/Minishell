@@ -57,12 +57,15 @@ void	handle_heredoc_redirection(t_io *io)
 		return ;
 	if (pipe(fd) == -1)
 		error_exit("pipe failed for heredoc");
+    signal(SIGINT, SIG_DFL);
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
+		if (!line || ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
+				&& ft_strlen(line) == ft_strlen(io->file)))
 		{
-			free(line);
+			if (line)
+				free(line);
 			break ;
 		}
 		write(fd[1], line, ft_strlen(line));

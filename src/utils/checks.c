@@ -62,7 +62,7 @@ int	check_operators(t_info *info)
 	return (1);
 }
 
-int		check_redirections(t_info *info)
+int	check_redirections(t_info *info)
 {
 	int		i;
 	int		j;
@@ -78,8 +78,7 @@ int		check_redirections(t_info *info)
 			if (ft_strncmp(args[i], info->redirections->reds[j],
 					ft_strlen(args[i])) == 0)
 			{
-				
-				info->io->file = ft_strdup(args[i + 1]);				
+				info->io->file = ft_strdup(args[i + 1]);
 				info->redirections->f[j](info->io);
 				remove_redir_tokens(args, i);
 				break ;

@@ -10,9 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+path-> is the path the user wants to change to
+chdir -> this changed the dir to what I wanted
+getcwd -> this retrieved the path I wanted
+*/
+
+/* COUNT LEVELS
+strstr -> Count how many "../" there is /
+find the 1st occurence of "..". Pointer points to the beginning of ".."
+
+ptr += 2 -> Move past the ".."
+ptr++ -> Move past the "/"
+len -> updates the len to exclude the "../" that have been iterated
+*/
+
+/*
+if (last_slash == cur_dir) // the last slash if the 1st character (/)
+*/
+
 #include "../../includes/shellinho.h"
 
-void	cd_with_arg(const char *path) // path-> is the path the user wants to change to
+void	cd_with_arg(const char *path)
 {
 	char	current_dir[PATH_MAX];
 
@@ -21,9 +40,9 @@ void	cd_with_arg(const char *path) // path-> is the path the user wants to chang
 		error_exit("Error: path is NULL");
 		return;
 	}
-	if (chdir(path) == 0) // this changed the dir to what I wanted
+	if (chdir(path) == 0)
 	{
-		if (getcwd(current_dir, sizeof(current_dir)) != NULL) // this retrieved the path I wanted
+		if (getcwd(current_dir, sizeof(current_dir)) != NULL)
             ;
 		else
 			error_exit("Error: getcwd");
@@ -41,14 +60,13 @@ int count_levels(const char *arg)
     levels = 0;
     ptr = arg;
     len = ft_strlen(ptr);
-    // Count how many "../" there is
-    while ((ptr = ft_strnstr(ptr, "..", len))) // find the 1st occurence of "..". Pointer points to the beginning of ".."
+    while ((ptr = ft_strnstr(ptr, "..", len)))
     {
         levels++;
-        ptr += 2; // Move past the ".."
+        ptr += 2;
         if (*ptr == '/')
-            ptr++; // Move past the "/"
-        len = ft_strlen(ptr); // updates the len to exclude the "../" that have been iterated
+            ptr++;
+        len = ft_strlen(ptr);
     }
     return (levels);
 }
@@ -65,15 +83,15 @@ void ft_cd_doispontos(t_info *info, int levels)
         error_exit("Error: getcwd");
     while (i < levels)
     {
-        last_slash = ft_strrchr(cur_dir, '/'); // find the last / in cur_dir
+        last_slash = ft_strrchr(cur_dir, '/');
         if (last_slash == NULL)
             error_exit("Error: Invalid directory path");
-        if (last_slash == cur_dir) // the last slash if the 1st character (/)
+        if (last_slash == cur_dir)
         {
             *last_slash = '\0';
             break;
         }
-        *last_slash = '\0'; // changes the / to a null byte, that makes everything after the / disappear
+        *last_slash = '\0';
         i++;
     }
     if (chdir(cur_dir) != 0)
@@ -104,12 +122,11 @@ void	ft_cd_home(t_info *info)
 
 void	ft_cd(t_info *info)
 {
-	char	*oldpwd;
     int     levels;
 
     if (!info || !info->cmd_tree->args)
     {
-        printf("Error: Invalid info or args\n");
+        ft_putstr_fd("Error: Invalid info or args\n", 2);
         return;
     }
 	if ((!info->cmd_tree->args[1] || ft_strncmp(info->cmd_tree->args[1], "~", 1) == 0))
@@ -118,14 +135,6 @@ void	ft_cd(t_info *info)
     {
         levels = count_levels(info->cmd_tree->args[1]);
         ft_cd_doispontos(info, levels);
-    }
-	else if (info->cmd_tree->args[1] && ft_strncmp(info->cmd_tree->args[1], "-", 1) == 0) // this does not work
-	{
-		oldpwd = getenv("OLDPWD");
-		if (oldpwd)
-            cd_with_arg(oldpwd);
-		else
-			error_exit("Error: OLDPWD not set");
 	}
 	else if (info->cmd_tree->args[1])
 		cd_with_arg(info->cmd_tree->args[1]);
