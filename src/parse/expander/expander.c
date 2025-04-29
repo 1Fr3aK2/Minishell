@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/03/26 19:13:42 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/04/29 16:46:11 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*translate(char *str, char **env)
 		return (NULL);
 	if (str[i] && str[i] == '?')
 	{
-		var_value = ft_itoa(exit_status);
+		var_value = ft_itoa(g_exit_status);
 		if (!var_value)
 			return (NULL);
 	}

@@ -6,31 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/25 03:57:26 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:35:14 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
-
-static void	fill_builtins(t_info *info)
-{
-	info->builtins->builtins[0] = "echo";
-	info->builtins->builtins[1] = "cd";
-	info->builtins->builtins[2] = "pwd";
-	info->builtins->builtins[3] = "export";
-	info->builtins->builtins[4] = "unset";
-	info->builtins->builtins[5] = "env";
-	info->builtins->builtins[6] = "exit";
-	info->builtins->builtins[7] = NULL;
-	info->builtins->f[0] = ft_echo;
-	info->builtins->f[1] = ft_cd;
-	info->builtins->f[2] = ft_pwd;
-	info->builtins->f[3] = ft_export;
-	info->builtins->f[4] = ft_unset;
-	info->builtins->f[5] = ft_env;
-	info->builtins->f[6] = ft_exit;
-	info->builtins->f[7] = NULL;
-}
 
 void	copy_env(char ***my_env, char **env)
 {
@@ -59,32 +39,6 @@ void	copy_env(char ***my_env, char **env)
 	}
 }
 
-static void	fill_types(t_info *info)
-{
-	info->types->types[0] = "|";
-	info->types->types[1] = "||";
-	info->types->types[2] = "&&";
-	info->types->types[3] = NULL;
-	info->types->f[0] = ft_pipe_wrapper;
-	info->types->f[1] = ft_or;
-	info->types->f[2] = ft_and;
-	info->types->f[3] = NULL;
-}
-
-static void	fill_redirections(t_info *info)
-{
-	info->redirections->reds[0] = ">";
-	info->redirections->reds[1] = "<";
-	info->redirections->reds[2] = ">>";
-	info->redirections->reds[3] = "<<";
-	info->redirections->reds[4] = NULL;
-	info->redirections->f[0] = handle_output_redirection;  // >
-	info->redirections->f[1] = handle_input_redirection;   // <
-	info->redirections->f[2] = handle_append_redirection;  // >>
-	info->redirections->f[3] = handle_heredoc_redirection; // <<
-	info->redirections->f[4] = NULL;
-}
-
 void	init_io(t_io *io)
 {
 	if (!io)
@@ -104,9 +58,7 @@ void	init(t_info *info)
 	info->export_env = NULL;
 	info->builtins = malloc(sizeof(t_builtins));
 	if (!info->builtins)
-	{
 		return ;
-	}
 	info->types = malloc(sizeof(t_types));
 	if (!info->types)
 		return (free(info->builtins));
@@ -126,8 +78,5 @@ void	init(t_info *info)
 		return ;
 	}
 	init_io(info->io);
-	fill_builtins(info);
-	fill_types(info);
-	fill_redirections(info);
-	copy_env(&info->export_env, info->my_env);
+	fill_all(info);
 }

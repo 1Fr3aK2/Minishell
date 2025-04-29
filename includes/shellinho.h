@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/04/29 16:18:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:51:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,10 @@ bool					check_translate(char *str);
 // parse/init
 void					init(t_info *info);
 void					copy_env(char ***my_env, char **env);
+
+//parse/utils_init.c
+void fill_all(t_info *info);
+
 // parse/parse
 int						size_woutquotes(char *str);
 char					*remove_quotes(char *str);

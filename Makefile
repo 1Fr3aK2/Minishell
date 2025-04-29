@@ -12,6 +12,7 @@ SRCS =  src/main.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
 		src/parse/init.c \
+		src/parse/utils_init.c \
 		src/parse/parse.c \
 		src/parse/quotes.c \
 		src/parse/tree.c \

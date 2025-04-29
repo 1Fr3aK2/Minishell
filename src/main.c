@@ -6,13 +6,13 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/25 18:41:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:52:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
-unsigned int	exit_status = 0;
+unsigned int	g_exit_status = 0;
 
 void	start(t_info *info)
 {

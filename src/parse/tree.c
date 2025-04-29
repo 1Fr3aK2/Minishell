@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/20 00:12:41 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:46:47 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 		|| node->left->args[0] == NULL)
 	{
 		ft_putstr_fd("Shellinho: syntax error\n", 2);
-		exit_status = 2;
+		g_exit_status = 2;
 		if (node->args)
 		{
 			if (node->args[0])
@@ -81,7 +81,7 @@ static t_tree	*creat_op_node(char **tokens, int *index)
 		|| node->right->args[0] == NULL)
 	{
 		ft_putstr_fd("Shellinho: syntax error\n", 2);
-		exit_status = 2;
+		g_exit_status = 2;
 		if (node->right)
 			free_tree(node->right);
 		if (node->left)

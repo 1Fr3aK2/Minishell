@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/29 16:05:57 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:43:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ft_exit(t_info *info)
         if (info->cmd_tree->args[2] && ft_strisnum(info->cmd_tree->args[1]))
         {
             ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
-            exit_status = 1;
+            g_exit_status = 1;
             return;
         }
         while (info->cmd_tree->args[i][j] != '\0')
@@ -55,8 +55,8 @@ void	ft_exit(t_info *info)
 				ft_putstr_fd("exit\nshellinho: exit:", 2);
                 ft_putstr_fd(info->cmd_tree->args[i], 2);
 				ft_putstr_fd(" numeric argument required\n", 2);
-                exit_status = 2;
-                exit(exit_status);
+                g_exit_status = 2;
+                exit(g_exit_status);
             }
             j++;
         }
@@ -66,9 +66,9 @@ void	ft_exit(t_info *info)
 	if (exit_flags)
 	{
 		if (exit_flags > 255)
-			exit_status = exit_flags % 256;
+			g_exit_status = exit_flags % 256;
 		else
-			exit_status = exit_flags;
+			g_exit_status = exit_flags;
 	}
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
@@ -76,5 +76,5 @@ void	ft_exit(t_info *info)
 	free_arr(info->export_env);
 	rl_clear_history();
 	close_fds(0);
-	exit(exit_status);
+	exit(g_exit_status);
 }

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/23 19:54:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:48:00 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ void	child_process(t_info *info)
 		restore_io(info->io);
 		if (WIFEXITED(status))                
 			// Verifica se o processo terminou normalmente
-			exit_status = WEXITSTATUS(status);
+			g_exit_status = WEXITSTATUS(status);
 				// Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
 		set_signals();                        
 			// Restore SIGINT handling after child exits
 		signal(SIGINT, handle_sigint);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 		{
-			exit_status = 131;
+			g_exit_status = 131;
 			write(1, "Quit (Core dumped)\n", 19);
 		}
 		else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
-			exit_status = 130;
+			g_exit_status = 130;
 			write(1, "\n", 1);
 		}
 	}

@@ -12,13 +12,13 @@ void ft_or_wrapper(t_info *info, t_tree *node)
         if (node->left && node->right)
         {
             ft_or_wrapper(info, node->left);
-            if (exit_status != 0)   
+            if (g_exit_status != 0)   
                 ft_or_wrapper(info, node->right);
         }
         else
         {
             ft_putstr_fd("Shellinho: syntax error\n", 2);
-            exit_status = 2;
+            g_exit_status = 2;
             free_tree(node);
         }
     }
@@ -33,7 +33,7 @@ void ft_or_wrapper(t_info *info, t_tree *node)
             exec_command(info, node);
         waitpid(pid, &status, 0);
         if (WIFEXITED(status)) // verifica se terminou normalmente
-            exit_status = WEXITSTATUS(status);
+            g_exit_status = WEXITSTATUS(status);
     }
 }
 

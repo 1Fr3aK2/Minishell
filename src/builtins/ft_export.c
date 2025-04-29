@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/23 18:24:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 16:44:16 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -365,7 +365,7 @@ void	ft_export(t_info *info)
 		}
 		free(sorted_env);
 	}
-	exit_status = exit;
+	g_exit_status = exit;
 }
 
 //env nao tem aspas ao contrario de export 
