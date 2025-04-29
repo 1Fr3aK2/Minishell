@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/29 16:43:59 by rafael           ###   ########.fr       */
+/*   Updated: 2025/04/29 19:23:04 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	validate_exit_args(char **args)
 	if (args[2] && ft_strisnum(args[1]))
 	{
 		ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
-		exit_status = 1;
+		g_exit_status = 1;
 		return (1);
 	}
 	while (args[1][j])
@@ -46,8 +46,8 @@ static int	validate_exit_args(char **args)
 			ft_putstr_fd("exit\nshellinho: exit:", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putstr_fd(" numeric argument required\n", 2);
-			exit_status = 2;
-			exit(exit_status);
+			g_exit_status = 2;
+			exit(g_exit_status);
 		}
 		j++;
 	}
@@ -59,40 +59,6 @@ void	ft_exit(t_info *info)
 	int	exit_flags;
 
 	exit_flags = ft_atoi(info->flags);
-<<<<<<< Updated upstream
-    i = 1;
-    if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[i])
-    {
-        j = 0;
-        if (info->cmd_tree->args[2] && ft_strisnum(info->cmd_tree->args[1]))
-        {
-            ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
-            g_exit_status = 1;
-            return;
-        }
-        while (info->cmd_tree->args[i][j] != '\0')
-        {
-            if (!ft_isdigit(info->cmd_tree->args[i][j]))
-            {
-				ft_putstr_fd("exit\nshellinho: exit:", 2);
-                ft_putstr_fd(info->cmd_tree->args[i], 2);
-				ft_putstr_fd(" numeric argument required\n", 2);
-                g_exit_status = 2;
-                exit(g_exit_status);
-            }
-            j++;
-        }
-    }
-	if (isatty(STDIN_FILENO)) // checks if stdin is connected to a terminal. Ex: in input redirections, stdin is connected to a file
-		printf("exit\n");
-	if (exit_flags)
-	{
-		if (exit_flags > 255)
-			g_exit_status = exit_flags % 256;
-		else
-			g_exit_status = exit_flags;
-	}
-=======
 	if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[1])
 		if (validate_exit_args(info->cmd_tree->args))
 			return ;
@@ -101,11 +67,10 @@ void	ft_exit(t_info *info)
     if (exit_flags)
     {
         if (exit_flags > 255)
-            exit_status = exit_flags % 256;
+            g_exit_status = exit_flags % 256;
         else
-            exit_status = exit_flags;
+            g_exit_status = exit_flags;
     }
->>>>>>> Stashed changes
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);
