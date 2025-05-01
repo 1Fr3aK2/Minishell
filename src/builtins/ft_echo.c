@@ -14,11 +14,18 @@
 
 int	check_flags(char *str)
 {
-	if (ft_strlen(str) != 2)
+	int	i;
+
+	if (!str || str[0] != '-' || str[1] == '\0')
 		return (1);
-	if (ft_strncmp(str, "-n", 2) == 0)
-		return (0);
-	return (1);
+	i = 1;
+	while (str[i])
+	{
+		if (str[i] != 'n')
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 void	ft_echo(t_info *info)
@@ -30,7 +37,7 @@ void	ft_echo(t_info *info)
 	j = 0;
 	if (check_redirections(info) == 0)
 		exit(0);
-	if (check_flags(info->cmd_tree->args[i]) == 0)
+	while (check_flags(info->cmd_tree->args[i]) == 0)
 		++i;
 	while (info->cmd_tree->args[i])
 	{
