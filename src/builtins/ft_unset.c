@@ -12,12 +12,6 @@
 
 #include "../../includes/shellinho.h"
 
-/*
-is_match -> Verifica se a env var (env_var) corresponde ao (arg).
-remove_env -> Remove a env var em uma posição específica (index).
-unset_from_env -> Procura e remove uma env var de (env) com base em um arg (arg).
-
-*/
 static int	is_match(char *env_var, char *arg)
 {
 	char	*str;

@@ -31,8 +31,9 @@ static int	ft_strisnum(char *str)
 
 static int	validate_exit_args(char **args)
 {
-	int	j = 0;
+	int	j;
 
+	j = 0;
 	if (args[2] && ft_strisnum(args[1]))
 	{
 		ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
@@ -64,13 +65,13 @@ void	ft_exit(t_info *info)
 			return ;
 	if (isatty(STDIN_FILENO))
 		printf("exit\n");
-    if (exit_flags)
-    {
-        if (exit_flags > 255)
-            g_exit_status = exit_flags % 256;
-        else
-            g_exit_status = exit_flags;
-    }
+	if (exit_flags)
+	{
+		if (exit_flags > 255)
+			g_exit_status = exit_flags % 256;
+		else
+			g_exit_status = exit_flags;
+	}
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);
@@ -79,4 +80,3 @@ void	ft_exit(t_info *info)
 	close_fds(0);
 	exit(g_exit_status);
 }
-
