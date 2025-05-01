@@ -57,7 +57,7 @@ void	handle_heredoc_redirection(t_io *io)
 		return ;
 	if (pipe(fd) == -1)
 		error_exit("pipe failed for heredoc");
-    signal(SIGINT, SIG_DFL);
+	signal(SIGINT, SIG_DFL);
 	while (1)
 	{
 		line = readline("> ");
