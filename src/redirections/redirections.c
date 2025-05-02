@@ -54,10 +54,8 @@ void	handle_heredoc_redirection(t_io *io)
 	int		fd[2];
 	pid_t	pid;
 
-	if (!io || !io->file)
+	if (!io || !io->file || pipe(fd) == -1)
 		return ;
-	if (pipe(fd) == -1)
-		error_exit("pipe failed for heredoc");
 	signal(SIGINT, SIG_DFL);
 	pid = fork();
 	if (pid < 0)
@@ -84,49 +82,3 @@ void	handle_heredoc_redirection(t_io *io)
 		close(fd[0]);
 	close(fd[0]);
 }
-
-/*static void	heredoc_loop(t_io *io, int write_fd)
-{
-	char	*line;
-
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
-				&& ft_strlen(line) == ft_strlen(io->file)))
-		{
-			if (line)
-				free(line);
-			break ;
-		}
-		write(write_fd, line, ft_strlen(line));
-		write(write_fd, "\n", 1);
-		free(line);
-	}
-	close(write_fd);
-	exit(0);
-}
-
-void	handle_heredoc_redirection(t_io *io)
-{
-	int		fd[2];
-	pid_t	pid;
-
-	if (!io || !io->file)
-		return ;
-	if (pipe(fd) == -1)
-		error_exit("pipe failed for heredoc");
-    pid = fork();
-    signal(SIGINT, SIG_DFL);
-	if (pid < 0)
-		return ;
-	if (pid == 0)
-	{
-		heredoc_loop(io, fd[1]);
-	}
-	close(fd[1]);
-	if (dup2(fd[0], STDIN_FILENO) == -1)
-		close(fd[0]);
-	close(fd[0]);
-	waitpid(pid, NULL, 0);
-}*/

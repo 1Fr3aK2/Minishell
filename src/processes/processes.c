@@ -37,11 +37,9 @@ void	child_process(t_info *info)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		storing_backup(info->io);
-		check_redirections(info);
-		handle_heredoc_redirection(info->io);
+		//check_redirections(info);
 		exec(info, info->cmd_tree);
-		restore_io(info->io);
+        exit(1);
 	}
 	else
 	{
