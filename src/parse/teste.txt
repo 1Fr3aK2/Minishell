@@ -26,6 +26,6 @@ ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
 echo z as>> t.txt
 problema parsing -> nao assume redirections
 
-cat << test -> ctrl + c n funciona
-echo -n -nnnnnn -> n funciona corretamente
 echo $HOMEEE -> free invalid 
+cat << test | echo ola
+echo << test
