@@ -52,26 +52,33 @@ void	handle_heredoc_redirection(t_io *io)
 {
 	char	*line;
 	int		fd[2];
+    pid_t   pid;
 
 	if (!io || !io->file)
 		return ;
 	if (pipe(fd) == -1)
 		error_exit("pipe failed for heredoc");
 	signal(SIGINT, SIG_DFL);
-	while (1)
-	{
-		line = readline("> ");
-		if (!line || ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
-				&& ft_strlen(line) == ft_strlen(io->file)))
-		{
-			if (line)
-				free(line);
-			break ;
-		}
-		write(fd[1], line, ft_strlen(line));
-		write(fd[1], "\n", 1);
-		free(line);
-	}
+    pid = fork();
+    if (pid < 0)
+        return ;
+    if (pid == 0)
+    {
+        while (1)
+        {
+            line = readline("> ");
+            if (!line || ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
+                    && ft_strlen(line) == ft_strlen(io->file)))
+            {
+                if (line)
+                    free(line);
+                break ;
+            }
+            write(fd[1], line, ft_strlen(line));
+            write(fd[1], "\n", 1);
+            free(line);
+        }
+    }
 	close(fd[1]);
 	if (dup2(fd[0], STDIN_FILENO) == -1)
 		close(fd[0]);
