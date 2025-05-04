@@ -50,35 +50,59 @@ void	handle_append_redirection(t_io *io)
 
 void	handle_heredoc_redirection(t_io *io)
 {
-	char	*line;
-	int		fd[2];
-	pid_t	pid;
+	char				*line;
+	int					fd[2];
+	pid_t				pid;
+	int					status;
+	struct sigaction	original_sigint;
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
-	signal(SIGINT, SIG_DFL);
+	// Save original SIGINT handler
+	sigaction(SIGINT, NULL, &original_sigint);
+	
 	pid = fork();
 	if (pid < 0)
 		return ;
 	if (pid == 0)
 	{
+        signal(SIGINT, SIG_DFL);
+		// Child process
 		while (1)
 		{
 			line = readline("> ");
-			if (!line || ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0)
+			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
 					&& ft_strlen(line) == ft_strlen(io->file)))
 			{
-				if (line)
-					free(line);
+				free(line);
 				break ;
 			}
-			write(fd[1], line, ft_strlen(line));
-			write(fd[1], "\n", 1);
+			if (write(fd[1], line, ft_strlen(line)) == -1)
+				break ;
+			if (line[0] != '\0')
+				write(fd[1], "\n", 1);
 			free(line);
 		}
+		close(fd[1]);
+		exit(0);
 	}
-	close(fd[1]);
-	if (dup2(fd[0], STDIN_FILENO) == -1)
+	else
+	{
+        // Parent process
+		signal(SIGINT, SIG_IGN);
+		close(fd[1]);
+
+        waitpid(pid, &status, 0);
+        if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+            write(1, "\n", 1);
+        // Restore SIGINT handler (to your shell handler)
+        signal(SIGINT, handle_sigint);
+		// Restore original signal handler
+		if (dup2(fd[0], STDIN_FILENO) == -1)
+		{
+			close(fd[0]);
+			return ;
+		}
 		close(fd[0]);
-	close(fd[0]);
+	}
 }
