@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils1.c                                           :+:      :+:    :+:   */
+/*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 20:07:36 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 18:08:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	check_operators(t_info *info)
 	return (1);
 }
 
-int	check_redirections(t_info *info) cat << EOF >> t.txt  --- cat >> t.txt
+int	check_redirections(t_info *info)
 {
 	int		i;
 	int		j;
