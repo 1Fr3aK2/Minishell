@@ -23,13 +23,9 @@ estas aspas -> (``) -> usadas para executar comandos
 NORMINETE
 melhorar mensagens de erro // ERROR
 ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
-echo z as>> t.txt
-
-problema parsing -> nao assume redirections
 
 echo $HOMEE && echo $? && echo $USER && echo -n ola
 
-export a=aa | env | ls | export a=aa -> declara a nova variavel
 export a=aa | env | ls | export a -> nao declara nada
 
 

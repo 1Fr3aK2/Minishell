@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:09 by raamorim          #+#    #+#             */
-/*   Updated: 2025/02/17 18:52:30 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/05 19:57:11 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,14 @@ static void	*free_str(char **dest, int i)
 
 static int	get_word_length(char *str)
 {
-	int			len;
-	char		quote;
-	static int	in_quotes;
+	int		len = 0;
+	char	quote = 0;
+	int		in_quotes = 0;
+	int		op_len;
 
-	len = 0;
-	quote = 0;
-	while (str[len] && (!is_space(str[len]) || in_quotes == 1))
+	if ((op_len = is_operator(str)))
+		return (op_len);
+	while (str[len] && (!is_space(str[len]) || in_quotes))
 	{
 		if (is_quote(str[len]))
 		{
@@ -40,6 +41,8 @@ static int	get_word_length(char *str)
 			else if (str[len] == quote)
 				in_quotes = 0;
 		}
+		else if (!in_quotes && is_operator(&str[len]))
+			break;
 		len++;
 	}
 	return (len);
@@ -57,15 +60,58 @@ static int	word_alloc(char **dest, char *s, int len, int j)
 	return (1);
 }
 
+static int	conta_word(char *str)
+{
+	int		i = 0;
+	int		count = 0;
+	char	quote = 0;
+	int		in_quotes = 0;
+	int		op_len;
+
+	while (str[i])
+	{
+		while (str[i] && is_space(str[i]))
+			i++;
+		if (!str[i])
+			break;
+		if ((op_len = is_operator(&str[i])))
+		{
+			i += op_len;
+			count++;
+		}
+		else
+		{
+			while (str[i] && (!is_space(str[i]) || in_quotes))
+			{
+				if (is_quote(str[i]))
+				{
+					if (!in_quotes)
+					{
+						in_quotes = 1;
+						quote = str[i];
+					}
+					else if (str[i] == quote)
+						in_quotes = 0;
+				}
+				else if (!in_quotes && is_operator(&str[i]))
+					break;
+				i++;
+			}
+			count++;
+		}
+	}
+	return (count);
+}
+
+
 char	**ft_split_quotes(char *s)
 {
 	char	**dest;
-	int		i;
-	int		j;
+	int		i = 0;
+	int		j = 0;
+	int		len;
 
-	i = 0;
-	j = 0;
-	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
+	dest = (char **)malloc((conta_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
 	while (s[i])
@@ -74,10 +120,11 @@ char	**ft_split_quotes(char *s)
 			i++;
 		if (s[i])
 		{
-			if (!word_alloc(dest, s + i, get_word_length(s + i), j))
+			len = get_word_length(s + i);
+			if (!word_alloc(dest, s + i, len, j))
 				return (free_str(dest, j));
 			j++;
-			i += get_word_length(s + i);
+			i += len;
 		}
 	}
 	dest[j] = NULL;

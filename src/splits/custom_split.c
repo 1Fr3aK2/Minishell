@@ -12,19 +12,6 @@
 
 #include "../../includes/shellinho.h"
 
-static int	is_operator(const char *str)
-{
-	if (!str)
-		return (0);
-	if ((str[0] == '|' && str[1] == '|') || (str[0] == '&' && str[1] == '&'))
-		return (2);
-	if ((str[0] == '<' && str[1] == '<') || (str[0] == '>' && str[1] == '>'))
-		return (2);
-	if (str[0] == '|' || str[0] == '<' || str[0] == '>')
-		return (1);
-	return (0);
-}
-
 static int	word_len_custom(const char *str)
 {
 	int	len;

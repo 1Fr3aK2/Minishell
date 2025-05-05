@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/05 19:42:03 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 19:52:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,6 +223,7 @@ int						count_quotes(char *input);
 
 // utils/utils_bools
 bool					is_quote(char c);
+int						is_operator(const char *str);
 
 // utils
 void					close_fds(int i);
