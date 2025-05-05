@@ -20,7 +20,10 @@ void	child_process(t_info *info)
 	if (!info)
 		return ;
 	storing_backup(info->io);
+	g_exit_status = 0;
 	check_redirections(info);
+	if (g_exit_status == 130) // this makes cases like pwd << EOF, not execute pwd, if ctrl c happens
+		return ;
 	if (info->io->file)
 	{
 		free(info->io->file);
@@ -37,9 +40,8 @@ void	child_process(t_info *info)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		//check_redirections(info);
 		exec(info, info->cmd_tree);
-        exit(1);
+		exit(1);
 	}
 	else
 	{
@@ -49,9 +51,9 @@ void	child_process(t_info *info)
 		if (WIFEXITED(status))
 			// Verifica se o processo terminou normalmente
 			g_exit_status = WEXITSTATUS(status);
-				// Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
+		// Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
 		set_signals();
-			// Restore SIGINT handling after child exits
+		// Restore SIGINT handling after child exits
 		signal(SIGINT, handle_sigint);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
 		{

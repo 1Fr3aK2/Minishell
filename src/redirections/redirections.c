@@ -58,16 +58,13 @@ void	handle_heredoc_redirection(t_io *io)
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
-	// Save original SIGINT handler
 	sigaction(SIGINT, NULL, &original_sigint);
-	
 	pid = fork();
 	if (pid < 0)
 		return ;
 	if (pid == 0)
 	{
-        signal(SIGINT, SIG_DFL);
-		// Child process
+		signal(SIGINT, SIG_DFL);
 		while (1)
 		{
 			line = readline("> ");
@@ -88,16 +85,17 @@ void	handle_heredoc_redirection(t_io *io)
 	}
 	else
 	{
-        // Parent process
 		signal(SIGINT, SIG_IGN);
 		close(fd[1]);
-
-        waitpid(pid, &status, 0);
-        if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-            write(1, "\n", 1);
-        // Restore SIGINT handler (to your shell handler)
-        signal(SIGINT, handle_sigint);
-		// Restore original signal handler
+		waitpid(pid, &status, 0);
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
+			write(1, "\n", 1);
+			g_exit_status = 130;
+			close(fd[0]);
+			return ;
+		}
+		signal(SIGINT, handle_sigint);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			close(fd[0]);

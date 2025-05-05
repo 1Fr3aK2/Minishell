@@ -62,7 +62,7 @@ int	check_operators(t_info *info)
 	return (1);
 }
 
-int	check_redirections(t_info *info)
+int	check_redirections(t_info *info) cat << EOF >> t.txt  --- cat >> t.txt
 {
 	int		i;
 	int		j;
@@ -81,7 +81,7 @@ int	check_redirections(t_info *info)
 				info->io->file = ft_strdup(args[i + 1]);
 				info->redirections->f[j](info->io);
 				remove_redir_tokens(args, i);
-				break ;
+				j = -1;
 			}
 			j++;
 		}
