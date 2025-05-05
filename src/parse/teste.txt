@@ -27,10 +27,10 @@ echo z as>> t.txt
 
 problema parsing -> nao assume redirections
 
-cat << test | echo ola
-echo << test
-
 echo $HOMEE && echo $? && echo $USER && echo -n ola
 
 export a=aa | env | ls | export a=aa -> declara a nova variavel
 export a=aa | env | ls | export a -> nao declara nada
+
+
+cat << test | echo ola

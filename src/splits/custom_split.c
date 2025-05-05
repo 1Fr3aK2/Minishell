@@ -12,10 +12,38 @@
 
 #include "../../includes/shellinho.h"
 
+static int	is_operator(const char *str)
+{
+	if (!str)
+		return (0);
+	if ((str[0] == '|' && str[1] == '|') || (str[0] == '&' && str[1] == '&'))
+		return (2);
+	if ((str[0] == '<' && str[1] == '<') || (str[0] == '>' && str[1] == '>'))
+		return (2);
+	if (str[0] == '|' || str[0] == '<' || str[0] == '>')
+		return (1);
+	return (0);
+}
+
+static int	word_len_custom(const char *str)
+{
+	int	len;
+
+	if (!str)
+		return (0);
+	if (is_operator(str))
+		return (is_operator(str));
+	len = 0;
+	while (str[len] && !is_space(str[len]) && !is_operator(&str[len]))
+		len++;
+	return (len);
+}
+
 static int	counte_word(const char *str)
 {
-	int		i;
-	int		words;
+	int	i;
+	int	words;
+	int	op_len;
 
 	if (!str)
 		return (-1);
@@ -25,10 +53,15 @@ static int	counte_word(const char *str)
 	{
 		while (str[i] && is_space(str[i]))
 			i++;
-		if (str[i])
-			words++;
-		while (str[i] && !is_space(str[i]))
-			i++;
+		if (!str[i])
+			break;
+		op_len = is_operator(&str[i]);
+		if (op_len)
+			i += op_len;
+		else
+			while (str[i] && !is_space(str[i]) && !is_operator(&str[i]))
+				i++;
+		words++;
 	}
 	return (words);
 }
@@ -43,8 +76,7 @@ static char	*word_aloc(const char *str)
 		return (NULL);
 	i = -1;
 	word_len = 0;
-	while (str[word_len] && !is_space(str[word_len]))
-		word_len++;
+	word_len = word_len_custom(str);
 	word = (char *)malloc(word_len + 1);
 	if (!word)
 		return (NULL);
@@ -66,6 +98,7 @@ char	**custom_ft_split(char const *s)
 {
 	char	**dest;
 	int		i;
+	int		len;
 
 	i = 0;
 	if (!s)
@@ -82,9 +115,9 @@ char	**custom_ft_split(char const *s)
 			dest[i] = word_aloc(s);
 			if (!dest[i++])
 				return (free_str(dest, i - 1), NULL);
+			len = word_len_custom(s);
+			s += len;
 		}
-		while (*s && !is_space(*s))
-			s++;
 	}
 	dest[i] = 0;
 	return (dest);
