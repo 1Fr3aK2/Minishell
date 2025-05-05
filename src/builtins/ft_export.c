@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 16:44:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 16:23:29 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,19 +37,22 @@ static bool	check_env(char ***env, char *str)
 	i = 0;
 	if (!env || !*env || !str)
 		return (false);
+	name_len = 0;
 	equal_pos = ft_strchr(str, '=');
-	name_len = ft_strlen(str);
 	if (equal_pos)
 		name_len = equal_pos - str;
-	else
-		return (true); // existe o nome da variavel sem o igual retorna nao necessita de nada
+	else	
+		name_len = ft_strlen(str);
 	while ((*env)[i])
 	{
 		if (ft_strncmp(str, (*env)[i], name_len) == 0
 			&& ((*env)[i][name_len] == '=' || (*env)[i][name_len] == '\0'))
 		{
+			if (equal_pos)
+			{
 				free((*env)[i]);
 				(*env)[i] = ft_strdup(str);
+			}
 			return (true);
 		}
 		i++;
@@ -333,19 +336,19 @@ void	ft_export(t_info *info)
 				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
     			{
         			add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    			}
+					if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
+						add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+				}
     			else
     			{
         			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-            			add_to_env(&(info->export_env), info->cmd_tree->args[i]);
-    			}
+						add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+				}
 			}
 			else
 			{
 				if (check_env(&info->export_env,
-						info->cmd_tree->args[i]) == false)
+					info->cmd_tree->args[i]) == false)
 					add_to_env(&(info->export_env), info->cmd_tree->args[i]);
 			}
 			i++;

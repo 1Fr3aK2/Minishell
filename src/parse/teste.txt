@@ -21,8 +21,8 @@ zsh: command not found: asdasd
 estas aspas -> (``) -> usadas para executar comandos
 
 NORMINETE
-melhorar mensagens de erro
-ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status 
+melhorar mensagens de erro // ERROR
+ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
 echo z as>> t.txt
 
 problema parsing -> nao assume redirections
@@ -31,3 +31,6 @@ cat << test | echo ola
 echo << test
 
 echo $HOMEE && echo $? && echo $USER && echo -n ola
+
+export a=aa | env | ls | export a=aa -> declara a nova variavel
+export a=aa | env | ls | export a -> nao declara nada
