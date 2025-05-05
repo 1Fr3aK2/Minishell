@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 19:17:18 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 02:51:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ char	**new_input(char *input)
 static void	check_dollar(char **args, t_info *info)
 {
 	int		i;
+	int		j;
 	char	*new;
 
 	if (!info || !info->my_env || !args)
@@ -81,6 +82,9 @@ static void	check_dollar(char **args, t_info *info)
 	i = 1;
 	while (args[i])
 	{
+		j = 0;
+		if (args[i][j] && args[i][j] == '$' && args[i][j + 1] == '\0')
+			return ;
 		new = handle_dollar(args[i], info->my_env);
 		if (!new)
 			return ;

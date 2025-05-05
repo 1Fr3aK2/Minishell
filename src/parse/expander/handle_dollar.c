@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 18:38:08 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 02:53:41 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ static int	process_variable(char *str, char **env, char **new, int i)
 	char	*var_name;
 	char	*var_value;
 	char	*temp;
-
+	
 	var_name = expand(str + i);
 	if (!var_name)
-		return (i + 1);
+		return (-1);
 	var_value = translate(var_name, env);
+	if (!var_value)
+		var_value = ft_strdup(" ");
 	if (var_value)
 	{
 		temp = join_and_free(*new, var_value);
@@ -71,7 +73,13 @@ char	*handle_dollar(char *str, char **env)
 		free(temp);
 		i += size_to_var(str + i);
 		if (str[i] == '$')
-			i = process_variable(str, env, &new, i);
+		{
+			int j = process_variable(str, env, &new, i);
+			if (j == -1)
+				return (free(new), NULL);
+			else 
+				i = j;
+		}
 	}
 	return (new);
 }

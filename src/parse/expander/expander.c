@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 18:46:45 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 02:46:24 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,12 @@ char	*expand(char *str)
 			else
 			{
 				var_name = ft_substr(str, i, get_varname_len(str));
-				if (!var_name)
+				if (!var_name || !(*var_name))
+				{
+					if (var_name)
+						free(var_name);
 					return (NULL);
+				}
 				return (var_name);
 			}
 		}
@@ -88,7 +92,8 @@ char	*translate(char *str, char **env)
 		var_value = get_env(str, env);
 		if (!var_value)
 			return (NULL);
-		var_value = ft_strdup(var_value);
+		else 
+			var_value = ft_strdup(var_value);
 	}
 	return (var_value);
 }
