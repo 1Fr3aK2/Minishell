@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/05 02:51:37 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/05 18:07:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ char	**new_input(char *input)
 	if (count_quotes(input) == 0)
 		return (custom_ft_split(input));
 	if (check_quotes(input) == -1)
-		return (printf("ERROR\n"), NULL);
+		return (ft_putstr_fd("Syntax error (quotes)\n", 2), NULL);
 	new = ft_split_quotes(input);
 	if (!new)
 		return (free_arr(new), NULL);
@@ -74,7 +74,6 @@ char	**new_input(char *input)
 static void	check_dollar(char **args, t_info *info)
 {
 	int		i;
-	int		j;
 	char	*new;
 
 	if (!info || !info->my_env || !args)
@@ -82,9 +81,6 @@ static void	check_dollar(char **args, t_info *info)
 	i = 1;
 	while (args[i])
 	{
-		j = 0;
-		if (args[i][j] && args[i][j] == '$' && args[i][j + 1] == '\0')
-			return ;
 		new = handle_dollar(args[i], info->my_env);
 		if (!new)
 			return ;
