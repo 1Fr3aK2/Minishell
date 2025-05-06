@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 16:53:49 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 16:59:44 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 20:28:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_var_name(char *str, int *i)
 	if (!str || !i || *i < 0)
 		return (NULL);
 	var_name = ft_substr(str, *i, get_varname_len(str));
-	if (!var_name || !(*var_name)) //casos como echo $
+	if (!var_name)
 	{
 		if (var_name)
 			free(var_name);
