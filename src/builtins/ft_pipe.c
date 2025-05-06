@@ -17,9 +17,9 @@ void	exec_command(t_info *info, t_tree *node)
 	if (!info || !node)
 		return ;
 	info->cmd_tree = node;
-	if (check_operators(info) == 0)
-		exit(0);
 	if (check_redirections(info) == 0)
+		exit(0);
+	if (check_operators(info) == 0)
 		exit(0);
 	if (check_builtins(info) == 0)
 		exit(0);

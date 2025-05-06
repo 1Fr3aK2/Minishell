@@ -65,6 +65,7 @@ void	handle_heredoc_redirection(t_io *io)
 	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
+		close(fd[0]);
 		while (1)
 		{
 			line = readline("> ");
@@ -74,8 +75,7 @@ void	handle_heredoc_redirection(t_io *io)
 				free(line);
 				break ;
 			}
-			if (write(fd[1], line, ft_strlen(line)) == -1)
-				break ;
+			write(fd[1], line, ft_strlen(line));
 			if (line[0] != '\0')
 				write(fd[1], "\n", 1);
 			free(line);
@@ -86,8 +86,8 @@ void	handle_heredoc_redirection(t_io *io)
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		close(fd[1]);
 		waitpid(pid, &status, 0);
+		close(fd[1]);
 		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 		{
 			write(1, "\n", 1);
@@ -96,7 +96,7 @@ void	handle_heredoc_redirection(t_io *io)
 			return ;
 		}
 		signal(SIGINT, handle_sigint);
-		if (dup2(fd[0], STDIN_FILENO) == -1)
+		if (dup2(fd[0], STDIN_FILENO) == -1) // Redirect stdin to the pipe
 		{
 			close(fd[0]);
 			return ;

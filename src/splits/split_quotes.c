@@ -29,7 +29,7 @@ static int	get_word_length(char *str)
 	len = 0;
 	quote = 0;
 	in_quotes = 0;
-	if (is_operator(str))
+	if ((str))
 		return (is_operator(str));
 	while (str[len] && (!is_space(str[len]) || in_quotes == 1))
 	{
