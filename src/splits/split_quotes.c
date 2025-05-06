@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:09 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/05 19:57:11 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 02:38:06 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,18 +22,20 @@ static void	*free_str(char **dest, int i)
 
 static int	get_word_length(char *str)
 {
-	int		len = 0;
-	char	quote = 0;
-	int		in_quotes = 0;
-	int		op_len;
+	int		len;
+	char	quote;
+	int		in_quotes;
 
-	if ((op_len = is_operator(str)))
-		return (op_len);
-	while (str[len] && (!is_space(str[len]) || in_quotes))
+	len = 0;
+	quote = 0;
+	in_quotes = 0;
+	if (is_operator(str))
+		return (is_operator(str));
+	while (str[len] && (!is_space(str[len]) || in_quotes == 1))
 	{
 		if (is_quote(str[len]))
 		{
-			if (!in_quotes)
+			if (in_quotes == 0)
 			{
 				in_quotes = 1;
 				quote = str[len];
@@ -41,8 +43,8 @@ static int	get_word_length(char *str)
 			else if (str[len] == quote)
 				in_quotes = 0;
 		}
-		else if (!in_quotes && is_operator(&str[len]))
-			break;
+		else if (in_quotes == 0 && is_operator(&str[len]))
+			break ;
 		len++;
 	}
 	return (len);
@@ -62,30 +64,33 @@ static int	word_alloc(char **dest, char *s, int len, int j)
 
 static int	conta_word(char *str)
 {
-	int		i = 0;
-	int		count = 0;
-	char	quote = 0;
-	int		in_quotes = 0;
-	int		op_len;
+	int		i;
+	int		count;
+	char	quote;
+	int		in_quotes;
 
+	i = 0;
+	count = 0;
+	quote = 0;
+	in_quotes = 0;
 	while (str[i])
 	{
 		while (str[i] && is_space(str[i]))
 			i++;
 		if (!str[i])
-			break;
-		if ((op_len = is_operator(&str[i])))
+			break ;
+		if (is_operator(&str[i]))
 		{
-			i += op_len;
+			i += is_operator(&str[i]);
 			count++;
 		}
 		else
 		{
-			while (str[i] && (!is_space(str[i]) || in_quotes))
+			while (str[i] && (!is_space(str[i]) || in_quotes == 1))
 			{
 				if (is_quote(str[i]))
 				{
-					if (!in_quotes)
+					if (in_quotes == 0)
 					{
 						in_quotes = 1;
 						quote = str[i];
@@ -93,8 +98,8 @@ static int	conta_word(char *str)
 					else if (str[i] == quote)
 						in_quotes = 0;
 				}
-				else if (!in_quotes && is_operator(&str[i]))
-					break;
+				else if (in_quotes == 0 && is_operator(&str[i]))
+					break ;
 				i++;
 			}
 			count++;
@@ -103,14 +108,15 @@ static int	conta_word(char *str)
 	return (count);
 }
 
-
 char	**ft_split_quotes(char *s)
 {
 	char	**dest;
-	int		i = 0;
-	int		j = 0;
+	int		i;
+	int		j;
 	int		len;
 
+	i = 0;
+	j = 0;
 	dest = (char **)malloc((conta_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);

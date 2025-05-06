@@ -41,7 +41,7 @@ static int	counte_word(const char *str)
 		while (str[i] && is_space(str[i]))
 			i++;
 		if (!str[i])
-			break;
+			break ;
 		op_len = is_operator(&str[i]);
 		if (op_len)
 			i += op_len;

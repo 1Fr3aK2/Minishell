@@ -12,3 +12,16 @@ ola
 Rafael
 /home/rafael/git/42/Shellinho
 /home/rafael/git/42/Shellinho
+ola
+ola
+EOF
+Makefile
+README.md
+a.t
+includes
+libraries
+notas.txt
+obj
+shellinho
+src
+t.txt

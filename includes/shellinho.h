@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/05 19:52:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 01:53:45 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ typedef struct s_reds
 
 typedef struct s_io
 {
-	char	*file;
-	int		fd_in;
-	int		fd_out;
-	int		stdin_backup;
-	int		stdout_backup;
-	t_reds	*redirections;
+	char				*file;
+	int					fd_in;
+	int					fd_out;
+	int					stdin_backup;
+	int					stdout_backup;
+	t_reds				*redirections;
 }						t_io;
 
 typedef enum s_node_type
@@ -165,8 +165,8 @@ bool					check_translate(char *str);
 void					init(t_info *info);
 void					copy_env(char ***my_env, char **env);
 
-//parse/utils_init.c
-void fill_all(t_info *info);
+// parse/utils_init.c
+void					fill_all(t_info *info);
 
 // parse/parse
 int						size_woutquotes(char *str);
@@ -175,8 +175,8 @@ void					handle_quotes(char *str, char *new, int i, int *j);
 char					**new_input(char *input);
 void					parse(char *input, t_info *info);
 
-//parse/parse_utils.c
-void	ft_free(void **ptr);
+// parse/parse_utils.c
+void					ft_free(void **ptr);
 
 // parse/quotes
 int						check_quotes(char *input);
