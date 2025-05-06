@@ -37,7 +37,11 @@ void	ft_echo(t_info *info)
 	j = 0;
 	if (check_redirections(info) == 0)
 		exit(0);
+<<<<<<< Updated upstream
 	while (check_flags(info->cmd_tree->args[i]) == 0)
+=======
+	if (check_flags(info->cmd_tree->args[i]) == 0)
+>>>>>>> Stashed changes
 		++i;
 	while (info->cmd_tree->args[i])
 	{
