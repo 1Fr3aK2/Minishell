@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 16:33:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 17:34:27 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,11 +155,14 @@ void					ft_or(t_info *info);
 char					*handle_dollar(char *str, char **env);
 
 // parse/expander
-int						get_varname_len(char *str);
 char					*expand(char *str);
 char					*translate(char *str, char **env);
-int						size_to_var(char *str);
 bool					check_translate(char *str);
+
+//parse/expander/utils_expander.c
+int						get_varname_len(char *str);
+char					*get_var_name(char *str, int *i);
+int						size_to_var(char *str);
 
 // parse/init
 void					init(t_info *info);
@@ -169,20 +172,21 @@ void					copy_env(char ***my_env, char **env);
 void					fill_all(t_info *info);
 
 // parse/parse
-int						size_woutquotes(char *str);
 char					*remove_quotes(char *str);
-void					handle_quotes(char *str, char *new, int i, int *j);
-char					**new_input(char *input);
 void					parse(char *input, t_info *info);
 
 // parse/parse_utils.c
-void					ft_free(void **ptr);
+
+int						size_woutquotes(char *str);
+void					handle_quotes(char *str, char *new, int i, int *j);
+char					**new_input(char *input);
 
 // parse/quotes
 int						check_quotes(char *input);
 void					remove_all_quotes(char **tokens);
 
 // parse/tree
+t_tree					*build_tree_tokens(char **tokens);
 t_tree					*parse_tokens(char **tokens);
 
 // parse/utils_tree

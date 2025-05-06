@@ -6,70 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/05 18:07:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:34:48 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
-
-int	size_woutquotes(char *str)
-{
-	int		i;
-	char	quote;
-	int		count;
-
-	if (!str)
-		return (-1);
-	i = 0;
-	quote = 0;
-	count = 0;
-	if (str[i] && is_quote(str[i]))
-	{
-		quote = str[i];
-		i++;
-	}
-	while (str[i])
-	{
-		if (str[i] && str[i] != quote)
-		{
-			i++;
-			count++;
-		}
-		else if (str[i] && str[i] == quote)
-			i++;
-	}
-	return (count);
-}
-
-void	handle_quotes(char *str, char *new, int i, int *j)
-{
-	static int	in_quotes;
-	static char	quote_char;
-
-	if (in_quotes == 0)
-	{
-		in_quotes = 1;
-		quote_char = str[i];
-	}
-	else if (str[i] == quote_char)
-		in_quotes = 0;
-	else
-		new[(*j)++] = str[i];
-}
-
-char	**new_input(char *input)
-{
-	char	**new;
-
-	if (count_quotes(input) == 0)
-		return (custom_ft_split(input));
-	if (check_quotes(input) == -1)
-		return (ft_putstr_fd("Syntax error (quotes)\n", 2), NULL);
-	new = ft_split_quotes(input);
-	if (!new)
-		return (free_arr(new), NULL);
-	return (new);
-}
 
 static void	check_dollar(char **args, t_info *info)
 {
@@ -102,13 +43,10 @@ t_tree	*build_tree_tokens(char **tokens)
 	return (parse_tokens(tokens));
 }
 
-void	parse(char *input, t_info *info)
+static void	reset_info(t_info *info)
 {
-	char	**tokens;
-
-	if (!input || !info)
+	if (!info)
 		return ;
-	tokens = NULL;
 	if (info->cmd_tree)
 	{
 		free_tree(info->cmd_tree);
@@ -119,6 +57,16 @@ void	parse(char *input, t_info *info)
 		free(info->flags);
 		info->flags = NULL;
 	}
+}
+
+void	parse(char *input, t_info *info)
+{
+	char	**tokens;
+
+	if (!input || !info)
+		return ;
+	tokens = NULL;
+	reset_info(info);
 	tokens = new_input(input);
 	if (!tokens)
 		return ;

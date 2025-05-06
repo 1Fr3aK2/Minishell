@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/05 02:53:41 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 17:18:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	process_variable(char *str, char **env, char **new, int i)
 	char	*var_name;
 	char	*var_value;
 	char	*temp;
-	
+
 	var_name = expand(str + i);
 	if (!var_name)
 		return (-1);
@@ -50,13 +50,35 @@ static int	process_variable(char *str, char **env, char **new, int i)
 	return (i + get_varname_len(str + i) + 1);
 }
 
+static int	handle_loop(char *str, char **env, char **new, int *i)
+{
+	char	*temp;
+	int		j;
+
+	temp = ft_substr(str, *i, size_to_var(str + *i));
+	if (!temp)
+		return (-1);
+	*new = join_and_free(*new, temp);
+	if (!*new)
+		return (free(temp), -1);
+	free(temp);
+	*i += size_to_var(str + *i);
+	if (str[*i] == '$')
+	{
+		j = process_variable(str, env, new, *i);
+		if (j == -1)
+			return (-1);
+		*i = j;
+	}
+	return (0);
+}
+
 char	*handle_dollar(char *str, char **env)
 {
 	char	*new;
-	char	*temp;
 	int		i;
 
-	if (check_translate(str) == 0)
+	if (!check_translate(str))
 		return (ft_strdup(str));
 	new = ft_strdup("");
 	if (!new)
@@ -64,22 +86,8 @@ char	*handle_dollar(char *str, char **env)
 	i = 0;
 	while (str[i])
 	{
-		temp = ft_substr(str, i, size_to_var(str + i));
-		if (!temp)
+		if (handle_loop(str, env, &new, &i) == -1)
 			return (free(new), NULL);
-		new = join_and_free(new, temp);
-		if (!new)
-			return (free(temp), NULL);
-		free(temp);
-		i += size_to_var(str + i);
-		if (str[i] == '$')
-		{
-			int j = process_variable(str, env, &new, i);
-			if (j == -1)
-				return (free(new), NULL);
-			else 
-				i = j;
-		}
 	}
 	return (new);
 }

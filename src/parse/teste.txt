@@ -12,11 +12,32 @@ echo 'Texto com "aspas duplas" e '"mistura"' de 'aspas simples' dentro' -> corri
 \\\\\\\
 echo `pwd` asdasd
 /home/raamorim/commoncore/Shellinho asdasd
-echo & asdasd    
-
+echo & asdasd
 [1] 68519
 [1]  + 68519 done       echo
 zsh: command not found: asdasd
+
+CORRIGIR TESTES
+
+
+echo "O meu user é $USER e estou em $PWD" -> correto : O meu user é rafael e estou em /home/rafael
+echo "$HOME$USER" -> correto : /home/rafaelrafael
+echo "$HOME$NAO_EXISTE" -> correto : /home/rafael
+echo "User: $USER, Desconhecido: $NAO_EXISTE" -> correto : User: rafael, Desconhecido:
+
+echo $123ABC -> bash -> 23ABC
+            -> zsh -> zsh: command not found: 23ABC
+            outros(nos) -> \n 
+
+echo $HOME!USER -> bash -> bash: !USER: event not found
+                -> ZSH -> zsh: event not found: USER
+                outros(nos) -> /home/rafael!USER
+
+
+echo "'$HOME'" -> correto -> '/home/rafael'
+echo "asd"'$HOME'"asd" -> asd$HOMEasd
+ echo "Inicio"'$PWD'"Fim" -> Inicio$PWDFim
+
 
 estas aspas -> (``) -> usadas para executar comandos
 
@@ -29,3 +50,6 @@ ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
 
 echo $HOMEE && echo $? && echo $USER && echo -n ola
 cat << test | echo ola
+quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
+
+quando fazemos export a -> export a+=a -> aa -> incorreto (deve dar a=a);

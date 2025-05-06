@@ -6,35 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/05 02:46:24 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:56:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shellinho.h"
-
-int	get_varname_len(char *str)
-{
-	int	i;
-	int	start;
-
-	i = 0;
-	start = 0;
-	while (str[i])
-	{
-		if (str[i] && str[i] == '$')
-		{
-			i++;
-			if (str[i] == '?')
-				return (i);
-			start = i;
-			while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
-				i++;
-			return (i - start);
-		}
-		i++;
-	}
-	return (0);
-}
 
 char	*expand(char *str)
 {
@@ -57,16 +33,7 @@ char	*expand(char *str)
 				return (var_name);
 			}
 			else
-			{
-				var_name = ft_substr(str, i, get_varname_len(str));
-				if (!var_name || !(*var_name))
-				{
-					if (var_name)
-						free(var_name);
-					return (NULL);
-				}
-				return (var_name);
-			}
+				return (get_var_name(str, &i));
 		}
 		i++;
 	}
@@ -92,24 +59,10 @@ char	*translate(char *str, char **env)
 		var_value = get_env(str, env);
 		if (!var_value)
 			return (NULL);
-		else 
+		else
 			var_value = ft_strdup(var_value);
 	}
 	return (var_value);
-}
-
-int	size_to_var(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] && str[i] == '$')
-			return (i);
-		i++;
-	}
-	return (i);
 }
 
 bool	check_translate(char *str)

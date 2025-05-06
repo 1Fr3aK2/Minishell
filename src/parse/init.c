@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 16:35:14 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 17:25:23 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,32 +51,37 @@ void	init_io(t_io *io)
 	io->redirections = NULL;
 }
 
-void	init(t_info *info)
+static int	alloc_struct(t_info *info)
 {
-	info->cmd_tree = NULL;
-	info->flags = NULL;
-	info->export_env = NULL;
+	if (!info)
+		return (-1);
 	info->builtins = malloc(sizeof(t_builtins));
 	if (!info->builtins)
-		return ;
+		return (-1);
 	info->types = malloc(sizeof(t_types));
 	if (!info->types)
-		return (free(info->builtins));
+		return (free(info->builtins), -1);
 	info->redirections = malloc(sizeof(t_reds));
 	if (!info->redirections)
-	{
-		free(info->builtins);
-		free(info->types);
-		return ;
-	}
+		return (free(info->builtins), free(info->types), -1);
 	info->io = malloc(sizeof(t_io));
 	if (!info->io)
 	{
 		free(info->builtins);
 		free(info->types);
 		free(info->redirections);
-		return ;
+		return (-1);
 	}
+	return (0);
+}
+
+void	init(t_info *info)
+{
+	info->cmd_tree = NULL;
+	info->flags = NULL;
+	info->export_env = NULL;
+	if (alloc_struct(info) == -1)
+		return ;
 	init_io(info->io);
 	fill_all(info);
 }

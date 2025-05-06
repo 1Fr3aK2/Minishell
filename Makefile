@@ -11,6 +11,7 @@ SRCS =  src/main.c \
 		src/builtins/ft_or.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
+		src/parse/expander/utils_expander.c\
 		src/parse/init.c \
 		src/parse/utils_init.c \
 		src/parse/parse.c \
