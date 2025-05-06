@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/06 16:56:39 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 00:46:12 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 char	*expand(char *str)
 {
 	int		i;
-	char	*var_name;
 
 	if (!str)
 		return (NULL);
@@ -26,12 +25,7 @@ char	*expand(char *str)
 		{
 			i++;
 			if (str[i] && str[i] == '?')
-			{
-				var_name = ft_substr(str, i, ft_strlen(str) - i);
-				if (!var_name)
-					return (NULL);
-				return (var_name);
-			}
+				return (get_var_name(str, &i));
 			else
 				return (get_var_name(str, &i));
 		}
