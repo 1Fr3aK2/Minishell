@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 18:55:29 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/25 03:57:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 18:43:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_env(t_info *info)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (info->cmd_tree->args && info->cmd_tree->args[0]

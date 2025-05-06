@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 17:34:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 19:27:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void					exec_command(t_info *info, t_tree *node);
 void					ft_and(t_info *info);
 
 // builtins/or
+void					exec_command_op(t_info *info, t_tree *node);
 void					ft_or(t_info *info);
 
 // parse/handle_dollar
