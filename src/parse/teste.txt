@@ -54,3 +54,4 @@ cat << test | echo ola
 quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
 quando fazemos export a -> export a+=a -> aa -> incorreto (deve dar a=a);
 probllemas em ft_pipe quando se junta || ou && 
+leak -> cat << EOF >> t.txt
