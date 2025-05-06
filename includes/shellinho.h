@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 01:53:45 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/06 16:33:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,14 +190,11 @@ int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
 // processes
 void					child_process(t_info *info);
-/* void					exec(t_info *info); */
 void					exec(t_info *info, t_tree *node);
 
 // processes/utils
-/* char					*find_path(t_info *info); */
 char					*find_path(t_info *info, char *cmd);
 char					*get_env(char *variable_name, char **env);
-void					free_types(t_types *types);
 
 // redirections
 void					handle_input_redirection(t_io *io);
