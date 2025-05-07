@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/07 01:19:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 20:38:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,10 +133,29 @@ void					ft_pwd(t_info *info);
 void					sort_env(char **args);
 
 // builtins/export
+void	add_to_env(char ***env, char *str);
 void					sort_env(char **args);
-char					*reverse_strchr(char *str, int c);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
+
+// builtins/export/export_utils.c
+bool					check_equal_plus(char *str);
+bool	check_equal_sign(char *str);
+bool	check_plus_sign(char *str);
+bool					check_valid_input(char *str, int *exit);
+
+// builtins/export/export_utils_utils.c
+void					format_str(char **str);
+bool					check_pos(char *str, char c);
+int						find_index(char **arr, char *str);
+void					create_var(char ***env, char *str);
+bool					check_env(char ***env, char *str);
+
+// builtins/export/export_aux_functions.c
+void					handle_regular_assignment(t_info *info, char *arg);
+void					handle_plus_assignment(t_info *info, char *arg);
+void					add_check(char ***arr, char *str);
+void					format_str(char **str);
 
 // builtins/unset
 void					ft_unset(t_info *info);
@@ -160,7 +179,7 @@ char					*expand(char *str);
 char					*translate(char *str, char **env);
 bool					check_translate(char *str);
 
-//parse/expander/utils_expander.c
+// parse/expander/utils_expander.c
 int						get_varname_len(char *str);
 char					*get_var_name(char *str, int *i);
 int						size_to_var(char *str);
@@ -193,6 +212,7 @@ t_tree					*parse_tokens(char **tokens);
 // parse/utils_tree
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
+
 // processes
 void					child_process(t_info *info);
 void					exec(t_info *info, t_tree *node);
@@ -236,6 +256,7 @@ int						check_builtins(t_info *info);
 int						check_operators(t_info *info);
 void					clean(t_info *info);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
+char					*reverse_strchr(char *str, int c);
 
 // utils/free.c
 void					free_tree(t_tree *node);

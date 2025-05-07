@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/06 16:32:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 20:19:44 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,24 @@ void	error_exit(char *msg)
 		perror(msg);
 	close_fds(0);
 	exit(EXIT_FAILURE);
+}
+
+char	*reverse_strchr(char *str, int c)
+{
+	char	*pos;
+	char	*new;
+	int		len;
+
+	if (!str)
+		return (NULL);
+	pos = ft_strchr(str, c);
+	if (!pos)
+		return (NULL);
+	len = pos - str;
+	new = (char *)malloc(sizeof(char) * (len + 1));
+	if (!new)
+		return (NULL);
+	ft_strncpy(new, str, len);
+	new[len] = '\0';
+	return (new);
 }

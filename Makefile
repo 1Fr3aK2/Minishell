@@ -4,7 +4,10 @@ SRCS =  src/main.c \
 		src/builtins/ft_cd.c \
 		src/builtins/ft_exit.c \
 		src/builtins/ft_pwd.c \
-		src/builtins/ft_export.c \
+		src/builtins/ft_export/ft_export.c \
+		src/builtins/ft_export/export_utils.c \
+		src/builtins/ft_export/export_utils_utils.c \
+		src/builtins/ft_export/export_aux_functions.c \
 		src/builtins/ft_unset.c \
 		src/builtins/ft_pipe.c \
 		src/builtins/ft_and.c \
