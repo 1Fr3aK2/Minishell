@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/07 03:24:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 03:50:32 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -328,9 +328,9 @@ void	add_check(char ***arr, char *str)
 
 void	ft_export(t_info *info)
 {
-	char	**sorted_env;
-	int		exit;
-	int		i;
+	char **sorted_env;
+	int exit;
+	int i;
 
 	sorted_env = NULL;
 	i = 1;
@@ -397,5 +397,3 @@ void	ft_export(t_info *info)
 	}
 	g_exit_status = exit;
 }
-
-// env nao tem aspas ao contrario de export
