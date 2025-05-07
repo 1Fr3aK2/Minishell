@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/06 20:09:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 01:17:49 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@
 	}
 } */
 
-
-
 static void	handle_child_signals(void)
 {
 	signal(SIGINT, SIG_DFL);
@@ -101,14 +99,6 @@ static void	exec_child_process(t_info *info)
 	exec(info, info->cmd_tree);
 	exit(1);
 }
-static void	free_io_file(t_io *io)
-{
-	if (io->file)
-	{
-		free(io->file);
-		io->file = NULL;
-	}
-}
 
 void	child_process(t_info *info)
 {
@@ -138,7 +128,6 @@ void	child_process(t_info *info)
 	signal(SIGINT, handle_sigint);
 	handle_parent_signals(status);
 }
-
 
 void	exec(t_info *info, t_tree *node)
 {

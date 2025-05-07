@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/06 16:33:05 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 01:21:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,22 @@ void	free_tree(t_tree *node)
 		free_tree(node->right);
 	if (node)
 		free(node);
+	node = NULL;
+}
+
+void	free_io_file(t_io *io)
+{
+	if (io->file)
+	{
+		free(io->file);
+		io->file = NULL;
+	}
+}
+
+void	free_builtins(t_builtins *builtins)
+{
+	if (!builtins)
+		return ;
+	free(builtins);
+	builtins = NULL;
 }

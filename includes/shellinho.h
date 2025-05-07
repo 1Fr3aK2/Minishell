@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 19:27:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 01:19:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,15 +232,18 @@ void					close_fds(int i);
 void					close_pipe_fds(int fd[2]);
 void					print_banner(void);
 void					error_exit(char *msg);
-void					free_arr(char **arr);
 int						check_builtins(t_info *info);
 int						check_operators(t_info *info);
 void					clean(t_info *info);
 char					*ft_strncpy(char *dest, char *src, unsigned int n);
+
+// utils/free.c
 void					free_tree(t_tree *node);
+void					free_io_file(t_io *io);
+void					free_arr(char **arr);
+void					free_builtins(t_builtins *builtins);
 
 // main
 void					start(t_info *info);
-void					free_builtins(t_builtins *builtins);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 16:52:58 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 01:20:12 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,13 +48,6 @@ void	start(t_info *info)
 		free(input);
 	}
 	rl_clear_history();
-}
-
-void	free_builtins(t_builtins *builtins)
-{
-	if (!builtins)
-		return ;
-	free(builtins);
 }
 
 void	change_shlvl(char ***env, char *name)
