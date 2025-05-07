@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/07 01:01:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 03:24:23 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ static bool	check_equal_sign(char *str)
 
 static bool	check_env(char ***env, char *str)
 {
-	int i;
-	char *equal_pos;
-	size_t name_len;
-	
+	int		i;
+	char	*equal_pos;
+	size_t	name_len;
+
 	i = 0;
 	if (!env || !*env || !str)
 		return (false);
@@ -41,7 +41,7 @@ static bool	check_env(char ***env, char *str)
 	equal_pos = ft_strchr(str, '=');
 	if (equal_pos)
 		name_len = equal_pos - str;
-	else	
+	else
 		name_len = ft_strlen(str);
 	while ((*env)[i])
 	{
@@ -132,49 +132,50 @@ char	**create_sorted_env_copy(char **env)
 	return (copy);
 }
 
-static void format_str(char **str)
+static void	format_str(char **str)
 {
-    char *value;
-    char *new;
-    int key_len;
-	int total_len;
+	char	*value;
+	char	*new;
+	int		key_len;
+	int		total_len;
 
-    if (!str || !*str)
-        return;
-    value = ft_strchr(*str, '=');
-    if (!value)
-        return;
-    key_len = value - *str + 1;
-    value++;
-    total_len = key_len + ft_strlen(value) + 3;
-    new = (char *)malloc(sizeof(char) * total_len);
-    if (!new)
-        return;
-    ft_strlcpy(new, *str, key_len + 1);
-    ft_strlcat(new, "\"", total_len);
-    ft_strlcat(new, value, total_len);
-    ft_strlcat(new, "\"", total_len);
-    free(*str);
-    *str = new;
+	if (!str || !*str)
+		return ;
+	value = ft_strchr(*str, '=');
+	if (!value)
+		return ;
+	key_len = value - *str + 1;
+	value++;
+	total_len = key_len + ft_strlen(value) + 3;
+	new = (char *)malloc(sizeof(char) * total_len);
+	if (!new)
+		return ;
+	ft_strlcpy(new, *str, key_len + 1);
+	ft_strlcat(new, "\"", total_len);
+	ft_strlcat(new, value, total_len);
+	ft_strlcat(new, "\"", total_len);
+	free(*str);
+	*str = new;
 }
 
-static bool check_pos(char *str, char c)
+static bool	check_pos(char *str, char c)
 {
 	if (!str)
-		return (false);	
-	if ((ft_strchr(str, c) && (ft_strchr(str, c) < ft_strchr(str, '=')))  
+		return (false);
+	if ((ft_strchr(str, c) && (ft_strchr(str, c) < ft_strchr(str, '=')))
 		|| (ft_strchr(str, c) && !ft_strchr(str, '=')))
 		return (true);
 	return (false);
 }
 
-static bool check_plus_sign(char *str)
+static bool	check_plus_sign(char *str)
 {
+	int	i;
+
 	if (!str)
 		return (false);
-	int i;
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] && str[i] == '+')
 		{
@@ -182,17 +183,20 @@ static bool check_plus_sign(char *str)
 				return (true);
 			return (false);
 		}
-		i++;			
+		i++;
 	}
 	return (false);
 }
 
-bool check_valid_input(char *str, int *exit)
+bool	check_valid_input(char *str, int *exit)
 {
 	if (!str)
 		return (false);
-	if (*str == '\0' || *str == '=' || *str == '+'|| ft_isdigit(*str) == 1 || check_pos(str, '-') || check_pos(str, '.')
-		|| check_pos(str, ':') || check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!') || check_pos(str, '?') || (ft_strchr(str, '+') && !check_plus_sign(str)))
+	if (*str == '\0' || *str == '=' || *str == '+' || ft_isdigit(*str) == 1
+		|| check_pos(str, '-') || check_pos(str, '.') || check_pos(str, ':')
+		|| check_pos(str, ',') || check_pos(str, '\\') || check_pos(str, '!')
+		|| check_pos(str, '?') || (ft_strchr(str, '+')
+			&& !check_plus_sign(str)))
 	{
 		ft_putstr_fd("shellinho: export: `", 2);
 		ft_putstr_fd(str, 2);
@@ -205,14 +209,14 @@ bool check_valid_input(char *str, int *exit)
 	return (true);
 }
 
-char *reverse_strchr(char *str, int c)
+char	*reverse_strchr(char *str, int c)
 {
-	char *pos;
-	char *new;
-	int len;
+	char	*pos;
+	char	*new;
+	int		len;
 
 	if (!str)
-		return NULL;
+		return (NULL);
 	pos = ft_strchr(str, c);
 	if (!pos)
 		return (NULL);
@@ -222,13 +226,12 @@ char *reverse_strchr(char *str, int c)
 		return (NULL);
 	ft_strncpy(new, str, len);
 	new[len] = '\0';
-	return (new);	
+	return (new);
 }
 
-
-int find_index(char **arr, char *str)
+int	find_index(char **arr, char *str)
 {
-	int i;
+	int	i;
 
 	if (!arr || !str)
 		return (-1);
@@ -242,12 +245,12 @@ int find_index(char **arr, char *str)
 	return (-1);
 }
 
-void create_var(char ***env, char *str)
+void	create_var(char ***env, char *str)
 {
-	int len;
-	char *new_str;
-	char *var_name;
-	char *var_value;
+	int		len;
+	char	*new_str;
+	char	*var_name;
+	char	*var_value;
 
 	var_name = reverse_strchr(str, '+');
 	var_value = ft_strchr(str, '=');
@@ -256,10 +259,7 @@ void create_var(char ***env, char *str)
 	len = ft_strlen(var_name) + ft_strlen(var_value) + 1;
 	new_str = (char *)malloc(sizeof(char) * (len + 1));
 	if (!new_str)
-	{
-		free(var_name);
-		return;
-	}
+		return (free(var_name));
 	new_str[0] = '\0';
 	ft_strlcpy(new_str, var_name, ft_strlen(var_name) + 1);
 	ft_strlcat(new_str, var_value, len + 1);
@@ -269,46 +269,69 @@ void create_var(char ***env, char *str)
 	free(var_name);
 }
 
-void add_check(char ***arr, char *str)
+static int	add_equal(char **var)
 {
-    char *var_name;
-    char *temp;
-	char *var_value;
-	char *new_var;
-    int i;
+	char	*tmp;
 
-    var_name = reverse_strchr(str, '+');
-	if (!var_name)
-		return ;
-	var_value = ft_strchr(str, '=');
-	if (!var_value)
-        return (free(var_name));
-	var_value++;
-    i = find_index(*arr, var_name);
-    if (i == -1)
-	{
-		create_var(arr, str);
-		free(var_name);
-		return ;
-	}
-    temp = ft_strjoin((*arr)[i], var_value);
-    if (!temp)
-        return (free(var_name));
-    free((*arr)[i]);
-	new_var = remove_quotes(temp);
-	free(temp);
-	format_str(&new_var);
-    (*arr)[i] = new_var;
-    free(var_name);
+	if (ft_strchr(*var, '=') != NULL)
+		return (1);
+	tmp = ft_strjoin(*var, "=");
+	if (!tmp)
+		return (-1);
+	free(*var);
+	*var = tmp;
+	return (1);
 }
 
+static int	concat_and_update(char ***arr, int i, char *val)
+{
+	char	*tmp;
+	char	*final;
+
+	tmp = ft_strjoin((*arr)[i], val);
+	if (!tmp)
+		return (-1);
+	free((*arr)[i]);
+	final = remove_quotes(tmp);
+	free(tmp);
+	format_str(&final);
+	(*arr)[i] = final;
+	return (1);
+}
+
+void	add_check(char ***arr, char *str)
+{
+	char	*name;
+	char	*value;
+	int		index;
+
+	name = reverse_strchr(str, '+');
+	if (name == NULL)
+		return ;
+	value = ft_strchr(str, '=');
+	if (value == NULL)
+		return (free(name));
+	value++;
+	index = find_index(*arr, name);
+	if (index == -1)
+	{
+		create_var(arr, str);
+		free(name);
+		return ;
+	}
+	if (add_equal(&(*arr)[index]) == -1)
+		return (free(name));
+	if (concat_and_update(arr, index, value) == -1)
+		return (free(name));
+	free(name);
+}
 
 void	ft_export(t_info *info)
 {
 	char	**sorted_env;
 	int		exit;
 	int		i;
-	
+
 	sorted_env = NULL;
 	i = 1;
 	exit = 0;
@@ -320,35 +343,39 @@ void	ft_export(t_info *info)
 		{
 			if (!check_valid_input(info->cmd_tree->args[i], &exit))
 			{
-	 			i++;
-				continue;
+				i++;
+				continue ;
 			}
 			if (check_equal_sign(info->cmd_tree->args[i]) == true)
 			{
 				if (check_plus_sign(info->cmd_tree->args[i]) == true)
 				{
 					add_check(&info->my_env, info->cmd_tree->args[i]);
-        			add_check(&info->export_env, info->cmd_tree->args[i]);
+					add_check(&info->export_env, info->cmd_tree->args[i]);
 					i++;
-					continue;
+					continue ;
 				}
-    			format_str(&info->cmd_tree->args[i]);
+				format_str(&info->cmd_tree->args[i]);
 				if (check_env(&info->my_env, info->cmd_tree->args[i]) == false)
-    			{
-        			add_to_env(&(info->my_env), info->cmd_tree->args[i]);
-					if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-						add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+				{
+					add_to_env(&(info->my_env), info->cmd_tree->args[i]);
+					if (check_env(&info->export_env,
+							info->cmd_tree->args[i]) == false)
+						add_to_env(&(info->export_env),
+							info->cmd_tree->args[i]);
 				}
-    			else
-    			{
-        			if (check_env(&info->export_env, info->cmd_tree->args[i]) == false)
-						add_to_env(&(info->export_env), info->cmd_tree->args[i]);
+				else
+				{
+					if (check_env(&info->export_env,
+							info->cmd_tree->args[i]) == false)
+						add_to_env(&(info->export_env),
+							info->cmd_tree->args[i]);
 				}
 			}
 			else
 			{
 				if (check_env(&info->export_env,
-					info->cmd_tree->args[i]) == false)
+						info->cmd_tree->args[i]) == false)
 					add_to_env(&(info->export_env), info->cmd_tree->args[i]);
 			}
 			i++;
@@ -371,4 +398,4 @@ void	ft_export(t_info *info)
 	g_exit_status = exit;
 }
 
-//env nao tem aspas ao contrario de export 
+// env nao tem aspas ao contrario de export
