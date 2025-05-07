@@ -51,24 +51,6 @@ ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
 echo $HOMEE && echo $? && echo $USER && echo -n ola
 cat << test | echo ola
 
-<<<<<<< Updated upstream
 quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
 quando fazemos export a -> export a+=a -> aa -> incorreto (deve dar a=a);
 probllemas em ft_pipe quando se junta || ou && 
-leak -> cat << EOF >> t.txt
-=======
-verificar precedencias dos operadores ou seja que esta maior na hierarquiac
-
-Redirections 
-input tem prioridade -> "<"
-
-sort > a.t < t.txt
-
-1-o conteudo de t.txt sofre a execucao do primeiro comando e passa para o ficheiro do meio
-
-
-ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status 
-
-echo z as>> t.txt
-problema parsing -> nao assume redirections
->>>>>>> Stashed changes

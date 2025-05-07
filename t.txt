@@ -2,7 +2,6 @@ hha
 gay
 yugo
 khad
-<<<<<<< Updated upstream
 
 gay
 boy
@@ -51,7 +50,4 @@ asd
 asd
 EOF
 asd
-=======
-goodbye
-goodbye1
->>>>>>> Stashed changes
+casd

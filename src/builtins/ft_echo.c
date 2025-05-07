@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 17:29:36 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/07 01:00:29 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ void	ft_echo(t_info *info)
 	j = 0;
 	if (check_redirections(info) == 0)
 		exit(0);
-<<<<<<< Updated upstream
 	while (check_flags(info->cmd_tree->args[i]) == 0)
-=======
-	if (check_flags(info->cmd_tree->args[i]) == 0)
->>>>>>> Stashed changes
 		++i;
 	while (info->cmd_tree->args[i])
 	{

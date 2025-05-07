@@ -6,11 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/05/06 20:26:24 by rafael           ###   ########.fr       */
-=======
-/*   Updated: 2025/04/23 17:03:49 by rafael           ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/07 01:02:29 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,13 +84,5 @@ void	parse(char *input, t_info *info)
 		return (free_arr(tokens));
 	if (info->cmd_tree->args && info->cmd_tree->args[1])
 		info->flags = ft_strdup(info->cmd_tree->args[1]);
-<<<<<<< Updated upstream
-=======
-/* 
-	// Debug tree
-	printf("\nCommand Tree Structure:\n");
-	print_tree(info->cmd_tree, 0); */
-
->>>>>>> Stashed changes
 	free_arr(tokens);
 }

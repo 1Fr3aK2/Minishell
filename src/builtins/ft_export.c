@@ -6,11 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/05/05 16:23:29 by rafael           ###   ########.fr       */
-=======
-/*   Updated: 2025/04/23 17:37:40 by rafael           ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/07 01:01:56 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -317,10 +313,7 @@ void	ft_export(t_info *info)
 	i = 1;
 	exit = 0;
 	check_redirections(info);
-<<<<<<< Updated upstream
 	check_operators(info);
-=======
->>>>>>> Stashed changes
 	if (info->cmd_tree->args[i] != NULL)
 	{
 		while (info->cmd_tree->args[i])
