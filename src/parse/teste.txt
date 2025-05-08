@@ -53,5 +53,3 @@ cat << test | echo ola
 
 quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
 probllemas em ft_pipe quando se junta || ou && 
-
-problema export $PP$USER -> está a colocar um espaço e nao deve colocar nada -> funcao expand;

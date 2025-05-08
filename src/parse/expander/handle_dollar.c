@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/06 17:18:55 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/08 04:09:12 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	process_variable(char *str, char **env, char **new, int i)
 		return (-1);
 	var_value = translate(var_name, env);
 	if (!var_value)
-		var_value = ft_strdup(" ");
+		var_value = ft_strdup("");
 	if (var_value)
 	{
 		temp = join_and_free(*new, var_value);

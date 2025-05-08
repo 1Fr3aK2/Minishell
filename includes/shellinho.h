@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/07 20:38:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/08 04:19:38 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,15 +133,15 @@ void					ft_pwd(t_info *info);
 void					sort_env(char **args);
 
 // builtins/export
-void	add_to_env(char ***env, char *str);
+void					add_to_env(char ***env, char *str);
 void					sort_env(char **args);
 char					**create_sorted_env_copy(char **args);
 void					ft_export(t_info *info);
 
 // builtins/export/export_utils.c
 bool					check_equal_plus(char *str);
-bool	check_equal_sign(char *str);
-bool	check_plus_sign(char *str);
+bool					check_equal_sign(char *str);
+bool					check_plus_sign(char *str);
 bool					check_valid_input(char *str, int *exit);
 
 // builtins/export/export_utils_utils.c

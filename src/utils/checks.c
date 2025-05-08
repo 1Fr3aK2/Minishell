@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/06 20:15:48 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/08 04:18:31 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,9 @@ int	check_redirections(t_info *info)
 			if (ft_strncmp(args[i], info->redirections->reds[j],
 					ft_strlen(args[i])) == 0)
 			{
+				if (!args[i + 1])
+					// Evita segfault ao aceder filename inexistente
+					return (1);
 				update_io_file(info->io, args[i + 1]);
 				info->redirections->f[j](info->io);
 				remove_redir_tokens(args, i);
