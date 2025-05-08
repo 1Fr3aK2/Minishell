@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/04/23 15:20:24 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/08 16:18:33 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,14 @@ void	handle_append_redirection(t_io *io)
 
 void	handle_heredoc_redirection(t_io *io)
 {
-	char				*line;
-	int					fd[2];
-	pid_t				pid;
-	int					status;
-	struct sigaction	original_sigint;
+	char	*line;
+	int		fd[2];
+	pid_t	pid;
+	int		status;
+	int		tty_fd;
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
-	sigaction(SIGINT, NULL, &original_sigint);
 	pid = fork();
 	if (pid < 0)
 		return ;
@@ -66,8 +65,12 @@ void	handle_heredoc_redirection(t_io *io)
 	{
 		signal(SIGINT, SIG_DFL);
 		close(fd[0]);
+		tty_fd = open("/dev/tty", O_RDONLY);
+		if (tty_fd == -1)
+			exit(1);
 		while (1)
 		{
+			dup2(tty_fd, STDIN_FILENO);
 			line = readline("> ");
 			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
 					&& ft_strlen(line) == ft_strlen(io->file)))
@@ -81,6 +84,7 @@ void	handle_heredoc_redirection(t_io *io)
 			free(line);
 		}
 		close(fd[1]);
+		close(tty_fd);
 		exit(0);
 	}
 	else
@@ -101,6 +105,5 @@ void	handle_heredoc_redirection(t_io *io)
 			close(fd[0]);
 			return ;
 		}
-		close(fd[0]);
 	}
 }
