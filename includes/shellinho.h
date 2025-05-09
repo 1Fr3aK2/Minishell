@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/08 16:15:09 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/09 01:34:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,9 @@ bool					check_equal_plus(char *str);
 bool					check_equal_sign(char *str);
 bool					check_plus_sign(char *str);
 bool					check_valid_input(char *str, int *exit);
+void					format_str(char **str);
 
 // builtins/export/export_utils_utils.c
-void					format_str(char **str);
 bool					check_pos(char *str, char c);
 int						find_index(char **arr, char *str);
 void					create_var(char ***env, char *str);

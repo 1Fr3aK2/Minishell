@@ -6,37 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:28:54 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/08 04:20:31 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/09 01:32:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shellinho.h"
-
-void	format_str(char **str)
-{
-	char	*value;
-	char	*new;
-	int		key_len;
-	int		total_len;
-
-	if (!str || !*str)
-		return ;
-	value = ft_strchr(*str, '=');
-	if (!value)
-		return ;
-	key_len = value - *str + 1;
-	value++;
-	total_len = key_len + ft_strlen(value) + 3;
-	new = (char *)malloc(sizeof(char) * total_len);
-	if (!new)
-		return ;
-	ft_strlcpy(new, *str, key_len + 1);
-	ft_strlcat(new, "\"", total_len);
-	ft_strlcat(new, value, total_len);
-	ft_strlcat(new, "\"", total_len);
-	free(*str);
-	*str = new;
-}
 
 bool	check_pos(char *str, char c)
 {
@@ -88,6 +62,18 @@ void	create_var(char ***env, char *str)
 	free(var_name);
 }
 
+static int	get_name_len(char *str, char *equal_pos)
+{
+	int	name_len;
+
+	name_len = 0;
+	if (equal_pos)
+		name_len = equal_pos - str;
+	else
+		name_len = ft_strlen(str);
+	return (name_len);
+}
+
 bool	check_env(char ***env, char *str)
 {
 	int		i;
@@ -97,12 +83,8 @@ bool	check_env(char ***env, char *str)
 	i = 0;
 	if (!env || !*env || !str)
 		return (false);
-	name_len = 0;
 	equal_pos = ft_strchr(str, '=');
-	if (equal_pos)
-		name_len = equal_pos - str;
-	else
-		name_len = ft_strlen(str);
+	name_len = get_name_len(str, equal_pos);
 	while ((*env)[i])
 	{
 		if (ft_strncmp(str, (*env)[i], name_len) == 0

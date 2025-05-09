@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:08:28 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/07 20:37:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/09 01:33:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,30 @@ bool	check_equal_plus(char *str)
 		return (true);
 	else
 		return (false);
+}
+
+void	format_str(char **str)
+{
+	char	*value;
+	char	*new;
+	int		key_len;
+	int		total_len;
+
+	if (!str || !*str)
+		return ;
+	value = ft_strchr(*str, '=');
+	if (!value)
+		return ;
+	key_len = value - *str + 1;
+	value++;
+	total_len = key_len + ft_strlen(value) + 3;
+	new = (char *)malloc(sizeof(char) * total_len);
+	if (!new)
+		return ;
+	ft_strlcpy(new, *str, key_len + 1);
+	ft_strlcat(new, "\"", total_len);
+	ft_strlcat(new, value, total_len);
+	ft_strlcat(new, "\"", total_len);
+	free(*str);
+	*str = new;
 }
