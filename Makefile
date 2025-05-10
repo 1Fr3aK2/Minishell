@@ -9,7 +9,8 @@ SRCS =  src/main.c \
 		src/builtins/ft_export/export_utils_utils.c \
 		src/builtins/ft_export/export_aux_functions.c \
 		src/builtins/ft_unset.c \
-		src/builtins/ft_pipe.c \
+		src/builtins/ft_pipe/ft_pipe.c \
+		src/builtins/ft_pipe/ft_pipe_utils.c \
 		src/builtins/ft_and.c \
 		src/builtins/ft_or.c \
 		src/parse/expander/handle_dollar.c\

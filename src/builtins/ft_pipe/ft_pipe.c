@@ -1,0 +1,82 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_pipe.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
+/*   Updated: 2025/05/10 02:45:36 by rafael           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "../../../includes/shellinho.h"
+
+static void	child_exec(t_info *info, t_tree *node, int in, int out)
+{
+	if (in != -1)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+	if (out != -1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+	exec_command(info, node);
+	exit(1);
+}
+
+static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
+{
+	int		fd[2];
+	pid_t	pid;
+
+	if (pipe(fd) == -1)
+		return (ft_putstr_fd("Pipe error\n", 2), -1);
+	pid = fork();
+	if (pid == -1)
+		return (ft_putstr_fd("Fork error\n", 2), -1);
+	if (pid == 0)
+		child_exec(info, node->left, in, fd[1]);
+	if (in != -1)
+		close(in);
+	close(fd[1]);
+	*out = fd[0];
+	return (pid);
+}
+
+void	ft_pipe(t_info *info, t_tree *node)
+{
+	t_tree	*curr;
+	pid_t	pid;
+	int		in;
+
+	curr = node;
+	pid = -1;
+	in = -1;
+	while (curr && curr->type == PIPE)
+	{
+		pid = create_pipe(info, curr, in, &in);
+		if (pid == -1)
+			return ;
+		curr = curr->right;
+	}
+	if (curr)
+	{
+		pid = fork();
+		if (pid == 0)
+			child_exec(info, curr, in, -1);
+	}
+	if (in != -1)
+		close(in);
+	wait_all(pid);
+}
+
+void	ft_pipe_wrapper(t_info *info)
+{
+	if (!info || !info->cmd_tree)
+		return ;
+	ft_pipe(info, info->cmd_tree);
+}

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/09 01:34:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 02:46:49 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,16 +160,23 @@ void					format_str(char **str);
 // builtins/unset
 void					ft_unset(t_info *info);
 
-// builtins/pipe
+// builtins/ft_pipe/ft_pipe.c
 void					ft_pipe_wrapper(t_info *info);
+void					ft_pipe(t_info *info, t_tree *node);
+
+// builtins/ft_pipe/ft_pipe_utils.c
+void					wait_all(pid_t last_pid);
+void					exec_command(t_info *info, t_tree *node);
 
 // builtins/and
 void					exec_command(t_info *info, t_tree *node);
 void					ft_and(t_info *info);
+void					ft_and_wrapper(t_info *info, t_tree *node);
 
 // builtins/or
 void					exec_command_op(t_info *info, t_tree *node);
 void					ft_or(t_info *info);
+void					ft_or_wrapper(t_info *info, t_tree *node);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);
