@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:25:15 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 19:26:55 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 02:52:47 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	exec_command_op(t_info *info, t_tree *node)
 		g_exit_status = WEXITSTATUS(status);
 }
 
-void	ft_or_wrapper(t_info *info, t_tree *node)
+void	ft_or(t_info *info, t_tree *node)
 {
 	if (!info || !node)
 		return ;
@@ -40,9 +40,9 @@ void	ft_or_wrapper(t_info *info, t_tree *node)
 	{
 		if (node->left && node->right)
 		{
-			ft_or_wrapper(info, node->left);
+			ft_or(info, node->left);
 			if (g_exit_status != 0)
-				ft_or_wrapper(info, node->right);
+				ft_or(info, node->right);
 		}
 		else
 		{
@@ -55,9 +55,9 @@ void	ft_or_wrapper(t_info *info, t_tree *node)
 		exec_command_op(info, node);
 }
 
-void	ft_or(t_info *info)
+void	ft_or_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
-	ft_or_wrapper(info, info->cmd_tree);
+	ft_or(info, info->cmd_tree);
 }

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/10 02:46:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 02:52:04 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,13 +170,13 @@ void					exec_command(t_info *info, t_tree *node);
 
 // builtins/and
 void					exec_command(t_info *info, t_tree *node);
-void					ft_and(t_info *info);
-void					ft_and_wrapper(t_info *info, t_tree *node);
+void					ft_and_wrapper(t_info *info);
+void					ft_and(t_info *info, t_tree *node);
 
 // builtins/or
 void					exec_command_op(t_info *info, t_tree *node);
-void					ft_or(t_info *info);
-void					ft_or_wrapper(t_info *info, t_tree *node);
+void					ft_or_wrapper(t_info *info);
+void					ft_or(t_info *info, t_tree *node);
 
 // parse/handle_dollar
 char					*handle_dollar(char *str, char **env);

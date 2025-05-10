@@ -6,13 +6,13 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/06 19:33:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 02:52:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-void	ft_and_wrapper(t_info *info, t_tree *node)
+void	ft_and(t_info *info, t_tree *node)
 {
 	if (!info || !node)
 		return ;
@@ -20,9 +20,9 @@ void	ft_and_wrapper(t_info *info, t_tree *node)
 	{
 		if (node->left && node->right)
 		{
-			ft_and_wrapper(info, node->left);
+			ft_and(info, node->left);
 			if (g_exit_status == 0)
-				ft_and_wrapper(info, node->right);
+				ft_and(info, node->right);
 		}
 		else
 		{
@@ -35,9 +35,9 @@ void	ft_and_wrapper(t_info *info, t_tree *node)
 		exec_command_op(info, node);
 }
 
-void	ft_and(t_info *info)
+void	ft_and_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
-	ft_and_wrapper(info, info->cmd_tree);
+	ft_and(info, info->cmd_tree);
 }

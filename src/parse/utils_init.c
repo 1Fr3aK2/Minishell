@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/29 18:52:29 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 02:53:50 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ static void	fill_types(t_info *info)
 	info->types->types[2] = "&&";
 	info->types->types[3] = NULL;
 	info->types->f[0] = ft_pipe_wrapper;
-	info->types->f[1] = ft_or;
-	info->types->f[2] = ft_and;
+	info->types->f[1] = ft_or_wrapper;
+	info->types->f[2] = ft_and_wrapper;
 	info->types->f[3] = NULL;
 }
 
