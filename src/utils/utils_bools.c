@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:02 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/10 03:33:33 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/10 03:45:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	is_space(char c)
 	return ((c >= 9 && c <= 13) || c == 32);
 }
 
-int	is_operator(char *str)
+int	is_operator(const char *str)
 {
 	if (!str)
 		return (0);
