@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< Updated upstream
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
 /*   Updated: 2025/05/13 17:20:27 by raamorim         ###   ########.fr       */
+=======
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
+/*   Updated: 2025/05/13 17:13:11 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +79,27 @@ void	update_io_file(t_io *io, char *filename)
 	io->file = ft_strdup(filename);
 	if (!io->file)
 		return ;
+}
+
+
+void	handle_heredocs_first(t_info *info)
+{
+	char	**args = info->cmd_tree->args;
+	int		i = 0;
+
+	while (args && args[i])
+	{
+		if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
+		{
+			if (!args[i + 1])
+				return ; // Prevent crash
+			update_io_file(info->io, args[i + 1]);
+			handle_heredoc_redirection(info->io);
+			remove_redir_tokens(args, i);
+			continue;
+		}
+		i++;
+	}
 }
 
 int	check_redirections(t_info *info)

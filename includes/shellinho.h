@@ -3,10 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
+<<<<<<< Updated upstream
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
 /*   Updated: 2025/05/13 17:21:29 by raamorim         ###   ########.fr       */
+=======
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
+/*   Updated: 2025/05/13 17:34:48 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +118,9 @@ void					print_node_type(t_node_type type);
 void					init_io(t_io *io);
 int						check_redirections(t_info *info);
 void					remove_redir_tokens(char **args, int i);
-void					remove_operator_tokens(char **args, int i);
+void	handle_heredocs_first(t_info *info);
+void prepare_heredocs(t_tree *node, t_info *info);
+void	update_io_file(t_io *io, char *filename);
 
 // builtins/echo
 int						check_flags(char *str);

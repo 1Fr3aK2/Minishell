@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/08 16:14:53 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:17:35 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	child_process(t_info *info)
 		return ;
 	storing_backup(info->io);
 	g_exit_status = 0;
+	handle_heredocs_first(info);
 	check_redirections(info);
 	if (g_exit_status == 130)
 		return ;

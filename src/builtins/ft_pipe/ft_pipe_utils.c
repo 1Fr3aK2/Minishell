@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/10 02:53:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:21:08 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	exec_command(t_info *info, t_tree *node)
 	if (!info || !node)
 		exit(1);
 	info->cmd_tree = node;
+	handle_heredocs_first(info);
 	if (check_redirections(info) == 0)
 		exit(0);
 	if (node->type == CMD)

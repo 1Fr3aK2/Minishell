@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/10 02:53:50 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 16:59:34 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,11 @@ static void	fill_redirections(t_info *info)
 	info->redirections->reds[0] = ">";
 	info->redirections->reds[1] = "<";
 	info->redirections->reds[2] = ">>";
-	info->redirections->reds[3] = "<<";
-	info->redirections->reds[4] = NULL;
+	info->redirections->reds[3] = NULL;
 	info->redirections->f[0] = handle_output_redirection;
 	info->redirections->f[1] = handle_input_redirection;
 	info->redirections->f[2] = handle_append_redirection;
-	info->redirections->f[3] = handle_heredoc_redirection;
-	info->redirections->f[4] = NULL;
+	info->redirections->f[3] = NULL;
 }
 
 void	fill_all(t_info *info)

@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/08 16:18:33 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 17:32:56 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,42 @@ void	handle_heredoc_redirection(t_io *io)
 		}
 	}
 }
+
+void prepare_heredocs(t_tree *node, t_info *info)
+{
+	int i;
+
+	if (!node)
+		return;
+
+	if (node->type == CMD && node->args)
+	{
+		i = 0;
+		while (node->args[i])
+		{
+			if (ft_strncmp(node->args[i], "<<", 2) == 0)
+			{
+				if (!node->args[i + 1])
+				{
+					ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+					g_exit_status = 2;
+					return;
+				}
+				// Set up the heredoc target filename
+				update_io_file(info->io, node->args[i + 1]);
+
+				// Handle heredoc (this will fork, wait, and prepare the input)
+				handle_heredoc_redirection(info->io);
+
+				// Optional: remove the "<< delimiter" tokens from args[] here
+				// so it doesn’t get re-parsed or mis-executed later
+				remove_redir_tokens(node->args, i);
+				i = -1; // Restart parsing since we removed args
+			}
+			i++;
+		}
+	}
+	prepare_heredocs(node->left, info);
+	prepare_heredocs(node->right, info);
+}
+
