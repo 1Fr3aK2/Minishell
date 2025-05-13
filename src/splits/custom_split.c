@@ -73,14 +73,6 @@ static char	*word_aloc(const char *str)
 	return (word);
 }
 
-static void	*free_str(char **dest, int i)
-{
-	while (i >= 0)
-		free(dest[i--]);
-	free(dest);
-	return (NULL);
-}
-
 char	**custom_ft_split(char const *s)
 {
 	char	**dest;
