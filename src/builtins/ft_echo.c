@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 17:22:45 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:05:23 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_echo(t_info *info)
 
 	i = 1;
 	j = 0;
-	handle_heredocs_first(info);
+	prepare_heredocs(info->cmd_tree, info);
 	if (check_redirections(info) == 0)
 		exit(0);
 	while (check_flags(info->cmd_tree->args[i]) == 0)

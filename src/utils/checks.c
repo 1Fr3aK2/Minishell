@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< Updated upstream
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 17:20:27 by raamorim         ###   ########.fr       */
-=======
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 17:13:11 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/13 18:31:59 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,25 +74,24 @@ void	update_io_file(t_io *io, char *filename)
 		return ;
 }
 
-
-void	handle_heredocs_first(t_info *info)
+void	remove_redir_tokens(char **args, int i)
 {
-	char	**args = info->cmd_tree->args;
-	int		i = 0;
-
-	while (args && args[i])
+	if (args[i])
 	{
-		if (args[i][0] == '<' && args[i][1] == '<' && args[i][2] == '\0')
-		{
-			if (!args[i + 1])
-				return ; // Prevent crash
-			update_io_file(info->io, args[i + 1]);
-			handle_heredoc_redirection(info->io);
-			remove_redir_tokens(args, i);
-			continue;
-		}
+		free(args[i]);
+		args[i] = NULL;
+	}
+	if (args[i + 1])
+	{
+		free(args[i + 1]);
+		args[i + 1] = NULL;
+	}
+	while (args[i + 2])
+	{
+		args[i] = args[i + 2];
 		i++;
 	}
+	args[i] = NULL;
 }
 
 int	check_redirections(t_info *info)
@@ -119,7 +111,7 @@ int	check_redirections(t_info *info)
 					ft_strlen(args[i])) == 0)
 			{
 				if (!args[i + 1])
-					// Evita segfault ao aceder filename inexistente
+
 					return (1);
 				update_io_file(info->io, args[i + 1]);
 				info->redirections->f[j](info->io);
@@ -131,24 +123,4 @@ int	check_redirections(t_info *info)
 		i++;
 	}
 	return (1);
-}
-
-void	remove_redir_tokens(char **args, int i)
-{
-	if (args[i])
-	{
-		free(args[i]);
-		args[i] = NULL;
-	}
-	if (args[i + 1])
-	{
-		free(args[i + 1]);
-		args[i + 1] = NULL;
-	}
-	while (args[i + 2])
-	{
-		args[i] = args[i + 2];
-		i++;
-	}
-	args[i] = NULL;
 }

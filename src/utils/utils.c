@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 17:06:30 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:28:30 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,6 @@ void	close_pipe_fds(int fd[2])
 {
 	close(fd[0]);
 	close(fd[1]);
-}
-
-void	error_exit(char *msg)
-{
-	if (!msg)
-		perror("Error\n");
-	else
-		perror(msg);
-	close_fds(0);
 }
 
 char	*reverse_strchr(char *str, int c)

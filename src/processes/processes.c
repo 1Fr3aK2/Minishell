@@ -6,67 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 17:17:35 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 18:04:07 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
-
-/* void	child_process(t_info *info)
-{
-	pid_t	pid;
-	int		status;
-
-	if (!info)
-		return ;
-	storing_backup(info->io);
-	g_exit_status = 0;
-	check_redirections(info);
-	if (g_exit_status == 130) // this makes cases like pwd << EOF, not execute pwd, if ctrl c happens
-		return ;
-	if (info->io->file)
-	{
-		free(info->io->file);
-		info->io->file = NULL;
-	}
-	if (check_operators(info) == 0)
-		return ;
-	if (check_builtins(info) == 0)
-		return (restore_io(info->io), (void)0);
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		exec(info, info->cmd_tree);
-		exit(1);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
-		restore_io(info->io);
-		if (WIFEXITED(status))
-			// Verifica se o processo terminou normalmente
-			g_exit_status = WEXITSTATUS(status);
-		// Obtém o código de saída (o valor passado para exit() ou retornado pelo main()).
-		set_signals();
-		// Restore SIGINT handling after child exits
-		signal(SIGINT, handle_sigint);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
-		{
-			g_exit_status = 131;
-			write(1, "Quit (Core dumped)\n", 19);
-		}
-		else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-		{
-			g_exit_status = 130;
-			write(1, "\n", 1);
-		}
-	}
-} */
 
 static void	handle_child_signals(void)
 {
@@ -109,7 +53,7 @@ void	child_process(t_info *info)
 		return ;
 	storing_backup(info->io);
 	g_exit_status = 0;
-	handle_heredocs_first(info);
+	prepare_heredocs(info->cmd_tree, info);
 	check_redirections(info);
 	if (g_exit_status == 130)
 		return ;

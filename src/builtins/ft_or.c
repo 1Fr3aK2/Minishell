@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_or.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:25:15 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/10 02:52:47 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:57:34 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ void	ft_or_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
+	prepare_heredocs(info->cmd_tree, info);
 	ft_or(info, info->cmd_tree);
 }

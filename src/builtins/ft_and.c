@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_and.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/10 02:52:26 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:56:55 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ void	ft_and_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
+	prepare_heredocs(info->cmd_tree, info);
 	ft_and(info, info->cmd_tree);
 }

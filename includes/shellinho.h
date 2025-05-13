@@ -3,17 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-<<<<<<< Updated upstream
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/13 17:21:29 by raamorim         ###   ########.fr       */
-=======
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/13 17:34:48 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/13 18:36:03 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,32 +107,13 @@ typedef struct s_info
 extern unsigned int		g_exit_status;
 
 // to_remove
-void					print_node_type(t_node_type type);
 void					init_io(t_io *io);
-int						check_redirections(t_info *info);
-void					remove_redir_tokens(char **args, int i);
-void	handle_heredocs_first(t_info *info);
-void prepare_heredocs(t_tree *node, t_info *info);
-void	update_io_file(t_io *io, char *filename);
 
-// builtins/echo
-int						check_flags(char *str);
-void					ft_echo(t_info *info);
-
-// builtins/env
-void					ft_env(t_info *info);
-
-// builtins/cd
-void					cd_with_arg(const char *path);
-int						count_levels(const char *arg);
-void					ft_cd_doispontos(t_info *info, int levels);
-void					ft_cd_home(t_info *info);
-void					ft_cd(t_info *info);
-
-// builtins/exit
-void					ft_exit(t_info *info);
-void					ft_pwd(t_info *info);
-void					sort_env(char **args);
+// builtins/export/export_aux_functions.c
+void					handle_regular_assignment(t_info *info, char *arg);
+void					handle_plus_assignment(t_info *info, char *arg);
+void					add_check(char ***arr, char *str);
+void					format_str(char **str);
 
 // builtins/export
 void					add_to_env(char ***env, char *str);
@@ -160,11 +134,26 @@ int						find_index(char **arr, char *str);
 void					create_var(char ***env, char *str);
 bool					check_env(char ***env, char *str);
 
-// builtins/export/export_aux_functions.c
-void					handle_regular_assignment(t_info *info, char *arg);
-void					handle_plus_assignment(t_info *info, char *arg);
-void					add_check(char ***arr, char *str);
-void					format_str(char **str);
+
+// builtins/echo
+int						check_flags(char *str);
+void					ft_echo(t_info *info);
+
+// builtins/env
+void					ft_env(t_info *info);
+
+// builtins/cd
+void					cd_with_arg(const char *path);
+int						count_levels(const char *arg);
+void					ft_cd_doispontos(t_info *info, int levels);
+void					ft_cd_home(t_info *info);
+void					ft_cd(t_info *info);
+
+// builtins/exit
+void					ft_exit(t_info *info);
+void					ft_pwd(t_info *info);
+void					sort_env(char **args);
+
 
 // builtins/unset
 void					ft_unset(t_info *info);
@@ -237,13 +226,18 @@ void					exec(t_info *info, t_tree *node);
 char					*find_path(t_info *info, char *cmd);
 char					*get_env(char *variable_name, char **env);
 
-// redirections
-void					handle_input_redirection(t_io *io);
-void					handle_output_redirection(t_io *io);
-void					handle_append_redirection(t_io *io);
+// redirections/heredocs
 void					handle_heredoc_redirection(t_io *io);
+void					prepare_heredocs(t_tree *node, t_info *info);
+
+// redirections/redir_utils
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
+
+// redirections/redirections
+void					handle_output_redirection(t_io *io);
+void					handle_input_redirection(t_io *io);
+void					handle_append_redirection(t_io *io);
 
 // signals
 void					handle_sigint(int sig);
@@ -259,22 +253,16 @@ char					**ft_split_quotes(char *s);
 int						count_word(char *str);
 int						count_quotes(char *input);
 
+// utils/checks
+int						check_redirections(t_info *info);
+void					remove_redir_tokens(char **args, int i);
+void					update_io_file(t_io *io, char *filename);
+
 // utils/utils_bools
 bool					is_quote(char c);
 int						is_operator(const char *str);
 int						is_operator_char(char c);
 int						is_double_operator(char *str);
-
-// utils
-void					close_fds(int i);
-void					close_pipe_fds(int fd[2]);
-void					print_banner(void);
-void					error_exit(char *msg);
-int						check_builtins(t_info *info);
-int						check_operators(t_info *info);
-void					clean(t_info *info);
-char					*ft_strncpy(char *dest, char *src, unsigned int n);
-char					*reverse_strchr(char *str, int c);
 
 // utils/free.c
 void					free_tree(t_tree *node);
@@ -283,7 +271,16 @@ void					free_arr(char **arr);
 void					free_builtins(t_builtins *builtins);
 void					*free_str(char **dest, int i);
 
+// utils
+void					close_fds(int i);
+void					close_pipe_fds(int fd[2]);
+int						check_builtins(t_info *info);
+int						check_operators(t_info *info);
+char					*ft_strncpy(char *dest, char *src, unsigned int n);
+char					*reverse_strchr(char *str, int c);
+
 // main
 void					start(t_info *info);
+void	change_shlvl(char ***env, char *name);
 
 #endif

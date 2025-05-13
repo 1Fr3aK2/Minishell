@@ -25,6 +25,7 @@ SRCS =  src/main.c \
 		src/parse/utils_tree.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
+		src/redirections/heredocs.c\
 		src/redirections/redirections.c\
 		src/redirections/redir_utils.c\
 		src/signals/signal_handle.c\
