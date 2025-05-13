@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 20:17:08 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 21:03:28 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	handle_heredoc_redirection(t_io *io)
 	int		fd[2];
 	pid_t	pid;
 	int		status;
-	//int		tty_fd;
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
@@ -29,12 +28,10 @@ void	handle_heredoc_redirection(t_io *io)
 	{
 		signal(SIGINT, SIG_DFL);
 		close(fd[0]);
-/*  		tty_fd = open("/dev/tty", O_RDONLY);
-		if (tty_fd == -1)
-			exit(1); */
+		close_fds(0);
+		close_pipe_fds(fd);
 		while (1)
 		{
-			//dup2(tty_fd, STDIN_FILENO);
 			line = readline("> ");
 			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
 					&& ft_strlen(line) == ft_strlen(io->file)))
@@ -48,7 +45,6 @@ void	handle_heredoc_redirection(t_io *io)
 			free(line);
 		}
 		close(fd[1]);
-		close_fds(0);
 		exit(0);
 	}
 	else
