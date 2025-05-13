@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 17:32:24 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:09:31 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(out, STDOUT_FILENO);
 		close(out);
 	}
+	close_fds(0);
 	exec_command(info, node);
 	exit(1);
 }
