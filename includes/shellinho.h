@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/13 18:36:03 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:29:19 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,6 @@ int						find_index(char **arr, char *str);
 void					create_var(char ***env, char *str);
 bool					check_env(char ***env, char *str);
 
-
 // builtins/echo
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
@@ -153,7 +152,6 @@ void					ft_cd(t_info *info);
 void					ft_exit(t_info *info);
 void					ft_pwd(t_info *info);
 void					sort_env(char **args);
-
 
 // builtins/unset
 void					ft_unset(t_info *info);
@@ -281,6 +279,6 @@ char					*reverse_strchr(char *str, int c);
 
 // main
 void					start(t_info *info);
-void	change_shlvl(char ***env, char *name);
+void					change_shlvl(char ***env, char *name);
 
 #endif

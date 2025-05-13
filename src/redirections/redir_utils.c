@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 18:26:03 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/13 19:27:12 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	storing_backup(t_io *io)
 		close(io->stdout_backup);
 		io->stdout_backup = -1;
 	}
-	close_fds(0);
 }
 
 void	restore_io(t_io *io)
