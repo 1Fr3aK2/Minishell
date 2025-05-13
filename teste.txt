@@ -46,10 +46,8 @@ estas aspas -> (``) -> usadas para executar comandos
 
 NORMINETE
 melhorar mensagens de erro // ERROR
-ctrl+d -> quando saimos do lvl ele nao mantem o mesmo status
 
 echo $HOMEE && echo $? && echo $USER && echo -n ola
-cat << test | echo ola
 
 quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
 
