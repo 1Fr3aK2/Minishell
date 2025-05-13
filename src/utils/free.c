@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/07 01:21:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:19:45 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ void	free_builtins(t_builtins *builtins)
 		return ;
 	free(builtins);
 	builtins = NULL;
+}
+
+void	*free_str(char **dest, int i)
+{
+	while (i >= 0)
+		free(dest[i--]);
+	free(dest);
+	return (NULL);
 }

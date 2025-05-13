@@ -3,45 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   split_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 14:23:09 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/10 03:48:19 by rafael           ###   ########.fr       */
+/*   Created: 2025/05/13 16:43:51 by raamorim          #+#    #+#             */
+/*   Updated: 2025/05/13 17:27:22 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-static void	*free_str(char **dest, int i)
+static void	update_quotes(char c, int *in_quotes, char *quote)
 {
-	while (i >= 0)
-		free(dest[i--]);
-	free(dest);
-	return (NULL);
+	if (is_quote(c))
+	{
+		if (!*in_quotes)
+		{
+			*in_quotes = 1;
+			*quote = c;
+		}
+		else if (c == *quote)
+			*in_quotes = 0;
+	}
 }
 
 static int	get_word_length(char *str)
 {
-	int			len;
-	char		quote;
-	static int	in_quotes;
+	int		len;
+	int		in_quotes;
+	char	quote;
 
 	len = 0;
+	in_quotes = 0;
 	quote = 0;
-	while (str[len] && (!is_space(str[len]) || in_quotes == 1))
+	if (!str || !str[0])
+		return (0);
+	if (!in_quotes && is_operator_char(str[0]))
 	{
-		if (is_quote(str[len]))
-		{
-			if (!in_quotes)
-			{
-				in_quotes = 1;
-				quote = str[len];
-			}
-			else if (str[len] == quote)
-				in_quotes = 0;
-		}
-		len++;
+		if (is_double_operator(str))
+			return (2);
+		return (1);
 	}
+	while (str[len] && (!is_space(str[len]) && (!is_operator_char(str[len])
+				|| in_quotes)))
+		update_quotes(str[len++], &in_quotes, &quote);
 	return (len);
 }
 
@@ -61,10 +65,12 @@ char	**ft_split_quotes(char *s)
 {
 	char	**dest;
 	int		i;
-	int		j;
+	int		j;	
 
 	i = 0;
 	j = 0;
+	if (!s)
+		return (NULL);
 	dest = (char **)malloc((count_word(s) + 1) * sizeof(char *));
 	if (!dest)
 		return (NULL);
@@ -76,8 +82,8 @@ char	**ft_split_quotes(char *s)
 		{
 			if (!word_alloc(dest, s + i, get_word_length(s + i), j))
 				return (free_str(dest, j));
-			j++;
 			i += get_word_length(s + i);
+			j++;
 		}
 	}
 	dest[j] = NULL;

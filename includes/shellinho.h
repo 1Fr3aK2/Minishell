@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/10 03:45:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/13 17:21:29 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,6 +253,8 @@ int						count_quotes(char *input);
 // utils/utils_bools
 bool					is_quote(char c);
 int						is_operator(const char *str);
+int						is_operator_char(char c);
+int						is_double_operator(char *str);
 
 // utils
 void					close_fds(int i);
@@ -270,6 +272,7 @@ void					free_tree(t_tree *node);
 void					free_io_file(t_io *io);
 void					free_arr(char **arr);
 void					free_builtins(t_builtins *builtins);
+void					*free_str(char **dest, int i);
 
 // main
 void					start(t_info *info);
