@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 18:31:59 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 02:38:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,24 +98,21 @@ int	check_redirections(t_info *info)
 {
 	int		i;
 	int		j;
-	char	**args;
 
-	args = info->cmd_tree->args;
 	i = 0;
-	while (args && args[i])
+	while (info->cmd_tree->args && info->cmd_tree->args[i])
 	{
 		j = 0;
 		while (info->redirections->reds[j])
 		{
-			if (ft_strncmp(args[i], info->redirections->reds[j],
-					ft_strlen(args[i])) == 0)
+			if (ft_strncmp(info->cmd_tree->args[i], info->redirections->reds[j],
+					ft_strlen(info->cmd_tree->args[i])) == 0)
 			{
-				if (!args[i + 1])
-
+				if (!info->cmd_tree->args[i + 1])
 					return (1);
-				update_io_file(info->io, args[i + 1]);
+				update_io_file(info->io, info->cmd_tree->args[i + 1]);
 				info->redirections->f[j](info->io);
-				remove_redir_tokens(args, i);
+				remove_redir_tokens(info->cmd_tree->args, i);
 				j = -1;
 			}
 			j++;
