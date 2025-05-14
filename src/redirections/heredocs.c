@@ -6,11 +6,13 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/14 16:25:57 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 19:38:07 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
+
+// cat << eof -> CTRL C -> 1 fd open
 
 void	handle_heredoc_redirection(t_io *io)
 {
@@ -26,10 +28,10 @@ void	handle_heredoc_redirection(t_io *io)
 		return ;
 	if (pid == 0)
 	{
-		signal(SIGINT, SIG_DFL);
+		signal(SIGINT, sigint_heredoc_handler);
 		close(fd[0]);
-		close_fds(0);
-		close_pipe_fds(fd);
+		close(io->stdin_backup);
+		close(io->stdout_backup);
 		while (1)
 		{
 			line = readline("> ");
@@ -65,9 +67,10 @@ void	handle_heredoc_redirection(t_io *io)
 			close(fd[0]);
 			return ;
 		}
+		close(fd[0]);
 	}
 }
-
+/* 
 void	prepare_heredocs(t_tree *node, t_info *info)
 {
 	int	i;
@@ -95,6 +98,48 @@ void	prepare_heredocs(t_tree *node, t_info *info)
 			i++;
 		}
 	}
+	prepare_heredocs(node->left, info);
+	prepare_heredocs(node->right, info);
+} */
+
+static int	process_heredoc_args(t_tree *node, t_info *info)
+{
+	int i = 0;
+
+	while (node->args[i])
+	{
+		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
+		{
+			if (!node->args[i + 1])
+			{
+				ft_putstr_fd("syntax error\n", 2);
+				g_exit_status = 2;
+				return (-1);
+			}
+			update_io_file(info->io, node->args[i + 1]);
+			handle_heredoc_redirection(info->io);
+			remove_redir_tokens(node->args, i);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+void	prepare_heredocs(t_tree *node, t_info *info)
+{
+	int res;
+
+	if (!node)
+		return;
+
+	if (node->type == CMD && node->args)
+	{
+		res = process_heredoc_args(node, info);
+		if (res <= 0)
+			return;
+	}
+
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
 }
