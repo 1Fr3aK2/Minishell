@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 16:43:51 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 18:29:27 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:29:53 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	get_word_length(char *str)
 	len = 0;
 	in_quotes = 0;
 	quote = 0;
+
 	if (!str || !str[0])
 		return (0);
 	if (!in_quotes && is_operator_char(str[0]))
@@ -43,9 +44,13 @@ static int	get_word_length(char *str)
 			return (2);
 		return (1);
 	}
-	while (str[len] && (!is_space(str[len]) && (!is_operator_char(str[len])
-				|| in_quotes)))
-		update_quotes(str[len++], &in_quotes, &quote);
+	while (str[len])
+	{
+		update_quotes(str[len], &in_quotes, &quote);
+		if (!in_quotes && (is_space(str[len]) || is_operator_char(str[len])))
+			break;
+		len++;
+	}
 	return (len);
 }
 
