@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 18:05:23 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 15:37:19 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ void	ft_echo(t_info *info)
 		j = 0;
 		i++;
 	}
-	if (check_flags(info->flags) == 1)
+	if (check_flags(info->cmd_tree->args[1]) == 1)
 		write(1, "\n", 1);
 }
