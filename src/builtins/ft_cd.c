@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 17:50:26 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:40:06 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	cd_with_arg(const char *path)
 
 	if (!path)
 	{
-		ft_putstr_fd("Error: path is NULL", 2);
+		ft_putstr_fd("Error: path is NULL\n", 2);
 		return ;
 	}
 	if (chdir(path) == 0)
@@ -26,10 +26,10 @@ void	cd_with_arg(const char *path)
 		if (getcwd(current_dir, sizeof(current_dir)) != NULL)
 			;
 		else
-			ft_putstr_fd("Error: getcwd", 2);
+			ft_putstr_fd("Error: getcwd\n", 2);
 	}
 	else
-		ft_putstr_fd("Error: chdir", 2);
+		ft_putstr_fd("Error: chdir\n", 2);
 }
 
 int	count_levels(const char *arg)
@@ -41,8 +41,11 @@ int	count_levels(const char *arg)
 	levels = 0;
 	ptr = arg;
 	len = ft_strlen(ptr);
-	while ((ptr = ft_strnstr(ptr, "..", len)))
+	while (1)
 	{
+		ptr = ft_strnstr(ptr, "..", len);
+		if (!ptr)
+			break ;
 		levels++;
 		ptr += 2;
 		if (*ptr == '/')
@@ -60,23 +63,23 @@ void	ft_cd_doispontos(t_info *info, int levels)
 
 	(void)info;
 	i = 0;
-	if (getcwd(cur_dir, sizeof(cur_dir)) == NULL)
-		ft_putstr_fd("Error: getcwd", 2);
+	if (!getcwd(cur_dir, sizeof(cur_dir)))
+		ft_putstr_fd("Error: getcwd\n", 2);
 	while (i < levels)
 	{
 		last_slash = ft_strrchr(cur_dir, '/');
-		if (last_slash == NULL)
-			ft_putstr_fd("Error: Invalid directory path", 2);
+		if (!last_slash)
+			ft_putstr_fd("Error: Invalid directory path\n", 2);
 		if (last_slash == cur_dir)
 		{
-			*last_slash = '\0';
+			cur_dir[1] = '\0';
 			break ;
 		}
 		*last_slash = '\0';
 		i++;
 	}
 	if (chdir(cur_dir) != 0)
-		ft_putstr_fd("Error: chdir", 2);
+		ft_putstr_fd("Error: chdir\n", 2);
 }
 
 void	ft_cd_home(t_info *info)

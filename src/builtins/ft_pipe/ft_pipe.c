@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 19:32:16 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/13 21:24:28 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,5 +80,5 @@ void	ft_pipe_wrapper(t_info *info)
 	if (!info || !info->cmd_tree)
 		return ;
 	prepare_heredocs(info->cmd_tree, info);
-	ft_pipe(info, info->cmd_tree);
+	ft_pipe(info, info->cmd_tree->left);
 }

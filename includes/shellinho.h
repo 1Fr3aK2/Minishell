@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/14 03:04:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/14 16:22:58 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,14 +106,10 @@ typedef struct s_info
 
 extern unsigned int		g_exit_status;
 
-// to_remove
-void					init_io(t_io *io);
-
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
 void					add_check(char ***arr, char *str);
-void					format_str(char **str);
 
 // builtins/export
 void					add_to_env(char ***env, char *str);
@@ -188,8 +184,9 @@ char					*get_var_name(char *str, int *i);
 int						size_to_var(char *str);
 
 // parse/init
-void					init(t_info *info);
 void					copy_env(char ***my_env, char **env);
+void					init_io(t_io *io);
+void					init(t_info *info);
 
 // parse/utils_init.c
 void					fill_all(t_info *info);

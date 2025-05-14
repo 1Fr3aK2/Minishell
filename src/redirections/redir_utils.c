@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 20:02:07 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:26:16 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ void	storing_backup(t_io *io)
 	io->stdout_backup = dup(STDOUT_FILENO);
 	if (io->stdout_backup == -1)
 		ft_putstr_fd("dup stdout backup failed", 2);
-	
 }
 
 void	restore_io(t_io *io)

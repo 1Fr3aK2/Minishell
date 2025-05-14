@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 21:03:28 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:25:57 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ void	handle_heredoc_redirection(t_io *io)
 	}
 }
 
-void prepare_heredocs(t_tree *node, t_info *info)
+void	prepare_heredocs(t_tree *node, t_info *info)
 {
-	int i;
+	int	i;
 
 	if (!node)
-		return;
+		return ;
 	if (node->type == CMD && node->args)
 	{
 		i = 0;
@@ -83,9 +83,9 @@ void prepare_heredocs(t_tree *node, t_info *info)
 			{
 				if (!node->args[i + 1])
 				{
-					ft_putstr_fd("syntax error near unexpected token `newline'\n", 2);
+					ft_putstr_fd("syntax error\n", 2);
 					g_exit_status = 2;
-					return;
+					return ;
 				}
 				update_io_file(info->io, node->args[i + 1]);
 				handle_heredoc_redirection(info->io);
