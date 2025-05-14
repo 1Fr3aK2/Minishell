@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/13 19:29:19 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 03:04:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,11 +210,13 @@ void					remove_all_quotes(char **tokens);
 
 // parse/tree
 t_tree					*build_tree_tokens(char **tokens);
-t_tree					*parse_tokens(char **tokens);
+t_tree					*creat_op_node(char **tokens, int *index);
+t_tree					*create_node(char **tokens);
 
 // parse/utils_tree
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
+t_tree					*parse_tokens(char **tokens);
 
 // processes
 void					child_process(t_info *info);

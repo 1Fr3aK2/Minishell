@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 16:59:34 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 03:08:31 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../../includes/shellinho.h"
 
 static void	fill_builtins(t_info *info)
 {

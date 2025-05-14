@@ -6,11 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:52:23 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/06 19:19:05 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/14 03:06:44 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../../includes/shellinho.h"
 
 static int	set_priority(char *str)
 {
@@ -59,4 +59,25 @@ t_node_type	find_type(char **tokens, int i)
 		return (PIPE);
 	else
 		return (CMD);
+}
+
+t_tree	*parse_tokens(char **tokens)
+{
+	int		op_index;
+	int		total;
+	t_tree	*node;
+
+	op_index = -1;
+	total = 0;
+	node = NULL;
+	if (!tokens || !tokens[0])
+		return (NULL);
+	while (tokens[total])
+		total++;
+	op_index = search_ops(tokens);
+	if (op_index != -1)
+		node = creat_op_node(tokens, &op_index);
+	else
+		node = create_node(tokens);
+	return (node);
 }

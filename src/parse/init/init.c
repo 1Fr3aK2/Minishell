@@ -6,11 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/10 02:31:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/14 03:08:23 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../../includes/shellinho.h"
 
 void	copy_env(char ***my_env, char **env)
 {
