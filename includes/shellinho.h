@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/14 17:08:03 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/14 18:09:28 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,7 @@ void					handle_append_redirection(t_io *io);
 
 // signals
 void					handle_sigint(int sig);
+void					sigint_heredoc_handler(int sig);
 void					set_signals(void);
 
 // splits/custom_split.c
