@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 18:28:30 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:51:05 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,27 @@ char	*reverse_strchr(char *str, int c)
 	ft_strncpy(new, str, len);
 	new[len] = '\0';
 	return (new);
+}
+
+void	change_shlvl(char ***env, char *name)
+{
+	int		i;
+	char	*value;
+	char	*new_val;
+
+	if (!env || !*env)
+		return ;
+	i = 0;
+	value = (ft_itoa(ft_atoi(get_env(name, *env)) + 1));
+	new_val = ft_strjoin("SHLVL=", value);
+	free(value);
+	while ((*env)[i])
+	{
+		if (ft_strncmp("SHLVL=", (*env)[i], ft_strlen("SHLVL=")) == 0)
+		{
+			free((*env)[i]);
+			(*env)[i] = new_val;
+		}
+		i++;
+	}
 }

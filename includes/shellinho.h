@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/14 16:22:58 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:08:03 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,9 @@ void					ft_cd(t_info *info);
 
 // builtins/exit
 void					ft_exit(t_info *info);
+
+// builtins/pwd
 void					ft_pwd(t_info *info);
-void					sort_env(char **args);
 
 // builtins/unset
 void					ft_unset(t_info *info);
@@ -161,19 +162,18 @@ void					wait_all(pid_t last_pid);
 void					exec_command(t_info *info, t_tree *node);
 
 // builtins/and
-void					exec_command(t_info *info, t_tree *node);
-void					ft_and_wrapper(t_info *info);
 void					ft_and(t_info *info, t_tree *node);
+void					ft_and_wrapper(t_info *info);
 
 // builtins/or
 void					exec_command_op(t_info *info, t_tree *node);
-void					ft_or_wrapper(t_info *info);
 void					ft_or(t_info *info, t_tree *node);
+void					ft_or_wrapper(t_info *info);
 
-// parse/handle_dollar
+// parse/expander/handle_dollar
 char					*handle_dollar(char *str, char **env);
 
-// parse/expander
+// parse/expander/expander.c
 char					*expand(char *str);
 char					*translate(char *str, char **env);
 bool					check_translate(char *str);
@@ -183,7 +183,7 @@ int						get_varname_len(char *str);
 char					*get_var_name(char *str, int *i);
 int						size_to_var(char *str);
 
-// parse/init
+// parse/init/init.c
 void					copy_env(char ***my_env, char **env);
 void					init_io(t_io *io);
 void					init(t_info *info);
@@ -191,22 +191,7 @@ void					init(t_info *info);
 // parse/utils_init.c
 void					fill_all(t_info *info);
 
-// parse/parse
-char					*remove_quotes(char *str);
-void					parse(char *input, t_info *info);
-
-// parse/parse_utils.c
-
-int						size_woutquotes(char *str);
-void					handle_quotes(char *str, char *new, int i, int *j);
-char					**new_input(char *input);
-
-// parse/quotes
-int						check_quotes(char *input);
-void					remove_all_quotes(char **tokens);
-
-// parse/tree
-t_tree					*build_tree_tokens(char **tokens);
+// parse/tree/tree.c
 t_tree					*creat_op_node(char **tokens, int *index);
 t_tree					*create_node(char **tokens);
 
@@ -215,13 +200,28 @@ int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
 t_tree					*parse_tokens(char **tokens);
 
-// processes
+// parse/parse_utils.c
+
+int						size_woutquotes(char *str);
+void					handle_quotes(char *str, char *new, int i, int *j);
+char					**new_input(char *input);
+
+// parse/parse.c
+t_tree					*build_tree_tokens(char **tokens);
+void					parse(char *input, t_info *info);
+
+// parse/quotes
+int						check_quotes(char *input);
+char					*remove_quotes(char *str);
+void					remove_all_quotes(char **tokens);
+
+// processes/processes.c
 void					child_process(t_info *info);
 void					exec(t_info *info, t_tree *node);
 
-// processes/utils
-char					*find_path(t_info *info, char *cmd);
+// processes/utils.c
 char					*get_env(char *variable_name, char **env);
+char					*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs
 void					handle_heredoc_redirection(t_io *io);
@@ -240,20 +240,29 @@ void					handle_append_redirection(t_io *io);
 void					handle_sigint(int sig);
 void					set_signals(void);
 
-// splits/custom_split
+// splits/custom_split.c
 char					**custom_ft_split(char const *s);
 
-// splits/split_quotes
+// splits/split_quotes.c
 char					**ft_split_quotes(char *s);
 
-// splits/utils_split_quotes
-int						count_word(char *str);
+// splits/utils_split_quotes.c
 int						count_quotes(char *input);
+int						count_word(char *str);
 
-// utils/checks
+// utils/checks.c
+int						check_builtins(t_info *info);
+int						check_operators(t_info *info);
 int						check_redirections(t_info *info);
-void					remove_redir_tokens(char **args, int i);
 void					update_io_file(t_io *io, char *filename);
+void					remove_redir_tokens(char **args, int i);
+
+// utils/free.c
+void					free_arr(char **arr);
+void					free_tree(t_tree *node);
+void					free_io_file(t_io *io);
+void					free_builtins(t_builtins *builtins);
+void					*free_str(char **dest, int i);
 
 // utils/utils_bools
 bool					is_quote(char c);
@@ -261,23 +270,13 @@ int						is_operator(const char *str);
 int						is_operator_char(char c);
 int						is_double_operator(char *str);
 
-// utils/free.c
-void					free_tree(t_tree *node);
-void					free_io_file(t_io *io);
-void					free_arr(char **arr);
-void					free_builtins(t_builtins *builtins);
-void					*free_str(char **dest, int i);
-
 // utils
 void					close_fds(int i);
 void					close_pipe_fds(int fd[2]);
-int						check_builtins(t_info *info);
-int						check_operators(t_info *info);
-char					*ft_strncpy(char *dest, char *src, unsigned int n);
 char					*reverse_strchr(char *str, int c);
+void					change_shlvl(char ***env, char *name);
 
 // main
 void					start(t_info *info);
-void					change_shlvl(char ***env, char *name);
 
 #endif

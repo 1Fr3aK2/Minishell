@@ -3,16 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 16:24:13 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/14 16:50:46 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
 
 unsigned int	g_exit_status = 0;
+
+static int	is_input_valid(char *input)
+{
+	return (input && *input);
+}
+
+static int	is_tree_invalid(t_info *info)
+{
+	return (!info->cmd_tree || !info->cmd_tree->args
+		|| !info->cmd_tree->args[0]);
+}
+
+static void	reset_tree(t_info *info)
+{
+	if (info->cmd_tree)
+	{
+		free_tree(info->cmd_tree);
+		info->cmd_tree = NULL;
+	}
+}
 
 void	start(t_info *info)
 {
@@ -23,51 +43,21 @@ void	start(t_info *info)
 		input = readline("shellinho$> ");
 		if (!input)
 			ft_exit(info);
-		if (!*input)
+		if (!is_input_valid(input))
 		{
 			free(input);
 			continue ;
 		}
-		if (*input)
-			add_history(input);
-		if (info->cmd_tree)
-		{
-			free_tree(info->cmd_tree);
-			info->cmd_tree = NULL;
-		}
+		add_history(input);
+		reset_tree(info);
 		parse(input, info);
-		if (!info->cmd_tree || !info->cmd_tree->args
-			|| !info->cmd_tree->args[0])
+		if (is_tree_invalid(info))
 		{
 			free(input);
 			continue ;
 		}
 		child_process(info);
 		free(input);
-	}
-	rl_clear_history();
-}
-
-void	change_shlvl(char ***env, char *name)
-{
-	int		i;
-	char	*value;
-	char	*new_val;
-
-	if (!env || !*env)
-		return ;
-	i = 0;
-	value = (ft_itoa(ft_atoi(get_env(name, *env)) + 1));
-	new_val = ft_strjoin("SHLVL=", value);
-	free(value);
-	while ((*env)[i])
-	{
-		if (ft_strncmp("SHLVL=", (*env)[i], ft_strlen("SHLVL=")) == 0)
-		{
-			free((*env)[i]);
-			(*env)[i] = new_val;
-		}
-		i++;
 	}
 }
 

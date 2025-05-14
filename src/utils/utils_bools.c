@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:02 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/13 17:20:53 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/14 17:06:54 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 bool	is_quote(char c)
 {
 	return ((c == '\'' || c == '\"'));
-}
-
-bool	is_space(char c)
-{
-	return ((c >= 9 && c <= 13) || c == 32);
 }
 
 int	is_operator(const char *str)
