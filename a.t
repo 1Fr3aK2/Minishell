@@ -9,9 +9,3 @@ shellinho
 src
 t.txt
 test.txt
-
-
-gay
-hha
-khad
-yugo

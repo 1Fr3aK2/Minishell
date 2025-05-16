@@ -6,13 +6,14 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/16 17:35:22 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:19:55 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
 // cat << eof -> CTRL C -> 1 fd open
+// pwd | cat << eof -> prints pwd
 
 void	handle_heredoc_redirection(t_io *io)
 {
@@ -54,14 +55,14 @@ void	handle_heredoc_redirection(t_io *io)
 		signal(SIGINT, SIG_IGN);
 		waitpid(pid, &status, 0);
 		close(fd[1]);
-		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		signal(SIGINT, handle_sigint);
+		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
 		{
-			write(1, "\n", 1);
 			g_exit_status = 130;
 			close(fd[0]);
 			return ;
 		}
-		signal(SIGINT, handle_sigint);
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			close(fd[0]);
@@ -73,8 +74,8 @@ void	handle_heredoc_redirection(t_io *io)
 
 static int	process_heredoc_args(t_tree *node, t_info *info)
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
 	while (node->args[i])
 	{
@@ -98,18 +99,16 @@ static int	process_heredoc_args(t_tree *node, t_info *info)
 
 void	prepare_heredocs(t_tree *node, t_info *info)
 {
-	int res;
+	int	res;
 
 	if (!node)
-		return;
-
+		return ;
 	if (node->type == CMD && node->args)
 	{
 		res = process_heredoc_args(node, info);
 		if (res <= 0)
-			return;
+			return ;
 	}
-
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
 }

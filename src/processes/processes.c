@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 18:50:11 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/16 20:22:48 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ void	child_process(t_info *info)
 	storing_backup(info->io);
 	g_exit_status = 0;
 	prepare_heredocs(info->cmd_tree, info);
+	if (g_exit_status == 130)
+		return ;
 	check_redirections(info);
 	if (g_exit_status == 130)
 		return ;
