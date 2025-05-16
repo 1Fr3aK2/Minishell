@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/14 19:38:07 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:14:31 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,37 +70,6 @@ void	handle_heredoc_redirection(t_io *io)
 		close(fd[0]);
 	}
 }
-/* 
-void	prepare_heredocs(t_tree *node, t_info *info)
-{
-	int	i;
-
-	if (!node)
-		return ;
-	if (node->type == CMD && node->args)
-	{
-		i = 0;
-		while (node->args[i])
-		{
-			if (ft_strncmp(node->args[i], "<<", 2) == 0)
-			{
-				if (!node->args[i + 1])
-				{
-					ft_putstr_fd("syntax error\n", 2);
-					g_exit_status = 2;
-					return ;
-				}
-				update_io_file(info->io, node->args[i + 1]);
-				handle_heredoc_redirection(info->io);
-				remove_redir_tokens(node->args, i);
-				i = -1;
-			}
-			i++;
-		}
-	}
-	prepare_heredocs(node->left, info);
-	prepare_heredocs(node->right, info);
-} */
 
 static int	process_heredoc_args(t_tree *node, t_info *info)
 {

@@ -46,10 +46,3 @@ estas aspas -> (``) -> usadas para executar comandos
 
 NORMINETE
 melhorar mensagens de erro // ERROR
-
-quando fazemos cd .. e o pwd é /home  está a dar -> Error: chdirshellinho$>
-
-
-
-
-
