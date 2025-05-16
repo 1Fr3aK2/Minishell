@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/16 17:14:31 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/16 17:35:22 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,9 @@ void	handle_heredoc_redirection(t_io *io)
 
 static int	process_heredoc_args(t_tree *node, t_info *info)
 {
-	int i = 0;
-
+	int i;
+	
+	i = 0;
 	while (node->args[i])
 	{
 		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
