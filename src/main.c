@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 14:03:34 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:52:54 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 	copy_env(&info.my_env, env);
 	change_shlvl(&info.my_env, "SHLVL");
 	init(&info);
-	set_signals(&info);
+	set_signals();
 	start(&info);
 	free_arr(info.my_env);
 	free_builtins(info.builtins);

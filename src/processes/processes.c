@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 14:03:38 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/19 16:53:08 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	child_process(t_info *info)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	restore_io(info->io);
-	set_signals(info);
+	set_signals();
 	handle_parent_signals(status, info);
 }
 
