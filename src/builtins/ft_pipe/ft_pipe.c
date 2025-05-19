@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 16:14:32 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 00:48:07 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,12 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
-	if (in != -1 && !(info->io->stdin_is_heredoc))
+	if (info->io && info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	{
+		dup2(info->io->fd_in, STDIN_FILENO);
+		close(info->io->fd_in);
+	}
+	else if (in != -1)
 	{
 		dup2(in, STDIN_FILENO);
 		close(in);
