@@ -46,3 +46,7 @@ estas aspas -> (``) -> usadas para executar comandos
 
 NORMINETE
 melhorar mensagens de erro // ERROR
+
+// cat << eof -> CTRL C -> 1 fd open
+// pwd | cat << eof -> prints pwd
+// wc -l | cat < t.txt    -> prompt printa 2x no meu pc

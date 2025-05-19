@@ -12,9 +12,6 @@
 
 #include "../../includes/shellinho.h"
 
-// cat << eof -> CTRL C -> 1 fd open
-// pwd | cat << eof -> prints pwd
-
 void	handle_heredoc_redirection(t_io *io)
 {
 	char	*line;
@@ -26,7 +23,11 @@ void	handle_heredoc_redirection(t_io *io)
 		return ;
 	pid = fork();
 	if (pid < 0)
+	{
+		close(fd[0]);
+		close(fd[1]);
 		return ;
+	}
 	if (pid == 0)
 	{
 		signal(SIGINT, sigint_heredoc_handler);
@@ -61,11 +62,13 @@ void	handle_heredoc_redirection(t_io *io)
 		{
 			g_exit_status = 130;
 			close(fd[0]);
+			restore_io(io);
 			return ;
 		}
 		if (dup2(fd[0], STDIN_FILENO) == -1)
 		{
 			close(fd[0]);
+			restore_io(io);
 			return ;
 		}
 		close(fd[0]);

@@ -72,7 +72,6 @@ void	child_process(t_info *info)
 	waitpid(pid, &status, 0);
 	restore_io(info->io);
 	set_signals();
-	signal(SIGINT, handle_sigint);
 	handle_parent_signals(status);
 }
 
