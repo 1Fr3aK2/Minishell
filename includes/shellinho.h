@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/19 17:37:51 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/19 17:46:41 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +110,12 @@ typedef struct s_info
 	t_types				*types;
 	t_tree				*cmd_tree;
 }						t_info;
+
+
+void	ignore_sigquit(void);
+void	set_signals_noninteractive(void);
+void	signal_print_newline(int signal);
+void	set_signals_interactive(void);
 
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
@@ -228,6 +238,7 @@ char					*find_path(t_info *info, char *cmd);
 // redirections/heredocs
 void					handle_heredoc_redirection(t_io *io, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
+void					handle_siging_heredoc(int sig);
 
 // redirections/redir_utils
 void					storing_backup(t_io *io);
@@ -239,9 +250,11 @@ void					handle_input_redirection(t_io *io);
 void					handle_append_redirection(t_io *io);
 
 // signals
+void	ignore_sigquit(void);
 void					handle_sigint(int sig);
-void					sigint_heredoc_handler(int sig);
-void					set_signals(void);
+void	set_signals_interactive(void);
+void	print_newline(int signal);
+void	set_signals_noninteractive(void);
 
 // splits/custom_split.c
 char					**custom_ft_split(char const *s);

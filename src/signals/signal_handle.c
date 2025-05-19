@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/19 15:52:26 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:45:51 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
+
+void	ignore_sigquit(void)
+{
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = SIG_IGN;
+	sigaction(SIGQUIT, &act, NULL);
+}
 
 void	handle_sigint(int sig)
 {
@@ -21,15 +30,30 @@ void	handle_sigint(int sig)
 	rl_redisplay();
 }
 
-void	sigint_heredoc_handler(int sig)
+void	set_signals_interactive(void)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
+	struct sigaction	act;
+
+	ignore_sigquit();
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = &handle_sigint;
+	act.sa_flags = SA_RESTART; // <-- important
+	sigaction(SIGINT, &act, NULL);
 }
 
-void	set_signals(void)
+void	print_newline(int signal)
 {
-	signal(SIGINT, handle_sigint);
-	signal(SIGQUIT, SIG_IGN);
+	(void)signal;
+	write(1, "\n", 1); // <-- this is safer
+}
+
+void	set_signals_noninteractive(void)
+{
+	struct sigaction	act;
+
+	ft_memset(&act, 0, sizeof(act));
+	act.sa_handler = &print_newline;
+	act.sa_flags = SA_RESTART; // <-- important
+	sigaction(SIGINT, &act, NULL);
+	sigaction(SIGQUIT, &act, NULL);
 }

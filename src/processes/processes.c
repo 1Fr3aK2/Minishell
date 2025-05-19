@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/19 16:53:08 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/19 17:43:08 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +63,7 @@ void	child_process(t_info *info)
 	check_redirections(info);
 	if (info->exit_status == 130)
 		return ;
+	set_signals_noninteractive();
 	free_io_file(info->io);
 	info->io->file = NULL;
 	if (!check_operators(info) || !check_builtins(info))
@@ -70,8 +75,12 @@ void	child_process(t_info *info)
 		exec_child_process(info);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
+	set_signals_interactive(); 
 	restore_io(info->io);
+<<<<<<< Updated upstream
 	set_signals();
+=======
+>>>>>>> Stashed changes
 	handle_parent_signals(status, info);
 }
 

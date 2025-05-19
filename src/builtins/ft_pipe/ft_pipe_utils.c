@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/19 17:35:25 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/19 16:45:19 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +34,7 @@ void	wait_all(pid_t last_pid, t_info *info)
 				write(1, "Quit (core dumped)\n", 19);
 			}
 			else if (WTERMSIG(status) == SIGINT)
-			{
 				update_status(info, 130);
-				write(1, "\n", 1);
-			}
 		}
 		wpid = wait(&status);
 	}
