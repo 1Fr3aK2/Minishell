@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 03:08:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:43:53 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	init_io(t_io *io)
 	io->fd_out = -1;
 	io->stdin_backup = -1;
 	io->stdin_backup = -1;
-    io->stdin_is_heredoc = -1;
+	io->stdin_is_heredoc = -1;
 	io->file = NULL;
 	io->redirections = NULL;
 }
@@ -82,6 +82,7 @@ static int	alloc_struct(t_info *info)
 
 void	init(t_info *info)
 {
+	info->exit_status = 0;
 	info->cmd_tree = NULL;
 	info->flags = NULL;
 	info->export_env = NULL;
@@ -89,4 +90,11 @@ void	init(t_info *info)
 		return ;
 	init_io(info->io);
 	fill_all(info);
+}
+
+void	update_status(t_info *info, unsigned int status)
+{
+	if (!info)
+		return ;
+	info->exit_status = status;
 }

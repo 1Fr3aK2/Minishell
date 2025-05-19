@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/16 20:19:55 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:48:05 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
 
-void	handle_heredoc_redirection(t_io *io)
+void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	char	*line;
 	int		fd[2];
@@ -60,7 +60,7 @@ void	handle_heredoc_redirection(t_io *io)
 		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
 		{
-			g_exit_status = 130;
+			update_status(info, 130);
 			close(fd[0]);
 			restore_io(io);
 			return ;
@@ -72,7 +72,7 @@ void	handle_heredoc_redirection(t_io *io)
 			return ;
 		}
 		close(fd[0]);
-        io->stdin_is_heredoc = 1;
+		io->stdin_is_heredoc = 1;
 	}
 }
 
@@ -88,11 +88,11 @@ static int	process_heredoc_args(t_tree *node, t_info *info)
 			if (!node->args[i + 1])
 			{
 				ft_putstr_fd("syntax error\n", 2);
-				g_exit_status = 2;
+				info->exit_status = 2;
 				return (-1);
 			}
 			update_io_file(info->io, node->args[i + 1]);
-			handle_heredoc_redirection(info->io);
+			handle_heredoc_redirection(info->io, info);
 			remove_redir_tokens(node->args, i);
 			return (1);
 		}

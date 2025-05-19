@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/07 01:02:29 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:43:14 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	check_dollar(char **args, t_info *info)
 		j = 0;
 		if (args[i][j] && args[i][j] == '$' && args[i][j + 1] == '\0')
 			return ;
-		new = handle_dollar(args[i], info->my_env);
+		new = handle_dollar(args[i], info);
 		if (!new)
 			return ;
 		if (ft_strncmp(new, args[i], ft_strlen(args[i])) != 0)
@@ -40,11 +40,11 @@ static void	check_dollar(char **args, t_info *info)
 	}
 }
 
-t_tree	*build_tree_tokens(char **tokens)
+t_tree	*build_tree_tokens(char **tokens, t_info *info)
 {
 	if (!tokens)
 		return (NULL);
-	return (parse_tokens(tokens));
+	return (parse_tokens(tokens, info));
 }
 
 static void	reset_info(t_info *info)
@@ -79,7 +79,7 @@ void	parse(char *input, t_info *info)
 		check_dollar(tokens, info);
 		remove_all_quotes(tokens);
 	}
-	info->cmd_tree = build_tree_tokens(tokens);
+	info->cmd_tree = build_tree_tokens(tokens, info);
 	if (!info->cmd_tree)
 		return (free_arr(tokens));
 	if (info->cmd_tree->args && info->cmd_tree->args[1])

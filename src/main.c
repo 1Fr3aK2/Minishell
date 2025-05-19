@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 18:48:02 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:03:34 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/shellinho.h"
-
-unsigned int	g_exit_status = 0;
 
 static int	is_input_valid(char *input)
 {
@@ -70,7 +68,7 @@ int	main(int argc, char **argv, char **env)
 	copy_env(&info.my_env, env);
 	change_shlvl(&info.my_env, "SHLVL");
 	init(&info);
-	set_signals();
+	set_signals(&info);
 	start(&info);
 	free_arr(info.my_env);
 	free_builtins(info.builtins);

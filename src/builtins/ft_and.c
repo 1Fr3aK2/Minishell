@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_and.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/13 17:56:55 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:35:31 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ void	ft_and(t_info *info, t_tree *node)
 		if (node->left && node->right)
 		{
 			ft_and(info, node->left);
-			if (g_exit_status == 0)
+			if (info->exit_status == 0)
 				ft_and(info, node->right);
 		}
 		else
 		{
 			ft_putstr_fd("Shellinho: syntax error\n", 2);
-			g_exit_status = 2;
+			update_status(info, 2);
 			free_tree(node);
 		}
 	}

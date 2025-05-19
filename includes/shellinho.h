@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/16 20:05:56 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 15:52:44 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_io
 	int					fd_out;
 	int					stdin_backup;
 	int					stdout_backup;
-    int                 stdin_is_heredoc;
+	int					stdin_is_heredoc;
 
 	t_reds				*redirections;
 }						t_io;
@@ -96,6 +96,7 @@ typedef struct s_tree
 
 typedef struct s_info
 {
+	unsigned int		exit_status;
 	char				*flags;
 	char				**my_env;
 	char				**export_env;
@@ -105,8 +106,6 @@ typedef struct s_info
 	t_types				*types;
 	t_tree				*cmd_tree;
 }						t_info;
-
-extern unsigned int		g_exit_status;
 
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
@@ -160,7 +159,7 @@ void					ft_pipe_wrapper(t_info *info);
 void					ft_pipe(t_info *info, t_tree *node);
 
 // builtins/ft_pipe/ft_pipe_utils.c
-void					wait_all(pid_t last_pid);
+void					wait_all(pid_t last_pid, t_info *info);
 void					exec_command(t_info *info, t_tree *node);
 
 // builtins/and
@@ -173,11 +172,11 @@ void					ft_or(t_info *info, t_tree *node);
 void					ft_or_wrapper(t_info *info);
 
 // parse/expander/handle_dollar
-char					*handle_dollar(char *str, char **env);
+char					*handle_dollar(char *str, t_info *info);
 
 // parse/expander/expander.c
 char					*expand(char *str);
-char					*translate(char *str, char **env);
+char					*translate(char *str, char **env, t_info *info);
 bool					check_translate(char *str);
 
 // parse/expander/utils_expander.c
@@ -189,18 +188,19 @@ int						size_to_var(char *str);
 void					copy_env(char ***my_env, char **env);
 void					init_io(t_io *io);
 void					init(t_info *info);
+void					update_status(t_info *info, unsigned int status);
 
 // parse/utils_init.c
 void					fill_all(t_info *info);
 
 // parse/tree/tree.c
-t_tree					*creat_op_node(char **tokens, int *index);
+t_tree					*creat_op_node(char **tokens, int *index, t_info *info);
 t_tree					*create_node(char **tokens);
 
 // parse/utils_tree
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
-t_tree					*parse_tokens(char **tokens);
+t_tree					*parse_tokens(char **tokens, t_info *info);
 
 // parse/parse_utils.c
 
@@ -209,7 +209,7 @@ void					handle_quotes(char *str, char *new, int i, int *j);
 char					**new_input(char *input);
 
 // parse/parse.c
-t_tree					*build_tree_tokens(char **tokens);
+t_tree					*build_tree_tokens(char **tokens, t_info *info);
 void					parse(char *input, t_info *info);
 
 // parse/quotes
@@ -226,7 +226,7 @@ char					*get_env(char *variable_name, char **env);
 char					*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs
-void					handle_heredoc_redirection(t_io *io);
+void					handle_heredoc_redirection(t_io *io, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
 
 // redirections/redir_utils

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:52:23 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 03:06:44 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:46:30 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_node_type	find_type(char **tokens, int i)
 		return (CMD);
 }
 
-t_tree	*parse_tokens(char **tokens)
+t_tree	*parse_tokens(char **tokens, t_info *info)
 {
 	int		op_index;
 	int		total;
@@ -76,7 +76,7 @@ t_tree	*parse_tokens(char **tokens)
 		total++;
 	op_index = search_ops(tokens);
 	if (op_index != -1)
-		node = creat_op_node(tokens, &op_index);
+		node = creat_op_node(tokens, &op_index, info);
 	else
 		node = create_node(tokens);
 	return (node);

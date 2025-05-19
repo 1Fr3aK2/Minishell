@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 03:06:34 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:47:14 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static char	**sub_tokens(char **tokens, int start, int end)
 	return (sub);
 }
 
-static int	handle_syntax_error(t_tree *node, char **tokens)
+static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 {
 	ft_putstr_fd("Shellinho: syntax error\n", 2);
-	g_exit_status = 2;
+	update_status(info, 2);
 	if (node->right)
 		free_tree(node->right);
 	if (node->left)
@@ -67,7 +67,7 @@ static t_tree	*init_node(char *token)
 	return (node);
 }
 
-t_tree	*creat_op_node(char **tokens, int *index)
+t_tree	*creat_op_node(char **tokens, int *index, t_info *info)
 {
 	t_tree	*node;
 	char	**left;
@@ -84,14 +84,14 @@ t_tree	*creat_op_node(char **tokens, int *index)
 		return (NULL);
 	node->type = find_type(tokens, *index);
 	left = sub_tokens(tokens, 0, *index);
-	node->left = parse_tokens(left);
+	node->left = parse_tokens(left, info);
 	free_arr(left);
 	if (!node->left || !node->left->args || !node->left->args[0])
-		return (handle_syntax_error(node, NULL), NULL);
+		return (handle_syntax_error(node, NULL, info), NULL);
 	right = sub_tokens(tokens, *index + 1, total);
-	node->right = parse_tokens(right);
+	node->right = parse_tokens(right, info);
 	if (!node->right || !node->right->args || !node->right->args[0])
-		return (handle_syntax_error(node, right), NULL);
+		return (handle_syntax_error(node, right, info), NULL);
 	free_arr(right);
 	return (node);
 }

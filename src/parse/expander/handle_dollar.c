@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/08 04:09:12 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:42:44 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ static char	*join_and_free(char *s1, char *s2)
 	return (new);
 }
 
-static int	process_variable(char *str, char **env, char **new, int i)
+static int	process_variable(char *str, char **new, int i,
+		t_info *info)
 {
 	char	*var_name;
 	char	*var_value;
@@ -30,7 +31,7 @@ static int	process_variable(char *str, char **env, char **new, int i)
 	var_name = expand(str + i);
 	if (!var_name)
 		return (-1);
-	var_value = translate(var_name, env);
+	var_value = translate(var_name, info->my_env, info);
 	if (!var_value)
 		var_value = ft_strdup("");
 	if (var_value)
@@ -50,7 +51,7 @@ static int	process_variable(char *str, char **env, char **new, int i)
 	return (i + get_varname_len(str + i) + 1);
 }
 
-static int	handle_loop(char *str, char **env, char **new, int *i)
+static int	handle_loop(char *str, char **new, int *i, t_info *info)
 {
 	char	*temp;
 	int		j;
@@ -65,7 +66,7 @@ static int	handle_loop(char *str, char **env, char **new, int *i)
 	*i += size_to_var(str + *i);
 	if (str[*i] == '$')
 	{
-		j = process_variable(str, env, new, *i);
+		j = process_variable(str, new, *i, info);
 		if (j == -1)
 			return (-1);
 		*i = j;
@@ -73,7 +74,7 @@ static int	handle_loop(char *str, char **env, char **new, int *i)
 	return (0);
 }
 
-char	*handle_dollar(char *str, char **env)
+char	*handle_dollar(char *str, t_info *info)
 {
 	char	*new;
 	int		i;
@@ -86,7 +87,7 @@ char	*handle_dollar(char *str, char **env)
 	i = 0;
 	while (str[i])
 	{
-		if (handle_loop(str, env, &new, &i) == -1)
+		if (handle_loop(str, &new, &i, info) == -1)
 			return (free(new), NULL);
 	}
 	return (new);

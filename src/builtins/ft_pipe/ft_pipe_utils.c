@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/16 19:43:37 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:38:22 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/shellinho.h"
 
-void	wait_all(pid_t last_pid)
+void	wait_all(pid_t last_pid, t_info *info)
 {
 	int		status;
 	pid_t	wpid;
@@ -21,17 +21,17 @@ void	wait_all(pid_t last_pid)
 	while (wpid > 0)
 	{
 		if (wpid == last_pid && WIFEXITED(status))
-			g_exit_status = WEXITSTATUS(status);
+			info->exit_status = WEXITSTATUS(status);
 		else if (wpid == last_pid && WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == SIGQUIT)
 			{
-				g_exit_status = 131;
+				update_status(info, 131);
 				write(1, "Quit (core dumped)\n", 19);
 			}
 			else if (WTERMSIG(status) == SIGINT)
 			{
-				g_exit_status = 130;
+				update_status(info, 130);
 				write(1, "\n", 1);
 			}
 		}
@@ -63,5 +63,5 @@ void	exec_command(t_info *info, t_tree *node)
 		ft_or(info, node);
 	else
 		exit(127);
-	exit(g_exit_status);
+	exit(info->exit_status);
 }

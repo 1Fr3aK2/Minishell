@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/06 18:08:24 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:17:47 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	ft_strisnum(char *str)
 	return (1);
 }
 
-static int	validate_exit_args(char **args)
+static int	validate_exit_args(t_info *info, char **args)
 {
 	int	j;
 
@@ -37,7 +37,7 @@ static int	validate_exit_args(char **args)
 	if (args[2] && ft_strisnum(args[1]))
 	{
 		ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
-		g_exit_status = 1;
+		update_status(info, 1);
 		return (1);
 	}
 	while (args[1][j])
@@ -47,8 +47,8 @@ static int	validate_exit_args(char **args)
 			ft_putstr_fd("exit\nshellinho: exit:", 2);
 			ft_putstr_fd(args[1], 2);
 			ft_putstr_fd(" numeric argument required\n", 2);
-			g_exit_status = 2;
-			exit(g_exit_status);
+			update_status(info, 1);
+			exit(info->exit_status);
 		}
 		j++;
 	}
@@ -61,16 +61,16 @@ void	ft_exit(t_info *info)
 
 	exit_flags = ft_atoi(info->flags);
 	if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[1])
-		if (validate_exit_args(info->cmd_tree->args))
+		if (validate_exit_args(info, info->cmd_tree->args))
 			return ;
 	if (isatty(STDIN_FILENO))
 		printf("exit\n");
 	if (exit_flags)
 	{
 		if (exit_flags > 255)
-			g_exit_status = exit_flags % 256;
+			info->exit_status = exit_flags % 256;
 		else
-			g_exit_status = exit_flags;
+			info->exit_status = exit_flags;
 	}
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
@@ -78,5 +78,5 @@ void	ft_exit(t_info *info)
 	free_arr(info->export_env);
 	rl_clear_history();
 	close_fds(0);
-	exit(g_exit_status);
+	exit(info->exit_status);
 }

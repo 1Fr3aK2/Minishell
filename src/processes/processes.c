@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/16 20:22:48 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 14:03:38 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,20 @@ static void	handle_child_signals(void)
 	signal(SIGQUIT, SIG_DFL);
 }
 
-static void	handle_parent_signals(int status)
+static void	handle_parent_signals(int status, t_info *info)
 {
 	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
+		update_status(info, WEXITSTATUS(status));
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 		{
-			g_exit_status = 131;
+			update_status(info, 131);
 			write(1, "Quit (Core dumped)\n", 19);
 		}
 		else if (WTERMSIG(status) == SIGINT)
 		{
-			g_exit_status = 130;
+			update_status(info, 130);
 			write(1, "\n", 1);
 		}
 	}
@@ -52,12 +52,12 @@ void	child_process(t_info *info)
 	if (!info)
 		return ;
 	storing_backup(info->io);
-	g_exit_status = 0;
+	info->exit_status = 0;
 	prepare_heredocs(info->cmd_tree, info);
-	if (g_exit_status == 130)
+	if (info->exit_status == 130)
 		return ;
 	check_redirections(info);
-	if (g_exit_status == 130)
+	if (info->exit_status == 130)
 		return ;
 	free_io_file(info->io);
 	info->io->file = NULL;
@@ -71,8 +71,8 @@ void	child_process(t_info *info)
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	restore_io(info->io);
-	set_signals();
-	handle_parent_signals(status);
+	set_signals(info);
+	handle_parent_signals(status, info);
 }
 
 void	exec(t_info *info, t_tree *node)

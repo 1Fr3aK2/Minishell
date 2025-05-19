@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_or.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:25:15 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/13 17:57:34 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 13:36:30 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec_command_op(t_info *info, t_tree *node)
 		exec_command(info, node);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
-		g_exit_status = WEXITSTATUS(status);
+		info->exit_status = WEXITSTATUS(status);
 }
 
 void	ft_or(t_info *info, t_tree *node)
@@ -41,13 +41,13 @@ void	ft_or(t_info *info, t_tree *node)
 		if (node->left && node->right)
 		{
 			ft_or(info, node->left);
-			if (g_exit_status != 0)
+			if (info->exit_status != 0)
 				ft_or(info, node->right);
 		}
 		else
 		{
 			ft_putstr_fd("Shellinho: syntax error\n", 2);
-			g_exit_status = 2;
+			update_status(info, 2);
 			free_tree(node);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/07 00:46:12 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 14:04:51 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*expand(char *str)
 {
-	int		i;
+	int	i;
 
 	if (!str)
 		return (NULL);
@@ -34,7 +34,7 @@ char	*expand(char *str)
 	return (NULL);
 }
 
-char	*translate(char *str, char **env)
+char	*translate(char *str, char **env, t_info *info)
 {
 	char	*var_value;
 	int		i;
@@ -44,7 +44,7 @@ char	*translate(char *str, char **env)
 		return (NULL);
 	if (str[i] && str[i] == '?')
 	{
-		var_value = ft_itoa(g_exit_status);
+		var_value = ft_itoa(info->exit_status);
 		if (!var_value)
 			return (NULL);
 	}

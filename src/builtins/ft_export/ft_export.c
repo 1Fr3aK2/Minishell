@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/07 20:39:00 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/19 13:36:43 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ void	ft_export(t_info *info)
 			add_to_env(&info->export_env, info->cmd_tree->args[i]);
 		i++;
 	}
-	g_exit_status = exit_status;
+	info->exit_status = exit_status;
 }
