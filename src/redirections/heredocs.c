@@ -72,6 +72,7 @@ void	handle_heredoc_redirection(t_io *io)
 			return ;
 		}
 		close(fd[0]);
+        io->stdin_is_heredoc = 1;
 	}
 }
 

@@ -14,7 +14,7 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
-	if (in != -1)
+	if (in != -1 && !(info->io->stdin_is_heredoc))
 	{
 		dup2(in, STDIN_FILENO);
 		close(in);

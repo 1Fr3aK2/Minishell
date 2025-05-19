@@ -46,4 +46,5 @@ void	restore_io(t_io *io)
 		close(io->fd_out);
 		io->fd_out = -1;
 	}
+	io->stdin_is_heredoc = 0;
 }
