@@ -1,6 +1,0 @@
-Usar SIG_DFL restaura o CTRL C para o estado original, de terminar processos.
-É necessario chamar o SIG_DFL porque, noutras partes do codigo, eu chamo SIG_IGN,
- o que altera o estado orginal de terminal processos.
-
-
- Restore function serve para casos tipo ls em que nao leem do stdin

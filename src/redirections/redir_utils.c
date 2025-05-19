@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/14 18:55:17 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:13:34 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,23 @@ void	restore_io(t_io *io)
 		close(io->stdout_backup);
 		io->stdout_backup = -1;
 	}
-	if (io->fd_in > 0)
+	if (io->fd_in > 2)
 	{
 		close(io->fd_in);
 		io->fd_in = -1;
 	}
-	if (io->fd_out > 0)
+	if (io->fd_out > 2)
 	{
 		close(io->fd_out);
 		io->fd_out = -1;
 	}
 	io->stdin_is_heredoc = 0;
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	write(1, "\n", 1);
+	close_fds(0);
+	exit(130);
 }

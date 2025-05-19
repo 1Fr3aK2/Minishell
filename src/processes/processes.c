@@ -6,11 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/05/19 16:53:08 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/05/19 17:43:08 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/19 19:21:07 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +27,7 @@ static void	handle_parent_signals(int status, t_info *info)
 		if (WTERMSIG(status) == SIGQUIT)
 		{
 			update_status(info, 131);
-			write(1, "Quit (Core dumped)\n", 19);
+			write(1, "Quit (core dumped)\n", 19);
 		}
 		else if (WTERMSIG(status) == SIGINT)
 		{
@@ -77,10 +73,6 @@ void	child_process(t_info *info)
 	waitpid(pid, &status, 0);
 	set_signals_interactive(); 
 	restore_io(info->io);
-<<<<<<< Updated upstream
-	set_signals();
-=======
->>>>>>> Stashed changes
 	handle_parent_signals(status, info);
 }
 

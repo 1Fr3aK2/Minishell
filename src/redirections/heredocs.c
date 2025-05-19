@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/19 17:45:12 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/19 19:04:02 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	}
 	if (pid == 0)
 	{
-		signal(SIGINT, handle_siging_heredoc);
+		signal(SIGINT, handle_sigint_heredoc);
 		close(fd[0]);
 		close(io->stdin_backup);
 		close(io->stdout_backup);
@@ -54,8 +54,8 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	else
 	{
 		signal(SIGINT, SIG_IGN);
-		waitpid(pid, &status, 0);
 		close(fd[1]);
+		waitpid(pid, &status, 0);
 		signal(SIGINT, handle_sigint);
 		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
@@ -115,11 +115,4 @@ void	prepare_heredocs(t_tree *node, t_info *info)
 	}
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
-}
-
-void	handle_siging_heredoc(int sig)
-{
-	(void)sig;
-	write(1, "\n", 1);
-	exit(130);
 }

@@ -48,6 +48,9 @@ NORMINETE
 melhorar mensagens de erro // ERROR
 ls | exit 5555555
 
+shellinho$> wc -l || cat t.txt 
+^\
+Quit (core dumped)
 
-
-// cat << eof -> CTRL C -> 1 fd open
+shellinho$> cat << eof && echo ola
+> eof -> 2 fds abertos
