@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 14:55:45 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:17:52 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ int	check_redirections(t_info *info)
 				if (!info->cmd_tree->args[i + 1])
 					return (1);
 				update_io_file(info->io, info->cmd_tree->args[i + 1]);
-				info->redirections->f[j](info->io);
+				info->redirections->f[j](info->io, info);
 				remove_redir_tokens(info->cmd_tree->args, i);
 				j = -1;
 			}

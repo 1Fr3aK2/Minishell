@@ -6,75 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 16:32:54 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:09:24 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
-
-/*void	handle_heredoc_redirection(t_io *io, t_info *info)
-{
-	char	*line;
-	int		fd[2];
-	pid_t	pid;
-	int		status;
-
-	if (!io || !io->file || pipe(fd) == -1)
-		return ;
-	pid = fork();
-	if (pid < 0)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		return ;
-	}
-	if (pid == 0)
-	{
-		signal(SIGINT, handle_sigint_heredoc);
-		close(fd[0]);
-		close(io->stdin_backup);
-		close(io->stdout_backup);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
-					&& ft_strlen(line) == ft_strlen(io->file)))
-			{
-				free(line);
-				break ;
-			}
-			write(fd[1], line, ft_strlen(line));
-			if (line[0] != '\0')
-				write(fd[1], "\n", 1);
-			free(line);
-		}
-		close(fd[1]);
-		exit(0);
-	}
-	else
-	{
-		signal(SIGINT, SIG_IGN);
-		close(fd[1]);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, handle_sigint);
-		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
-		{
-			update_status(info, 130);
-			close(fd[0]);
-			restore_io(io);
-			return ;
-		}
-		if (dup2(fd[0], STDIN_FILENO) == -1)
-		{
-			close(fd[0]);
-			restore_io(io);
-			return ;
-		}
-		close(fd[0]);
-		io->stdin_is_heredoc = 1;
-	}
-}*/
 
 void	handle_heredoc_redirection(t_io *io, t_info *info)
 {

@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 16:32:46 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:21:31 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	child_process(t_info *info)
 	if (info->exit_status == 130)
 		return ;
 	check_redirections(info);
-	if (info->exit_status == 130)
+	if (info->exit_status != 0)
 		return ;
 	set_signals_noninteractive();
 	free_io_file(info->io);

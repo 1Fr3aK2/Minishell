@@ -6,7 +6,11 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
+<<<<<<< Updated upstream
 /*   Updated: 2025/05/20 17:17:19 by raamorim         ###   ########.fr       */
+=======
+/*   Updated: 2025/05/20 18:22:39 by dsteiger         ###   ########.fr       */
+>>>>>>> Stashed changes
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +67,7 @@ typedef struct s_builtins
 typedef struct s_reds
 {
 	char				*reds[MAX_REDS];
-	void				(*f[MAX_REDS])(t_io *io);
+	void				(*f[MAX_REDS])(t_io *io, t_info *info);
 }						t_reds;
 
 typedef struct s_io
@@ -239,9 +243,9 @@ void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 
 // redirections/redirections
-void					handle_output_redirection(t_io *io);
-void					handle_input_redirection(t_io *io);
-void					handle_append_redirection(t_io *io);
+void					handle_output_redirection(t_io *io, t_info *info);
+void					handle_input_redirection(t_io *io, t_info *info);
+void					handle_append_redirection(t_io *io, t_info *info);
 
 // signals
 void					ignore_sigquit(void);
