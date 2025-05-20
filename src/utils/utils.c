@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 16:51:05 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:35:27 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,12 @@ void	change_shlvl(char ***env, char *name)
 		return ;
 	i = 0;
 	value = (ft_itoa(ft_atoi(get_env(name, *env)) + 1));
+	if (!value)
+		return ;
 	new_val = ft_strjoin("SHLVL=", value);
 	free(value);
+	if (!new_val)
+		return ;
 	while ((*env)[i])
 	{
 		if (ft_strncmp("SHLVL=", (*env)[i], ft_strlen("SHLVL=")) == 0)

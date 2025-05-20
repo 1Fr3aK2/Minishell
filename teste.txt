@@ -45,7 +45,6 @@ estas aspas -> (``) -> usadas para executar comandos
 //TO do
 
 NORMINETE
-melhorar mensagens de erro // ERROR
 ls | exit 5555555
 
 shellinho$> wc -l || cat t.txt 
