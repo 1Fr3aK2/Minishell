@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 14:43:37 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:46:50 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static int	is_input_valid(char *input)
 {
-	int	i = 0;
-
+	int	i;
+	
 	if (!input)
 		return (0);
+	i = 0;
 	while (input[i])
 	{
-		if (!isspace((unsigned char)input[i]))
+		if (!is_space(input[i]))
 			return (1);
 		i++;
 	}
