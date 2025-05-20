@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/20 16:31:12 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 17:17:19 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ typedef struct s_tree
 
 typedef struct s_info
 {
+	bool				error_msg;
 	unsigned int		exit_status;
 	char				*flags;
 	char				**my_env;
