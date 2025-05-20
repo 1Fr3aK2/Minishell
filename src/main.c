@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 18:34:01 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:06:22 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	is_input_valid(char *input)
 {
 	int	i;
-	
+
 	if (!input)
 		return (0);
 	i = 0;

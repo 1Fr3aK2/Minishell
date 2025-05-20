@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 18:50:29 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:17:50 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static int	process_heredoc_args(t_tree *node, t_info *info)
 		{
 			if (node->args[i + 1] && ft_strncmp(node->args[i + 1], "<", 1) == 0)
 			{
-				ft_putstr_fd("syntax error near unexpected token `<<<'\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `<<'\n", 2);
 				info->exit_status = 2;
 				return (-1);
 			}

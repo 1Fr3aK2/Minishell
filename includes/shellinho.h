@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/20 18:52:51 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 20:30:30 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_tree
 {
 	char				**args;
 	t_node_type			type;
-	t_io *io;
+	t_io				*io;
 	struct s_tree		*left;
 	struct s_tree		*right;
 }						t_tree;
@@ -108,6 +108,7 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
+int	is_valid_append_token(const char *token);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
