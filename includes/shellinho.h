@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/19 18:51:56 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:17:02 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,9 +167,11 @@ void					ft_and(t_info *info, t_tree *node);
 void					ft_and_wrapper(t_info *info);
 
 // builtins/or
-void					exec_command_op(t_info *info, t_tree *node);
 void					ft_or(t_info *info, t_tree *node);
 void					ft_or_wrapper(t_info *info);
+
+// builtins/ft_or/ft_or_utils.c
+void					exec_command_op(t_info *info, t_tree *node);
 
 // parse/expander/handle_dollar
 char					*handle_dollar(char *str, t_info *info);

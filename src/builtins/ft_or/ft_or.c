@@ -3,56 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_or.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 19:25:15 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/19 18:25:30 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:17:35 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
-
-void	exec_command_op(t_info *info, t_tree *node)
-{
-	pid_t	pid;
-	int		status;
-	int		sig;
-
-	if (check_builtins(info) == 0)
-		return ;
-	pid = fork();
-	if (pid == -1)
-		return (ft_putstr_fd("Fork error\n", 2), (void)0);
-	if (pid == 0)
-	{
-		if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
-		{
-			dup2(info->io->fd_in, STDIN_FILENO);
-			close(info->io->fd_in);
-		}
-		exec_command(info, node);
-	}
-	waitpid(pid, &status, 0);
-	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
-	{
-		close(info->io->fd_in);
-		info->io->fd_in = -1;
-		info->io->stdin_is_heredoc = 0;
-	}
-	if (WIFEXITED(status))
-		info->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-	{
-		sig = WTERMSIG(status);
-		if (sig == SIGINT)
-			info->exit_status = 130;
-		else if (sig == SIGQUIT)
-		{
-			info->exit_status = 131;
-			write(1, "Quit (core dumped)\n", 19);
-		}
-	}
-}
+#include "../../../includes/shellinho.h"
 
 void	ft_or(t_info *info, t_tree *node)
 {

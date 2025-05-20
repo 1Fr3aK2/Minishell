@@ -12,7 +12,8 @@ SRCS =  src/main.c \
 		src/builtins/ft_pipe/ft_pipe.c \
 		src/builtins/ft_pipe/ft_pipe_utils.c \
 		src/builtins/ft_and.c \
-		src/builtins/ft_or.c \
+		src/builtins/ft_or/ft_or.c \
+		src/builtins/ft_or/ft_or_utils.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
 		src/parse/expander/utils_expander.c\
