@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_aux_functions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:23:13 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/09 01:33:08 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/20 16:11:58 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void	add_check(char ***arr, char *str)
 	int		index;
 
 	name = reverse_strchr(str, '+');
-	if (name == NULL)
+	if (!name)
 		return ;
 	value = ft_strchr(str, '=');
-	if (value == NULL)
+	if (!value)
 		return (free(name));
 	value++;
 	index = find_index(*arr, name);

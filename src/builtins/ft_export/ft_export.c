@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 13:36:43 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:14:52 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,5 +129,5 @@ void	ft_export(t_info *info)
 			add_to_env(&info->export_env, info->cmd_tree->args[i]);
 		i++;
 	}
-	info->exit_status = exit_status;
+	update_status(info, exit_status);
 }
