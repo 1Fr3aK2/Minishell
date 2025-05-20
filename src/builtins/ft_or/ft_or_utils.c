@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 14:17:41 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:23:38 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	exec_command_op(t_info *info, t_tree *node)
 		return ;
 	pid = fork();
 	if (pid == -1)
-		return (ft_putstr_fd("Fork error\n", 2), (void)0);
+		return (ft_putstr_fd("Fork error\n", 2));
 	if (pid == 0)
 		handle_child_process(info, node);
 	waitpid(pid, &status, 0);
