@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/19 18:38:32 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:14:17 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ void	set_signals_interactive(void)
 	ignore_sigquit();
 	ft_memset(&act, 0, sizeof(act));
 	act.sa_handler = &handle_sigint;
-	act.sa_flags = SA_RESTART; // <-- important
+	act.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &act, NULL);
 }
 
 void	print_newline(int signal)
 {
 	(void)signal;
-	write(1, "\n", 1); // <-- this is safer
+	write(1, "\n", 1);
 }
 
 void	set_signals_noninteractive(void)
@@ -53,7 +53,7 @@ void	set_signals_noninteractive(void)
 
 	ft_memset(&act, 0, sizeof(act));
 	act.sa_handler = &print_newline;
-	act.sa_flags = SA_RESTART; // <-- important
+	act.sa_flags = SA_RESTART;
 	sigaction(SIGINT, &act, NULL);
 	sigaction(SIGQUIT, &act, NULL);
 }

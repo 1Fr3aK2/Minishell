@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/14 17:05:52 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:55:45 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ void	update_io_file(t_io *io, char *filename)
 
 void	remove_redir_tokens(char **args, int i)
 {
+	int	j;
+
 	if (args[i])
 	{
 		free(args[i]);
@@ -114,10 +116,10 @@ void	remove_redir_tokens(char **args, int i)
 		free(args[i + 1]);
 		args[i + 1] = NULL;
 	}
-	while (args[i + 2])
+	j = i + 2;
+	while (args[j])
 	{
-		args[i] = args[i + 2];
-		i++;
+		args[i++] = args[j++];
 	}
 	args[i] = NULL;
 }

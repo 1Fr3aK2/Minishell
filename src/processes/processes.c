@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 19:21:07 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:32:46 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	handle_parent_signals(int status, t_info *info)
 static void	exec_child_process(t_info *info)
 {
 	handle_child_signals();
-	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	if (info->io && info->io->stdin_is_heredoc && info->io->fd_in != -1)
 	{
 		dup2(info->io->fd_in, STDIN_FILENO);
 		close(info->io->fd_in);
@@ -68,7 +68,7 @@ void	child_process(t_info *info)
 	free_io_file(info->io);
 	info->io->file = NULL;
 	if (!check_operators(info) || !check_builtins(info))
-		return (restore_io(info->io));
+		return (restore_io(info->io), (void)0);
 	pid = fork();
 	if (pid == -1)
 		return ;
