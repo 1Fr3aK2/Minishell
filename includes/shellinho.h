@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shellinho.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-<<<<<<< Updated upstream
-/*   Updated: 2025/05/20 17:17:19 by raamorim         ###   ########.fr       */
-=======
-/*   Updated: 2025/05/20 18:22:39 by dsteiger         ###   ########.fr       */
->>>>>>> Stashed changes
+/*   Updated: 2025/05/20 18:52:51 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +74,6 @@ typedef struct s_io
 	int					stdin_backup;
 	int					stdout_backup;
 	int					stdin_is_heredoc;
-
 	t_reds				*redirections;
 }						t_io;
 

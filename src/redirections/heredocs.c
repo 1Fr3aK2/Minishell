@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 18:09:24 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 18:50:29 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 		{
 			line = readline("> ");
 			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
-				&& ft_strlen(line) == ft_strlen(io->file)))
+					&& ft_strlen(line) == ft_strlen(io->file)))
 			{
 				free(line);
 				break ;
@@ -56,7 +56,6 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 		close(fd[1]);
 		waitpid(pid, &status, 0);
 		signal(SIGINT, handle_sigint);
-
 		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
 		{
@@ -71,7 +70,6 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	}
 }
 
-
 static int	process_heredoc_args(t_tree *node, t_info *info)
 {
 	int	i;
@@ -79,11 +77,11 @@ static int	process_heredoc_args(t_tree *node, t_info *info)
 	i = 0;
 	while (node->args[i])
 	{
-		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
+		if (ft_strncmp(node->args[i], "<<", 2) == 0)
 		{
-			if (!node->args[i + 1])
+			if (node->args[i + 1] && ft_strncmp(node->args[i + 1], "<", 1) == 0)
 			{
-				ft_putstr_fd("syntax error\n", 2);
+				ft_putstr_fd("syntax error near unexpected token `<<<'\n", 2);
 				info->exit_status = 2;
 				return (-1);
 			}
