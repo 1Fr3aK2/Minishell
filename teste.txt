@@ -45,7 +45,6 @@ estas aspas -> (``) -> usadas para executar comandos
 //TO do
 
 NORMINETE
-quando passo apenas um espaco e dou enter
 ls | exit 5555555
 
 shellinho$> wc -l || cat t.txt 
@@ -57,3 +56,4 @@ shellinho$> cat << eof && echo ola
 
 
 echo $$
+echo ola &&& ps -> fds abertos
