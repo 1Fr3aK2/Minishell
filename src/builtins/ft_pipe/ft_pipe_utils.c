@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/19 17:55:20 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 16:18:48 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	wait_all(pid_t last_pid, t_info *info)
 	while (wpid > 0)
 	{
 		if (wpid == last_pid && WIFEXITED(status))
-			info->exit_status = WEXITSTATUS(status);
+			update_status(info, WEXITSTATUS(status));
 		else if (wpid == last_pid && WIFSIGNALED(status))
 		{
 			if (WTERMSIG(status) == SIGQUIT)
