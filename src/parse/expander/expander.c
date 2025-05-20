@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:52 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 14:04:51 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:55:51 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,7 @@ char	*expand(char *str)
 		if (str[i] && str[i] == '$')
 		{
 			i++;
-			if (str[i] && str[i] == '?')
-				return (get_var_name(str, &i));
-			else
-				return (get_var_name(str, &i));
+			return (get_var_name(str, &i));
 		}
 		i++;
 	}

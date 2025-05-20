@@ -54,3 +54,6 @@ Quit (core dumped)
 
 shellinho$> cat << eof && echo ola
 > eof -> 2 fds abertos
+
+
+echo $$
