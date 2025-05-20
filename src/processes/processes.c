@@ -40,6 +40,11 @@ static void	handle_parent_signals(int status, t_info *info)
 static void	exec_child_process(t_info *info)
 {
 	handle_child_signals();
+	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	{
+		dup2(info->io->fd_in, STDIN_FILENO);
+		close(info->io->fd_in);
+	}
 	exec(info, info->cmd_tree);
 	exit(1);
 }
@@ -71,7 +76,7 @@ void	child_process(t_info *info)
 		exec_child_process(info);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
-	set_signals_interactive(); 
+	set_signals_interactive();
 	restore_io(info->io);
 	handle_parent_signals(status, info);
 }

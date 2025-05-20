@@ -24,8 +24,21 @@ void	exec_command_op(t_info *info, t_tree *node)
 	if (pid == -1)
 		return (ft_putstr_fd("Fork error\n", 2), (void)0);
 	if (pid == 0)
+	{
+		if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
+		{
+			dup2(info->io->fd_in, STDIN_FILENO);
+			close(info->io->fd_in);
+		}
 		exec_command(info, node);
+	}
 	waitpid(pid, &status, 0);
+	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	{
+		close(info->io->fd_in);
+		info->io->fd_in = -1;
+		info->io->stdin_is_heredoc = 0;
+	}
 	if (WIFEXITED(status))
 		info->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))

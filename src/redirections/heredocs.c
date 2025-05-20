@@ -12,7 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-void	handle_heredoc_redirection(t_io *io, t_info *info)
+/*void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	char	*line;
 	int		fd[2];
@@ -74,9 +74,9 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 		close(fd[0]);
 		io->stdin_is_heredoc = 1;
 	}
-}
+}*/
 
-/* void	handle_heredoc_redirection(t_io *io, t_info *info)
+void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	char	*line;
 	int		fd[2];
@@ -133,7 +133,7 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 		io->fd_in = fd[0];
 		io->stdin_is_heredoc = 1;
 	}
-} */
+}
 
 
 static int	process_heredoc_args(t_tree *node, t_info *info)
