@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:57:57 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/20 23:59:07 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ static char	*join_and_free(char *s1, char *s2)
 	return (new);
 }
 
-static int	process_variable(char *str, char **new, int i,
-		t_info *info)
+static int	process_variable(char *str, char **new, int i, t_info *info)
 {
 	char	*var_name;
 	char	*var_value;
@@ -31,23 +30,23 @@ static int	process_variable(char *str, char **new, int i,
 	var_name = expand(str + i);
 	if (!var_name)
 		return (-1);
-	var_value = translate(var_name, info->my_env, info);
+	if (var_name[0] == '\0')
+		var_value = ft_strdup("$");
+	else
+		var_value = translate(var_name, info->my_env, info);
 	if (!var_value)
 		var_value = ft_strdup("");
-	if (var_value)
+	temp = join_and_free(*new, var_value);
+	if (!temp)
 	{
-		temp = join_and_free(*new, var_value);
-		if (!temp)
-		{
-			free(*new);
-			return (-1);
-		}
-		*new = temp;
-	}
-	if (var_name)
+		free(*new);
 		free(var_name);
-	if (var_value)
 		free(var_value);
+		return (-1);
+	}
+	*new = temp;
+	free(var_name);
+	free(var_value);
 	return (i + get_varname_len(str + i) + 1);
 }
 

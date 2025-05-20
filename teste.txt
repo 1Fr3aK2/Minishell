@@ -55,7 +55,6 @@ shellinho$> cat << eof && echo ola
 > eof -> 2 fds abertos
 
 
-echo $$
 echo ola &&& ps -> fds abertos
 
 echo ola >>> t.txt
