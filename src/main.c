@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 17:56:17 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/20 14:43:37 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,17 @@
 
 static int	is_input_valid(char *input)
 {
-	return (input && *input);
+	int	i = 0;
+
+	if (!input)
+		return (0);
+	while (input[i])
+	{
+		if (!isspace((unsigned char)input[i]))
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 static int	is_tree_invalid(t_info *info)
