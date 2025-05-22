@@ -77,11 +77,10 @@ static int	process_heredoc_args(t_tree *node, t_info *info)
 	i = 0;
 	while (node->args[i])
 	{
-		if (ft_strncmp(node->args[i], "<<", 2) == 0)
+		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
 		{
-			if (node->args[i + 1] && ft_strncmp(node->args[i + 1], "<", 1) == 0)
+			if (!node->args[i + 1])
 			{
-				ft_putstr_fd("syntax error near unexpected token `<<'\n", 2);
 				info->exit_status = 2;
 				return (-1);
 			}

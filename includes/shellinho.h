@@ -108,7 +108,9 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-int						is_valid_append_token(const char *token);
+int has_invalid_redirection(char **tokens, t_info *info);
+int is_valid_redirection(const char *token, t_info *info);
+bool check_invalid_redir_tokens(char **tokens);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);

@@ -61,6 +61,61 @@ t_node_type	find_type(char **tokens, int i)
 		return (CMD);
 }
 
+int	is_valid_redirection(const char *token, t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (info->redirections->reds[i])
+	{
+		if (strcmp(token, info->redirections->reds[i]) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	has_invalid_redirection(char **tokens, t_info *info)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	while (tokens && tokens[i])
+	{
+		if (strcmp(tokens[i], ">") == 0 || strcmp(tokens[i], ">>") == 0
+			|| strcmp(tokens[i], "<") == 0 || strcmp(tokens[i], "<<") == 0)
+		{
+			if (!tokens[i + 1] || strcmp(tokens[i + 1], ">") == 0
+				|| strcmp(tokens[i + 1], ">>") == 0 || strcmp(tokens[i + 1],
+					"<") == 0 || strcmp(tokens[i + 1], "<<") == 0)
+			{
+				ft_putstr_fd("Shellinho: syntax error near unexpected token `",
+					2);
+				ft_putstr_fd(tokens[i + 1] ? tokens[i + 1] : "newline", 2);
+				ft_putstr_fd("'\n", 2);
+				info->exit_status = 2;
+				return (1);
+			}
+		}
+		if (tokens[i][0] == '<' || tokens[i][0] == '>')
+		{
+			len = ft_strlen(tokens[i]);
+			if (len > 2)
+			{
+				ft_putstr_fd("Shellinho: syntax error near unexpected token `",
+					2);
+				ft_putstr_fd(tokens[i], 2);
+				ft_putstr_fd("'\n", 2);
+				info->exit_status = 2;
+				return (1);
+			}
+		}
+		i++;
+	}
+	return (0);
+}
+
 t_tree	*parse_tokens(char **tokens, t_info *info)
 {
 	int		op_index;
@@ -71,6 +126,8 @@ t_tree	*parse_tokens(char **tokens, t_info *info)
 	total = 0;
 	node = NULL;
 	if (!tokens || !tokens[0])
+		return (NULL);
+	if (has_invalid_redirection(tokens, info))
 		return (NULL);
 	while (tokens[total])
 		total++;
