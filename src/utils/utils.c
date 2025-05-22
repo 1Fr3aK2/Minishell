@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 14:35:27 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:53:32 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/shellinho.h"
+
+void	close_io_fds(t_io *io)
+{
+	if (!io)
+		return ;
+	close(io->stdout_backup);
+	close(io->stdin_backup);
+}
 
 void	close_fds(int i)
 {

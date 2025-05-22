@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/20 23:59:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/22 19:53:43 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,8 +197,8 @@ void					update_status(t_info *info, unsigned int status);
 void					fill_all(t_info *info);
 
 // parse/tree/syntax_tree.c
-int	is_valid_redirection(const char *token, t_info *info);
-int	has_invalid_redirection(char **tokens, t_info *info);
+int						is_valid_redirection(const char *token, t_info *info);
+int						has_invalid_redirection(char **tokens, t_info *info);
 
 // parse/tree/tree.c
 t_tree					*creat_op_node(char **tokens, int *index, t_info *info);
@@ -284,6 +284,7 @@ int						is_operator_char(char c);
 int						is_double_operator(char *str);
 
 // utils.c
+void					close_io_fds(t_io *io);
 void					close_fds(int i);
 void					close_pipe_fds(int fd[2]);
 char					*reverse_strchr(char *str, int c);

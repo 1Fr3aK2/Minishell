@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 18:21:31 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/05/22 19:59:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ void	exec(t_info *info, t_tree *node)
 		free_arr(info->cmd_tree->args);
 		free_arr(info->my_env);
 		free_builtins(info->builtins);
+		close_io_fds(info->io);
 		exit(127);
 	}
 	if (execve(path, node->args, info->my_env) == -1)
