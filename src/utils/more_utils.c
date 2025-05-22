@@ -48,8 +48,9 @@ void	remove_redir_tokens(char **args, int i)
 
 int	is_valid_append_token(const char *token)
 {
-	int	count = 0;
+	int	count;
 
+	count = 0;
 	while (token[count] == '>')
 		count++;
 	return (count == 2);

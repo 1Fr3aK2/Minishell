@@ -57,6 +57,4 @@ shellinho$> cat << eof && echo ola
 
 echo ola &&& ps -> fds abertos
 
-echo ola >>> t.txt
-
 cat << eof | wc -l >> t.txt -> ver quantas linhas conta

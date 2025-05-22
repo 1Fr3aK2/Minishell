@@ -108,15 +108,12 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-int has_invalid_redirection(char **tokens, t_info *info);
-int is_valid_redirection(const char *token, t_info *info);
-bool check_invalid_redir_tokens(char **tokens);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
 void					add_check(char ***arr, char *str);
 
-// builtins/export
+// builtins/export.c
 void					add_to_env(char ***env, char *str);
 void					sort_env(char **args);
 char					**create_sorted_env_copy(char **args);
@@ -135,27 +132,27 @@ int						find_index(char **arr, char *str);
 void					create_var(char ***env, char *str);
 bool					check_env(char ***env, char *str);
 
-// builtins/echo
+// builtins/echo.c
 int						check_flags(char *str);
 void					ft_echo(t_info *info);
 
-// builtins/env
+// builtins/env.c
 void					ft_env(t_info *info);
 
-// builtins/cd
+// builtins/cd.c
 void					cd_with_arg(const char *path);
 int						count_levels(const char *arg);
 void					ft_cd_doispontos(t_info *info, int levels);
 void					ft_cd_home(t_info *info);
 void					ft_cd(t_info *info);
 
-// builtins/exit
+// builtins/exit.c
 void					ft_exit(t_info *info);
 
-// builtins/pwd
+// builtins/pwd.c
 void					ft_pwd(t_info *info);
 
-// builtins/unset
+// builtins/unset.c
 void					ft_unset(t_info *info);
 
 // builtins/ft_pipe/ft_pipe.c
@@ -166,18 +163,18 @@ void					ft_pipe(t_info *info, t_tree *node);
 void					wait_all(pid_t last_pid, t_info *info);
 void					exec_command(t_info *info, t_tree *node);
 
-// builtins/and
+// builtins/and.c
 void					ft_and(t_info *info, t_tree *node);
 void					ft_and_wrapper(t_info *info);
 
-// builtins/or
+// builtins/or.c
 void					ft_or(t_info *info, t_tree *node);
 void					ft_or_wrapper(t_info *info);
 
 // builtins/ft_or/ft_or_utils.c
 void					exec_command_op(t_info *info, t_tree *node);
 
-// parse/expander/handle_dollar
+// parse/expander/handle_dollar.c
 char					*handle_dollar(char *str, t_info *info);
 
 // parse/expander/expander.c
@@ -199,11 +196,15 @@ void					update_status(t_info *info, unsigned int status);
 // parse/utils_init.c
 void					fill_all(t_info *info);
 
+// parse/tree/syntax_tree.c
+int	is_valid_redirection(const char *token, t_info *info);
+int	has_invalid_redirection(char **tokens, t_info *info);
+
 // parse/tree/tree.c
 t_tree					*creat_op_node(char **tokens, int *index, t_info *info);
 t_tree					*create_node(char **tokens);
 
-// parse/utils_tree
+// parse/utils_tree.c
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
 t_tree					*parse_tokens(char **tokens, t_info *info);
@@ -218,7 +219,7 @@ char					**new_input(char *input);
 t_tree					*build_tree_tokens(char **tokens, t_info *info);
 void					parse(char *input, t_info *info);
 
-// parse/quotes
+// parse/quotes.c
 int						check_quotes(char *input);
 char					*remove_quotes(char *str);
 void					remove_all_quotes(char **tokens);
@@ -231,21 +232,21 @@ void					exec(t_info *info, t_tree *node);
 char					*get_env(char *variable_name, char **env);
 char					*find_path(t_info *info, char *cmd);
 
-// redirections/heredocs
+// redirections/heredocs.c
 void					handle_heredoc_redirection(t_io *io, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
 void					handle_sigint_heredoc(int sig);
 
-// redirections/redir_utils
+// redirections/redir_utils.c
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 
-// redirections/redirections
+// redirections/redirections.c
 void					handle_output_redirection(t_io *io, t_info *info);
 void					handle_input_redirection(t_io *io, t_info *info);
 void					handle_append_redirection(t_io *io, t_info *info);
 
-// signals
+// signals.c
 void					ignore_sigquit(void);
 void					handle_sigint(int sig);
 void					set_signals_interactive(void);
@@ -276,19 +277,19 @@ void					free_io_file(t_io *io);
 void					free_builtins(t_builtins *builtins);
 void					*free_str(char **dest, int i);
 
-// utils/utils_bools
+// utils/utils_bools.c
 bool					is_quote(char c);
 int						is_operator(const char *str);
 int						is_operator_char(char c);
 int						is_double_operator(char *str);
 
-// utils
+// utils.c
 void					close_fds(int i);
 void					close_pipe_fds(int fd[2]);
 char					*reverse_strchr(char *str, int c);
 void					change_shlvl(char ***env, char *name);
 
-// main
+// main.c
 void					start(t_info *info);
 
 #endif
