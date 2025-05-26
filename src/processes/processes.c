@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/22 19:59:37 by rafael           ###   ########.fr       */
+/*   Updated: 2025/05/26 19:56:14 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	child_process(t_info *info)
 	set_signals_noninteractive();
 	free_io_file(info->io);
 	info->io->file = NULL;
+	close_io_fds(info->io);
 	if (!check_operators(info) || !check_builtins(info))
 		return (restore_io(info->io), (void)0);
 	pid = fork();
