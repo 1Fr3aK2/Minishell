@@ -89,37 +89,3 @@ int	check_redirections(t_info *info)
 	}
 	return (1);
 }
-
-void	update_io_file(t_io *io, char *filename)
-{
-	if (io->file)
-	{
-		free(io->file);
-		io->file = NULL;
-	}
-	io->file = ft_strdup(filename);
-	if (!io->file)
-		return ;
-}
-
-void	remove_redir_tokens(char **args, int i)
-{
-	int	j;
-
-	if (args[i])
-	{
-		free(args[i]);
-		args[i] = NULL;
-	}
-	if (args[i + 1])
-	{
-		free(args[i + 1]);
-		args[i + 1] = NULL;
-	}
-	j = i + 2;
-	while (args[j])
-	{
-		args[i++] = args[j++];
-	}
-	args[i] = NULL;
-}
