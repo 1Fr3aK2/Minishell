@@ -41,7 +41,7 @@ void	exec_command(t_info *info, t_tree *node)
 	if (!info || !node)
 		exit(1);
 	info->cmd_tree = node;
-	prepare_heredocs(info->cmd_tree, info);
+	//prepare_heredocs(info->cmd_tree, info); this doesnt print for cat << eof | cat
 	if (check_redirections(info) == 0)
 		exit(0);
 	if (node->type == CMD)

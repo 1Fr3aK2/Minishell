@@ -108,6 +108,8 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
+
+int	process_heredoc_args(t_tree *node, t_info *info);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);

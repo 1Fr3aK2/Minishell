@@ -65,12 +65,14 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 			io->fd_in = -1;
 			return ;
 		}
+		if (io->fd_in != -1)
+			close(io->fd_in);
 		io->fd_in = fd[0];
 		io->stdin_is_heredoc = 1;
 	}
 }
 
-static int	process_heredoc_args(t_tree *node, t_info *info)
+int	process_heredoc_args(t_tree *node, t_info *info)
 {
 	int	i;
 

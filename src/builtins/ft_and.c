@@ -39,6 +39,6 @@ void	ft_and_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
-	prepare_heredocs(info->cmd_tree, info);
+	//prepare_heredocs(info->cmd_tree, info);
 	ft_and(info, info->cmd_tree);
 }

@@ -14,6 +14,12 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
+	if (node->type == CMD)
+	{
+		process_heredoc_args(node, info);
+		if (info->exit_status == 130)
+			exit(130);
+	}
 	if (info->io && info->io->stdin_is_heredoc && info->io->fd_in != -1)
 	{
 		dup2(info->io->fd_in, STDIN_FILENO);
@@ -39,6 +45,9 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	int		fd[2];
 	pid_t	pid;
 
+	//process_heredoc_args(node, info);
+	if (info->exit_status == 130)
+		exit(130);
 	if (pipe(fd) == -1)
 		return (ft_putstr_fd("Pipe error\n", 2), -1);
 	pid = fork();
@@ -84,8 +93,8 @@ void	ft_pipe_wrapper(t_info *info)
 {
 	if (!info || !info->cmd_tree)
 		return ;
-	prepare_heredocs(info->cmd_tree, info);
+	/*prepare_heredocs(info->cmd_tree, info);
 	if (info->exit_status == 130)
-		return ;
+		return ;*/
 	ft_pipe(info, info->cmd_tree);
 }

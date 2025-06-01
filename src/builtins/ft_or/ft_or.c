@@ -39,6 +39,6 @@ void	ft_or_wrapper(t_info *info)
 {
 	if (!info)
 		return ;
-	prepare_heredocs(info->cmd_tree, info);
+	//prepare_heredocs(info->cmd_tree, info);
 	ft_or(info, info->cmd_tree);
 }

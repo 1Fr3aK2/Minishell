@@ -58,3 +58,44 @@ shellinho$> cat << eof && echo ola
 echo ola &&& ps -> fds abertos
 
 cat << eof | wc -l >> t.txt -> ver quantas linhas conta
+
+
+
+
+void	ft_pipe_wrapper(t_info *info)
+{
+	if (!info || !info->cmd_tree)
+		return ;
+	/*prepare_heredocs(info->cmd_tree, info); // descomentar isto pode ser a cena dos stdin mal restaurados
+	if (info->exit_status == 130)
+		return ;*/
+	ft_pipe(info, info->cmd_tree);
+}
+
+static void	child_exec(t_info *info, t_tree *node, int in, int out)
+{
+	if (node->type == CMD) // apagar isto....
+	{
+		process_heredoc_args(node, info);
+		if (info->exit_status == 130)
+			exit(130);
+	}
+	if (info->io && info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	{
+		dup2(info->io->fd_in, STDIN_FILENO);
+		close(info->io->fd_in);
+	}
+	else if (in != -1)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+	if (out != -1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+	close_fds(0);
+	exec_command(info, node);
+	exit(1);
+}
