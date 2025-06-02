@@ -35,7 +35,7 @@ void	ft_echo(t_info *info)
 
 	i = 1;
 	j = 0;
-	prepare_heredocs(info->cmd_tree, info);
+	//prepare_heredocs(info->cmd_tree, info);
 	if (check_redirections(info) == 0)
 		exit(0);
 	while (check_flags(info->cmd_tree->args[i]) == 0)

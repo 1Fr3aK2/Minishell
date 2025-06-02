@@ -14,11 +14,17 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
-	if (info->io && info->io->fd_in != -1)
+	if (node->io && node->io->heredoc_fd != -1)
 	{
-		dup2(info->io->fd_in, STDIN_FILENO);
-		close(info->io->fd_in);
-		info->io->fd_in = -1;
+		dup2(node->io->heredoc_fd, STDIN_FILENO);
+		close(node->io->heredoc_fd);
+		node->io->heredoc_fd = -1;
+	}
+	else if (node->io && node->io->fd_in != -1)
+	{
+		dup2(node->io->fd_in, STDIN_FILENO);
+		close(node->io->fd_in);
+		node->io->fd_in = -1;
 	}
 	else if (in != -1)
 	{
@@ -46,7 +52,10 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	if (pid == -1)
 		return (ft_putstr_fd("Fork error\n", 2), -1);
 	if (pid == 0)
+	{
+		handle_heredocs_for_tree(node->left, info);
 		child_exec(info, node->left, in, fd[1]);
+	}
 	if (in != -1)
 		close(in);
 	close(fd[1]);
@@ -79,7 +88,10 @@ void	ft_pipe(t_info *info, t_tree *node)
 	{
 		pid = fork();
 		if (pid == 0)
+		{
+			handle_heredocs_for_tree(curr, info);
 			child_exec(info, curr, in, -1);
+		}
 	}
 	if (in != -1)
 		close(in);
@@ -90,7 +102,7 @@ void	ft_pipe_wrapper(t_info *info)
 {
 	if (!info || !info->cmd_tree)
 		return ;
-	prepare_heredocs(info->cmd_tree, info);
+	handle_heredocs_for_tree(info->cmd_tree, info);
 	if (info->exit_status == 130)
 		return ;
 	ft_pipe(info, info->cmd_tree);

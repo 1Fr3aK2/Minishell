@@ -12,7 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-void	handle_heredoc_redirection(t_io *io, t_info *info)
+/*void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	char	*line;
 	int		fd[2];
@@ -104,4 +104,92 @@ void	prepare_heredocs(t_tree *node, t_info *info)
 		process_heredoc_args(node, info);
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
+}*/
+
+void	handle_heredoc_redirection(t_io *io, t_info *info)
+{
+	int		pipefd[2];
+	pid_t	pid;
+	int		status;
+	char	*line;
+
+	if (!io->file || pipe(pipefd) == -1)
+		return ;
+
+	pid = fork();
+	if (pid == -1)
+		return ;
+
+	if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		close(pipefd[0]);
+		while (1)
+		{
+			line = readline("> ");
+			if (!line || strcmp(line, io->file) == 0)
+			{
+				free(line);
+				break ;
+			}
+			write(pipefd[1], line, ft_strlen(line));
+			write(pipefd[1], "\n", 1);
+			free(line);
+		}
+		//free(line);
+		close(pipefd[1]);
+		exit(0);
+	}
+
+	close(pipefd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		info->exit_status = 130;
+		close(pipefd[0]);
+		io->heredoc_fd = -1;
+		return ;
+	}
+	io->heredoc_fd = pipefd[0];
 }
+
+
+int	process_heredoc_args(t_tree *node, t_info *info)
+{
+	int	i;
+
+	i = 0;
+	while (node->args[i])
+	{
+		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
+		{
+			if (!node->args[i + 1])
+			{
+				info->exit_status = 2;
+				return (-1);
+			}
+			update_io_file(info->io, node->args[i + 1]);
+			handle_heredoc_redirection(info->io, info);
+			if (info->exit_status == 130)
+				return (-1);
+			remove_redir_tokens(node->args, i);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+
+void	handle_heredocs_for_tree(t_tree *node, t_info *info)
+{
+	if (!node || info->exit_status == 130)
+		return ;
+
+	if (node->type == CMD)
+		process_heredoc_args(node, info);
+
+	handle_heredocs_for_tree(node->left, info);
+	handle_heredocs_for_tree(node->right, info);
+}
+

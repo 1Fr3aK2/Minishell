@@ -71,7 +71,7 @@ void	child_process(t_info *info)
 		return ;
 	storing_backup(info->io);
 	info->exit_status = 0;
-	prepare_heredocs(info->cmd_tree, info);
+	handle_heredocs_for_tree(info->cmd_tree, info);
 	if (info->exit_status == 130)
 		return ;
 	check_redirections(info);
