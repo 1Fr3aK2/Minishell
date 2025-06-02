@@ -43,8 +43,8 @@ void	set_signals_interactive(void)
 
 void	print_newline(int signal)
 {
-	(void)signal;
-	write(1, "\n", 1);
+	if (signal == SIGINT)
+		write(1, "\n", 1);
 }
 
 void	set_signals_noninteractive(void)
