@@ -73,6 +73,7 @@ typedef struct s_io
 	int					fd_out;
 	int					stdin_backup;
 	int					stdout_backup;
+    int                 heredoc_fd;
 	int					stdin_is_heredoc;
 	t_reds				*redirections;
 }						t_io;

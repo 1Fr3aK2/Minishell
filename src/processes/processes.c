@@ -40,10 +40,23 @@ static void	handle_parent_signals(int status, t_info *info)
 static void	exec_child_process(t_info *info)
 {
 	handle_child_signals();
-	if (info->io && info->io->stdin_is_heredoc && info->io->fd_in != -1)
+	if (info->io->heredoc_fd != -1)
+	{
+		dup2(info->io->heredoc_fd, STDIN_FILENO);
+		close(info->io->heredoc_fd);
+		info->io->heredoc_fd = -1;
+	}
+	else if (info->io->fd_in != -1)
 	{
 		dup2(info->io->fd_in, STDIN_FILENO);
 		close(info->io->fd_in);
+		info->io->fd_in = -1;
+	}
+	if (info->io->fd_out != -1)
+	{
+		dup2(info->io->fd_out, STDOUT_FILENO);
+		close(info->io->fd_out);
+		info->io->fd_out = -1;
 	}
 	exec(info, info->cmd_tree);
 	exit(1);

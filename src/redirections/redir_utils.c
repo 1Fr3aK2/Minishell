@@ -56,3 +56,16 @@ void	handle_sigint_heredoc(int sig)
 	close_fds(0);
 	exit(130);
 }
+
+void	reset_io(t_io *io)
+{
+	if (io->fd_in != -1)
+		close(io->fd_in);
+	if (io->heredoc_fd != -1)
+		close(io->heredoc_fd);
+	if (io->fd_out != -1)
+		close(io->fd_out);
+	io->fd_in = -1;
+	io->fd_out = -1;
+	io->heredoc_fd = -1;
+}

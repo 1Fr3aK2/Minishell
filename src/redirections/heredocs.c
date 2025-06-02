@@ -67,7 +67,7 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 		}
 		if (io->fd_in != -1)
 			close(io->fd_in);
-		io->fd_in = fd[0];
+		io->heredoc_fd = fd[0];
 		io->stdin_is_heredoc = 1;
 	}
 }
@@ -98,16 +98,10 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 
 void	prepare_heredocs(t_tree *node, t_info *info)
 {
-	int	res;
-
 	if (!node)
 		return ;
 	if (node->type == CMD && node->args)
-	{
-		res = process_heredoc_args(node, info);
-		if (res <= 0 || info->exit_status == 130)
-			return ;
-	}
+		process_heredoc_args(node, info);
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
 }
