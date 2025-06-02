@@ -59,7 +59,6 @@ static void	fill_redirections(t_info *info)
 void	fill_all(t_info *info)
 {
 	fill_builtins(info);
-	fill_builtins(info);
 	fill_types(info);
 	fill_redirections(info);
 	copy_env(&info->export_env, info->my_env);

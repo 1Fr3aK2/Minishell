@@ -46,7 +46,7 @@ void	init_io(t_io *io)
 	io->fd_in = -1;
 	io->fd_out = -1;
 	io->stdin_backup = -1;
-	io->stdin_backup = -1;
+	io->stdout_backup = -1;
 	io->heredoc_fd = -1;
 	io->stdin_is_heredoc = 0;
 	io->file = NULL;
