@@ -12,7 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-/*void	handle_heredoc_redirection(t_io *io, t_info *info)
+void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	char	*line;
 	int		fd[2];
@@ -104,9 +104,9 @@ void	prepare_heredocs(t_tree *node, t_info *info)
 		process_heredoc_args(node, info);
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
-}*/
+}
 
-void	handle_heredoc_redirection(t_io *io, t_info *info)
+/*void	handle_heredoc_redirection(t_io *io, t_info *info)
 {
 	int		pipefd[2];
 	pid_t	pid;
@@ -191,5 +191,5 @@ void	handle_heredocs_for_tree(t_tree *node, t_info *info)
 
 	handle_heredocs_for_tree(node->left, info);
 	handle_heredocs_for_tree(node->right, info);
-}
+}*/
 
