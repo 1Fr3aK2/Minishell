@@ -55,10 +55,9 @@ shellinho$> cat << eof && echo ola
 > eof -> 2 fds abertos
 
 
-echo ola &&& ps -> fds abertos
-
 cat << eof | wc -l >> t.txt -> ver quantas linhas conta
 
+exit asd -> fd aberto do pai
 
 
 

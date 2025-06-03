@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/19 14:17:47 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/03 16:43:35 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,17 +55,35 @@ static int	validate_exit_args(t_info *info, char **args)
 	return (0);
 }
 
+static int	parse_exit_args(t_info *info, int *exit_flags)
+{
+	if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[0])
+	{
+		if (ft_strncmp(info->cmd_tree->args[0], "exit", 5) == 0)
+		{
+			if (info->cmd_tree->args[1])
+			{
+				if (validate_exit_args(info, info->cmd_tree->args))
+					return (0);
+				*exit_flags = ft_atoi(info->cmd_tree->args[1]);
+			}
+			return (1);
+		}
+	}
+	return (0);
+}
+
 void	ft_exit(t_info *info)
 {
 	int	exit_flags;
+	int	has_valid_args;
 
-	exit_flags = ft_atoi(info->flags);
-	if (info->cmd_tree && info->cmd_tree->args && info->cmd_tree->args[1])
-		if (validate_exit_args(info, info->cmd_tree->args))
-			return ;
+	exit_flags = 0;
+	has_valid_args = 0;
+	parse_exit_args(info, &exit_flags);
 	if (isatty(STDIN_FILENO))
-		printf("exit\n");
-	if (exit_flags)
+		ft_putstr_fd("exit\n", 1);
+	if (has_valid_args)
 	{
 		if (exit_flags > 255)
 			info->exit_status = exit_flags % 256;
