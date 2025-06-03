@@ -73,7 +73,7 @@ typedef struct s_io
 	int					fd_out;
 	int					stdin_backup;
 	int					stdout_backup;
-    int                 heredoc_fd;
+	int					heredoc_fd;
 	int					stdin_is_heredoc;
 	t_reds				*redirections;
 }						t_io;
@@ -109,8 +109,7 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-void	handle_heredocs_for_tree(t_tree *node, t_info *info);
-int	process_heredoc_args(t_tree *node, t_info *info);
+
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
@@ -237,12 +236,14 @@ char					*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs.c
 void					handle_heredoc_redirection(t_io *io, t_info *info);
+int						process_heredoc_args(t_tree *node, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
-void					handle_sigint_heredoc(int sig);
+void					init_node_io(t_io *io);
 
 // redirections/redir_utils.c
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
+void					handle_sigint_heredoc(int sig);
 
 // redirections/redirections.c
 void					handle_output_redirection(t_io *io, t_info *info);
