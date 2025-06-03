@@ -49,6 +49,12 @@ static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 		free(node->args[0]);
 		free(node->args);
 	}
+	if (node->io)
+	{
+		free(node->io->file);
+		free(node->io->redirections);
+		free(node->io);
+	}
 	free(node);
 	free_arr(tokens);
 	return (1);
@@ -61,9 +67,20 @@ static t_tree	*init_node(char *token)
 	node = malloc(sizeof(t_tree));
 	if (!node)
 		return (NULL);
+	node->io = malloc(sizeof(t_io));
+	if (!node->io)
+	{
+		free(node);
+		return (NULL);
+	}
+	init_io(node->io);
 	node->args = malloc(sizeof(char *) * 2);
 	if (!node->args)
-		return (free(node), NULL);
+	{
+		free(node->io);
+		free(node);
+		return (NULL);
+	}
 	node->args[0] = ft_strdup(token);
 	node->args[1] = NULL;
 	node->left = NULL;
@@ -115,10 +132,21 @@ t_tree	*create_node(char **tokens)
 	node = malloc(sizeof(t_tree));
 	if (!node)
 		return (NULL);
+	node->io = malloc(sizeof(t_io));
+	if (!node->io)
+	{
+		free(node);
+		return (NULL);
+	}
+	init_io(node->io);
 	node->type = CMD;
 	node->args = malloc(sizeof(char *) * (total + 1));
 	if (!node->args)
-		return (free(node), NULL);
+	{
+		free(node->io);
+		free(node);
+		return (NULL);
+	}
 	while (++i < total)
 		node->args[i] = ft_strdup(tokens[i]);
 	node->args[total] = NULL;

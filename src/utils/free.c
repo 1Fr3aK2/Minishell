@@ -39,6 +39,12 @@ void	free_tree(t_tree *node)
 		free_tree(node->left);
 	if (node->right)
 		free_tree(node->right);
+	if (node->io)
+	{
+		if (node->io->file)
+			free(node->io->file);
+		free(node->io);
+	}
 	if (node)
 		free(node);
 	node = NULL;
