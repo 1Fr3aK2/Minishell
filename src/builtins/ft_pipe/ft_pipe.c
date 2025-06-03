@@ -14,6 +14,11 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
+	if (out != -1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
 	if (node->io && node->io->heredoc_fd != -1)
 	{
 		dup2(node->io->heredoc_fd, STDIN_FILENO);
@@ -30,11 +35,6 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 	{
 		dup2(in, STDIN_FILENO);
 		close(in);
-	}
-	if (out != -1)
-	{
-		dup2(out, STDOUT_FILENO);
-		close(out);
 	}
 	close_fds(0);
 	exec_command(info, node);
@@ -53,7 +53,7 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 		return (ft_putstr_fd("Fork error\n", 2), -1);
 	if (pid == 0)
 	{
-		prepare_heredocs(node->left, info);
+		close(fd[0]);
 		child_exec(info, node->left, in, fd[1]);
 	}
 	if (in != -1)
@@ -72,11 +72,6 @@ void	ft_pipe(t_info *info, t_tree *node)
 	curr = node;
 	pid = -1;
 	in = -1;
-	/*if (info->io && info->io->heredoc_fd != -1)
-	{
-		in = info->io->heredoc_fd;
-		info->io->heredoc_fd = -1;
-	}*/
 	while (curr && curr->type == PIPE)
 	{
 		pid = create_pipe(info, curr, in, &in);
@@ -88,10 +83,7 @@ void	ft_pipe(t_info *info, t_tree *node)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			prepare_heredocs(curr, info);
 			child_exec(info, curr, in, -1);
-		}
 	}
 	if (in != -1)
 		close(in);
