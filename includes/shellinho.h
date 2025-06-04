@@ -109,7 +109,6 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
@@ -238,7 +237,6 @@ char					*find_path(t_info *info, char *cmd);
 void					handle_heredoc_redirection(t_io *io, t_info *info);
 int						process_heredoc_args(t_tree *node, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
-void					init_node_io(t_io *io);
 
 // redirections/redir_utils.c
 void					storing_backup(t_io *io);

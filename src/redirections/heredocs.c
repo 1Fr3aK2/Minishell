@@ -40,8 +40,16 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	{
 		signal(SIGINT, handle_sigint_heredoc);
 		close(fd[0]);
-		close(io->stdin_backup);
-		close(io->stdout_backup);
+		if (io->stdin_backup != -1)
+		{
+			close(io->stdin_backup);
+			io->stdin_backup = -1;
+		}
+		if (io->stdout_backup != -1)
+		{
+			close(io->stdout_backup);
+			io->stdout_backup = -1;
+		}
 		while (1)
 		{
 			line = readline("> ");
@@ -99,7 +107,7 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 				node->io = malloc(sizeof(t_io));
 				if (!node->io)
 					return (-1);
-				init_node_io(node->io);
+				init_io(node->io);
 			}
 			update_io_file(node->io, node->args[i + 1]);
 			handle_heredoc_redirection(node->io, info);
@@ -119,12 +127,4 @@ void	prepare_heredocs(t_tree *node, t_info *info)
 		process_heredoc_args(node, info);
 	prepare_heredocs(node->left, info);
 	prepare_heredocs(node->right, info);
-}
-
-void	init_node_io(t_io *io)
-{
-	ft_bzero(io, sizeof(t_io));
-	io->fd_in = -1;
-	io->fd_out = -1;
-	io->heredoc_fd = -1;
 }
