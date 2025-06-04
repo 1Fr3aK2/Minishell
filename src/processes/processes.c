@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/04 17:10:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:28:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ void	exec(t_info *info, t_tree *node)
 		free_arr(info->cmd_tree->args);
 		free_arr(info->my_env);
 		free_builtins(info->builtins);
+		close_fds(0);
 		exit(127);
 	}
 	if (execve(path, node->args, info->my_env) == -1)

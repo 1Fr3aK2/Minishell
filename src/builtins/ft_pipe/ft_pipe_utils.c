@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/04 22:24:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:28:01 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	exec_command(t_info *info, t_tree *node)
 		else
 		{
 			exec(info, node);
-			close_fds(0);
+			/* close_fds(0); */
 		}
 	}
 	else if (node->type == PIPE)
