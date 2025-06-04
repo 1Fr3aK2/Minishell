@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/04 15:24:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 22:07:05 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	exec_command(t_info *info, t_tree *node)
 		if (check_operators(info) == 0)
 			exit(0);
 		if (check_builtins(info) == 0)
+		{
+			close_fds(0);
 			exit(0);
+		}
 		exec(info, node);
 	}
 	else if (node->type == PIPE)
@@ -59,5 +62,6 @@ void	exec_command(t_info *info, t_tree *node)
 		ft_or(info, node);
 	else
 		exit(127);
+	close_fds(0);
 	exit(info->exit_status);
 }
