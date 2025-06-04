@@ -84,7 +84,7 @@ void	child_process(t_info *info)
 	}
 	check_redirections(info);
 	if (info->exit_status != 0)
-        return (restore_io(info->io), (void)0);
+		return (restore_io(info->io), (void)0);
 	set_signals_noninteractive();
 	free_io_file(info->io);
 	info->io->file = NULL;
@@ -98,9 +98,9 @@ void	child_process(t_info *info)
 		exec_child_process(info);
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
-    set_signals_interactive();
-    restore_io(info->io);
-    handle_parent_signals(status, info);
+	set_signals_interactive();
+	restore_io(info->io);
+	handle_parent_signals(status, info);
 }
 
 void	exec(t_info *info, t_tree *node)

@@ -12,6 +12,20 @@
 
 #include "../../../includes/shellinho.h"
 
+
+static void	close_heredoc_fds(t_tree *node)
+{
+	if (!node)
+		return ;
+	if (node->io && node->io->heredoc_fd != -1)
+	{
+		close(node->io->heredoc_fd);
+		node->io->heredoc_fd = -1;
+	}
+	close_heredoc_fds(node->left);
+	close_heredoc_fds(node->right);
+}
+
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	if (out != -1)
@@ -98,4 +112,5 @@ void	ft_pipe_wrapper(t_info *info)
 	if (info->exit_status == 130)
 		return ;
 	ft_pipe(info, info->cmd_tree);
+    close_heredoc_fds(info->cmd_tree);
 }

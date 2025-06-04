@@ -78,7 +78,6 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 			update_status(info, 130);
 			close(fd[0]);
 			restore_io(io);
-			io->fd_in = -1;
 			return ;
 		}
 		if (io->fd_in != -1)
