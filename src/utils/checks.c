@@ -12,24 +12,62 @@
 
 #include "../../includes/shellinho.h"
 
+int	apply_redirections(t_info *info, int *saved_in, int *saved_out)
+{
+	if (info->io->fd_in != -1)
+	{
+		*saved_in = dup(STDIN_FILENO);
+		if (*saved_in == -1 || dup2(info->io->fd_in, STDIN_FILENO) == -1)
+			return (-1);
+		close(info->io->fd_in);
+		info->io->fd_in = -1;
+	}
+	if (info->io->fd_out != -1)
+	{
+		*saved_out = dup(STDOUT_FILENO);
+		if (*saved_out == -1 || dup2(info->io->fd_out, STDOUT_FILENO) == -1)
+			return (-1);
+		close(info->io->fd_out);
+		info->io->fd_out = -1;
+	}
+	return (0);
+}
+
+void	restore_redirections(int saved_in, int saved_out)
+{
+	if (saved_in != -1)
+	{
+		dup2(saved_in, STDIN_FILENO);
+		close(saved_in);
+	}
+	if (saved_out != -1)
+	{
+		dup2(saved_out, STDOUT_FILENO);
+		close(saved_out);
+	}
+}
+
 int	check_builtins(t_info *info)
 {
 	char	*cmd;
 	int		i;
+    int		saved_in = -1;
+	int		saved_out = -1;
 
 	cmd = info->cmd_tree->args[0];
 	i = 0;
 	while (info->builtins->builtins[i])
 	{
 		if (ft_strncmp(cmd, info->builtins->builtins[i],
-				ft_strlen(info->builtins->builtins[i])) == 0)
+				ft_strlen(info->builtins->builtins[i])) == 0
+			&& ft_strlen(cmd) == ft_strlen(info->builtins->builtins[i]))
 		{
-			if (ft_strlen(cmd) == ft_strlen(info->builtins->builtins[i]))
-			{
-				if (info->builtins->f[i])
-					info->builtins->f[i](info);
-				return (0);
-			}
+			if (apply_redirections(info, &saved_in, &saved_out) == -1)
+				return (0); 
+			if (info->builtins->f[i])
+				info->builtins->f[i](info);
+            restore_redirections(saved_in, saved_out);
+			return (0);
 		}
 		i++;
 	}
@@ -64,8 +102,8 @@ int	check_operators(t_info *info)
 
 int	check_redirections(t_info *info)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (info->cmd_tree->args && info->cmd_tree->args[i])

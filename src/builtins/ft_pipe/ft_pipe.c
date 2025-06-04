@@ -12,7 +12,6 @@
 
 #include "../../../includes/shellinho.h"
 
-
 static void	close_heredoc_fds(t_tree *node)
 {
 	if (!node)

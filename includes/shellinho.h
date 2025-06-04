@@ -109,6 +109,9 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
+
+int	apply_redirections(t_info *info, int *saved_in, int *saved_out);
+void	restore_redirections(int saved_in, int saved_out);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
