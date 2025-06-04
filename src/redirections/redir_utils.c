@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/26 19:51:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 17:10:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,32 +22,40 @@ void	storing_backup(t_io *io)
 		ft_putstr_fd("dup stdout backup failed", 2);
 }
 
-void	restore_io(t_io *io)
+void restore_io(t_io *io)
 {
-	if (io->stdin_backup != -1)
-	{
-		dup2(io->stdin_backup, STDIN_FILENO);
-		close(io->stdin_backup);
-		io->stdin_backup = -1;
-	}
-	if (io->stdout_backup != -1)
-	{
-		dup2(io->stdout_backup, STDOUT_FILENO);
-		close(io->stdout_backup);
-		io->stdout_backup = -1;
-	}
-	if (io->fd_in > 2)
-	{
-		close(io->fd_in);
-		io->fd_in = -1;
-	}
-	if (io->fd_out > 2)
-	{
-		close(io->fd_out);
-		io->fd_out = -1;
-	}
-	io->stdin_is_heredoc = 0;
+    if (!io)
+        return;
+    if (io->heredoc_fd != -1)
+    {
+        close(io->heredoc_fd);
+        io->heredoc_fd = -1;
+    }
+    if (io->stdin_backup != -1)
+    {
+        dup2(io->stdin_backup, STDIN_FILENO);
+        close(io->stdin_backup);
+        io->stdin_backup = -1;
+    }
+    if (io->stdout_backup != -1)
+    {
+        dup2(io->stdout_backup, STDOUT_FILENO);
+        close(io->stdout_backup);
+        io->stdout_backup = -1;
+    }
+    if (io->fd_in > 2)
+    {
+        close(io->fd_in);
+        io->fd_in = -1;
+    }
+    if (io->fd_out > 2)
+    {
+        close(io->fd_out);
+        io->fd_out = -1;
+    }
+    io->stdin_is_heredoc = 0;
 }
+
 
 void	handle_sigint_heredoc(int sig)
 {
