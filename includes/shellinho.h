@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/04 14:41:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:32:31 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,6 @@ typedef struct s_info
 }						t_info;
 
 // builtins/export/export_aux_functions.c
-void	execute_pipe(t_info *info, t_tree *node);
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
 void					add_check(char ***arr, char *str);

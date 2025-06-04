@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/04 14:49:31 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/04 15:32:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,9 @@ void	child_process(t_info *info)
 		return ;
 	storing_backup(info->io);
 	info->exit_status = 0;
-	// Etapa 1: preparar os heredocs da árvore inteira
 	prepare_heredocs(info->cmd_tree, info);
 	if (info->exit_status == 130)
 		return ;
-	// Etapa 2: associar corretamente o io do node à info
 	if (info->cmd_tree && info->cmd_tree->io)
 	{
 		if (info->io->heredoc_fd != -1)
@@ -117,7 +115,6 @@ void	child_process(t_info *info)
 		info->cmd_tree->io->heredoc_fd = -1;
 		info->io->stdin_is_heredoc = info->cmd_tree->io->stdin_is_heredoc;
 	}
-	// Etapa 3: processar redireções normais
 	check_redirections(info);
 	if (info->exit_status != 0)
 		return ;
