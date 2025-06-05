@@ -1,70 +1,12 @@
-erros parsing quotes : 
-echo "texto" 'outro "texto'; -> corrigido
-echo `yes "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"` -> POR CORRIGIR
-echo "Aspas duplas\" escapadas dentro de um texto" -> POR CORRIGIR
-echo "Mistura de aspas """" dentro de "um" texto 'estranho'" -> corrigido
-echo '"Aspas dentro de aspas" dentro de aspas' -> corrigido
-echo '""Aspas dentro de aspas"" dentro de aspas' -> corrigido
-echo "Texto com 'aspas simples' dentro de aspas duplas" -> corrigido
-echo 'Texto com "aspas duplas" dentro de aspas simples' -> corrigido
-echo "Texto com 'aspas simples' e "mistura" de "aspas duplas"" -> corrigido
-echo 'Texto com "aspas duplas" e '"mistura"' de 'aspas simples' dentro' -> corrigido
-\\\\\\\
-echo `pwd` asdasd
-/home/raamorim/commoncore/Shellinho asdasd
-echo & asdasd
-[1] 68519
-[1]  + 68519 done       echo
-zsh: command not found: asdasd
-
-CORRIGIR TESTES
-
-
-echo "O meu user é $USER e estou em $PWD" -> correto : O meu user é rafael e estou em /home/rafael
-echo "$HOME$USER" -> correto : /home/rafaelrafael
-echo "$HOME$NAO_EXISTE" -> correto : /home/rafael
-echo "User: $USER, Desconhecido: $NAO_EXISTE" -> correto : User: rafael, Desconhecido:
-
-echo $123ABC -> bash -> 23ABC
-            -> zsh -> zsh: command not found: 23ABC
-            outros(nos) -> \n 
-
-echo $HOME!USER -> bash -> bash: !USER: event not found
-                -> ZSH -> zsh: event not found: USER
-                outros(nos) -> /home/rafael!USER
-
-
-echo "'$HOME'" -> correto -> '/home/rafael'
-echo "asd"'$HOME'"asd" -> asd$HOMEasd
- echo "Inicio"'$PWD'"Fim" -> Inicio$PWDFim
-
-
-estas aspas -> (``) -> usadas para executar comandos
-
-
-//TO do
-
-NORMINETE
-ls | exit 5555555
-
-shellinho$> wc -l || cat t.txt 
-^\
-Quit (core dumped)
-
-shellinho$> cat << eof && echo ola
-> eof -> 2 fds abertos
-
-cat << eof | wc -l >> t.txt -> ver quantas linhas conta
-
-exit asd -> fd aberto do pai
-
-dsteiger@pc-Duarte:/mnt/c/Users/Admin/Desktop/VSCODE/Shellinho$ cat << eof
-> echo ola
-> echo $HOME
+dsteiger@pc-Duarte:/mnt/c/Users/Admin/Desktop/VSCODE/Shellinho$ ./shellinho
+shellinho$> cat << eof
+> skd
 > eof
-echo ola
-echo /home/dsteiger
-
-sort < t.txt | pwd | ls
-
-o caso acima ainda lida com sigpipe
+skd
+shellinho$> echo ola
+ola
+shellinho$> sd
+sdshellinho$> eof
+eof: command not found
+free(): double free detected in tcache 2
+shellinho$> 

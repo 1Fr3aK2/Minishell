@@ -108,7 +108,7 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-void	handle_sigpipe(int sig);
+void					handle_sigpipe(int sig);
 int						apply_redirections(t_info *info, int *saved_in,
 							int *saved_out);
 void					restore_redirections(int saved_in, int saved_out);
@@ -229,9 +229,15 @@ int						check_quotes(char *input);
 char					*remove_quotes(char *str);
 void					remove_all_quotes(char **tokens);
 
-// processes/processes.c
-void					child_process(t_info *info);
+// processes/exec_process.c
 void					exec(t_info *info, t_tree *node);
+
+// processes/processes.c
+void					handle_child_signals(void);
+void					handle_parent_signals(int status, t_info *info);
+void					exec_child_process(t_info *info);
+void					execute_and_wait(t_info *info);
+void					child_process(t_info *info);
 
 // processes/utils.c
 char					*get_env(char *variable_name, char **env);

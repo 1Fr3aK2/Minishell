@@ -55,3 +55,10 @@ int	is_valid_append_token(const char *token)
 		count++;
 	return (count == 2);
 }
+
+void	handle_sigpipe(int sig)
+{
+	(void)sig;
+	close_fds(0);
+	exit(141);
+}

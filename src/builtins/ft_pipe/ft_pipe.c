@@ -25,14 +25,6 @@ static void	close_heredoc_fds(t_tree *node)
 	close_heredoc_fds(node->right);
 }
 
-void	handle_sigpipe(int sig)
-{
-	(void)sig;
-	close_fds(0);
-	// Termina silenciosamente, exit code 141 (128+13)
-	exit(141);
-}
-
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	if (out != -1)
@@ -74,10 +66,7 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 		return (ft_putstr_fd("Pipe error\n", 2), -1);
 	pid = fork();
 	if (pid == -1)
-	{
-		close_pipe_fds(fd);
-		return (ft_putstr_fd("Fork error\n", 2), -1);
-	}
+		return (close_pipe_fds(fd), -1);
 	if (pid == 0)
 	{
 		close(fd[0]);

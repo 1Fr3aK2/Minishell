@@ -12,14 +12,14 @@
 
 #include "../../includes/shellinho.h"
 
-static void	handle_child_signals(void)
+void	handle_child_signals(void)
 {
 	signal(SIGPIPE, handle_sigpipe);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
 }
 
-static void	handle_parent_signals(int status, t_info *info)
+void	handle_parent_signals(int status, t_info *info)
 {
 	if (WIFEXITED(status))
 		update_status(info, WEXITSTATUS(status));
@@ -38,7 +38,7 @@ static void	handle_parent_signals(int status, t_info *info)
 	}
 }
 
-static void	exec_child_process(t_info *info)
+void	exec_child_process(t_info *info)
 {
 	handle_child_signals();
 	if (info->io->heredoc_fd != -1)
@@ -63,11 +63,25 @@ static void	exec_child_process(t_info *info)
 	exit(1);
 }
 
-void	child_process(t_info *info)
+void	execute_and_wait(t_info *info)
 {
 	pid_t	pid;
 	int		status;
 
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0)
+		exec_child_process(info);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, &status, 0);
+	set_signals_interactive();
+	restore_io(info->io);
+	handle_parent_signals(status, info);
+}
+
+void	child_process(t_info *info)
+{
 	if (!info)
 		return ;
 	info->exit_status = 0;
@@ -92,44 +106,5 @@ void	child_process(t_info *info)
 	close_io_fds(info->io);
 	if (!check_operators(info) || !check_builtins(info))
 		return (restore_io(info->io), (void)0);
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0)
-		exec_child_process(info);
-	signal(SIGINT, SIG_IGN);
-	waitpid(pid, &status, 0);
-	set_signals_interactive();
-	restore_io(info->io);
-	handle_parent_signals(status, info);
-}
-
-void	exec(t_info *info, t_tree *node)
-{
-	char	*path;
-
-	if (!info)
-		return ;
-    restore_io(info->io);
-	path = find_path(info, node->args[0]);
-	if (!path)
-	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
-		close_fds(0);
-		exit(127);
-	}
-	if (execve(path, node->args, info->my_env) == -1)
-	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
-		free(path);
-		exit(126);
-	}
+	execute_and_wait(info);
 }
