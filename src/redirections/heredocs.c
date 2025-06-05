@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/05 22:22:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 22:33:25 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	int		fd[2];
 	pid_t	pid;
 	int		status;
+	char 	*temp;
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
@@ -39,13 +40,13 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 				free(line);
 				break ;
 			}
-			char *teste = handle_dollar(line, info);
-			if (!teste)
+			temp = handle_dollar(line, info);
+			if (!temp)
 				ft_strdup("");
-			write(fd[1], teste, ft_strlen(teste));
+			write(fd[1], temp, ft_strlen(temp));
 			write(fd[1], "\n", 1);
 			free(line);
-			free(teste);
+			free(temp);
 		}
 		close(fd[1]);
 		exit(0);
