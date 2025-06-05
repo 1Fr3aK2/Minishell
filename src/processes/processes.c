@@ -14,8 +14,10 @@
 
 static void	handle_child_signals(void)
 {
+    signal(SIGPIPE, SIG_DFL);
 	signal(SIGINT, SIG_DFL);
 	signal(SIGQUIT, SIG_DFL);
+
 }
 
 static void	handle_parent_signals(int status, t_info *info)

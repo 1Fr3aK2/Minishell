@@ -49,6 +49,7 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(in, STDIN_FILENO);
 		close(in);
 	}
+    signal(SIGPIPE, SIG_DFL);
 	exec_command(info, node);
 	exit(1);
 }

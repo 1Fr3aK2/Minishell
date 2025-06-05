@@ -64,3 +64,5 @@ dsteiger@pc-Duarte:/mnt/c/Users/Admin/Desktop/VSCODE/Shellinho$ cat << eof
 > eof
 echo ola
 echo /home/dsteiger
+
+sort < t.txt | pwd | ls
