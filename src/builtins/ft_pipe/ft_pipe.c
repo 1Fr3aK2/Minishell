@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 20:58:51 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 21:30:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 {
 	int		fd[2];
 	pid_t	pid;
+	int		has_heredoc;
 
+	has_heredoc = node->right && node->right->io
+		&& node->right->io->heredoc_fd != -1;
 	if (pipe(fd) == -1)
 		return (ft_putstr_fd("Pipe error\n", 2), -1);
 	pid = fork();
@@ -74,7 +77,13 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	if (in != -1)
 		close(in);
 	close(fd[1]);
-	*out = fd[0];
+	if (has_heredoc)
+	{
+		close(fd[0]);
+		*out = -1;
+	}
+	else
+		*out = fd[0];
 	return (pid);
 }
 
