@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tree.c                                             :+:      :+:    :+:   */
+/*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:18:15 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 03:05:43 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	check_missing_redir_target(char **tokens, t_info *info)
 			if (!tokens[i + 1] || ft_strncmp(tokens[i + 1], ">", 2) == 0
 				|| ft_strncmp(tokens[i + 1], ">>", 3) == 0
 				|| ft_strncmp(tokens[i + 1], "<", 2) == 0 || ft_strncmp(tokens[i
-					+ 1], "<<", 3) == 0)
+						+ 1], "<<", 3) == 0)
 				return (print_redir_syntax_error(tokens[i + 1], info), 1);
 		}
 		i++;

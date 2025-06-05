@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 18:17:52 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/05 03:06:46 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,11 @@ int	check_builtins(t_info *info)
 {
 	char	*cmd;
 	int		i;
-    int		saved_in = -1;
-	int		saved_out = -1;
+	int		saved_in;
+	int		saved_out;
 
+	saved_in = -1;
+	saved_out = -1;
 	cmd = info->cmd_tree->args[0];
 	i = 0;
 	while (info->builtins->builtins[i])
@@ -63,10 +65,10 @@ int	check_builtins(t_info *info)
 			&& ft_strlen(cmd) == ft_strlen(info->builtins->builtins[i]))
 		{
 			if (apply_redirections(info, &saved_in, &saved_out) == -1)
-				return (0); 
+				return (0);
 			if (info->builtins->f[i])
 				info->builtins->f[i](info);
-            restore_redirections(saved_in, saved_out);
+			restore_redirections(saved_in, saved_out);
 			return (0);
 		}
 		i++;
