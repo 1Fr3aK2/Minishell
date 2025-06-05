@@ -111,6 +111,7 @@ void	exec(t_info *info, t_tree *node)
 
 	if (!info)
 		return ;
+    restore_io(info->io);
 	path = find_path(info, node->args[0]);
 	if (!path)
 	{
