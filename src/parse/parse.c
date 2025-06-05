@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:58:04 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:45:27 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,6 @@ static void	reset_info(t_info *info)
 		free_tree(info->cmd_tree);
 		info->cmd_tree = NULL;
 	}
-	if (info->flags)
-	{
-		free(info->flags);
-		info->flags = NULL;
-	}
 }
 
 void	parse(char *input, t_info *info)
@@ -82,7 +77,5 @@ void	parse(char *input, t_info *info)
 	info->cmd_tree = build_tree_tokens(tokens, info);
 	if (!info->cmd_tree)
 		return (free_arr(tokens));
-	if (info->cmd_tree->args && info->cmd_tree->args[1])
-		info->flags = ft_strdup(info->cmd_tree->args[1]);
 	free_arr(tokens);
 }

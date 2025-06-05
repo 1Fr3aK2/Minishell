@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:17:38 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 19:45:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ void	init(t_info *info)
 	info->error_msg = false;
 	info->exit_status = 0;
 	info->cmd_tree = NULL;
-	info->flags = NULL;
 	info->export_env = NULL;
 	if (alloc_struct(info) == -1)
 		return ;

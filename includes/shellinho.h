@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/05 03:36:01 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 19:45:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ typedef struct s_info
 {
 	bool				error_msg;
 	unsigned int		exit_status;
-	char				*flags;
 	char				**my_env;
 	char				**export_env;
 	t_builtins			*builtins;
