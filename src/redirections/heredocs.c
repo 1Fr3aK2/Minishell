@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/05 17:52:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 22:22:20 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,13 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 				free(line);
 				break ;
 			}
-			line = handle_dollar(line, info);
-			if (!line)
+			char *teste = handle_dollar(line, info);
+			if (!teste)
 				ft_strdup("");
-			write(fd[1], line, ft_strlen(line));
+			write(fd[1], teste, ft_strlen(teste));
 			write(fd[1], "\n", 1);
 			free(line);
+			free(teste);
 		}
 		close(fd[1]);
 		exit(0);
