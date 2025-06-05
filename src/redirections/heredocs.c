@@ -19,37 +19,17 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 	pid_t	pid;
 	int		status;
 
-	if (!io || !io->file)
-	{
-		printf("Debug: io or io->file is NULL\n");
+	if (!io || !io->file || pipe(fd) == -1)
 		return ;
-	}
-	if (pipe(fd) == -1)
-	{
-		perror("pipe failed");
-		return ;
-	}
 	pid = fork();
 	if (pid < 0)
-	{
-		close(fd[0]);
-		close(fd[1]);
-		return ;
-	}
+		return (close_pipe_fds(fd), (void)0);
 	if (pid == 0)
 	{
 		signal(SIGINT, handle_sigint_heredoc);
 		close(fd[0]);
-		if (io->stdin_backup != -1)
-		{
-			close(io->stdin_backup);
-			io->stdin_backup = -1;
-		}
-		if (io->stdout_backup != -1)
-		{
-			close(io->stdout_backup);
-			io->stdout_backup = -1;
-		}
+		close_and_reset(&io->stdin_backup);
+		close_and_reset(&io->stdout_backup);
 		while (1)
 		{
 			line = readline("> ");
@@ -97,10 +77,7 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 		if (ft_strncmp(node->args[i], "<<", 2) == 0 && node->args[i][2] == '\0')
 		{
 			if (!node->args[i + 1])
-			{
-				info->exit_status = 2;
-				return (-1);
-			}
+				return (info->exit_status = 2, -1);
 			if (!node->io)
 			{
 				node->io = malloc(sizeof(t_io));

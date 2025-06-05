@@ -12,6 +12,15 @@
 
 #include "../../includes/shellinho.h"
 
+void	close_and_reset(int *fd)
+{
+	if (*fd != -1)
+	{
+		close(*fd);
+		*fd = -1;
+	}
+}
+
 void	storing_backup(t_io *io)
 {
 	io->stdin_backup = dup(STDIN_FILENO);
@@ -26,33 +35,19 @@ void	restore_io(t_io *io)
 {
 	if (!io)
 		return ;
-	if (io->heredoc_fd != -1)
-	{
-		close(io->heredoc_fd);
-		io->heredoc_fd = -1;
-	}
+	close_and_reset(&io->heredoc_fd);
 	if (io->stdin_backup != -1)
 	{
 		dup2(io->stdin_backup, STDIN_FILENO);
-		close(io->stdin_backup);
-		io->stdin_backup = -1;
+		close_and_reset(&io->stdin_backup);
 	}
 	if (io->stdout_backup != -1)
 	{
 		dup2(io->stdout_backup, STDOUT_FILENO);
-		close(io->stdout_backup);
-		io->stdout_backup = -1;
+		close_and_reset(&io->stdout_backup);
 	}
-	if (io->fd_in > 2)
-	{
-		close(io->fd_in);
-		io->fd_in = -1;
-	}
-	if (io->fd_out > 2)
-	{
-		close(io->fd_out);
-		io->fd_out = -1;
-	}
+	close_and_reset(&io->fd_in);
+	close_and_reset(&io->fd_out);
 	io->stdin_is_heredoc = 0;
 }
 

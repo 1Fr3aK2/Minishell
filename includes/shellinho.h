@@ -243,6 +243,7 @@ int						process_heredoc_args(t_tree *node, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
 
 // redirections/redir_utils.c
+void					close_and_reset(int *fd);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 void					handle_sigint_heredoc(int sig);
