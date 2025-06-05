@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 17:18:15 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 03:35:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,36 +120,26 @@ t_tree	*creat_op_node(char **tokens, int *index, t_info *info)
 t_tree	*create_node(char **tokens)
 {
 	t_tree	*node;
-	int		total;
-	int		i;
 
 	if (!tokens)
 		return (NULL);
-	total = 0;
-	i = -1;
-	while (tokens[total])
-		total++;
 	node = malloc(sizeof(t_tree));
 	if (!node)
 		return (NULL);
-	node->io = malloc(sizeof(t_io));
+	node->io = alloc_io();
 	if (!node->io)
 	{
 		free(node);
 		return (NULL);
 	}
-	init_io(node->io);
 	node->type = CMD;
-	node->args = malloc(sizeof(char *) * (total + 1));
+	node->args = dup_args(tokens);
 	if (!node->args)
 	{
 		free(node->io);
 		free(node);
 		return (NULL);
 	}
-	while (++i < total)
-		node->args[i] = ft_strdup(tokens[i]);
-	node->args[total] = NULL;
 	node->left = NULL;
 	node->right = NULL;
 	return (node);

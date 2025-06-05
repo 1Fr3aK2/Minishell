@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 18:54:28 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/06 17:32:00 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 03:36:15 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,14 @@ char	**new_input(char *input)
 	if (!new)
 		return (free_arr(new), NULL);
 	return (new);
+}
+
+t_io	*alloc_io(void)
+{
+	t_io	*io;
+
+	io = malloc(sizeof(t_io));
+	if (io)
+		init_io(io);
+	return (io);
 }

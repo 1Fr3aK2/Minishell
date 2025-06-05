@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/04 22:28:01 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 03:41:17 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,14 @@ void	wait_all(pid_t last_pid, t_info *info)
 	}
 }
 
+static void	close_exit(void)
+{
+	close_fds(0);
+	exit(0);
+}
+
 void	exec_command(t_info *info, t_tree *node)
 {
-	if (!info || !node)
-		exit(1);
 	info->cmd_tree = node;
 	if (check_redirections(info) == 0)
 		exit(0);
@@ -48,14 +52,11 @@ void	exec_command(t_info *info, t_tree *node)
 		if (check_operators(info) == 0)
 			exit(0);
 		if (check_builtins(info) == 0)
-		{
-			close_fds(0);
-			exit(0);
-		}
+			close_exit();
 		else
 		{
 			exec(info, node);
-			/* close_fds(0); */
+			close_fds(0);
 		}
 	}
 	else if (node->type == PIPE)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:52:23 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/19 13:46:30 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 03:35:42 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,26 @@ t_tree	*parse_tokens(char **tokens, t_info *info)
 	else
 		node = create_node(tokens);
 	return (node);
+}
+
+char	**dup_args(char **tokens)
+{
+	int		total;
+	char	**args;
+	int		i;
+
+	total = 0;
+	while (tokens[total])
+		total++;
+	args = malloc(sizeof(char *) * (total + 1));
+	if (!args)
+		return (NULL);
+	i = 0;
+	while (i < total)
+	{
+		args[i] = ft_strdup(tokens[i]);
+		i++;
+	}
+	args[total] = NULL;
+	return (args);
 }

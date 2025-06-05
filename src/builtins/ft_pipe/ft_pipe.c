@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 03:00:45 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 03:15:15 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(in, STDIN_FILENO);
 		close(in);
 	}
-	/* close_fds(0); */
 	exec_command(info, node);
 	exit(1);
 }
@@ -114,5 +113,5 @@ void	ft_pipe_wrapper(t_info *info)
 	if (info->exit_status == 130)
 		return ;
 	ft_pipe(info, info->cmd_tree);
-    close_heredoc_fds(info->cmd_tree);
+	close_heredoc_fds(info->cmd_tree);
 }

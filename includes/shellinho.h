@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/05 03:07:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 03:36:01 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -212,12 +212,13 @@ t_tree					*create_node(char **tokens);
 int						search_ops(char **tokens);
 t_node_type				find_type(char **tokens, int i);
 t_tree					*parse_tokens(char **tokens, t_info *info);
+char					**dup_args(char **tokens);
 
 // parse/parse_utils.c
-
 int						size_woutquotes(char *str);
 void					handle_quotes(char *str, char *new, int i, int *j);
 char					**new_input(char *input);
+t_io					*alloc_io(void);
 
 // parse/parse.c
 t_tree					*build_tree_tokens(char **tokens, t_info *info);
