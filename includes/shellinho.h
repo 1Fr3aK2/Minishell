@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/05 19:45:36 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:04:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
+void	handle_sigpipe(int sig);
 int						apply_redirections(t_info *info, int *saved_in,
 							int *saved_out);
 void					restore_redirections(int saved_in, int saved_out);

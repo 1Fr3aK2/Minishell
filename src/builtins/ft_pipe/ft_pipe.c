@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 22:18:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 00:05:35 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@ static void	close_heredoc_fds(t_tree *node)
 	}
 	close_heredoc_fds(node->left);
 	close_heredoc_fds(node->right);
+}
+
+void	handle_sigpipe(int sig)
+{
+	(void)sig;
+	close_fds(0);
+	// Termina silenciosamente, exit code 141 (128+13)
+	exit(141);
 }
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
@@ -49,6 +57,7 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(in, STDIN_FILENO);
 		close(in);
 	}
+	signal(SIGPIPE, handle_sigpipe);
 	exec_command_op(info, node);
 	exit(1);
 }
