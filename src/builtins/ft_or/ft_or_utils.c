@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_or_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 18:04:24 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/05 20:50:48 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ void	exec_command_op(t_info *info, t_tree *node)
 		handle_child_process(info, node);
 	waitpid(pid, &status, 0);
 	close_heredoc_fd(info);
+	close_fds(0);
 	handle_status(info, status);
 }

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 03:26:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 20:58:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	signal(SIGPIPE, SIG_IGN);
 	copy_env(&info.my_env, env);
 	change_shlvl(&info.my_env, "SHLVL");
 	init(&info);
