@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/04 22:26:48 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/05 03:00:45 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 		return (ft_putstr_fd("Pipe error\n", 2), -1);
 	pid = fork();
 	if (pid == -1)
+	{
+		close_pipe_fds(fd);
 		return (ft_putstr_fd("Fork error\n", 2), -1);
+	}
 	if (pid == 0)
 	{
 		close(fd[0]);
