@@ -6,7 +6,7 @@
 /*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 11:01:28 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/06 11:15:06 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	is_valid_redirection(const char *token, t_info *info)
 	i = 0;
 	while (info->redirections->reds[i])
 	{
-		if (ft_strncmp(token, info->redirections->reds[i], ft_strlen(token)) == 0)
+		if (ft_strncmp(token, info->redirections->reds[i],
+				ft_strlen(token)) == 0)
 			return (1);
 		i++;
 	}
