@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 00:05:35 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 11:10:39 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,10 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	if (pid == -1)
 		return (-1);
 	if (has_heredoc)
-		(close(fd[0]), *out = -1);
+	{
+		close(fd[0]);
+		*out = -1;
+	}
 	else
 		*out = fd[0];
 	return (pid);
