@@ -12,7 +12,7 @@
 
 #include "../../includes/shellinho.h"
 
-static void	setup_io_from_tree(t_info *info)
+/*static void	setup_io_from_tree(t_info *info)
 {
 	if (info->cmd_tree && info->cmd_tree->io)
 	{
@@ -74,4 +74,4 @@ void	child_process(t_info *info)
 	if (!pre_fork_setup(info))
 		return ;
 	run_fork_and_exec(info);
-}
+}*/
