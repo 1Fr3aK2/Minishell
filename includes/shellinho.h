@@ -241,16 +241,16 @@ char					*get_env(char *variable_name, char **env);
 char					*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs.c
-void					child_heredoc_writer(t_io *io, t_info *info,
-							int write_fd);
-int						parent_heredoc_handler(t_io *io, t_info *info,
-							int fd_read, int pid);
+void					handle_heredoc_child(t_io *io, t_info *info, int fd[2]);
+void					handle_heredoc_parent(t_io *io, t_info *info, int fd[2],
+							pid_t pid);
 void					handle_heredoc_redirection(t_io *io, t_info *info);
 int						process_heredoc_args(t_tree *node, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);
 
 // redirections/redir_utils.c
 void					close_and_reset(int *fd);
+void					close_heredoc_backups(t_io *io);
 void					storing_backup(t_io *io);
 void					restore_io(t_io *io);
 void					handle_sigint_heredoc(int sig);

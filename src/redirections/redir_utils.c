@@ -21,6 +21,12 @@ void	close_and_reset(int *fd)
 	}
 }
 
+void	close_heredoc_backups(t_io *io)
+{
+	close_and_reset(&io->stdin_backup);
+	close_and_reset(&io->stdout_backup);
+}
+
 void	storing_backup(t_io *io)
 {
 	io->stdin_backup = dup(STDIN_FILENO);
