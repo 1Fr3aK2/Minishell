@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   shellinho.h                                        :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/06 00:04:03 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:41:03 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SHELLINHO_H
-# define SHELLINHO_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "../libraries/libft/libft.h"
 # include <curses.h>

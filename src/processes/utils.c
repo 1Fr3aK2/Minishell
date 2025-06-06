@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:15 by raamorim          #+#    #+#             */
-/*   Updated: 2025/04/21 17:54:47 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 char	*get_env(char *variable_name, char **env)
 {

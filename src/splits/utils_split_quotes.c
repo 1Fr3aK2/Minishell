@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_split_quotes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 16:53:21 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 16:28:15 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 int	count_quotes(char *input)
 {

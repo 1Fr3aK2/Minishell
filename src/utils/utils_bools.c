@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bools.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:02 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/14 17:06:54 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 bool	is_quote(char c)
 {

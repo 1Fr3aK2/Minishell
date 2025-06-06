@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 03:35:03 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../../includes/minishell.h"
 
 static char	**sub_tokens(char **tokens, int start, int end)
 {

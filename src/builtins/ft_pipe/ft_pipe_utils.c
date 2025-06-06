@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/05 03:41:17 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../../includes/minishell.h"
 
 void	wait_all(pid_t last_pid, t_info *info)
 {

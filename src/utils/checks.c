@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/05 03:06:46 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 int	apply_redirections(t_info *info, int *saved_in, int *saved_out)
 {

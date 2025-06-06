@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/03 16:43:35 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:46:01 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 static int	ft_strisnum(char *str)
 {
@@ -96,5 +96,8 @@ void	ft_exit(t_info *info)
 	free_arr(info->export_env);
 	rl_clear_history();
 	close_fds(0);
+	free(info->io);
+	free(info->types);
+	free(info->redirections);
 	exit(info->exit_status);
 }

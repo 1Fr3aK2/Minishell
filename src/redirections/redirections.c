@@ -6,11 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 20:31:27 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 void	handle_output_redirection(t_io *io, t_info *info)
 {

@@ -6,11 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 10:44:38 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/shellinho.h"
+#include "../includes/minishell.h"
 
 static int	is_input_valid(char *input)
 {

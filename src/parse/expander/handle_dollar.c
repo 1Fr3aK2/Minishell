@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   handle_dollar.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/05/20 23:59:07 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../../includes/minishell.h"
 
 static char	*join_and_free(char *s1, char *s2)
 {

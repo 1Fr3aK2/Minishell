@@ -6,11 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 12:57:06 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 20:22:15 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 void	ft_and(t_info *info, t_tree *node)
 {

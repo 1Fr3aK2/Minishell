@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:28:54 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/09 01:32:58 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../../includes/minishell.h"
 
 bool	check_pos(char *str, char c)
 {

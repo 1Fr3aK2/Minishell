@@ -6,11 +6,11 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:01:35 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/05/20 20:26:39 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/shellinho.h"
+#include "../../includes/minishell.h"
 
 void	update_io_file(t_io *io, char *filename)
 {

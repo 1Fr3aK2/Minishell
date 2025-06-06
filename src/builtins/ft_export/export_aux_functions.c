@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export_aux_functions.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:23:13 by rafael            #+#    #+#             */
-/*   Updated: 2025/05/20 16:11:58 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../includes/shellinho.h"
+#include "../../../includes/minishell.h"
 
 void	handle_regular_assignment(t_info *info, char *arg)
 {

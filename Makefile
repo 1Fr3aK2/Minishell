@@ -41,7 +41,7 @@ SRCS =  src/main.c \
 		src/utils/utils_bools.c \
 		src/utils/utils.c \
 		
-NAME = shellinho
+NAME = minishell
 
 COMPRESS = ar rcs
 
@@ -88,8 +88,8 @@ $(LIBFT):
 	@echo "$(YELLOW)compiling LIBFT ...$(RESET)"
 	@$(MAKE) -C $(LIBFT_DIR) --no-print-directory
 
-v: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --track-fds=yes ./$(NAME)
+v: re
+	valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all --track-origins=yes --show-reachable=yes --suppressions=.readline.supp ./$(NAME)
 
 clean:
 	@echo "$(RED)cleaning objs ...$(RESET)"
