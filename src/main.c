@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:47:27 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ void	start(t_info *info)
 
 int	main(int argc, char **argv, char **env)
 {
-	t_info	info;
+	static t_info	info;
 
 	(void)argc;
 	(void)argv;
-	signal(SIGPIPE, SIG_IGN);
+	//signal(SIGPIPE, SIG_IGN);
 	copy_env(&info.my_env, env);
 	change_shlvl(&info.my_env, "SHLVL");
 	init(&info);

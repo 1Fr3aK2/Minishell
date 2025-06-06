@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/06 15:41:03 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:52:31 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,7 @@ void					ft_cd(t_info *info);
 
 // builtins/exit.c
 void					ft_exit(t_info *info);
+void					ft_exit2(t_info *info);
 
 // builtins/pwd.c
 void					ft_pwd(t_info *info);

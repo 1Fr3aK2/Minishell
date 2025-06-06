@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:01:35 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:48:02 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,13 @@ int	is_valid_append_token(const char *token)
 	return (count == 2);
 }
 
-void	handle_sigpipe(int sig)
+/* void	handle_sigpipe(int sig)
 {
 	(void)sig;
 	close_fds(0);
 	exit(141);
 }
-
+ */
 void	close_heredoc_fds(t_tree *node)
 {
 	if (!node)

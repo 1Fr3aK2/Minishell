@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/06 15:46:01 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:50:35 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,22 @@ void	ft_exit(t_info *info)
 		else
 			info->exit_status = exit_flags;
 	}
+	free_tree(info->cmd_tree);
+	free_builtins(info->builtins);
+	free_arr(info->my_env);
+	free_arr(info->export_env);
+	rl_clear_history();
+	close_fds(0);
+	free(info->io);
+	free(info->types);
+	free(info->redirections);
+	exit(info->exit_status);
+}
+
+void	ft_exit2(t_info *info)
+{
+	if (isatty(STDIN_FILENO))
+		ft_putstr_fd("exit\n", 1);
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);

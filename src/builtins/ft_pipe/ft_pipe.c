@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 15:47:38 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(in, STDIN_FILENO);
 		close(in);
 	}
-	signal(SIGPIPE, handle_sigpipe);
+	//signal(SIGPIPE, handle_sigpipe);
 	exec_command_op(info, node);
 	exit(1);
 }
