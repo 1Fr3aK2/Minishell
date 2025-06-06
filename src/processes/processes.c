@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:47:44 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:03:03 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,8 @@ void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
 	ft_putstr_fd(": command not found\n", 2);
-	free_arr(info->cmd_tree->args);
-	free_arr(info->my_env);
-	free_builtins(info->builtins);
-	close_fds(0);
-	exit(exit_code);
+	info->exit_status = exit_code;
+	ft_exit2(info);
 }
 
 void	exec(t_info *info, t_tree *node)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:47:38 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:04:41 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 	}
 	//signal(SIGPIPE, handle_sigpipe);
 	exec_command_op(info, node);
-	exit(1);
+	ft_exit2(info);
 }
 
 static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)

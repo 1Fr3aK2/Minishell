@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/06 15:50:35 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/06 16:12:29 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,16 +104,14 @@ void	ft_exit(t_info *info)
 
 void	ft_exit2(t_info *info)
 {
-	if (isatty(STDIN_FILENO))
-		ft_putstr_fd("exit\n", 1);
 	free_tree(info->cmd_tree);
 	free_builtins(info->builtins);
 	free_arr(info->my_env);
 	free_arr(info->export_env);
-	rl_clear_history();
-	close_fds(0);
 	free(info->io);
 	free(info->types);
 	free(info->redirections);
+	rl_clear_history();
+	close_fds(0);
 	exit(info->exit_status);
 }
