@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/05 03:05:43 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/06 11:01:28 by raamorim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_valid_redirection(const char *token, t_info *info)
 	i = 0;
 	while (info->redirections->reds[i])
 	{
-		if (strcmp(token, info->redirections->reds[i]) == 0)
+		if (ft_strncmp(token, info->redirections->reds[i], ft_strlen(token)) == 0)
 			return (1);
 		i++;
 	}
