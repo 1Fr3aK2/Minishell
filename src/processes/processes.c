@@ -63,6 +63,17 @@ void	exec_child_process(t_info *info)
 	exit(1);
 }
 
+static void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
+{
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	free_arr(info->cmd_tree->args);
+	free_arr(info->my_env);
+	free_builtins(info->builtins);
+	close_fds(0);
+	exit(exit_code);
+}
+
 void	exec(t_info *info, t_tree *node)
 {
 	char	*path;
@@ -72,22 +83,10 @@ void	exec(t_info *info, t_tree *node)
 	restore_io(info->io);
 	path = find_path(info, node->args[0]);
 	if (!path)
-	{
-		ft_putstr_fd(node->args[0], 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
-		close_fds(0);
-		exit(127);
-	}
+		handle_exec_failure(info, node->args[0], 127);
 	if (execve(path, node->args, info->my_env) == -1)
 	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
 		free(path);
-		exit(126);
+		handle_exec_failure(info, node->args[0], 126);
 	}
 }
