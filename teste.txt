@@ -68,3 +68,11 @@ echo /home/dsteiger
 sort < t.txt | pwd | ls
 
 o caso acima ainda lida com sigpipe
+
+dsteiger@pc-Duarte:/mnt/c/Users/Admin/Desktop/VSCODE/Shellinho$ ./shellinho
+shellinho$> cat << eof
+> eof
+shellinho$> eof
+eof: command not found
+free(): double free detected in tcache 2
+shellinho$>

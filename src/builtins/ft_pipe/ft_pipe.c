@@ -12,27 +12,6 @@
 
 #include "../../../includes/shellinho.h"
 
-static void	close_heredoc_fds(t_tree *node)
-{
-	if (!node)
-		return ;
-	if (node->io && node->io->heredoc_fd != -1)
-	{
-		close(node->io->heredoc_fd);
-		node->io->heredoc_fd = -1;
-	}
-	close_heredoc_fds(node->left);
-	close_heredoc_fds(node->right);
-}
-
-void	handle_sigpipe(int sig)
-{
-	(void)sig;
-	close_fds(0);
-	// Termina silenciosamente, exit code 141 (128+13)
-	exit(141);
-}
-
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	if (out != -1)
@@ -62,6 +41,24 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 	exit(1);
 }
 
+static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid == -1)
+		return (close_pipe_fds(fd), -1);
+	if (pid == 0)
+	{
+		close(fd[0]);
+		child_exec(info, node->left, in, fd[1]);
+	}
+	if (in != -1)
+		close(in);
+	close(fd[1]);
+	return (pid);
+}
+
 static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 {
 	int		fd[2];
@@ -72,25 +69,11 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 		&& node->right->io->heredoc_fd != -1;
 	if (pipe(fd) == -1)
 		return (ft_putstr_fd("Pipe error\n", 2), -1);
-	pid = fork();
+	pid = handle_pipe_fork(info, node, in, fd);
 	if (pid == -1)
-	{
-		close_pipe_fds(fd);
-		return (ft_putstr_fd("Fork error\n", 2), -1);
-	}
-	if (pid == 0)
-	{
-		close(fd[0]);
-		child_exec(info, node->left, in, fd[1]);
-	}
-	if (in != -1)
-		close(in);
-	close(fd[1]);
+		return (-1);
 	if (has_heredoc)
-	{
-		close(fd[0]);
-		*out = -1;
-	}
+		(close(fd[0]), *out = -1);
 	else
 		*out = fd[0];
 	return (pid);

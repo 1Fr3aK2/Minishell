@@ -12,64 +12,75 @@
 
 #include "../../includes/shellinho.h"
 
-void	handle_heredoc_redirection(t_io *io, t_info *info)
+static void	child_heredoc_writer(t_io *io, t_info *info, int write_fd)
 {
 	char	*line;
+	char	*temp;
+
+	signal(SIGINT, handle_sigint_heredoc);
+	close_and_reset(&io->stdin_backup);
+	close_and_reset(&io->stdout_backup);
+	while (1)
+	{
+		line = readline("> ");
+		if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
+				&& ft_strlen(line) == ft_strlen(io->file)))
+		{
+			free(line);
+			break ;
+		}
+		temp = handle_dollar(line, info);
+		if (!temp)
+			temp = ft_strdup("");
+		write(write_fd, temp, ft_strlen(temp));
+		write(write_fd, "\n", 1);
+		free(line);
+		free(temp);
+	}
+	close(write_fd);
+	exit(0);
+}
+
+static int	parent_heredoc_handler(t_io *io, t_info *info, int fd_read, int pid)
+{
+	int	status;
+
+	signal(SIGINT, SIG_IGN);
+	close(fd_read + 1);
+	waitpid(pid, &status, 0);
+	signal(SIGINT, handle_sigint);
+	if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
+	{
+		update_status(info, 130);
+		close(fd_read);
+		restore_io(io);
+		return (1);
+	}
+	if (io->fd_in != -1)
+		close(io->fd_in);
+	io->heredoc_fd = fd_read;
+	io->stdin_is_heredoc = 1;
+	return (0);
+}
+
+void	handle_heredoc_redirection(t_io *io, t_info *info)
+{
 	int		fd[2];
 	pid_t	pid;
-	int		status;
-	char 	*temp;
 
 	if (!io || !io->file || pipe(fd) == -1)
 		return ;
 	pid = fork();
 	if (pid < 0)
-		return (close_pipe_fds(fd), (void)0);
+	{
+		close_pipe_fds(fd);
+		return ;
+	}
 	if (pid == 0)
-	{
-		signal(SIGINT, handle_sigint_heredoc);
-		close(fd[0]);
-		close_and_reset(&io->stdin_backup);
-		close_and_reset(&io->stdout_backup);
-		while (1)
-		{
-			line = readline("> ");
-			if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
-					&& ft_strlen(line) == ft_strlen(io->file)))
-			{
-				free(line);
-				break ;
-			}
-			temp = handle_dollar(line, info);
-			if (!temp)
-				ft_strdup("");
-			write(fd[1], temp, ft_strlen(temp));
-			write(fd[1], "\n", 1);
-			free(line);
-			free(temp);
-		}
-		close(fd[1]);
-		exit(0);
-	}
+		child_heredoc_writer(io, info, fd[1]);
 	else
-	{
-		signal(SIGINT, SIG_IGN);
-		close(fd[1]);
-		waitpid(pid, &status, 0);
-		signal(SIGINT, handle_sigint);
-		if ((WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-			|| (WIFEXITED(status) && WEXITSTATUS(status) == 130))
-		{
-			update_status(info, 130);
-			close(fd[0]);
-			restore_io(io);
-			return ;
-		}
-		if (io->fd_in != -1)
-			close(io->fd_in);
-		io->heredoc_fd = fd[0];
-		io->stdin_is_heredoc = 1;
-	}
+		parent_heredoc_handler(io, info, fd[0], pid);
 }
 
 int	process_heredoc_args(t_tree *node, t_info *info)

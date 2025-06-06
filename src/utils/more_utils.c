@@ -55,3 +55,23 @@ int	is_valid_append_token(const char *token)
 		count++;
 	return (count == 2);
 }
+
+void	handle_sigpipe(int sig)
+{
+	(void)sig;
+	close_fds(0);
+	exit(141);
+}
+
+void	close_heredoc_fds(t_tree *node)
+{
+	if (!node)
+		return ;
+	if (node->io && node->io->heredoc_fd != -1)
+	{
+		close(node->io->heredoc_fd);
+		node->io->heredoc_fd = -1;
+	}
+	close_heredoc_fds(node->left);
+	close_heredoc_fds(node->right);
+}

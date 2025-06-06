@@ -108,10 +108,6 @@ typedef struct s_info
 	t_tree				*cmd_tree;
 }						t_info;
 
-void	handle_sigpipe(int sig);
-int						apply_redirections(t_info *info, int *saved_in,
-							int *saved_out);
-void					restore_redirections(int saved_in, int saved_out);
 // builtins/export/export_aux_functions.c
 void					handle_regular_assignment(t_info *info, char *arg);
 void					handle_plus_assignment(t_info *info, char *arg);
@@ -229,8 +225,13 @@ int						check_quotes(char *input);
 char					*remove_quotes(char *str);
 void					remove_all_quotes(char **tokens);
 
-// processes/processes.c
+// processes/main_process.c
 void					child_process(t_info *info);
+
+// processes/processes.c
+void					handle_child_signals(void);
+void					handle_parent_signals(int status, t_info *info);
+void					exec_child_process(t_info *info);
 void					exec(t_info *info, t_tree *node);
 
 // processes/utils.c
@@ -271,11 +272,12 @@ int						count_quotes(char *input);
 int						count_word(char *str);
 
 // utils/checks.c
+int						apply_redirections(t_info *info, int *saved_in,
+							int *saved_out);
+void					restore_redirections(int saved_in, int saved_out);
 int						check_builtins(t_info *info);
 int						check_operators(t_info *info);
 int						check_redirections(t_info *info);
-void					update_io_file(t_io *io, char *filename);
-void					remove_redir_tokens(char **args, int i);
 
 // utils/free.c
 void					free_arr(char **arr);
@@ -283,6 +285,13 @@ void					free_tree(t_tree *node);
 void					free_io_file(t_io *io);
 void					free_builtins(t_builtins *builtins);
 void					*free_str(char **dest, int i);
+
+// utils/more_utils.c
+void					update_io_file(t_io *io, char *filename);
+void					remove_redir_tokens(char **args, int i);
+int						is_valid_append_token(const char *token);
+void					handle_sigpipe(int sig);
+void					close_heredoc_fds(t_tree *node);
 
 // utils/utils_bools.c
 bool					is_quote(char c);
