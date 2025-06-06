@@ -232,6 +232,8 @@ void					child_process(t_info *info);
 void					handle_child_signals(void);
 void					handle_parent_signals(int status, t_info *info);
 void					exec_child_process(t_info *info);
+void					handle_exec_failure(t_info *info, char *cmd,
+							int exit_code);
 void					exec(t_info *info, t_tree *node);
 
 // processes/utils.c
@@ -239,6 +241,10 @@ char					*get_env(char *variable_name, char **env);
 char					*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs.c
+void					child_heredoc_writer(t_io *io, t_info *info,
+							int write_fd);
+int						parent_heredoc_handler(t_io *io, t_info *info,
+							int fd_read, int pid);
 void					handle_heredoc_redirection(t_io *io, t_info *info);
 int						process_heredoc_args(t_tree *node, t_info *info);
 void					prepare_heredocs(t_tree *node, t_info *info);

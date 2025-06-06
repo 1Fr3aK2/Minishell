@@ -63,45 +63,15 @@ void	exec_child_process(t_info *info)
 	exit(1);
 }
 
-void	child_process(t_info *info)
+void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
 {
-	pid_t	pid;
-	int		status;
-
-	if (!info)
-		return ;
-	info->exit_status = 0;
-	prepare_heredocs(info->cmd_tree, info);
-	if (info->exit_status == 130)
-		return (restore_io(info->io), (void)0);
-	storing_backup(info->io);
-	if (info->cmd_tree && info->cmd_tree->io)
-	{
-		if (info->io->heredoc_fd != -1)
-			close(info->io->heredoc_fd);
-		info->io->heredoc_fd = info->cmd_tree->io->heredoc_fd;
-		info->cmd_tree->io->heredoc_fd = -1;
-		info->io->stdin_is_heredoc = info->cmd_tree->io->stdin_is_heredoc;
-	}
-	check_redirections(info);
-	if (info->exit_status != 0)
-		return (restore_io(info->io), (void)0);
-	set_signals_noninteractive();
-	free_io_file(info->io);
-	info->io->file = NULL;
-	close_io_fds(info->io);
-	if (!check_operators(info) || !check_builtins(info))
-		return (restore_io(info->io), (void)0);
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0)
-		exec_child_process(info);
-	signal(SIGINT, SIG_IGN);
-	waitpid(pid, &status, 0);
-	set_signals_interactive();
-	restore_io(info->io);
-	handle_parent_signals(status, info);
+	ft_putstr_fd(cmd, 2);
+	ft_putstr_fd(": command not found\n", 2);
+	free_arr(info->cmd_tree->args);
+	free_arr(info->my_env);
+	free_builtins(info->builtins);
+	close_fds(0);
+	exit(exit_code);
 }
 
 void	exec(t_info *info, t_tree *node)
@@ -113,23 +83,10 @@ void	exec(t_info *info, t_tree *node)
 	restore_io(info->io);
 	path = find_path(info, node->args[0]);
 	if (!path)
-	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
-		close_fds(0);
-		exit(127);
-	}
+		handle_exec_failure(info, node->args[0], 127);
 	if (execve(path, node->args, info->my_env) == -1)
 	{
-		ft_putstr_fd(node->args[0], 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_arr(info->cmd_tree->args);
-		free_arr(info->my_env);
-		free_builtins(info->builtins);
 		free(path);
-		exit(126);
+		handle_exec_failure(info, node->args[0], 126);
 	}
 }
