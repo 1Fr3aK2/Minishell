@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:47:27 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:57:26 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	start(t_info *info)
 	while (1)
 	{
 		set_signals_interactive();
-		input = readline("shellinho$> ");
+		input = readline("Minishell$> ");
 		if (!input)
 			ft_exit(info);
 		if (!is_input_valid(input))
