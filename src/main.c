@@ -51,6 +51,11 @@ void	start(t_info *info)
 	{
 		set_signals_interactive();
 		input = readline("Minishell$> ");
+		if (g_sigint_received)
+		{
+			info->exit_status = 130;
+			g_sigint_received = 0;
+		}
 		if (!input)
 			ft_exit(info);
 		if (!is_input_valid(input))
@@ -77,7 +82,7 @@ int	main(int argc, char **argv, char **env)
 
 	(void)argc;
 	(void)argv;
-	//signal(SIGPIPE, SIG_IGN);
+	// signal(SIGPIPE, SIG_IGN);
 	copy_env(&info.my_env, env);
 	change_shlvl(&info.my_env, "SHLVL");
 	init(&info);

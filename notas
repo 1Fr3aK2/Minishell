@@ -1,0 +1,7 @@
+echo gay > teste | echo lesbian > teste
+echo gay >> teste | echo lesbian >> teste
+
+o resultado destes testes é aleatorio. No 1o, qq um pode ser escrito. No 2o, sao os 2 escritos mas a ordem varia.
+
+---------
+

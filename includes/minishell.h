@@ -45,38 +45,38 @@
 
 # define SPACES " \n\t\v\f\r"
 
-typedef struct s_info	t_info;
-typedef struct s_io		t_io;
+typedef struct s_info			t_info;
+typedef struct s_io				t_io;
 
 typedef struct s_types
 {
-	char				*types[MAX_TYPES];
-	void				(*f[MAX_TYPES])(t_info *info);
-}						t_types;
+	char						*types[MAX_TYPES];
+	void						(*f[MAX_TYPES])(t_info *info);
+}								t_types;
 
 typedef struct s_builtins
 {
-	char				*builtins[MAX_BUILTINS];
-	void				(*f[MAX_BUILTINS])(t_info *info);
-}						t_builtins;
+	char						*builtins[MAX_BUILTINS];
+	void						(*f[MAX_BUILTINS])(t_info *info);
+}								t_builtins;
 
 typedef struct s_reds
 {
-	char				*reds[MAX_REDS];
-	void				(*f[MAX_REDS])(t_io *io, t_info *info);
-}						t_reds;
+	char						*reds[MAX_REDS];
+	void						(*f[MAX_REDS])(t_io *io, t_info *info);
+}								t_reds;
 
 typedef struct s_io
 {
-	char				*file;
-	int					fd_in;
-	int					fd_out;
-	int					stdin_backup;
-	int					stdout_backup;
-	int					heredoc_fd;
-	int					stdin_is_heredoc;
-	t_reds				*redirections;
-}						t_io;
+	char						*file;
+	int							fd_in;
+	int							fd_out;
+	int							stdin_backup;
+	int							stdout_backup;
+	int							heredoc_fd;
+	int							stdin_is_heredoc;
+	t_reds						*redirections;
+}								t_io;
 
 typedef enum s_node_type
 {
@@ -84,236 +84,251 @@ typedef enum s_node_type
 	PIPE,
 	OR,
 	CMD
-}						t_node_type;
+}								t_node_type;
 
 typedef struct s_tree
 {
-	char				**args;
-	t_node_type			type;
-	t_io				*io;
-	struct s_tree		*left;
-	struct s_tree		*right;
-}						t_tree;
+	char						**args;
+	t_node_type					type;
+	t_io						*io;
+	struct s_tree				*left;
+	struct s_tree				*right;
+}								t_tree;
 
 typedef struct s_info
 {
-	bool				error_msg;
-	unsigned int		exit_status;
-	char				**my_env;
-	char				**export_env;
-	t_builtins			*builtins;
-	t_io				*io;
-	t_reds				*redirections;
-	t_types				*types;
-	t_tree				*cmd_tree;
-}						t_info;
+	bool						error_msg;
+	unsigned int				exit_status;
+	char						**my_env;
+	char						**export_env;
+	t_builtins					*builtins;
+	t_io						*io;
+	t_reds						*redirections;
+	t_types						*types;
+	t_tree						*cmd_tree;
+}								t_info;
+
+extern volatile sig_atomic_t	g_sigint_received;
 
 // builtins/export/export_aux_functions.c
-void					handle_regular_assignment(t_info *info, char *arg);
-void					handle_plus_assignment(t_info *info, char *arg);
-void					add_check(char ***arr, char *str);
+void							handle_regular_assignment(t_info *info,
+									char *arg);
+void							handle_plus_assignment(t_info *info, char *arg);
+void							add_check(char ***arr, char *str);
 
 // builtins/export.c
-void					add_to_env(char ***env, char *str);
-void					sort_env(char **args);
-char					**create_sorted_env_copy(char **args);
-void					ft_export(t_info *info);
+void							add_to_env(char ***env, char *str);
+void							sort_env(char **args);
+char							**create_sorted_env_copy(char **args);
+void							ft_export(t_info *info);
 
 // builtins/export/export_utils.c
-bool					check_equal_plus(char *str);
-bool					check_equal_sign(char *str);
-bool					check_plus_sign(char *str);
-bool					check_valid_input(char *str, int *exit);
-void					format_str(char **str);
+bool							check_equal_plus(char *str);
+bool							check_equal_sign(char *str);
+bool							check_plus_sign(char *str);
+bool							check_valid_input(char *str, int *exit);
+void							format_str(char **str);
 
 // builtins/export/export_utils_utils.c
-bool					check_pos(char *str, char c);
-int						find_index(char **arr, char *str);
-void					create_var(char ***env, char *str);
-bool					check_env(char ***env, char *str);
+bool							check_pos(char *str, char c);
+int								find_index(char **arr, char *str);
+void							create_var(char ***env, char *str);
+bool							check_env(char ***env, char *str);
 
 // builtins/echo.c
-int						check_flags(char *str);
-void					ft_echo(t_info *info);
+int								check_flags(char *str);
+void							ft_echo(t_info *info);
 
 // builtins/env.c
-void					ft_env(t_info *info);
+void							ft_env(t_info *info);
 
 // builtins/cd.c
-void					cd_with_arg(const char *path);
-int						count_levels(const char *arg);
-void					ft_cd_doispontos(t_info *info, int levels);
-void					ft_cd_home(t_info *info);
-void					ft_cd(t_info *info);
+void							cd_with_arg(const char *path);
+int								count_levels(const char *arg);
+void							ft_cd_doispontos(t_info *info, int levels);
+void							ft_cd_home(t_info *info);
+void							ft_cd(t_info *info);
 
 // builtins/exit.c
-void					ft_exit(t_info *info);
-void					ft_exit2(t_info *info);
+void							ft_exit(t_info *info);
+void							ft_exit2(t_info *info);
 
 // builtins/pwd.c
-void					ft_pwd(t_info *info);
+void							ft_pwd(t_info *info);
 
 // builtins/unset.c
-void					ft_unset(t_info *info);
+void							ft_unset(t_info *info);
 
 // builtins/ft_pipe/ft_pipe.c
-void					ft_pipe_wrapper(t_info *info);
-void					ft_pipe(t_info *info, t_tree *node);
+void							ft_pipe_wrapper(t_info *info);
+void							ft_pipe(t_info *info, t_tree *node);
 
 // builtins/ft_pipe/ft_pipe_utils.c
-void					wait_all(pid_t last_pid, t_info *info);
-void					exec_command(t_info *info, t_tree *node);
+void							wait_all(pid_t last_pid, t_info *info);
+void							exec_command(t_info *info, t_tree *node);
 
 // builtins/and.c
-void					ft_and(t_info *info, t_tree *node);
-void					ft_and_wrapper(t_info *info);
+void							ft_and(t_info *info, t_tree *node);
+void							ft_and_wrapper(t_info *info);
 
 // builtins/or.c
-void					ft_or(t_info *info, t_tree *node);
-void					ft_or_wrapper(t_info *info);
+void							ft_or(t_info *info, t_tree *node);
+void							ft_or_wrapper(t_info *info);
 
 // builtins/ft_or/ft_or_utils.c
-void					exec_command_op(t_info *info, t_tree *node);
+void							exec_command_op(t_info *info, t_tree *node);
 
 // parse/expander/handle_dollar.c
-char					*handle_dollar(char *str, t_info *info);
+char							*handle_dollar(char *str, t_info *info);
 
 // parse/expander/expander.c
-char					*expand(char *str);
-char					*translate(char *str, char **env, t_info *info);
-bool					check_translate(char *str);
+char							*expand(char *str);
+char							*translate(char *str, char **env, t_info *info);
+bool							check_translate(char *str);
 
 // parse/expander/utils_expander.c
-int						get_varname_len(char *str);
-char					*get_var_name(char *str, int *i);
-int						size_to_var(char *str);
+int								get_varname_len(char *str);
+char							*get_var_name(char *str, int *i);
+int								size_to_var(char *str);
 
 // parse/init/init.c
-void					copy_env(char ***my_env, char **env);
-void					init_io(t_io *io);
-void					init(t_info *info);
-void					update_status(t_info *info, unsigned int status);
+void							copy_env(char ***my_env, char **env);
+void							init_io(t_io *io);
+void							init(t_info *info);
+void							update_status(t_info *info,
+									unsigned int status);
 
 // parse/utils_init.c
-void					fill_all(t_info *info);
+void							fill_all(t_info *info);
 
 // parse/tree/syntax_tree.c
-int						is_valid_redirection(const char *token, t_info *info);
-int						has_invalid_redirection(char **tokens, t_info *info);
+int								is_valid_redirection(const char *token,
+									t_info *info);
+int								has_invalid_redirection(char **tokens,
+									t_info *info);
 
 // parse/tree/tree.c
-t_tree					*creat_op_node(char **tokens, int *index, t_info *info);
-t_tree					*create_node(char **tokens);
+t_tree							*creat_op_node(char **tokens, int *index,
+									t_info *info);
+t_tree							*create_node(char **tokens);
 
 // parse/utils_tree.c
-int						search_ops(char **tokens);
-t_node_type				find_type(char **tokens, int i);
-t_tree					*parse_tokens(char **tokens, t_info *info);
-char					**dup_args(char **tokens);
+int								search_ops(char **tokens);
+t_node_type						find_type(char **tokens, int i);
+t_tree							*parse_tokens(char **tokens, t_info *info);
+char							**dup_args(char **tokens);
 
 // parse/parse_utils.c
-int						size_woutquotes(char *str);
-void					handle_quotes(char *str, char *new, int i, int *j);
-char					**new_input(char *input);
-t_io					*alloc_io(void);
+int								size_woutquotes(char *str);
+void							handle_quotes(char *str, char *new, int i,
+									int *j);
+char							**new_input(char *input);
+t_io							*alloc_io(void);
 
 // parse/parse.c
-t_tree					*build_tree_tokens(char **tokens, t_info *info);
-void					parse(char *input, t_info *info);
+t_tree							*build_tree_tokens(char **tokens, t_info *info);
+void							parse(char *input, t_info *info);
 
 // parse/quotes.c
-int						check_quotes(char *input);
-char					*remove_quotes(char *str);
-void					remove_all_quotes(char **tokens);
+int								check_quotes(char *input);
+char							*remove_quotes(char *str);
+void							remove_all_quotes(char **tokens);
 
 // processes/main_process.c
-void					child_process(t_info *info);
+void							child_process(t_info *info);
 
 // processes/processes.c
-void					handle_child_signals(void);
-void					handle_parent_signals(int status, t_info *info);
-void					exec_child_process(t_info *info);
-void					handle_exec_failure(t_info *info, char *cmd,
-							int exit_code);
-void					exec(t_info *info, t_tree *node);
+void							handle_child_signals(void);
+void							handle_parent_signals(int status, t_info *info);
+void							exec_child_process(t_info *info);
+void							handle_exec_failure(t_info *info, char *cmd,
+									int exit_code);
+void							exec(t_info *info, t_tree *node);
 
 // processes/utils.c
-char					*get_env(char *variable_name, char **env);
-char					*find_path(t_info *info, char *cmd);
+char							*get_env(char *variable_name, char **env);
+char							*find_path(t_info *info, char *cmd);
 
 // redirections/heredocs.c
-void					handle_heredoc_child(t_io *io, t_info *info, int fd[2]);
-void					handle_heredoc_parent(t_io *io, t_info *info, int fd[2],
-							pid_t pid);
-void					handle_heredoc_redirection(t_io *io, t_info *info);
-int						process_heredoc_args(t_tree *node, t_info *info);
-void					prepare_heredocs(t_tree *node, t_info *info);
+void							handle_heredoc_child(t_io *io, t_info *info,
+									int fd[2]);
+void							handle_heredoc_parent(t_io *io, t_info *info,
+									int fd[2], pid_t pid);
+void							handle_heredoc_redirection(t_io *io,
+									t_info *info);
+int								process_heredoc_args(t_tree *node,
+									t_info *info);
+void							prepare_heredocs(t_tree *node, t_info *info);
 
 // redirections/redir_utils.c
-void					close_and_reset(int *fd);
-void					close_heredoc_backups(t_io *io);
-void					storing_backup(t_io *io);
-void					restore_io(t_io *io);
-void					handle_sigint_heredoc(int sig);
+void							close_and_reset(int *fd);
+void							close_heredoc_backups(t_io *io);
+void							storing_backup(t_io *io);
+void							restore_io(t_io *io);
+void							handle_sigint_heredoc(int sig);
 
 // redirections/redirections.c
-void					handle_output_redirection(t_io *io, t_info *info);
-void					handle_input_redirection(t_io *io, t_info *info);
-void					handle_append_redirection(t_io *io, t_info *info);
+void							handle_output_redirection(t_io *io,
+									t_info *info);
+void							handle_input_redirection(t_io *io,
+									t_info *info);
+void							handle_append_redirection(t_io *io,
+									t_info *info);
 
 // signals.c
-void					ignore_sigquit(void);
-void					handle_sigint(int sig);
-void					set_signals_interactive(void);
-void					print_newline(int signal);
-void					set_signals_noninteractive(void);
+void							ignore_sigquit(void);
+void							handle_sigint(int sig);
+void							set_signals_interactive(void);
+void							print_newline(int signal);
+void							set_signals_noninteractive(void);
 
 // splits/custom_split.c
-char					**custom_ft_split(char const *s);
+char							**custom_ft_split(char const *s);
 
 // splits/split_quotes.c
-char					**ft_split_quotes(char *s);
+char							**ft_split_quotes(char *s);
 
 // splits/utils_split_quotes.c
-int						count_quotes(char *input);
-int						count_word(char *str);
+int								count_quotes(char *input);
+int								count_word(char *str);
 
 // utils/checks.c
-int						apply_redirections(t_info *info, int *saved_in,
-							int *saved_out);
-void					restore_redirections(int saved_in, int saved_out);
-int						check_builtins(t_info *info);
-int						check_operators(t_info *info);
-int						check_redirections(t_info *info);
+int								apply_redirections(t_info *info, int *saved_in,
+									int *saved_out);
+void							restore_redirections(int saved_in,
+									int saved_out);
+int								check_builtins(t_info *info);
+int								check_operators(t_info *info);
+int								check_redirections(t_info *info);
 
 // utils/free.c
-void					free_arr(char **arr);
-void					free_tree(t_tree *node);
-void					free_io_file(t_io *io);
-void					free_builtins(t_builtins *builtins);
-void					*free_str(char **dest, int i);
+void							free_arr(char **arr);
+void							free_tree(t_tree *node);
+void							free_io_file(t_io *io);
+void							free_builtins(t_builtins *builtins);
+void							*free_str(char **dest, int i);
 
 // utils/more_utils.c
-void					update_io_file(t_io *io, char *filename);
-void					remove_redir_tokens(char **args, int i);
-int						is_valid_append_token(const char *token);
-void					handle_sigpipe(int sig);
-void					close_heredoc_fds(t_tree *node);
+void							update_io_file(t_io *io, char *filename);
+void							remove_redir_tokens(char **args, int i);
+int								is_valid_append_token(const char *token);
+void							handle_sigpipe(int sig);
+void							close_heredoc_fds(t_tree *node);
 
 // utils/utils_bools.c
-bool					is_quote(char c);
-int						is_operator(const char *str);
-int						is_operator_char(char c);
-int						is_double_operator(char *str);
+bool							is_quote(char c);
+int								is_operator(const char *str);
+int								is_operator_char(char c);
+int								is_double_operator(char *str);
 
 // utils.c
-void					close_io_fds(t_io *io);
-void					close_fds(int i);
-void					close_pipe_fds(int fd[2]);
-char					*reverse_strchr(char *str, int c);
-void					change_shlvl(char ***env, char *name);
+void							close_io_fds(t_io *io);
+void							close_fds(int i);
+void							close_pipe_fds(int fd[2]);
+char							*reverse_strchr(char *str, int c);
+void							change_shlvl(char ***env, char *name);
 
 // main.c
-void					start(t_info *info);
+void							start(t_info *info);
 
 #endif

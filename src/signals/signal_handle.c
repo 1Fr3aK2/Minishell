@@ -12,6 +12,8 @@
 
 #include "../../includes/minishell.h"
 
+volatile sig_atomic_t	g_sigint_received = 0;
+
 void	ignore_sigquit(void)
 {
 	struct sigaction	act;
@@ -24,6 +26,7 @@ void	ignore_sigquit(void)
 void	handle_sigint(int sig)
 {
 	(void)sig;
+	g_sigint_received = 1;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
