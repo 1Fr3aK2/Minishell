@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:57:12 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 20:01:00 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ static void child_exec(t_info *info, t_tree *node, int in, int out)
 		dup2(in, STDIN_FILENO);
 		close(in);
 	}
+	info->cmd_tree = node;
+	if (!check_redirections(info))
+		ft_exit2(info);
 	if (node->io && node->io->heredoc_fd != -1)
 	{
 		dup2(node->io->heredoc_fd, STDIN_FILENO);
