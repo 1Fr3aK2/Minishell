@@ -3,21 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pipe.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 16:04:41 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:52:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-static void	child_exec(t_info *info, t_tree *node, int in, int out)
+static void child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	if (out != -1)
 	{
 		dup2(out, STDOUT_FILENO);
 		close(out);
+	}
+	if (in != -1)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
 	}
 	if (node->io && node->io->heredoc_fd != -1)
 	{
@@ -25,27 +30,14 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		close(node->io->heredoc_fd);
 		node->io->heredoc_fd = -1;
 	}
-	else if (node->io && node->io->fd_in != -1)
-	{
-		dup2(node->io->fd_in, STDIN_FILENO);
-		close(node->io->fd_in);
-		node->io->fd_in = -1;
-	}
-	else if (in != -1)
-	{
-		dup2(in, STDIN_FILENO);
-		close(in);
-	}
-	//signal(SIGPIPE, handle_sigpipe);
-	exec_command_op(info, node);
+	if (node->type == CMD)
+    	exec_command_op(info, node);
 	ft_exit2(info);
 }
 
-static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
+static pid_t handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 {
-	pid_t	pid;
-
-	pid = fork();
+	pid_t pid = fork();
 	if (pid == -1)
 		return (close_pipe_fds(fd), -1);
 	if (pid == 0)
@@ -56,7 +48,7 @@ static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 	if (in != -1)
 		close(in);
 	close(fd[1]);
-	return (pid);
+	return pid;
 }
 
 static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
@@ -82,20 +74,19 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	return (pid);
 }
 
-void	ft_pipe(t_info *info, t_tree *node)
+void ft_pipe(t_info *info, t_tree *node)
 {
-	t_tree	*curr;
-	pid_t	pid;
-	int		in;
+	t_tree *curr;
+	pid_t pid;
+	int in;
 
-	curr = node;
-	pid = -1;
 	in = -1;
+	curr = node;
 	while (curr && curr->type == PIPE)
 	{
 		pid = create_pipe(info, curr, in, &in);
 		if (pid == -1)
-			return ;
+			return;
 		curr = curr->right;
 	}
 	if (curr)
@@ -106,7 +97,9 @@ void	ft_pipe(t_info *info, t_tree *node)
 	}
 	if (in != -1)
 		close(in);
+
 	wait_all(pid, info);
+	close_heredoc_fds(info->cmd_tree);
 }
 
 void	ft_pipe_wrapper(t_info *info)

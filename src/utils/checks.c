@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checks.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/16 16:59:57 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	restore_redirections(int saved_in, int saved_out)
 	}
 }
 
+
 int	check_builtins(t_info *info)
 {
 	char	*cmd;
@@ -76,6 +77,34 @@ int	check_builtins(t_info *info)
 	return (1);
 }
 
+/* int	check_builtins(t_info *info)
+{
+	char	*cmd = info->cmd_tree->args[0];
+
+	for (int i = 0; info->builtins->builtins[i]; i++)
+	{
+		if (ft_strncmp(cmd, info->builtins->builtins[i],
+				ft_strlen(info->builtins->builtins[i]) + 1) == 0)
+		{
+			int	saved_in = -1;
+			int	saved_out = -1;
+
+			if (apply_redirections(info, &saved_in, &saved_out) == -1)
+				return (0);
+
+			info->builtins->f[i](info);
+
+			restore_redirections(saved_in, saved_out);
+
+			return (0);
+		}
+	}
+	return (1);
+} */
+
+
+
+
 int	check_operators(t_info *info)
 {
 	char	*cmd;
@@ -101,6 +130,19 @@ int	check_operators(t_info *info)
 	}
 	return (1);
 }
+
+/* int	check_operators(t_info *info)
+{
+	char *cmd = info->cmd_tree->args[0];
+
+	for (int i = 0; info->types->types[i]; i++)
+	{
+		if (ft_strncmp(cmd, info->types->types[i], ft_strlen(cmd)) == 0)
+			return 1; // é operador
+	}
+	return 0;
+} */
+
 
 int	check_redirections(t_info *info)
 {

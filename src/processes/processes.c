@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   processes.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: raamorim <raamorim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 16:03:03 by raamorim         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:50:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,26 @@ void	exec_child_process(t_info *info)
 	exec(info, info->cmd_tree);
 	exit(1);
 }
+
+/* void	exec_child_process(t_info *info)
+{
+	handle_child_signals();
+
+	// Redireciona entrada
+	if (info->io->heredoc_fd != -1)
+		dup2(info->io->heredoc_fd, STDIN_FILENO);
+	else if (info->io->fd_in != -1)
+		dup2(info->io->fd_in, STDIN_FILENO);
+
+	// Redireciona saída
+	if (info->io->fd_out != -1)
+		dup2(info->io->fd_out, STDOUT_FILENO);
+
+	// Executa a árvore (comando simples, pipe, etc.)
+	exec(info, info->cmd_tree);
+	exit(1); // Se exec falhar
+} */
+
 
 void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
 {

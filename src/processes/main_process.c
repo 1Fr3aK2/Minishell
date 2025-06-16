@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/16 18:50:49 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static int	pre_fork_setup(t_info *info)
 	return (1);
 }
 
-static void	run_fork_and_exec(t_info *info)
+/* static void	run_fork_and_exec(t_info *info)
 {
 	pid_t	pid;
 	int		status;
@@ -64,14 +64,56 @@ static void	run_fork_and_exec(t_info *info)
 	set_signals_interactive();
 	restore_io(info->io);
 	handle_parent_signals(status, info);
+} */
+
+static void	run_fork_and_exec(t_info *info)
+{
+	pid_t	pid;
+	int		status;
+
+	if (!check_builtins(info))
+	{
+		restore_io(info->io);
+		return;
+	}
+	pid = fork();
+	if (pid == -1)
+		return;
+	if (pid == 0)
+		exec_child_process(info);
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(pid, &status, 0);
+		set_signals_interactive();
+		restore_io(info->io);
+		handle_parent_signals(status, info);
+	}
 }
+
+
 
 void	child_process(t_info *info)
 {
-	if (!info)
+	if (!info || !info->cmd_tree)
 		return ;
+
 	info->exit_status = 0;
+
 	if (!pre_fork_setup(info))
 		return ;
-	run_fork_and_exec(info);
+
+	t_tree *node = info->cmd_tree;
+	if (node->type == CMD)
+		run_fork_and_exec(info);
+	else if (node->type == PIPE)
+		ft_pipe_wrapper(info);
+	else if (node->type == AND)
+		ft_and(info, node);
+	else if (node->type == OR)
+		ft_or(info, node);
+	else
+		info->exit_status = 127;
 }
+
+
