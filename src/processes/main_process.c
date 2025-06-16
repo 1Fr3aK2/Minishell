@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:50:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 19:04:54 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,28 +43,6 @@ static int	pre_fork_setup(t_info *info)
 	close_io_fds(info->io);
 	return (1);
 }
-
-/* static void	run_fork_and_exec(t_info *info)
-{
-	pid_t	pid;
-	int		status;
-
-	if (!check_operators(info) || !check_builtins(info))
-	{
-		restore_io(info->io);
-		return ;
-	}
-	pid = fork();
-	if (pid == -1)
-		return ;
-	if (pid == 0)
-		exec_child_process(info);
-	signal(SIGINT, SIG_IGN);
-	waitpid(pid, &status, 0);
-	set_signals_interactive();
-	restore_io(info->io);
-	handle_parent_signals(status, info);
-} */
 
 static void	run_fork_and_exec(t_info *info)
 {

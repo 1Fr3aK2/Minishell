@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:52:58 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 18:57:12 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,6 @@ void ft_pipe(t_info *info, t_tree *node)
 	}
 	if (in != -1)
 		close(in);
-
 	wait_all(pid, info);
 	close_heredoc_fds(info->cmd_tree);
 }

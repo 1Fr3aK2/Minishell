@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 18:40:45 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 19:02:01 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,8 @@ void exec_command_op(t_info *info, t_tree *node)
 		close_heredoc_fd(info);
 		close_fds(0);
 		exit(info->exit_status);
-	}
-	
-	exec(info, node);  // Só chega aqui se for CMD não-builtin
-
+	}	
+	exec(info, node);
 	close_heredoc_fd(info);
 	close_fds(0);
 	exit(info->exit_status);
