@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 19:04:54 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 20:06:19 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,14 @@ static void	run_fork_and_exec(t_info *info)
 
 void	child_process(t_info *info)
 {
+	t_tree *node;
+
 	if (!info || !info->cmd_tree)
 		return ;
-
 	info->exit_status = 0;
-
 	if (!pre_fork_setup(info))
 		return ;
-
-	t_tree *node = info->cmd_tree;
+	node = info->cmd_tree;
 	if (node->type == CMD)
 		run_fork_and_exec(info);
 	else if (node->type == PIPE)

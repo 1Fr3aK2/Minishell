@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 20:01:00 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/16 20:06:40 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ static void child_exec(t_info *info, t_tree *node, int in, int out)
 
 static pid_t handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 {
-	pid_t pid = fork();
+	pid_t pid;
+	
+	pid = fork();
 	if (pid == -1)
 		return (close_pipe_fds(fd), -1);
 	if (pid == 0)
@@ -85,6 +87,7 @@ void ft_pipe(t_info *info, t_tree *node)
 
 	in = -1;
 	curr = node;
+	pid = -1;
 	while (curr && curr->type == PIPE)
 	{
 		pid = create_pipe(info, curr, in, &in);
