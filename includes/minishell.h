@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/17 15:55:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:08:42 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ void							ft_pipe(t_info *info, t_tree *node);
 
 // builtins/ft_pipe/ft_pipe_utils.c
 void							wait_all(pid_t last_pid, t_info *info);
+void							dup_pipe_fds(int in, int out);
+void							handle_heredoc(t_tree *node);
 void							exec_command(t_info *info, t_tree *node);
 
 // builtins/and.c

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/16 19:04:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:08:52 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,30 @@ void	wait_all(pid_t last_pid, t_info *info)
 				update_status(info, 130);
 		}
 		wpid = wait(&status);
+	}
+}
+
+void	dup_pipe_fds(int in, int out)
+{
+	if (out != -1)
+	{
+		dup2(out, STDOUT_FILENO);
+		close(out);
+	}
+	if (in != -1)
+	{
+		dup2(in, STDIN_FILENO);
+		close(in);
+	}
+}
+
+void	handle_heredoc(t_tree *node)
+{
+	if (node->io && node->io->heredoc_fd != -1)
+	{
+		dup2(node->io->heredoc_fd, STDIN_FILENO);
+		close(node->io->heredoc_fd);
+		node->io->heredoc_fd = -1;
 	}
 }
 

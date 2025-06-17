@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 16:17:51 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/17 20:10:05 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,15 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
-	if (node->type == CMD && (!node->args || !node->args[0]))
-		exit(0);
-	if (out != -1)
-	{
-		dup2(out, STDOUT_FILENO);
-		close(out);
-	}
-	if (in != -1)
-	{
-		dup2(in, STDIN_FILENO);
-		close(in);
-	}
-	/* info->cmd_tree = node;
-	if (!check_redirections(info))
-		ft_exit2(info); */
-	if (node->io && node->io->heredoc_fd != -1)
-	{
-		dup2(node->io->heredoc_fd, STDIN_FILENO);
-		close(node->io->heredoc_fd);
-		node->io->heredoc_fd = -1;
-	}
+	t_tree	*old_cmd_tree;
+
+	old_cmd_tree = info->cmd_tree;
+	info->cmd_tree = node;
+	if (check_redirections(info) == 0)
+		ft_exit2(info);
+	info->cmd_tree = old_cmd_tree;
+	dup_pipe_fds(in, out);
+	handle_heredoc(node);
 	if (node->type == CMD)
 		exec_command_op(info, node);
 	ft_exit2(info);
