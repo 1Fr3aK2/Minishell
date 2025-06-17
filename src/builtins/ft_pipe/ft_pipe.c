@@ -12,8 +12,10 @@
 
 #include "../../../includes/minishell.h"
 
-static void child_exec(t_info *info, t_tree *node, int in, int out)
+static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
+	if (node->type == CMD && (!node->args || !node->args[0]))
+		exit(0) ;
 	if (out != -1)
 	{
 		dup2(out, STDOUT_FILENO);
@@ -34,14 +36,14 @@ static void child_exec(t_info *info, t_tree *node, int in, int out)
 		node->io->heredoc_fd = -1;
 	}
 	if (node->type == CMD)
-    	exec_command_op(info, node);
+		exec_command_op(info, node);
 	ft_exit2(info);
 }
 
-static pid_t handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
+static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 {
-	pid_t pid;
-	
+	pid_t	pid;
+
 	pid = fork();
 	if (pid == -1)
 		return (close_pipe_fds(fd), -1);
@@ -53,7 +55,7 @@ static pid_t handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 	if (in != -1)
 		close(in);
 	close(fd[1]);
-	return pid;
+	return (pid);
 }
 
 static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
@@ -79,11 +81,11 @@ static pid_t	create_pipe(t_info *info, t_tree *node, int in, int *out)
 	return (pid);
 }
 
-void ft_pipe(t_info *info, t_tree *node)
+void	ft_pipe(t_info *info, t_tree *node)
 {
-	t_tree *curr;
-	pid_t pid;
-	int in;
+	t_tree	*curr;
+	pid_t	pid;
+	int		in;
 
 	in = -1;
 	curr = node;
@@ -92,7 +94,7 @@ void ft_pipe(t_info *info, t_tree *node)
 	{
 		pid = create_pipe(info, curr, in, &in);
 		if (pid == -1)
-			return;
+			return ;
 		curr = curr->right;
 	}
 	if (curr)

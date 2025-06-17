@@ -52,11 +52,11 @@ static void	run_fork_and_exec(t_info *info)
 	if (!check_builtins(info))
 	{
 		restore_io(info->io);
-		return ;
+		return;
 	}
 	pid = fork();
 	if (pid == -1)
-		return ;
+		return;
 	if (pid == 0)
 		exec_child_process(info);
 	else
@@ -69,9 +69,11 @@ static void	run_fork_and_exec(t_info *info)
 	}
 }
 
+
+
 void	child_process(t_info *info)
 {
-	t_tree	*node;
+	t_tree *node;
 
 	if (!info || !info->cmd_tree)
 		return ;
@@ -79,8 +81,8 @@ void	child_process(t_info *info)
 	if (!pre_fork_setup(info))
 		return ;
 	node = info->cmd_tree;
-	if (node->type == CMD && (!node->args || !node->args[0]))
-		return ;
+    if (node->type == CMD && (!node->args || !node->args[0]))
+		return;
 	if (node->type == CMD)
 		run_fork_and_exec(info);
 	else if (node->type == PIPE)
