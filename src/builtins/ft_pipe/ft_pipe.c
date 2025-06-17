@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 20:06:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:52:36 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	if (node->type == CMD && (!node->args || !node->args[0]))
-		exit(0) ;
+		exit(0);
 	if (out != -1)
 	{
 		dup2(out, STDOUT_FILENO);

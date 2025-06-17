@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/16 19:02:01 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/17 15:53:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 	}
 	exec_command(info, node);
 } */
-
 static void	close_heredoc_fd(t_info *info)
 {
 	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
@@ -31,7 +30,7 @@ static void	close_heredoc_fd(t_info *info)
 		info->io->stdin_is_heredoc = 0;
 	}
 }
-/* 
+/*
 static void	handle_status(t_info *info, int status)
 {
 	int	sig;
@@ -51,17 +50,16 @@ static void	handle_status(t_info *info, int status)
 	}
 } */
 
-void exec_command_op(t_info *info, t_tree *node)
+void	exec_command_op(t_info *info, t_tree *node)
 {
 	if (check_builtins(info) == 0)
 	{
 		close_heredoc_fd(info);
 		close_fds(0);
 		exit(info->exit_status);
-	}	
+	}
 	exec(info, node);
 	close_heredoc_fd(info);
 	close_fds(0);
 	exit(info->exit_status);
 }
-

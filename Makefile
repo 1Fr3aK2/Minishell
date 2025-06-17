@@ -22,6 +22,7 @@ SRCS =  src/main.c \
 		src/parse/parse.c \
 		src/parse/parse_utils.c \
 		src/parse/quotes.c \
+		src/parse/utils_quotes.c \
 		src/parse/tree/syntax_tree.c \
 		src/parse/tree/tree.c \
 		src/parse/tree/utils_tree.c \

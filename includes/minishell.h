@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/06 15:52:31 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/17 15:55:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,10 @@ void							parse(char *input, t_info *info);
 int								check_quotes(char *input);
 char							*remove_quotes(char *str);
 void							remove_all_quotes(char **tokens);
+
+// parse/utils_quotes.c
+char							*add_spaces_around(char *str);
+void							add_space_operators(char **str);
 
 // processes/main_process.c
 void							child_process(t_info *info);

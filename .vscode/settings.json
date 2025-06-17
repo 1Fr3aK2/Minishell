@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "shellinho.h": "c"
+        "shellinho.h": "c",
+        "minishell.h": "c"
     }
 }
