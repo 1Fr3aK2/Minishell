@@ -143,7 +143,7 @@ void							ft_echo(t_info *info);
 void							ft_env(t_info *info);
 
 // builtins/cd.c
-void							cd_with_arg(const char *path);
+void							cd_with_arg(const char *path, t_info *info);
 int								count_levels(const char *arg);
 void							ft_cd_doispontos(t_info *info, int levels);
 void							ft_cd_home(t_info *info);

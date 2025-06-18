@@ -12,13 +12,13 @@
 
 #include "../../includes/minishell.h"
 
-void	cd_with_arg(const char *path)
+void	cd_with_arg(const char *path, t_info *info)
 {
 	char	current_dir[PATH_MAX];
 
 	if (!path)
 	{
-		ft_putstr_fd("Error: path is NULL\n", 2);
+		info->exit_status = 1;
 		return ;
 	}
 	if (chdir(path) == 0)
@@ -26,10 +26,19 @@ void	cd_with_arg(const char *path)
 		if (getcwd(current_dir, sizeof(current_dir)) != NULL)
 			;
 		else
+		{
 			ft_putstr_fd("Error: getcwd\n", 2);
+			info->exit_status = 1;
+		}
 	}
 	else
-		ft_putstr_fd("Error: chdir\n", 2);
+	{
+		ft_putstr_fd("cd: ", 2);
+		ft_putstr_fd(path, 2);
+		ft_putstr_fd(": ", 2);
+		perror("");
+		info->exit_status = 1;
+	}
 }
 
 int	count_levels(const char *arg)
@@ -111,6 +120,13 @@ void	ft_cd(t_info *info)
 	if (!info || !info->cmd_tree->args)
 	{
 		ft_putstr_fd("Error: Invalid info or args\n", 2);
+		info->exit_status = 1;
+		return ;
+	}
+	if (info->cmd_tree->args[2])
+	{
+		ft_putstr_fd("bash: cd: too many arguments\n", 2);
+		info->exit_status = 1;
 		return ;
 	}
 	if ((!info->cmd_tree->args[1] || ft_strncmp(info->cmd_tree->args[1], "~",
@@ -123,5 +139,5 @@ void	ft_cd(t_info *info)
 		ft_cd_doispontos(info, levels);
 	}
 	else if (info->cmd_tree->args[1])
-		cd_with_arg(info->cmd_tree->args[1]);
+		cd_with_arg(info->cmd_tree->args[1], info);
 }

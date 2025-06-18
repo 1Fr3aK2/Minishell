@@ -18,10 +18,10 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 
 	old_cmd_tree = info->cmd_tree;
 	info->cmd_tree = node;
+	dup_pipe_fds(in, out);
 	if (check_redirections(info) == 0)
 		ft_exit2(info);
 	info->cmd_tree = old_cmd_tree;
-	dup_pipe_fds(in, out);
 	handle_heredoc(node);
 	if (node->type == CMD)
 		exec_command_op(info, node);

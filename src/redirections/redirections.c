@@ -21,7 +21,7 @@ void	handle_output_redirection(t_io *io, t_info *info)
 	io->fd_out = open(io->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (io->fd_out == -1)
 	{
-		ft_putstr_fd("open failed in fd_out\n", 2);
+		perror(io->file);
 		info->exit_status = 1;
 	}
 }
@@ -35,7 +35,7 @@ void	handle_input_redirection(t_io *io, t_info *info)
 	io->fd_in = open(io->file, O_RDONLY);
 	if (io->fd_in == -1)
 	{
-		ft_putstr_fd("open failed in fd_in\n", 2);
+		perror(io->file);
 		info->exit_status = 1;
 	}
 }
@@ -49,7 +49,7 @@ void	handle_append_redirection(t_io *io, t_info *info)
 	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (io->fd_out == -1)
 	{
-		ft_putstr_fd("open failed in fd_out\n", 2);
+		perror(io->file);
 		info->exit_status = 1;
 	}
 }
