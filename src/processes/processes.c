@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 07:34:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 08:23:15 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	exec(t_info *info, t_tree *node)
 	if (!info)
 		return ;
 	restore_io(info->io);
+	if (node->args[0][0] == '\0')
+		handle_exec_failure(info, node->args[0], 0);
 	path = find_path(info, node->args[0]);
 	if (!path)
 		handle_exec_failure(info, node->args[0], 127);
