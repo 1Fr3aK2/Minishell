@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 15:57:02 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 07:29:21 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,10 @@ void	exec_child_process(t_info *info)
 void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
+	if (exit_code == 127)
+		ft_putstr_fd(": command not found\n", 2);
+	if (exit_code == 126)
+		ft_putstr_fd(": Is a directory\n", 2);
 	info->exit_status = exit_code;
 	ft_exit2(info);
 }
@@ -86,3 +89,4 @@ void	exec(t_info *info, t_tree *node)
 		handle_exec_failure(info, node->args[0], 126);
 	}
 }
+
