@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:08:28 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/18 16:42:50 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ bool	check_valid_input(char *str, int *exit)
 		|| check_pos(str, '?') || (ft_strchr(str, '+')
 			&& !check_plus_sign(str)))
 	{
-		ft_putstr_fd("shellinho: export: `", 2);
+		ft_putstr_fd("Minishell: export: `", 2);
 		ft_putstr_fd(str, 2);
 		ft_putendl_fd("': not a valid identifier", 2);
 		*exit = 1;

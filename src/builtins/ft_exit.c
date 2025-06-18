@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/18 03:20:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:42:40 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,13 @@ static int	validate_exit_args(t_info *info, char **args)
 {
 	if (args[2] && ft_strisnum(args[1]))
 	{
-		ft_putstr_fd("exit\nshellinho: exit: too many arguments\n", 2);
+		ft_putstr_fd("exit\nMinishell: exit: too many arguments\n", 2);
 		update_status(info, 1);
 		return (1);
 	}
 	if (!ft_strisnum(args[1]))
 	{
-		ft_putstr_fd("exit\nshellinho: exit: ", 2);
+		ft_putstr_fd("exit\nMinishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		update_status(info, 2);
