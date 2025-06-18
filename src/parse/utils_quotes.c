@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:54:18 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/17 15:55:46 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:34:20 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,36 @@ void	add_space_operators(char **str)
 		free(*str);
 		*str = temp;
 	}
+}
+
+int	count_non_empty(char **tokens)
+{
+	int	i;
+	int	count;
+
+	i = 0;
+	count = 0;
+	while (tokens[i])
+	{
+		if (tokens[i][0] != '\0')
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+void	copy_non_empty(char **src, char **dst)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	while (src[i])
+	{
+		if (src[i][0] != '\0')
+			dst[j++] = ft_strdup(src[i]);
+		i++;
+	}
+	dst[j] = NULL;
 }

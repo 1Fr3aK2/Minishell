@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/17 20:08:42 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:37:23 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ t_io							*alloc_io(void);
 
 // parse/parse.c
 t_tree							*build_tree_tokens(char **tokens, t_info *info);
+void							remove_empty_tokens(char ***tokens);
 void							parse(char *input, t_info *info);
 
 // parse/quotes.c
@@ -239,6 +240,8 @@ void							remove_all_quotes(char **tokens);
 // parse/utils_quotes.c
 char							*add_spaces_around(char *str);
 void							add_space_operators(char **str);
+int								count_non_empty(char **tokens);
+void							copy_non_empty(char **src, char **dst);
 
 // processes/main_process.c
 void							child_process(t_info *info);

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 07:37:03 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 16:37:32 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,22 @@ static void	reset_info(t_info *info)
 	}
 }
 
+void	remove_empty_tokens(char ***tokens)
+{
+	char	**new_tokens;
+	int		count;
+
+	if (!tokens || !*tokens)
+		return ;
+	count = count_non_empty(*tokens);
+	new_tokens = malloc(sizeof(char *) * (count + 1));
+	if (!new_tokens)
+		return ;
+	copy_non_empty(*tokens, new_tokens);
+	free_arr(*tokens);
+	*tokens = new_tokens;
+}
+
 void	parse(char *input, t_info *info)
 {
 	char	**tokens;
@@ -73,6 +89,7 @@ void	parse(char *input, t_info *info)
 	{
 		check_dollar(tokens, info);
 		remove_all_quotes(tokens);
+		remove_empty_tokens(&tokens);
 	}
 	info->cmd_tree = build_tree_tokens(tokens, info);
 	if (!info->cmd_tree)
