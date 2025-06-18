@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:15 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 07:26:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 07:35:22 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,6 @@ static char	*check_paths(char **paths, char *cmd)
 	free_arr(paths);
 	return (NULL);
 }
-
-// find_path.c
 
 char	*find_path(t_info *info, char *cmd)
 {
