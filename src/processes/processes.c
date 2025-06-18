@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 08:23:15 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 08:28:29 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,3 @@ void	exec(t_info *info, t_tree *node)
 		handle_exec_failure(info, node->args[0], 126);
 	}
 }
-

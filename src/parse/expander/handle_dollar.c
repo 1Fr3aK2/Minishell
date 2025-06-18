@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 08:24:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 08:31:08 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static int	process_variable(char *str, char **new, int i, t_info *info)
 	return (i + len);
 }
 
-
 static int	handle_loop(char *str, char **new, int *i, t_info *info)
 {
 	char	*temp;
@@ -74,11 +73,26 @@ static int	handle_loop(char *str, char **new, int *i, t_info *info)
 	return (0);
 }
 
+static int	handle_dollar_loop(char *str, char **new, int *i, t_info *info)
+{
+	int	j;
+
+	if (str[*i] == '$')
+	{
+		j = process_variable(str, new, *i, info);
+		if (j <= 0)
+			return (-1);
+		*i = j;
+	}
+	else if (handle_loop(str, new, i, info) == -1)
+		return (-1);
+	return (0);
+}
+
 char	*handle_dollar(char *str, t_info *info)
 {
 	char	*new;
 	int		i;
-	int		j;
 
 	if (!check_translate(str))
 		return (ft_strdup(str));
@@ -88,21 +102,8 @@ char	*handle_dollar(char *str, t_info *info)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
-		{
-			j = process_variable(str, &new, i, info);
-			if (j == -1)
-				return (free(new), NULL);
-			if (j == 0) // variável vazia -> liberamos new e retornamos NULL
-				return (free(new), NULL);
-			i = j;
-		}
-		else
-		{
-			if (handle_loop(str, &new, &i, info) == -1)
-				return (free(new), NULL);
-		}
+		if (handle_dollar_loop(str, &new, &i, info) == -1)
+			return (free(new), NULL);
 	}
 	return (new);
 }
-
