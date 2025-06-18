@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_tree.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/18 03:08:44 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	check_missing_redir_target(char **tokens, t_info *info)
 			if (!tokens[i + 1] || ft_strncmp(tokens[i + 1], ">", 2) == 0
 				|| ft_strncmp(tokens[i + 1], ">>", 3) == 0
 				|| ft_strncmp(tokens[i + 1], "<", 2) == 0 || ft_strncmp(tokens[i
-						+ 1], "<<", 3) == 0)
+					+ 1], "<<", 3) == 0)
 				return (print_redir_syntax_error(tokens[i + 1], info), 1);
 		}
 		i++;
@@ -62,23 +62,26 @@ static int	check_missing_redir_target(char **tokens, t_info *info)
 
 static int	check_invalid_redir_length(char **tokens, t_info *info)
 {
-	int	i;
-	int	len;
+	int		i;
+	char	*token;
 
 	i = 0;
 	while (tokens && tokens[i])
 	{
-		if (tokens[i][0] == '<' || tokens[i][0] == '>')
+		token = tokens[i];
+		if (token[i] == '\x01')
+			token++;
+		if (ft_strncmp(token, "<", 2) == 0 || ft_strncmp(token, ">", 2) == 0
+			|| ft_strncmp(token, ">>", 3) == 0 || ft_strncmp(token, "<<",
+				3) == 0)
 		{
-			len = ft_strlen(tokens[i]);
-			if (len > 2)
+			if (ft_strlen(token) > 3)
 			{
 				ft_putstr_fd("Shellinho: syntax error near unexpected token `",
 					2);
 				ft_putstr_fd(tokens[i], 2);
 				ft_putstr_fd("'\n", 2);
-				info->exit_status = 2;
-				return (1);
+				return (update_status(info, 2), 1);
 			}
 		}
 		i++;
