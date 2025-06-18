@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 03:11:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 03:51:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,16 +69,14 @@ static int	check_invalid_redir_length(char **tokens, t_info *info)
 	while (tokens && tokens[i])
 	{
 		token = tokens[i];
-		if (token[i] == '\x01')
+		if (token[0] == '\x01') // Corrigido!
 			token++;
 		if (ft_strncmp(token, "<", 2) == 0 || ft_strncmp(token, ">", 2) == 0
-			|| ft_strncmp(token, ">>", 3) == 0 || ft_strncmp(token, "<<",
-				3) == 0)
+			|| ft_strncmp(token, ">>", 3) == 0 || ft_strncmp(token, "<<", 3) == 0)
 		{
 			if (ft_strlen(token) > 3)
 			{
-				ft_putstr_fd("Shellinho: syntax error near unexpected token `",
-					2);
+				ft_putstr_fd("Shellinho: syntax error near unexpected token `", 2);
 				ft_putstr_fd(tokens[i], 2);
 				ft_putstr_fd("'\n", 2);
 				return (update_status(info, 2), 1);
@@ -88,6 +86,7 @@ static int	check_invalid_redir_length(char **tokens, t_info *info)
 	}
 	return (0);
 }
+
 
 int	has_invalid_redirection(char **tokens, t_info *info)
 {
