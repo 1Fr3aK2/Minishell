@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 20:10:05 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:21:19 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 	handle_heredoc(node);
 	if (node->type == CMD)
 		exec_command_op(info, node);
+	else
+		exec_command(info, node);
 	ft_exit2(info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/18 16:42:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/18 17:44:14 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static int	parse_exit_args(t_info *info, int *exit_flags)
 			{
 				if (validate_exit_args(info, info->cmd_tree->args))
 					return (0);
-				*exit_flags = ft_atoi(info->cmd_tree->args[1]);
+				*exit_flags = ft_atol(info->cmd_tree->args[1]);
 			}
 			return (1);
 		}

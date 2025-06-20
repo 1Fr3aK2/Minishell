@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/17 20:08:52 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:36:27 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,33 @@ void	dup_pipe_fds(int in, int out)
 {
 	if (out != -1)
 	{
-		dup2(out, STDOUT_FILENO);
+		if (dup2(out, STDOUT_FILENO) == -1)
+		{
+			perror("dup2 stdout");
+			exit(1);
+		}
 		close(out);
 	}
 	if (in != -1)
 	{
-		dup2(in, STDIN_FILENO);
+		if (dup2(in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 stdin");
+			exit(1);
+		}
 		close(in);
 	}
 }
 
 void	handle_heredoc(t_tree *node)
 {
-	if (node->io && node->io->heredoc_fd != -1)
+	if (node && node->io && node->io->heredoc_fd != -1)
 	{
-		dup2(node->io->heredoc_fd, STDIN_FILENO);
+		if (dup2(node->io->heredoc_fd, STDIN_FILENO) == -1)
+		{
+			perror("dup2 heredoc");
+			exit(1);
+		}
 		close(node->io->heredoc_fd);
 		node->io->heredoc_fd = -1;
 	}
@@ -70,6 +82,4 @@ void	exec_command(t_info *info, t_tree *node)
 		ft_or(info, node);
 	else
 		exit(127);
-	close_fds(0);
-	exit(info->exit_status);
 }

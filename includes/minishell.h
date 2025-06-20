@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/18 16:37:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/20 16:16:21 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ int								is_double_operator(char *str);
 // utils.c
 void							close_io_fds(t_io *io);
 void							close_fds(int i);
-void							close_pipe_fds(int fd[2]);
+void	close_pipe_fds(int *fd);
 char							*reverse_strchr(char *str, int c);
 void							change_shlvl(char ***env, char *name);
 
