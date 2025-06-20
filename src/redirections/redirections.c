@@ -12,10 +12,10 @@
 
 #include "../../includes/minishell.h"
 
-void	handle_output_redirection(t_io *io, t_info *info)
+int	handle_output_redirection(t_io *io, t_info *info)
 {
 	if (!io || !io->file)
-		return ;
+		return (0);
 	if (io->fd_out > 2)
 		close(io->fd_out);
 	io->fd_out = open(io->file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
@@ -23,13 +23,15 @@ void	handle_output_redirection(t_io *io, t_info *info)
 	{
 		perror(io->file);
 		info->exit_status = 1;
+		return (-1);
 	}
+	return (0);
 }
 
-void	handle_input_redirection(t_io *io, t_info *info)
+int	handle_input_redirection(t_io *io, t_info *info)
 {
 	if (!io || !io->file)
-		return ;
+		return (0);
 	if (io->fd_in > 2)
 		close(io->fd_in);
 	io->fd_in = open(io->file, O_RDONLY);
@@ -37,13 +39,15 @@ void	handle_input_redirection(t_io *io, t_info *info)
 	{
 		perror(io->file);
 		info->exit_status = 1;
+		return (-1);
 	}
+	return (0);
 }
 
-void	handle_append_redirection(t_io *io, t_info *info)
+int	handle_append_redirection(t_io *io, t_info *info)
 {
 	if (!io || !io->file)
-		return ;
+		return (0);
 	if (io->fd_out > 2)
 		close(io->fd_out);
 	io->fd_out = open(io->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
@@ -51,5 +55,7 @@ void	handle_append_redirection(t_io *io, t_info *info)
 	{
 		perror(io->file);
 		info->exit_status = 1;
+		return (-1);
 	}
+	return (0);
 }

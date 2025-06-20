@@ -106,6 +106,7 @@ int	check_redirections(t_info *info)
 {
 	int	i;
 	int	j;
+	int	ret;
 
 	i = 0;
 	while (info->cmd_tree->args && info->cmd_tree->args[i])
@@ -119,7 +120,9 @@ int	check_redirections(t_info *info)
 				if (!info->cmd_tree->args[i + 1])
 					return (1);
 				update_io_file(info->io, info->cmd_tree->args[i + 1]);
-				info->redirections->f[j](info->io, info);
+				ret = info->redirections->f[j](info->io, info);
+				if (ret < 0)
+					return (-1);
 				remove_redir_tokens(info->cmd_tree->args, i);
 				j = -1;
 			}

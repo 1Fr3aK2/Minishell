@@ -63,7 +63,7 @@ typedef struct s_builtins
 typedef struct s_reds
 {
 	char						*reds[MAX_REDS];
-	void						(*f[MAX_REDS])(t_io *io, t_info *info);
+	int							(*f[MAX_REDS])(t_io *io, t_info *info);
 }								t_reds;
 
 typedef struct s_io
@@ -277,11 +277,11 @@ void							restore_io(t_io *io);
 void							handle_sigint_heredoc(int sig);
 
 // redirections/redirections.c
-void							handle_output_redirection(t_io *io,
+int								handle_output_redirection(t_io *io,
 									t_info *info);
-void							handle_input_redirection(t_io *io,
+int								handle_input_redirection(t_io *io,
 									t_info *info);
-void							handle_append_redirection(t_io *io,
+int								handle_append_redirection(t_io *io,
 									t_info *info);
 
 // signals.c

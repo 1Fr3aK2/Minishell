@@ -29,7 +29,7 @@ int	is_valid_redirection(const char *token, t_info *info)
 
 static void	print_redir_syntax_error(char *token, t_info *info)
 {
-	ft_putstr_fd("Shellinho: syntax error near unexpected token `", 2);
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
 	if (token)
 		ft_putstr_fd(token, 2);
 	else
@@ -77,7 +77,7 @@ static int	check_invalid_redir_length(char **tokens, t_info *info)
 		{
 			if (ft_strlen(token) > 3)
 			{
-				ft_putstr_fd("Shellinho: syntax error near unexpected token `",
+				ft_putstr_fd("minishell: syntax error near unexpected token `",
 					2);
 				ft_putstr_fd(tokens[i], 2);
 				ft_putstr_fd("'\n", 2);

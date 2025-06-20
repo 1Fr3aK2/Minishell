@@ -36,7 +36,7 @@ static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 {
 	if (info->error_msg == false)
 	{
-		ft_putstr_fd("Shellinho: syntax error\n", 2);
+		ft_putstr_fd("Shellinho: syntax error\n", 2); // é necessario?
 		info->error_msg = !info->error_msg;
 	}
 	update_status(info, 2);
