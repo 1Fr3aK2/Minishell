@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/20 18:06:06 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:04:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,37 +63,34 @@ int is_builtin(char **builtins, char *cmd)
 	return (1);
 }
 
-int exec_builtins(char *cmd, t_info *info)
+int exec_builtins(char **cmd, t_info *info, t_tree *node)
 {
-
-	if (ft_strncmp(cmd, "cd", ft_strlen("cd")) == 0)
+	printf("checkig if is builtin\n");
+	if (ft_strncmp(cmd[0], "cd", ft_strlen("cd")) == 0)
 		return (ft_cd(info), 0);
-	if (ft_strncmp(cmd, "echo", ft_strlen("echo")) == 0)
-		return (ft_echo(info), 0);
-	if (ft_strncmp(cmd, "env", ft_strlen("env")) == 0)
+	if (ft_strncmp(cmd[0], "echo", ft_strlen("echo")) == 0)
+		return (ft_echo_wrapper(info, node), 0);
+	if (ft_strncmp(cmd[0], "env", ft_strlen("env")) == 0)
 		return (ft_env(info), 0);
-	if (ft_strncmp(cmd, "exit", ft_strlen("exit")) == 0)
+	if (ft_strncmp(cmd[0], "exit", ft_strlen("exit")) == 0)
 		return (ft_exit(info), 0);
-	if (ft_strncmp(cmd, "export", ft_strlen("export")) == 0)
+	if (ft_strncmp(cmd[0], "export", ft_strlen("export")) == 0)
 		return (ft_export(info), 0);
-	if (ft_strncmp(cmd, "unset", ft_strlen("unset")) == 0)
+	if (ft_strncmp(cmd[0], "unset", ft_strlen("unset")) == 0)
 		return (ft_unset(info), 0);
-	if (ft_strncmp(cmd, "pwd", ft_strlen("pwd")) == 0)
+	if (ft_strncmp(cmd[0], "pwd", ft_strlen("pwd")) == 0)
 		return (ft_pwd(info), 0);
 	return (1);
 }
 
 void	exec_command_op(t_info *info, t_tree *node)
 {
-	if (is_builtin(info->builtins->builtins, node->args[0]) == 0)
+	/* if (check_builtins(info) == 0)
 	{
-		if (exec_builtins(node->args[0], info) == 0)
-		{
-			close_heredoc_fd(info);
-			close_fds(0);
-			exit(info->exit_status);
-		}
-	}
+		close_heredoc_fd(info);
+		close_fds(0);
+		exit(info->exit_status);
+	} */
 	exec(info, node);
 	close_heredoc_fd(info);
 	close_fds(0);

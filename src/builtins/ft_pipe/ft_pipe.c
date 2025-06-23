@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/20 16:21:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/23 19:59:27 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,32 @@
 
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
-	t_tree	*old_cmd_tree;
-
-	old_cmd_tree = info->cmd_tree;
-	info->cmd_tree = node;
 	dup_pipe_fds(in, out);
+
 	if (check_redirections(info) == 0)
 		ft_exit2(info);
-	info->cmd_tree = old_cmd_tree;
+
 	handle_heredoc(node);
+
 	if (node->type == CMD)
-		exec_command_op(info, node);
+	{
+		if (is_builtin(info->builtins->builtins, node->args[0]) == 0)
+		{
+			exec_builtins(node->args, info, node);
+		}
+		else
+		{
+			exec_command_op(info, node);
+		}
+	}
 	else
+	{
 		exec_command(info, node);
+	}
+
 	ft_exit2(info);
 }
+
 
 static pid_t	handle_pipe_fork(t_info *info, t_tree *node, int in, int *fd)
 {

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/20 16:16:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:04:51 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ typedef struct s_info
 }								t_info;
 
 extern volatile sig_atomic_t	g_sigint_received;
-
+int exec_builtins(char **cmd, t_info *info, t_tree *node);
+int is_builtin(char **builtins, char *cmd);
+void ft_echo_wrapper(t_info *info, t_tree *node);
 // builtins/export/export_aux_functions.c
 void							handle_regular_assignment(t_info *info,
 									char *arg);
