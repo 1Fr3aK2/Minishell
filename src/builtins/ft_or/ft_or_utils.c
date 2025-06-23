@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/23 20:04:59 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:16:32 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int is_builtin(char **builtins, char *cmd)
 
 int exec_builtins(char **cmd, t_info *info, t_tree *node)
 {
-	printf("checkig if is builtin\n");
 	if (ft_strncmp(cmd[0], "cd", ft_strlen("cd")) == 0)
 		return (ft_cd(info), 0);
 	if (ft_strncmp(cmd[0], "echo", ft_strlen("echo")) == 0)

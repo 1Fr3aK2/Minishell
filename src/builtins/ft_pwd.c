@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:57:10 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/23 19:27:24 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/23 20:16:41 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ft_pwd(t_info *info)
 {
-	printf("asd\n");
 	char	buf[PATH_MAX];
 
 	(void)info;
