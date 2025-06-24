@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 02:02:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 17:34:01 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ int	exec_builtins(char **cmd, t_info *info, t_tree *node)
 	if (ft_strncmp(cmd[0], "exit", ft_strlen("exit")) == 0)
 		return (ft_exit(info), 0);
 	if (ft_strncmp(cmd[0], "export", ft_strlen("export")) == 0)
-		return (ft_export(info), 0);
+		return (ft_export_wrapper(info, node), 0);
 	if (ft_strncmp(cmd[0], "unset", ft_strlen("unset")) == 0)
 		return (ft_unset(info), 0);
 	if (ft_strncmp(cmd[0], "pwd", ft_strlen("pwd")) == 0)
