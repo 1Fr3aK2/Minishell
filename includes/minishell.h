@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 20:01:51 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:09:42 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,11 +107,7 @@ typedef struct s_info
 }								t_info;
 
 extern volatile sig_atomic_t	g_sigint_received;
-int								exec_builtins(char **cmd, t_info *info,
-									t_tree *node);
-									void	ft_export_wrapper(t_info *info, t_tree *node);
-int								is_builtin(char **builtins, char *cmd);
-void							ft_echo_wrapper(t_info *info, t_tree *node);
+
 // builtins/export/export_aux_functions.c
 void							handle_regular_assignment(t_info *info,
 									char *arg);
@@ -119,10 +115,14 @@ void							handle_plus_assignment(t_info *info, char *arg);
 void							add_check(char ***arr, char *str);
 
 // builtins/export.c
+void							print_sorted_env(char **env);
 void							add_to_env(char ***env, char *str);
 void							sort_env(char **args);
 char							**create_sorted_env_copy(char **args);
 void							ft_export(t_info *info);
+
+//builtins/ft_export/ft_export_wrapper.c
+void							ft_export_wrapper(t_info *info, t_tree *node);
 
 // builtins/export/export_utils.c
 bool							check_equal_plus(char *str);
@@ -140,6 +140,7 @@ bool							check_env(char ***env, char *str);
 // builtins/echo.c
 int								check_flags(char *str);
 void							ft_echo(t_info *info);
+void							ft_echo_wrapper(t_info *info, t_tree *node);
 
 // builtins/env.c
 void							ft_env(t_info *info);
@@ -173,6 +174,9 @@ void							exec_command(t_info *info, t_tree *node);
 
 // builtins/ft_or/ft_or_utils.c
 void							exec_command_op(t_info *info, t_tree *node);
+int								exec_builtins(char **cmd, t_info *info,
+									t_tree *node);
+int								is_builtin(char **builtins, char *cmd);
 
 // parse/expander/handle_dollar.c
 char							*handle_dollar(char *str, t_info *info);
