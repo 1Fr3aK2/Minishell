@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 20:42:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 23:25:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 	}
 	exec_comand_op(info, node);
 } */
-
 static void	close_heredoc_fd(t_info *info)
 {
 	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
@@ -36,6 +35,7 @@ static void	close_heredoc_fd(t_info *info)
 static void	handle_status(t_info *info, int status)
 {
 	int	sig;
+	int	i;
 	int	i;
 	int	i;
 
@@ -60,7 +60,8 @@ int	is_builtin(char **builtins, char *cmd)
 	i = 0;
 	while (builtins[i])
 	{
-		if (ft_strncmp(builtins[i], cmd, ft_strlen(builtins[i])) == 0)
+		if (ft_strncmp(builtins[i], cmd, ft_strlen(builtins[i])) == 0
+			&& ft_strlen(cmd) == ft_strlen(builtins[i]))
 			return (0);
 		i++;
 	}
