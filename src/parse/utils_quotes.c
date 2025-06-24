@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/17 15:54:18 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/18 16:34:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:39:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,17 @@ void	copy_non_empty(char **src, char **dst)
 		i++;
 	}
 	dst[j] = NULL;
+}
+
+void	print_syntax_error_token(t_tree *node, char **tokens, t_info *info)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
+	if (node && node->args && node->args[0])
+		ft_putstr_fd(node->args[0], 2);
+	else if (tokens && tokens[0])
+		ft_putstr_fd(tokens[0], 2);
+	else
+		ft_putstr_fd("newline", 2);
+	ft_putstr_fd("'\n", 2);
+	info->error_msg = true;
 }

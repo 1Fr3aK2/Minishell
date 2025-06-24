@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 02:00:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:37:51 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,7 @@ static char	**sub_tokens(char **tokens, int start, int end)
 static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 {
 	if (info->error_msg == false)
-	{
-		ft_putstr_fd("Shellinho: syntax error\n", 2);
-		info->error_msg = !info->error_msg;
-	}
+		print_syntax_error_token(node, tokens, info);
 	update_status(info, 2);
 	if (node->right)
 		free_tree(node->right);

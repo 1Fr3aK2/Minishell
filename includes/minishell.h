@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 20:14:37 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:39:25 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void							sort_env(char **args);
 char							**create_sorted_env_copy(char **args);
 void							ft_export(t_info *info);
 
-//builtins/ft_export/ft_export_wrapper.c
+// builtins/ft_export/ft_export_wrapper.c
 void							ft_export_wrapper(t_info *info, t_tree *node);
 
 // builtins/export/export_utils.c
@@ -240,6 +240,8 @@ char							*add_spaces_around(char *str);
 void							add_space_operators(char **str);
 int								count_non_empty(char **tokens);
 void							copy_non_empty(char **src, char **dst);
+void							print_syntax_error_token(t_tree *node,
+									char **tokens, t_info *info);
 
 // processes/main_process.c
 void							child_process(t_info *info);
