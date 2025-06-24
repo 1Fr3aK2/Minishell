@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 20:09:42 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:14:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,10 +170,10 @@ void							ft_pipe(t_info *info, t_tree *node);
 void							wait_all(pid_t last_pid, t_info *info);
 void							dup_pipe_fds(int in, int out);
 void							handle_heredoc(t_tree *node);
-void							exec_command(t_info *info, t_tree *node);
+void							exec_comand_op(t_info *info, t_tree *node);
 
 // builtins/ft_or/ft_or_utils.c
-void							exec_command_op(t_info *info, t_tree *node);
+void							exec_command(t_info *info, t_tree *node);
 int								exec_builtins(char **cmd, t_info *info,
 									t_tree *node);
 int								is_builtin(char **builtins, char *cmd);

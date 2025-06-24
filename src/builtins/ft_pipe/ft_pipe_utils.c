@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 19:14:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:13:44 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	handle_heredoc(t_tree *node)
 	}
 }
 
-void	exec_command(t_info *info, t_tree *node)
+void	exec_comand_op(t_info *info, t_tree *node)
 {
 	if (node->type == PIPE)
 		ft_pipe(info, node);

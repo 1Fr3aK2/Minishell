@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 01:57:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:14:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 		if (is_builtin(info->builtins->builtins, node->args[0]) == 0)
 			exec_builtins(node->args, info, node);
 		else
-			exec_command_op(info, node);
+			exec_command(info, node);
 	}
 	else
-		exec_command(info, node);
+		exec_comand_op(info, node);
 	ft_exit2(info);
 }
 
