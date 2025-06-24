@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_init.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/24 19:14:22 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,9 @@ static void	fill_builtins(t_info *info)
 static void	fill_types(t_info *info)
 {
 	info->types->types[0] = "|";
-	info->types->types[1] = "||";
-	info->types->types[2] = "&&";
-	info->types->types[3] = NULL;
+	info->types->types[1] = NULL;
 	info->types->f[0] = ft_pipe_wrapper;
-	info->types->f[1] = ft_or_wrapper;
-	info->types->f[2] = ft_and_wrapper;
-	info->types->f[3] = NULL;
+	info->types->f[1] = NULL;
 }
 
 static void	fill_redirections(t_info *info)

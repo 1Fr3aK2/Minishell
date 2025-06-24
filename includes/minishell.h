@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 17:33:53 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 20:01:51 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define BLUE "\033[34m"
 # define RED "\033[31m"
 # define MAX_BUILTINS 8
-# define MAX_TYPES 8
+# define MAX_TYPES 3
 # define MAX_REDS 5
 
 # define SPACES " \n\t\v\f\r"
@@ -80,9 +80,7 @@ typedef struct s_io
 
 typedef enum s_node_type
 {
-	AND,
 	PIPE,
-	OR,
 	CMD
 }								t_node_type;
 
@@ -172,14 +170,6 @@ void							wait_all(pid_t last_pid, t_info *info);
 void							dup_pipe_fds(int in, int out);
 void							handle_heredoc(t_tree *node);
 void							exec_command(t_info *info, t_tree *node);
-
-// builtins/and.c
-void							ft_and(t_info *info, t_tree *node);
-void							ft_and_wrapper(t_info *info);
-
-// builtins/or.c
-void							ft_or(t_info *info, t_tree *node);
-void							ft_or_wrapper(t_info *info);
 
 // builtins/ft_or/ft_or_utils.c
 void							exec_command_op(t_info *info, t_tree *node);

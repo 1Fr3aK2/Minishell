@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/20 16:36:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 19:14:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,6 @@ void	exec_command(t_info *info, t_tree *node)
 {
 	if (node->type == PIPE)
 		ft_pipe(info, node);
-	else if (node->type == AND)
-		ft_and(info, node);
-	else if (node->type == OR)
-		ft_or(info, node);
 	else
 		exit(127);
 }

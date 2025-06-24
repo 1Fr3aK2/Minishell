@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_tree.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:52:23 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/24 20:00:56 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,8 @@ static int	set_priority(char *str)
 {
 	if (!str)
 		return (0);
-	if (ft_strncmp(str, "||", 3) == 0)
+	if (ft_strncmp(str, "|", 2) == 0)
 		return (1);
-	else if (ft_strncmp(str, "&&", 3) == 0)
-		return (2);
-	else if (ft_strncmp(str, "|", 2) == 0)
-		return (3);
 	return (0);
 }
 
@@ -51,11 +47,7 @@ int	search_ops(char **tokens)
 
 t_node_type	find_type(char **tokens, int i)
 {
-	if (ft_strncmp(tokens[i], "&&", ft_strlen("&&")) == 0)
-		return (AND);
-	else if (ft_strncmp(tokens[i], "||", ft_strlen("||")) == 0)
-		return (OR);
-	else if (ft_strncmp(tokens[i], "|", ft_strlen("|")) == 0)
+	if (ft_strncmp(tokens[i], "|", ft_strlen("|")) == 0)
 		return (PIPE);
 	else
 		return (CMD);

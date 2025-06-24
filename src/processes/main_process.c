@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 15:56:50 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 19:13:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,6 @@ void	child_process(t_info *info)
 		run_fork_and_exec(info);
 	else if (node->type == PIPE)
 		ft_pipe_wrapper(info);
-	else if (node->type == AND)
-		ft_and(info, node);
-	else if (node->type == OR)
-		ft_or(info, node);
 	else
 		info->exit_status = 127;
 }
