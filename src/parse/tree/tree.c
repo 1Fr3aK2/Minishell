@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/24 02:00:19 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 {
 	if (info->error_msg == false)
 	{
-		ft_putstr_fd("Shellinho: syntax error\n", 2); // é necessario?
+		ft_putstr_fd("Shellinho: syntax error\n", 2);
 		info->error_msg = !info->error_msg;
 	}
 	update_status(info, 2);

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 15:28:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/23 20:16:28 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 01:59:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,13 @@ void	ft_echo(t_info *info)
 		write(1, "\n", 1);
 }
 
-
-void ft_echo_wrapper(t_info *info, t_tree *node)
+void	ft_echo_wrapper(t_info *info, t_tree *node)
 {
 	int	i;
 	int	j;
 
 	i = 1;
 	j = 0;
-
 	if (check_redirections(info) == 0)
 		exit(0);
 	while (check_flags(node->args[i]) == 0)

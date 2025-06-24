@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 01:49:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 02:02:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 	}
 	exec_command(info, node);
 } */
+
 static void	close_heredoc_fd(t_info *info)
 {
 	if (info->io->stdin_is_heredoc && info->io->fd_in != -1)
@@ -30,10 +31,13 @@ static void	close_heredoc_fd(t_info *info)
 		info->io->stdin_is_heredoc = 0;
 	}
 }
+
 /*
 static void	handle_status(t_info *info, int status)
 {
 	int	sig;
+	int	i;
+	int	i;
 
 	if (WIFEXITED(status))
 		update_status(info, WEXITSTATUS(status));
@@ -49,12 +53,12 @@ static void	handle_status(t_info *info, int status)
 		}
 	}
 } */
-
-int is_builtin(char **builtins, char *cmd)
+int	is_builtin(char **builtins, char *cmd)
 {
-	int i;
+	int	i;
+
 	i = 0;
-	while(builtins[i])
+	while (builtins[i])
 	{
 		if (ft_strncmp(builtins[i], cmd, ft_strlen(builtins[i])) == 0)
 			return (0);
@@ -63,7 +67,7 @@ int is_builtin(char **builtins, char *cmd)
 	return (1);
 }
 
-int exec_builtins(char **cmd, t_info *info, t_tree *node)
+int	exec_builtins(char **cmd, t_info *info, t_tree *node)
 {
 	if (ft_strncmp(cmd[0], "cd", ft_strlen("cd")) == 0)
 		return (ft_cd(info), 0);
@@ -84,12 +88,6 @@ int exec_builtins(char **cmd, t_info *info, t_tree *node)
 
 void	exec_command_op(t_info *info, t_tree *node)
 {
-	/* if (check_builtins(info) == 0)
-	{
-		close_heredoc_fd(info);
-		close_fds(0);
-		exit(info->exit_status);
-	} */
 	exec(info, node);
 	close_heredoc_fd(info);
 	close_fds(0);

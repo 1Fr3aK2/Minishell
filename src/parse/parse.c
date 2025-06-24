@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 17:21:34 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 01:59:43 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,3 @@ void	parse(char *input, t_info *info)
 	}
 	free_arr(tokens);
 }
-
