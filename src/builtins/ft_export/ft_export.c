@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/01 17:56:17 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/24 01:47:49 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,13 +107,14 @@ void	ft_export(t_info *info)
 {
 	int	i;
 	int	exit_status;
-
+	
 	exit_status = 0;
 	i = 1;
 	check_redirections(info);
-	check_operators(info);
 	if (!info->cmd_tree->args[i])
+	{
 		return (print_sorted_env(info->export_env));
+	}
 	while (info->cmd_tree->args[i])
 	{
 		if (!check_valid_input(info->cmd_tree->args[i], &exit_status))

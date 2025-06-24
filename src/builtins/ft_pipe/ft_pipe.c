@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/23 19:59:27 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 01:48:03 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,17 @@ static void	child_exec(t_info *info, t_tree *node, int in, int out)
 
 	if (check_redirections(info) == 0)
 		ft_exit2(info);
-
 	handle_heredoc(node);
 
 	if (node->type == CMD)
 	{
 		if (is_builtin(info->builtins->builtins, node->args[0]) == 0)
-		{
 			exec_builtins(node->args, info, node);
-		}
 		else
-		{
 			exec_command_op(info, node);
-		}
 	}
 	else
-	{
 		exec_command(info, node);
-	}
-
 	ft_exit2(info);
 }
 
