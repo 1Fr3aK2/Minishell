@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 23:25:55 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/24 23:28:37 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ static void	handle_status(t_info *info, int status)
 		}
 	}
 } */
+
 int	is_builtin(char **builtins, char *cmd)
 {
 	int	i;
