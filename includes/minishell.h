@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 20:39:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 00:21:04 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct s_info
 }								t_info;
 
 extern volatile sig_atomic_t	g_sigint_received;
-
+int	check_redirections_node(t_tree *node, t_info *info);
 // builtins/export/export_aux_functions.c
 void							handle_regular_assignment(t_info *info,
 									char *arg);

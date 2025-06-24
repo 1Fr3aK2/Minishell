@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 10:25:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 20:14:37 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 00:21:17 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	child_exec(t_info *info, t_tree *node, int in, int out)
 {
 	dup_pipe_fds(in, out);
-	if (check_redirections(info) == 0)
+	if (check_redirections_node(node, info) == 0)
 		ft_exit2(info);
 	handle_heredoc(node);
 	if (node->type == CMD)

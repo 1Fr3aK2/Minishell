@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/16 19:02:38 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 00:19:20 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ int	check_redirections(t_info *info)
 			{
 				if (!info->cmd_tree->args[i + 1])
 					return (1);
-				update_io_file(info->io, info->cmd_tree->args[i + 1]);
+				update_io_file(info->io, info->cmd_tree->args[i + 1]); 
 				ret = info->redirections->f[j](info->io, info);
 				if (ret < 0)
 					return (-1);
@@ -132,3 +132,4 @@ int	check_redirections(t_info *info)
 	}
 	return (1);
 }
+
