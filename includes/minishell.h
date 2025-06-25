@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/25 01:22:49 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:12:14 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,6 @@
 typedef struct s_info			t_info;
 typedef struct s_io				t_io;
 
-typedef struct s_types
-{
-	char						*types[MAX_TYPES];
-	void						(*f[MAX_TYPES])(t_info *info);
-}								t_types;
 
 typedef struct s_builtins
 {
@@ -102,7 +97,6 @@ typedef struct s_info
 	t_builtins					*builtins;
 	t_io						*io;
 	t_reds						*redirections;
-	t_types						*types;
 	t_tree						*cmd_tree;
 }								t_info;
 

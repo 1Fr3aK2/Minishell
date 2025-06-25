@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 15:12:36 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/18 17:44:14 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:11:38 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ void	ft_exit(t_info *info)
 	rl_clear_history();
 	close_fds(0);
 	free(info->io);
-	free(info->types);
 	free(info->redirections);
 	exit(info->exit_status);
 }
@@ -97,7 +96,6 @@ void	ft_exit2(t_info *info)
 	free_arr(info->my_env);
 	free_arr(info->export_env);
 	free(info->io);
-	free(info->types);
 	free(info->redirections);
 	rl_clear_history();
 	close_fds(0);

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/25 01:24:05 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:10:46 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,32 +70,6 @@ int	check_builtins(t_info *info)
 				info->builtins->f[i](info);
 			restore_redirections(saved_in, saved_out);
 			return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	check_operators(t_info *info)
-{
-	char	*cmd;
-	int		i;
-
-	if (!info || !info->cmd_tree)
-		return (1);
-	i = 0;
-	cmd = info->cmd_tree->args[0];
-	while (info->types->types[i])
-	{
-		if (ft_strncmp(cmd, info->types->types[i],
-				ft_strlen(info->types->types[i])) == 0)
-		{
-			if (ft_strlen(cmd) == ft_strlen(info->types->types[i]))
-			{
-				if (info->types->f[i])
-					info->types->f[i](info);
-				return (0);
-			}
 		}
 		i++;
 	}

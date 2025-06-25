@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 16:30:37 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 19:14:22 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:11:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,6 @@ static void	fill_builtins(t_info *info)
 	info->builtins->f[7] = NULL;
 }
 
-static void	fill_types(t_info *info)
-{
-	info->types->types[0] = "|";
-	info->types->types[1] = NULL;
-	info->types->f[0] = ft_pipe_wrapper;
-	info->types->f[1] = NULL;
-}
-
 static void	fill_redirections(t_info *info)
 {
 	info->redirections->reds[0] = ">";
@@ -55,7 +47,6 @@ static void	fill_redirections(t_info *info)
 void	fill_all(t_info *info)
 {
 	fill_builtins(info);
-	fill_types(info);
 	fill_redirections(info);
 	copy_env(&info->export_env, info->my_env);
 }

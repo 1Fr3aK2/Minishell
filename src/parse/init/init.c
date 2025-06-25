@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:11:35 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,21 +60,16 @@ static int	alloc_struct(t_info *info)
 	info->builtins = malloc(sizeof(t_builtins));
 	if (!info->builtins)
 		return (-1);
-	info->types = malloc(sizeof(t_types));
-	if (!info->types)
-		return (free(info->builtins), -1);
 	info->redirections = malloc(sizeof(t_reds));
 	if (!info->redirections)
 	{
 		free(info->builtins);
-		free(info->types);
 		return (-1);
 	}
 	info->io = malloc(sizeof(t_io));
 	if (!info->io)
 	{
 		free(info->builtins);
-		free(info->types);
 		free(info->redirections);
 		return (-1);
 	}
