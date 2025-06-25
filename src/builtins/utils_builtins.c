@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/25 00:39:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 01:25:08 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	check_redirections_node(t_tree *node, t_info *info)
 			{
 				if (!node->args[i + 1])
 					return (1);
-				update_io_file(node->io, node->args[i + 1]); 
+				update_io_file(node->io, node->args[i + 1]);
 				ret = info->redirections->f[j](node->io, info);
 				if (ret < 0)
 					return (-1);
@@ -105,7 +105,6 @@ int	apply_redirections_node(t_tree *node, int *saved_in, int *saved_out)
 	}
 	return (0);
 }
-
 
 int	is_builtin(char **builtins, char *cmd)
 {
@@ -152,7 +151,6 @@ int	exec_builtins(char **cmd, t_info *info, t_tree *node)
 	restore_redirections(saved_in, saved_out);
 	return (0);
 }
-
 
 void	exec_command(t_info *info, t_tree *node)
 {
