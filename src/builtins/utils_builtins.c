@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/25 01:25:08 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:23:06 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,37 +53,6 @@ static void	handle_status(t_info *info, int status)
 		}
 	}
 } */
-
-int	check_redirections_node(t_tree *node, t_info *info)
-{
-	int	i;
-	int	j;
-	int	ret;
-
-	i = 0;
-	while (node->args && node->args[i])
-	{
-		j = 0;
-		while (info->redirections->reds[j])
-		{
-			if (ft_strncmp(node->args[i], info->redirections->reds[j],
-					ft_strlen(node->args[i])) == 0)
-			{
-				if (!node->args[i + 1])
-					return (1);
-				update_io_file(node->io, node->args[i + 1]);
-				ret = info->redirections->f[j](node->io, info);
-				if (ret < 0)
-					return (-1);
-				remove_redir_tokens(node->args, i);
-				j = -1;
-			}
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
 
 int	apply_redirections_node(t_tree *node, int *saved_in, int *saved_out)
 {

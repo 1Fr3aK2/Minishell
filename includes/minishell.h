@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/25 16:12:14 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/25 16:24:13 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@
 
 typedef struct s_info			t_info;
 typedef struct s_io				t_io;
-
 
 typedef struct s_builtins
 {
@@ -101,8 +100,7 @@ typedef struct s_info
 }								t_info;
 
 extern volatile sig_atomic_t	g_sigint_received;
-int								check_redirections_node(t_tree *node,
-									t_info *info);
+
 // builtins/export/export_aux_functions.c
 void							handle_regular_assignment(t_info *info,
 									char *arg);
@@ -167,11 +165,13 @@ void							dup_pipe_fds(int in, int out);
 void							handle_heredoc(t_tree *node);
 void							exec_comand_op(t_info *info, t_tree *node);
 
-// builtins/ft_or/ft_or_utils.c
+// builtins/utils_builtins.c
 void							exec_command(t_info *info, t_tree *node);
 int								exec_builtins(char **cmd, t_info *info,
 									t_tree *node);
 int								is_builtin(char **builtins, char *cmd);
+int								apply_redirections_node(t_tree *node,
+									int *saved_in, int *saved_out);
 
 // parse/expander/handle_dollar.c
 char							*handle_dollar(char *str, t_info *info);
@@ -302,8 +302,9 @@ int								apply_redirections(t_info *info, int *saved_in,
 void							restore_redirections(int saved_in,
 									int saved_out);
 int								check_builtins(t_info *info);
-int								check_operators(t_info *info);
 int								check_redirections(t_info *info);
+int								check_redirections_node(t_tree *node,
+									t_info *info);
 
 // utils/free.c
 void							free_arr(char **arr);
