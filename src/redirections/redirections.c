@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/28 03:01:47 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/28 15:46:51 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,14 @@ void	setup_stdout(int out)
 {
 	if (out != -1)
 	{
+		dprintf(2, "[DEBUG setup_stdout] duplicating out=%d to STDOUT\n", out);
 		if (dup2(out, STDOUT_FILENO) == -1)
 		{
 			perror("dup2 stdout");
 			exit(1);
 		}
+		dprintf(2, "[DEBUG setup_stdout] closing out=%d\n", out);
 		close(out);
 	}
 }
+

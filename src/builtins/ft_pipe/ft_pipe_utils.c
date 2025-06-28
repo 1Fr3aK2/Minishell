@@ -6,35 +6,46 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/28 05:23:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/28 16:07:19 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../includes/minishell.h"
 
-void	wait_all(pid_t last_pid, t_info *info)
-{
-	int		status;
-	pid_t	wpid;
-
-	wpid = wait(&status);
-	while (wpid > 0)
-	{
-		if (wpid == last_pid && WIFEXITED(status))
-			update_status(info, WEXITSTATUS(status));
-		else if (wpid == last_pid && WIFSIGNALED(status))
-		{
-			if (WTERMSIG(status) == SIGQUIT)
-			{
-				update_status(info, 131);
-				write(1, "Quit (core dumped)\n", 19);
-			}
-			else if (WTERMSIG(status) == SIGINT)
-				update_status(info, 130);
-		}
-		wpid = wait(&status);
-	}
+void wait_all(pid_t last_pid, t_info *info) {
+    int status;
+    pid_t wpid;
+    
+    dprintf(2, "[DEBUG wait_all] waiting for children (last_pid=%d)\n", last_pid);
+    
+    // MUDANÇA PRINCIPAL: usar waitpid(-1, ...) em vez de wait()
+    // Isso espera por QUALQUER processo filho, não só o primeiro
+    while ((wpid = waitpid(-1, &status, 0)) > 0) {
+        dprintf(2, "[DEBUG wait_all] got wpid=%d\n", wpid);
+        
+        if (wpid == last_pid && WIFEXITED(status)) {
+            int code = WEXITSTATUS(status);
+            dprintf(2, "[DEBUG wait_all] last_pid exited with %d\n", code);
+            update_status(info, code);
+        }
+        else if (wpid == last_pid && WIFSIGNALED(status)) {
+            int sig = WTERMSIG(status);
+            dprintf(2, "[DEBUG wait_all] last_pid signaled with %d\n", sig);
+            if (sig == SIGQUIT) {
+                update_status(info, 131);
+                write(1, "Quit (core dumped)\n", 19);
+            }
+            else if (sig == SIGINT)
+                update_status(info, 130);
+        }
+        else {
+            dprintf(2, "[DEBUG wait_all] intermediate process %d finished\n", wpid);
+        }
+    }
+    
+    dprintf(2, "[DEBUG wait_all] all children finished\n");
 }
+
 
 void	handle_heredoc(t_tree *node)
 {
