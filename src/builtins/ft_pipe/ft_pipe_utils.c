@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/27 19:36:39 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/28 03:01:05 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,30 +36,6 @@ void	wait_all(pid_t last_pid, t_info *info)
 	}
 }
 
-void	dup_pipe_fds(int in, int out)
-{
-	if (out != -1)
-	{
-		printf("[dup_pipe_fds] Duplicating out fd %d to STDOUT\n", out);
-		if (dup2(out, STDOUT_FILENO) == -1)
-		{
-			perror("dup2 stdout");
-			exit(1);
-		}
-		close(out);
-	}
-	if (in != -1)
-	{
-		printf("[dup_pipe_fds] Duplicating in fd %d to STDIN\n", in);
-		if (dup2(in, STDIN_FILENO) == -1)
-		{
-			perror("dup2 stdin");
-			exit(1);
-		}
-		close(in);
-	}
-}
-
 void	handle_heredoc(t_tree *node)
 {
 	if (node && node->io && node->io->heredoc_fd != -1)
@@ -80,4 +56,36 @@ void	exec_comand_op(t_info *info, t_tree *node)
 		ft_pipe(info, node);
 	else
 		exit(127);
+}
+
+void	setup_stdin(t_tree *node, int in)
+{
+	if (node->io && node->io->heredoc_fd != -1)
+	{
+		if (in != -1)
+			close(in);
+		handle_heredoc(node);
+	}
+	else if (in != -1)
+	{
+		if (dup2(in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 stdin");
+			exit(1);
+		}
+		close(in);
+	}
+}
+
+void	execute_node(t_info *info, t_tree *node)
+{
+	if (node->type == CMD)
+	{
+		if (is_builtin(info->builtins->builtins, node->args[0]) == 0)
+			exec_builtins(node->args, info, node);
+		else
+			exec_command(info, node);
+	}
+	else
+		exec_comand_op(info, node);
 }

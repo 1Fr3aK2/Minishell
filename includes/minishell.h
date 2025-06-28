@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/25 16:24:13 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/28 03:03:35 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,10 @@ void							ft_pipe(t_info *info, t_tree *node);
 
 // builtins/ft_pipe/ft_pipe_utils.c
 void							wait_all(pid_t last_pid, t_info *info);
-void							dup_pipe_fds(int in, int out);
 void							handle_heredoc(t_tree *node);
 void							exec_comand_op(t_info *info, t_tree *node);
-
+void							setup_stdin(t_tree *node, int in);
+void							execute_node(t_info *info, t_tree *node);
 // builtins/utils_builtins.c
 void							exec_command(t_info *info, t_tree *node);
 int								exec_builtins(char **cmd, t_info *info,
@@ -278,6 +278,7 @@ int								handle_input_redirection(t_io *io,
 									t_info *info);
 int								handle_append_redirection(t_io *io,
 									t_info *info);
+void							setup_stdout(int out);
 
 // signals.c
 void							ignore_sigquit(void);
