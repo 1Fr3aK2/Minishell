@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/24 20:13:44 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/27 19:36:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	dup_pipe_fds(int in, int out)
 {
 	if (out != -1)
 	{
+		printf("[dup_pipe_fds] Duplicating out fd %d to STDOUT\n", out);
 		if (dup2(out, STDOUT_FILENO) == -1)
 		{
 			perror("dup2 stdout");
@@ -49,6 +50,7 @@ void	dup_pipe_fds(int in, int out)
 	}
 	if (in != -1)
 	{
+		printf("[dup_pipe_fds] Duplicating in fd %d to STDIN\n", in);
 		if (dup2(in, STDIN_FILENO) == -1)
 		{
 			perror("dup2 stdin");
