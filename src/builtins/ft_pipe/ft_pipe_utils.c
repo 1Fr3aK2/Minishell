@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/10 02:44:02 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/28 03:01:05 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/28 05:23:30 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,19 +60,45 @@ void	exec_comand_op(t_info *info, t_tree *node)
 
 void	setup_stdin(t_tree *node, int in)
 {
-	if (node->io && node->io->heredoc_fd != -1)
+	// Se o nó tem redirecionamento de input próprio, usa esse
+	if (node->io && node->io->fd_in != -1)
+	{
+		dprintf(2, "DEBUG: using node's input redirection fd %d\n", node->io->fd_in);
+		if (dup2(node->io->fd_in, STDIN_FILENO) == -1)
+		{
+			perror("dup2 node input");
+			exit(1);
+		}
+		close(node->io->fd_in);
+		node->io->fd_in = -1;
+		
+		// Se havia um fd do pipe, fecha-o
+		if (in != -1)
+		{
+			dprintf(2, "DEBUG: closing pipe input fd %d (node has own input)\n", in);
+			close(in);
+		}
+	}
+	// Se tem heredoc, usa o heredoc
+	else if (node->io && node->io->heredoc_fd != -1)
 	{
 		if (in != -1)
+		{
+			dprintf(2, "DEBUG: closing input fd %d before heredoc\n", in);
 			close(in);
+		}
 		handle_heredoc(node);
 	}
+	// Senão, usa o fd do pipe
 	else if (in != -1)
 	{
+		dprintf(2, "DEBUG: duplicating input fd %d to STDIN\n", in);
 		if (dup2(in, STDIN_FILENO) == -1)
 		{
 			perror("dup2 stdin");
 			exit(1);
 		}
+		dprintf(2, "DEBUG: closing input fd %d\n", in);
 		close(in);
 	}
 }
