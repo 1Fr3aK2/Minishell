@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:13:20 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:31:06 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,10 @@ int								handle_append_redirection(t_io *io,
 									t_info *info);
 void							process_redirections(t_tree *node,
 									t_info *info);
+
+// redirections/utils_redirections.c
+int								is_redir(char **redirs, char *cmd);
+void							exec_redirs(t_tree *node, t_info *info, int *i);
 
 // signals.c
 void							ignore_sigquit(void);
