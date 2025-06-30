@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/28 03:03:35 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:13:20 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_tree
 
 typedef struct s_info
 {
+	bool						in_redir;
 	bool						error_msg;
 	unsigned int				exit_status;
 	char						**my_env;
@@ -102,6 +103,7 @@ typedef struct s_info
 extern volatile sig_atomic_t	g_sigint_received;
 
 // builtins/export/export_aux_functions.c
+bool							check_pipeline_redirection(t_tree *node);
 void							handle_regular_assignment(t_info *info,
 									char *arg);
 void							handle_plus_assignment(t_info *info, char *arg);
@@ -163,8 +165,8 @@ void							ft_pipe(t_info *info, t_tree *node);
 void							wait_all(pid_t last_pid, t_info *info);
 void							handle_heredoc(t_tree *node);
 void							exec_comand_op(t_info *info, t_tree *node);
-void							setup_stdin(t_tree *node, int in);
 void							execute_node(t_info *info, t_tree *node);
+
 // builtins/utils_builtins.c
 void							exec_command(t_info *info, t_tree *node);
 int								exec_builtins(char **cmd, t_info *info,
@@ -278,7 +280,8 @@ int								handle_input_redirection(t_io *io,
 									t_info *info);
 int								handle_append_redirection(t_io *io,
 									t_info *info);
-void							setup_stdout(int out);
+void							process_redirections(t_tree *node,
+									t_info *info);
 
 // signals.c
 void							ignore_sigquit(void);
@@ -318,8 +321,8 @@ void							*free_str(char **dest, int i);
 void							update_io_file(t_io *io, char *filename);
 void							remove_redir_tokens(char **args, int i);
 int								is_valid_append_token(const char *token);
-void							handle_sigpipe(int sig);
 void							close_heredoc_fds(t_tree *node);
+void							handle_redir_error(t_info *info);
 
 // utils/utils_bools.c
 bool							is_quote(char c);
@@ -333,6 +336,10 @@ void							close_fds(int i);
 void							close_pipe_fds(int *fd);
 char							*reverse_strchr(char *str, int c);
 void							change_shlvl(char ***env, char *name);
+
+// utils/fds.c
+void							setup_stdin(t_tree *node, int in);
+void							setup_stdout(int out);
 
 // main.c
 void							start(t_info *info);

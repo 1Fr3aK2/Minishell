@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:54:56 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/25 16:11:35 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 04:29:45 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ static int	alloc_struct(t_info *info)
 
 void	init(t_info *info)
 {
+	info->in_redir = false;
 	info->error_msg = false;
 	info->exit_status = 0;
 	info->cmd_tree = NULL;

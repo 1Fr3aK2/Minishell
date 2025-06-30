@@ -40,6 +40,7 @@ SRCS =  src/main.c \
 		src/utils/more_utils.c \
 		src/utils/utils_bools.c \
 		src/utils/utils.c \
+		src/utils/fds.c \
 		
 NAME = minishell
 
