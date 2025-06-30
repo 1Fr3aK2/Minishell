@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:47:41 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:14:45 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:43:34 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,19 @@ void	execute_node(t_info *info, t_tree *node)
 	}
 	else
 		exec_comand_op(info, node);
+}
+
+bool	check_pipeline_redirection(t_tree *node)
+{
+	if (!node)
+		return (false);
+	if (node->type == PIPE)
+	{
+		if (has_redirection(node->left))
+			return (true);
+		return (check_pipeline_redirection(node->right));
+	}
+	else if (node->type == CMD)
+		return (has_redirection(node));
+	return (false);
 }

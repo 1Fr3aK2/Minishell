@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:31:06 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:42:57 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ void							wait_all(pid_t last_pid, t_info *info);
 void							handle_heredoc(t_tree *node);
 void							exec_comand_op(t_info *info, t_tree *node);
 void							execute_node(t_info *info, t_tree *node);
+bool							check_pipeline_redirection(t_tree *node);
 
 // builtins/utils_builtins.c
 void							exec_command(t_info *info, t_tree *node);
@@ -286,6 +287,7 @@ void							process_redirections(t_tree *node,
 // redirections/utils_redirections.c
 int								is_redir(char **redirs, char *cmd);
 void							exec_redirs(t_tree *node, t_info *info, int *i);
+bool							has_redirection(t_tree *node);
 
 // signals.c
 void							ignore_sigquit(void);

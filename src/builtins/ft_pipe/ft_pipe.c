@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/28 02:55:31 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:37:30 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 18:43:45 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,40 +144,6 @@ void	ft_pipe(t_info *info, t_tree *node)
 	if (in != -1 && info->in_redir == false)
 		close(in);
 	close_heredoc_fds(info->cmd_tree);
-}
-
-bool	has_redirection(t_tree *node)
-{
-	int	i;
-
-	if (!node || !node->args)
-		return (false);
-	i = 0;
-	while (node->args[i])
-	{
-		if (ft_strncmp(node->args[i], "<", 2) == 0 || ft_strncmp(node->args[i],
-				">", 2) == 0 || ft_strncmp(node->args[i], ">>", 3) == 0)
-		{
-			return (true);
-		}
-		i++;
-	}
-	return (false);
-}
-
-bool	check_pipeline_redirection(t_tree *node)
-{
-	if (!node)
-		return (false);
-	if (node->type == PIPE)
-	{
-		if (has_redirection(node->left))
-			return (true);
-		return (check_pipeline_redirection(node->right));
-	}
-	else if (node->type == CMD)
-		return (has_redirection(node));
-	return (false);
 }
 
 void	ft_pipe_wrapper(t_info *info)
