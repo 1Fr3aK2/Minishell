@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/30 19:17:16 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 20:26:08 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,25 @@ int	check_builtins(t_info *info)
 	return (1);
 }
 
+static int	handle_redirection(t_info *info, int i, int j)
+{
+	int	ret;
+
+	if (!info->cmd_tree->args[i + 1])
+		return (1);
+	update_io_file(info->io, info->cmd_tree->args[i + 1]);
+	ret = info->redirections->f[j](info->io, info);
+	if (ret < 0)
+		return (-1);
+	remove_redir_tokens(info->cmd_tree->args, i);
+	return (0);
+}
+
 int	check_redirections(t_info *info)
 {
 	int	i;
 	int	j;
-	int	ret;
+	int	res;
 
 	i = 0;
 	while (info->cmd_tree->args && info->cmd_tree->args[i])
@@ -91,13 +105,11 @@ int	check_redirections(t_info *info)
 			if (ft_strncmp(info->cmd_tree->args[i], info->redirections->reds[j],
 					ft_strlen(info->cmd_tree->args[i])) == 0)
 			{
-				if (!info->cmd_tree->args[i + 1])
+				res = handle_redirection(info, i, j);
+				if (res == 1)
 					return (1);
-				update_io_file(info->io, info->cmd_tree->args[i + 1]);
-				ret = info->redirections->f[j](info->io, info);
-				if (ret < 0)
+				if (res == -1)
 					return (-1);
-				remove_redir_tokens(info->cmd_tree->args, i);
 				j = -1;
 			}
 			j++;
