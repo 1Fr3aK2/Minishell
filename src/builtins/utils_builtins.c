@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/30 17:51:57 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 19:12:23 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,7 @@ int	exec_builtins(char **cmd, t_info *info, t_tree *node)
 		ft_unset(info);
 	else if (ft_strncmp(cmd[0], "pwd", 3) == 0)
 		ft_pwd(info);
-	restore_redirections(saved_in, saved_out);
-	return (0);
+	return (restore_redirections(saved_in, saved_out), 0);
 }
 
 void	exec_command(t_info *info, t_tree *node)

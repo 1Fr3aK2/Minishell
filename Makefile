@@ -12,6 +12,7 @@ SRCS =  src/main.c \
 		src/builtins/ft_unset.c \
 		src/builtins/ft_pipe/ft_pipe.c \
 		src/builtins/ft_pipe/ft_pipe_utils.c \
+		src/builtins/ft_pipe/handlers.c \
 		src/builtins/utils_builtins.c \
 		src/parse/expander/handle_dollar.c\
 		src/parse/expander/expander.c\
@@ -42,6 +43,7 @@ SRCS =  src/main.c \
 		src/utils/utils_bools.c \
 		src/utils/utils.c \
 		src/utils/fds.c \
+		src/utils/more_fds.c \
 		
 NAME = minishell
 

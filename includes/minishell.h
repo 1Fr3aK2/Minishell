@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:42:57 by rafael           ###   ########.fr       */
+/*   Updated: 2025/06/30 19:08:56 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,14 @@ void							ft_pwd(t_info *info);
 void							ft_unset(t_info *info);
 
 // builtins/ft_pipe/ft_pipe.c
-void							ft_pipe_wrapper(t_info *info);
+void							child_exec(t_info *info, t_tree *node, int in,
+									int out);
+pid_t							handle_pipe_fork(t_info *info, t_tree *node,
+									int in, int *fd);
+pid_t							create_pipe(t_info *info, t_tree *node, int in,
+									int *out);
 void							ft_pipe(t_info *info, t_tree *node);
+void							ft_pipe_wrapper(t_info *info);
 
 // builtins/ft_pipe/ft_pipe_utils.c
 void							wait_all(pid_t last_pid, t_info *info);
@@ -167,6 +173,12 @@ void							handle_heredoc(t_tree *node);
 void							exec_comand_op(t_info *info, t_tree *node);
 void							execute_node(t_info *info, t_tree *node);
 bool							check_pipeline_redirection(t_tree *node);
+
+// builtins/ft_pipe/handlers.c
+void							handle_fork_exec(t_info *info, t_tree *curr,
+									int in, pid_t *last_pid);
+void							handle_pipe_loop(t_info *info, t_tree **curr,
+									int *in, pid_t *last_pid);
 
 // builtins/utils_builtins.c
 void							exec_command(t_info *info, t_tree *node);
@@ -346,6 +358,12 @@ void							change_shlvl(char ***env, char *name);
 // utils/fds.c
 void							setup_stdin(t_tree *node, int in);
 void							setup_stdout(int out);
+
+// utils/more_fds.c
+void							dup_and_close_fd(int fd, int std_fd,
+									const char *err_msg);
+void							setup_io_fds(int in, int out);
+void							handle_node_io(t_tree *node);
 
 // main.c
 void							start(t_info *info);
