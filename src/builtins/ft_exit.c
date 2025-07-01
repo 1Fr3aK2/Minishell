@@ -34,13 +34,15 @@ static int	validate_exit_args(t_info *info, char **args)
 {
 	if (args[2] && ft_strisnum(args[1]))
 	{
-		ft_putstr_fd("exit\nMinishell: exit: too many arguments\n", 2);
+		ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
 		update_status(info, 1);
 		return (1);
 	}
 	if (!ft_strisnum(args[1]))
 	{
-		ft_putstr_fd("exit\nMinishell: exit: ", 2);
+		if (isatty(STDIN_FILENO))
+			ft_putstr_fd("exit\n", 1);
+		ft_putstr_fd("Minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		update_status(info, 2);
