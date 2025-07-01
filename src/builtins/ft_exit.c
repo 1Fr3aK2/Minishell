@@ -40,8 +40,6 @@ static int	validate_exit_args(t_info *info, char **args)
 	}
 	if (!ft_strisnum(args[1]))
 	{
-		if (isatty(STDIN_FILENO))
-			ft_putstr_fd("exit\n", 1);
 		ft_putstr_fd("Minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
@@ -74,10 +72,10 @@ void	ft_exit(t_info *info)
 	int	exit_flags;
 	int	has_valid_args;
 
-	exit_flags = 0;
-	has_valid_args = parse_exit_args(info, &exit_flags);
 	if (isatty(STDIN_FILENO))
 		ft_putstr_fd("exit\n", 1);
+	exit_flags = 0;
+	has_valid_args = parse_exit_args(info, &exit_flags);
 	if (has_valid_args)
 		info->exit_status = exit_flags % 256;
 	free_tree(info->cmd_tree);
