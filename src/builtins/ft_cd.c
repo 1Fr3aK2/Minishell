@@ -119,11 +119,11 @@ void	ft_cd(t_info *info)
 
 	if (!info || !info->cmd_tree->args)
 	{
-		ft_putstr_fd("Error: Invalid info or args\n", 2);
 		info->exit_status = 1;
 		return ;
 	}
-	if (info->cmd_tree->args[2])
+	if (info->cmd_tree->args[0] && info->cmd_tree->args[1]
+		&& info->cmd_tree->args[2])
 	{
 		ft_putstr_fd("bash: cd: too many arguments\n", 2);
 		info->exit_status = 1;
