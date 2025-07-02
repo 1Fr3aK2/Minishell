@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:41 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 15:57:37 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/02 04:11:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	start(t_info *info)
 			g_sigint_received = 0;
 		}
 		if (!input)
+		{
+			info->exit_status = 0;
 			ft_exit(info);
+		}
 		if (!is_input_valid(input))
 		{
 			free(input);
