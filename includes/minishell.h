@@ -301,7 +301,10 @@ int								is_redir(char **redirs, char *cmd);
 void							exec_redirs(t_tree *node, t_info *info, int *i);
 bool							has_redirection(t_tree *node);
 
-// signals.c
+// signals/sigint_received.c
+void							sigint_received(t_info *info);
+
+// signals/signal_handle.c
 void							ignore_sigquit(void);
 void							handle_sigint(int sig);
 void							set_signals_interactive(void);

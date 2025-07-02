@@ -33,6 +33,7 @@ SRCS =  src/main.c \
 		src/redirections/redirections.c\
 		src/redirections/redir_utils.c\
 		src/redirections/utils_redirections.c\
+		src/signals/sigint_received.c\
 		src/signals/signal_handle.c\
 		src/splits/custom_split.c\
 		src/splits/split_quotes.c \

@@ -51,11 +51,7 @@ void	start(t_info *info)
 	{
 		set_signals_interactive();
 		input = readline("Minishell$> ");
-		if (g_sigint_received)
-		{
-			info->exit_status = 130;
-			g_sigint_received = 0;
-		}
+		sigint_received(info);
 		if (!input)
 		{
 			info->exit_status = 0;
