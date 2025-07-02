@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 19:08:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:16:18 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,7 +267,7 @@ void							exec(t_info *info, t_tree *node);
 // processes/utils.c
 char							*get_env(char *variable_name, char **env);
 char							*find_path(t_info *info, char *cmd);
-
+int								is_directory(char *path);
 // redirections/heredocs.c
 void							handle_heredoc_child(t_io *io, t_info *info,
 									int fd[2]);

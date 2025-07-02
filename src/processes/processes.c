@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 08:28:29 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:15:28 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,19 @@ void	handle_exec_failure(t_info *info, char *cmd, int exit_code)
 {
 	ft_putstr_fd(cmd, 2);
 	if (exit_code == 127)
-		ft_putstr_fd(": command not found\n", 2);
-	if (exit_code == 126)
-		ft_putstr_fd(": Is a directory\n", 2);
+	{
+		if (errno == ENOENT)
+			ft_putstr_fd(": No such file or directory\n", 2);
+		else
+			ft_putstr_fd(": command not found\n", 2);
+	}
+	else if (exit_code == 126)
+	{
+		if (is_directory(cmd))
+			ft_putstr_fd(": Is a directory\n", 2);
+		else
+			ft_putstr_fd(": Permission denied\n", 2);
+	}
 	info->exit_status = exit_code;
 	ft_exit2(info);
 }
@@ -77,14 +87,23 @@ void	exec(t_info *info, t_tree *node)
 {
 	char	*path;
 
-	if (!info)
+	if (!info || !node || !node->args || !node->args[0])
 		return ;
 	restore_io(info->io);
-	if (node->args[0][0] == '\0')
-		handle_exec_failure(info, node->args[0], 0);
 	path = find_path(info, node->args[0]);
 	if (!path)
+	{
+		if (ft_strchr(node->args[0], '/'))
+			errno = ENOENT;
+		else
+			errno = 0;
 		handle_exec_failure(info, node->args[0], 127);
+	}
+	if (is_directory(path))
+	{
+		free(path);
+		handle_exec_failure(info, node->args[0], 126);
+	}
 	if (execve(path, node->args, info->my_env) == -1)
 	{
 		free(path);

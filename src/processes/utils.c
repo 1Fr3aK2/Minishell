@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:15 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/18 08:28:24 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 00:15:33 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,12 @@ char	*find_path(t_info *info, char *cmd)
 
 	if (!cmd)
 		return (NULL);
-	if (access(cmd, F_OK | X_OK) == 0)
+	if (ft_strchr(cmd, '/'))
+	{
+		if (access(cmd, F_OK) != 0)
+			return (NULL);
 		return (ft_strdup(cmd));
+	}
 	paths = ft_split(get_env("PATH", info->my_env), ':');
 	if (!paths)
 		return (NULL);
@@ -95,4 +99,19 @@ char	*find_path(t_info *info, char *cmd)
 	if (!path)
 		return (NULL);
 	return (path);
+}
+
+int	is_directory(char *path)
+{
+	DIR	*dir;
+
+	dir = opendir(path);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	if (errno == ENOTDIR)
+		return (0);
+	return (0);
 }
