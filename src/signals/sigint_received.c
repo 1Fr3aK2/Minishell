@@ -12,7 +12,7 @@
 
 #include "../../includes/minishell.h"
 
-void sigint_received(t_info *info)
+void	sigint_received(t_info *info)
 {
 	if (g_sigint_received)
 	{

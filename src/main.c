@@ -53,10 +53,7 @@ void	start(t_info *info)
 		input = readline("Minishell$> ");
 		sigint_received(info);
 		if (!input)
-		{
-			info->exit_status = 0;
-			ft_exit(info);
-		}
+			cleanup_and_exit(info);
 		if (!is_input_valid(input))
 		{
 			free(input);

@@ -367,6 +367,7 @@ void							dup_and_close_fd(int fd, int std_fd,
 									const char *err_msg);
 void							setup_io_fds(int in, int out);
 void							handle_node_io(t_tree *node);
+void							cleanup_and_exit(t_info *info);
 
 // main.c
 void							start(t_info *info);

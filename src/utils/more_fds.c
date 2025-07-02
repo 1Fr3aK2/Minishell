@@ -40,3 +40,9 @@ void	handle_node_io(t_tree *node)
 	if (node->io && node->io->fd_out != -1)
 		dup_and_close_fd(node->io->fd_out, STDOUT_FILENO, "dup2 file stdout");
 }
+
+void	cleanup_and_exit(t_info *info)
+{
+	info->exit_status = 0;
+	ft_exit(info);
+}
