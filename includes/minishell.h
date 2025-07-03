@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 00:16:18 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:43:40 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -257,8 +257,6 @@ void							print_syntax_error_token(t_tree *node,
 void							child_process(t_info *info);
 
 // processes/processes.c
-void							handle_child_signals(void);
-void							handle_parent_signals(int status, t_info *info);
 void							exec_child_process(t_info *info);
 void							handle_exec_failure(t_info *info, char *cmd,
 									int exit_code);
@@ -303,6 +301,8 @@ bool							has_redirection(t_tree *node);
 
 // signals/sigint_received.c
 void							sigint_received(t_info *info);
+void							handle_child_signals(void);
+void							handle_parent_signals(int status, t_info *info);
 
 // signals/signal_handle.c
 void							ignore_sigquit(void);
