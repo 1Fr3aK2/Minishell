@@ -39,14 +39,14 @@ SRCS =  src/main.c \
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \
 		src/utils/checks.c \
-		src/utils/close_fds.c \
-		src/utils/setup_fds.c \
+		src/utils/fds/close_fds.c \
+		src/utils/fds/setup_fds.c \
+		src/utils/fds/fds.c \
+		src/utils/fds/more_fds.c \
 		src/utils/free.c \
 		src/utils/more_utils.c \
 		src/utils/utils_bools.c \
 		src/utils/utils.c \
-		src/utils/fds.c \
-		src/utils/more_fds.c \
 		
 NAME = minishell
 

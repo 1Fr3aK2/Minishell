@@ -6,47 +6,32 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:57:12 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 04:05:09 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:36:41 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
-void	dup_and_close(int oldfd, int newfd, const char *errmsg)
+void	handle_node_io(t_tree *node)
 {
-	if (dup2(oldfd, newfd) == -1)
-	{
-		perror(errmsg);
-		exit(1);
-	}
-	close(oldfd);
+	if (node->io && node->io->fd_in != -1)
+		dup_and_close_fd(node->io->fd_in, STDIN_FILENO, "dup2 file stdin");
+	else if (node->io && node->io->heredoc_fd != -1)
+		dup_and_close_fd(node->io->heredoc_fd, STDIN_FILENO,
+			"dup2 heredoc stdin");
+	if (node->io && node->io->fd_out != -1)
+		dup_and_close_fd(node->io->fd_out, STDOUT_FILENO, "dup2 file stdout");
 }
 
-void	handle_io_input(t_tree *node, int in)
+void	close_heredoc_fds(t_tree *node)
 {
-	dup_and_close(node->io->fd_in, STDIN_FILENO, "dup2 node input");
-	node->io->fd_in = -1;
-	if (in != -1)
-		close(in);
-}
-
-void	handle_heredoc_case(t_tree *node, int in)
-{
-	if (in != -1)
-		close(in);
-	handle_heredoc(node);
-}
-
-void	restore_redirections(int saved_in, int saved_out)
-{
-	if (saved_in != -1)
+	if (!node)
+		return ;
+	if (node->io && node->io->heredoc_fd != -1)
 	{
-		dup2(saved_in, STDIN_FILENO);
-		close(saved_in);
+		close(node->io->heredoc_fd);
+		node->io->heredoc_fd = -1;
 	}
-	if (saved_out != -1)
-	{
-		dup2(saved_out, STDOUT_FILENO);
-		close(saved_out);
-	}
+	close_heredoc_fds(node->left);
+	close_heredoc_fds(node->right);
 }

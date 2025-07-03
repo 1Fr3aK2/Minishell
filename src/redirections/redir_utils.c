@@ -6,21 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/03 03:53:36 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:18:56 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	storing_backup(t_io *io)
-{
-	io->stdin_backup = dup(STDIN_FILENO);
-	if (io->stdin_backup == -1)
-		ft_putstr_fd("dup stdin backup failed", 2);
-	io->stdout_backup = dup(STDOUT_FILENO);
-	if (io->stdout_backup == -1)
-		ft_putstr_fd("dup stdout backup failed", 2);
-}
 
 void	restore_io(t_io *io)
 {
@@ -40,4 +30,26 @@ void	restore_io(t_io *io)
 	close_and_reset(&io->fd_in);
 	close_and_reset(&io->fd_out);
 	io->stdin_is_heredoc = 0;
+}
+
+void	restore_redirections(int saved_in, int saved_out)
+{
+	if (saved_in != -1)
+	{
+		dup2(saved_in, STDIN_FILENO);
+		close(saved_in);
+	}
+	if (saved_out != -1)
+	{
+		dup2(saved_out, STDOUT_FILENO);
+		close(saved_out);
+	}
+}
+
+void	handle_redir_error(t_info *info)
+{
+	ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n",
+		2);
+	info->exit_status = 258;
+	exit(258);
 }

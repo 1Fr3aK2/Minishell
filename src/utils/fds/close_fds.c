@@ -6,11 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/03 03:47:03 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 03:53:04 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:19:18 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/minishell.h"
+#include "../../../includes/minishell.h"
 
 void	close_io_fds(t_io *io)
 {
