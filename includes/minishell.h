@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 03:43:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:03:46 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,8 +185,6 @@ void							exec_command(t_info *info, t_tree *node);
 int								exec_builtins(char **cmd, t_info *info,
 									t_tree *node);
 int								is_builtin(char **builtins, char *cmd);
-int								apply_redirections_node(t_tree *node,
-									int *saved_in, int *saved_out);
 
 // parse/expander/handle_dollar.c
 char							*handle_dollar(char *str, t_info *info);
@@ -278,11 +276,8 @@ int								process_heredoc_args(t_tree *node,
 void							prepare_heredocs(t_tree *node, t_info *info);
 
 // redirections/redir_utils.c
-void							close_and_reset(int *fd);
-void							close_heredoc_backups(t_io *io);
 void							storing_backup(t_io *io);
 void							restore_io(t_io *io);
-void							handle_sigint_heredoc(int sig);
 
 // redirections/redirections.c
 int								handle_output_redirection(t_io *io,
@@ -296,19 +291,22 @@ void							process_redirections(t_tree *node,
 
 // redirections/utils_redirections.c
 int								is_redir(char **redirs, char *cmd);
-void							exec_redirs(t_tree *node, t_info *info, int *i);
 bool							has_redirection(t_tree *node);
+void							exec_redirs(t_tree *node, t_info *info, int *i);
+int								apply_redirections_node(t_tree *node,
+									int *saved_in, int *saved_out);
 
 // signals/sigint_received.c
 void							sigint_received(t_info *info);
 void							handle_child_signals(void);
 void							handle_parent_signals(int status, t_info *info);
+void							print_newline(int signal);
 
 // signals/signal_handle.c
 void							ignore_sigquit(void);
 void							handle_sigint(int sig);
 void							set_signals_interactive(void);
-void							print_newline(int signal);
+void							handle_sigint_heredoc(int sig);
 void							set_signals_noninteractive(void);
 
 // splits/custom_split.c
@@ -324,12 +322,23 @@ int								count_word(char *str);
 // utils/checks.c
 int								apply_redirections(t_info *info, int *saved_in,
 									int *saved_out);
-void							restore_redirections(int saved_in,
-									int saved_out);
 int								check_builtins(t_info *info);
 int								check_redirections(t_info *info);
 int								check_redirections_node(t_tree *node,
 									t_info *info);
+
+// utils/close_fds.c
+void							close_io_fds(t_io *io);
+void							close_fds(int i);
+void							close_pipe_fds(int *fd);
+void							close_and_reset(int *fd);
+void							close_heredoc_backups(t_io *io);
+
+// utils/setup_fds.c
+void							setup_io_fds(int in, int out);
+void							setup_stdin(t_tree *node, int in);
+void							setup_stdout(int out);
+void							setup_io_from_tree(t_info *info);
 
 // utils/free.c
 void							free_arr(char **arr);
@@ -352,20 +361,20 @@ int								is_operator_char(char c);
 int								is_double_operator(char *str);
 
 // utils.c
-void							close_io_fds(t_io *io);
-void							close_fds(int i);
-void							close_pipe_fds(int *fd);
 char							*reverse_strchr(char *str, int c);
 void							change_shlvl(char ***env, char *name);
 
 // utils/fds.c
-void							setup_stdin(t_tree *node, int in);
-void							setup_stdout(int out);
+void							dup_and_close(int oldfd, int newfd,
+									const char *errmsg);
+void							handle_io_input(t_tree *node, int in);
+void							handle_heredoc_case(t_tree *node, int in);
+void							restore_redirections(int saved_in,
+									int saved_out);
 
 // utils/more_fds.c
 void							dup_and_close_fd(int fd, int std_fd,
 									const char *err_msg);
-void							setup_io_fds(int in, int out);
 void							handle_node_io(t_tree *node);
 void							cleanup_and_exit(t_info *info);
 

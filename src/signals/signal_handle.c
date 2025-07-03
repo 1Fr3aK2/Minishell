@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handle.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/06 15:40:26 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/07/03 03:51:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,12 @@ void	set_signals_interactive(void)
 	sigaction(SIGINT, &act, NULL);
 }
 
-void	print_newline(int signal)
+void	handle_sigint_heredoc(int sig)
 {
-	if (signal == SIGINT)
-		write(1, "\n", 1);
+	(void)sig;
+	write(1, "\n", 1);
+	close_fds(0);
+	exit(130);
 }
 
 void	set_signals_noninteractive(void)

@@ -6,46 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:40:05 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/30 20:26:08 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:03:24 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	apply_redirections(t_info *info, int *saved_in, int *saved_out)
-{
-	if (info->io->fd_in != -1)
-	{
-		*saved_in = dup(STDIN_FILENO);
-		if (*saved_in == -1 || dup2(info->io->fd_in, STDIN_FILENO) == -1)
-			return (-1);
-		close(info->io->fd_in);
-		info->io->fd_in = -1;
-	}
-	if (info->io->fd_out != -1)
-	{
-		*saved_out = dup(STDOUT_FILENO);
-		if (*saved_out == -1 || dup2(info->io->fd_out, STDOUT_FILENO) == -1)
-			return (-1);
-		close(info->io->fd_out);
-		info->io->fd_out = -1;
-	}
-	return (0);
-}
-
-void	restore_redirections(int saved_in, int saved_out)
-{
-	if (saved_in != -1)
-	{
-		dup2(saved_in, STDIN_FILENO);
-		close(saved_in);
-	}
-	if (saved_out != -1)
-	{
-		dup2(saved_out, STDOUT_FILENO);
-		close(saved_out);
-	}
-}
 
 int	check_builtins(t_info *info)
 {

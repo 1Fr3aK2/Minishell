@@ -6,37 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/20 16:16:10 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:49:00 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-void	close_io_fds(t_io *io)
-{
-	if (!io)
-		return ;
-	close(io->stdout_backup);
-	close(io->stdin_backup);
-}
-
-void	close_fds(int i)
-{
-	i = 3;
-	while (i < FOPEN_MAX)
-	{
-		close(i);
-		i++;
-	}
-}
-
-void	close_pipe_fds(int *fd)
-{
-	if (fd[0] != -1)
-		close(fd[0]);
-	if (fd[1] != -1)
-		close(fd[1]);
-}
 
 char	*reverse_strchr(char *str, int c)
 {

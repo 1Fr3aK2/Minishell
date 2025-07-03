@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 16:34:48 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/03 03:43:15 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 04:04:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,10 @@ void	handle_parent_signals(int status, t_info *info)
 			write(1, "\n", 1);
 		}
 	}
+}
+
+void	print_newline(int signal)
+{
+	if (signal == SIGINT)
+		write(1, "\n", 1);
 }

@@ -39,6 +39,8 @@ SRCS =  src/main.c \
 		src/splits/split_quotes.c \
 		src/splits/utils_split_quotes.c \
 		src/utils/checks.c \
+		src/utils/close_fds.c \
+		src/utils/setup_fds.c \
 		src/utils/free.c \
 		src/utils/more_utils.c \
 		src/utils/utils_bools.c \

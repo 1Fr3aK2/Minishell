@@ -6,23 +6,11 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:53:00 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 19:13:58 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/03 03:59:00 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	setup_io_from_tree(t_info *info)
-{
-	if (info->cmd_tree && info->cmd_tree->io)
-	{
-		if (info->io->heredoc_fd != -1)
-			close(info->io->heredoc_fd);
-		info->io->heredoc_fd = info->cmd_tree->io->heredoc_fd;
-		info->cmd_tree->io->heredoc_fd = -1;
-		info->io->stdin_is_heredoc = info->cmd_tree->io->stdin_is_heredoc;
-	}
-}
 
 static int	pre_fork_setup(t_info *info)
 {
