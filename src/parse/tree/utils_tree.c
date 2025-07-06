@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:52:23 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 20:00:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/06 21:50:16 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,15 +64,19 @@ t_tree	*parse_tokens(char **tokens, t_info *info)
 	node = NULL;
 	if (!tokens || !tokens[0])
 		return (NULL);
-	if (has_invalid_redirection(tokens, info))
-		return (NULL);
 	while (tokens[total])
 		total++;
 	op_index = search_ops(tokens);
 	if (op_index != -1)
 		node = creat_op_node(tokens, &op_index, info);
 	else
+	{
+		if (has_invalid_redirection(tokens, info))
+			return (NULL);
 		node = create_node(tokens);
+	}
+	if (!node)
+		return (NULL);
 	return (node);
 }
 

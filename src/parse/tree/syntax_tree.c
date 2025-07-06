@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 20:39:40 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/07 00:43:09 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,18 @@ int	is_valid_redirection(const char *token, t_info *info)
 	return (0);
 }
 
-static void	print_redir_syntax_error(char *token, t_info *info)
+int	print_redir_syntax_error(char *token, t_info *info)
 {
+	if (!token)
+		token = "newline";
+	if (info->error_msg)
+		return (1);
 	ft_putstr_fd("minishell: syntax error near unexpected token `", 2);
-	if (token)
-		ft_putstr_fd(token, 2);
-	else
-		ft_putstr_fd("newline", 2);
+	ft_putstr_fd(token, 2);
 	ft_putstr_fd("'\n", 2);
-	info->exit_status = 2;
+	info->error_msg = true;
+	update_status(info, 2);
+	return (1);
 }
 
 static int	check_missing_redir_target(char **tokens, t_info *info)
@@ -52,8 +55,13 @@ static int	check_missing_redir_target(char **tokens, t_info *info)
 			if (!tokens[i + 1] || ft_strncmp(tokens[i + 1], ">", 2) == 0
 				|| ft_strncmp(tokens[i + 1], ">>", 3) == 0
 				|| ft_strncmp(tokens[i + 1], "<", 2) == 0 || ft_strncmp(tokens[i
-						+ 1], "<<", 3) == 0)
-				return (print_redir_syntax_error(tokens[i + 1], info), 1);
+						+ 1], "<<", 3) == 0 || ft_strncmp(tokens[i + 1], "|",
+					2) == 0)
+			{
+				if (!info->error_msg)
+					print_redir_syntax_error(tokens[i + 1], info);
+				return (1);
+			}
 		}
 		i++;
 	}
