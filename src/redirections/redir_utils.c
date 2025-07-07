@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 15:52:25 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/03 04:18:56 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/07 18:57:59 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,14 @@ void	handle_redir_error(t_info *info)
 		2);
 	info->exit_status = 258;
 	exit(258);
+}
+
+void	print_heredoc_eof(t_io *io, char *line)
+{
+	if (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
+		&& ft_strlen(line) == ft_strlen(io->file))
+		return ;
+	else
+		ft_putendl_fd("minishell: warning: here-document delimited by"
+			" end-of-file", 2);
 }

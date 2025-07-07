@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/06/27 04:04:32 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/07 19:10:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ void	handle_heredoc_child(t_io *io, t_info *info, int fd[2])
 		if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
 				&& ft_strlen(line) == ft_strlen(io->file)))
 		{
+			print_heredoc_eof(io, line);
 			free(line);
 			break ;
 		}
 		temp = handle_dollar(line, info);
 		if (!temp)
 			temp = ft_strdup("");
-		write(fd[1], temp, ft_strlen(temp));
-		write(fd[1], "\n", 1);
+		ft_putendl_fd(temp, fd[1]);
 		free(line);
 		free(temp);
 	}

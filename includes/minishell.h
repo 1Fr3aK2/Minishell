@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 04:36:14 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/07 18:49:43 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,6 +280,7 @@ void							restore_io(t_io *io);
 void							restore_redirections(int saved_in,
 									int saved_out);
 void							handle_redir_error(t_info *info);
+void							print_heredoc_eof(t_io *io, char *line);
 
 // redirections/redirections.c
 int								handle_output_redirection(t_io *io,
