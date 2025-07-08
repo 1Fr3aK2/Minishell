@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 14:15:58 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/30 19:12:23 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:53:11 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,5 @@ void	exec_command(t_info *info, t_tree *node)
 	exec(info, node);
 	close_heredoc_fd(info);
 	close_fds(0);
-	exit(info->exit_status);
+	ft_exit2(info);
 }

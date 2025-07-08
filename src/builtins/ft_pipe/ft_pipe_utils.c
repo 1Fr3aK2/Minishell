@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 17:47:41 by rafael            #+#    #+#             */
-/*   Updated: 2025/06/30 18:43:34 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/08 16:52:58 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,10 @@ void	exec_comand_op(t_info *info, t_tree *node)
 	if (node->type == PIPE)
 		ft_pipe(info, node);
 	else
-		exit(127);
+	{
+		update_status(info, 127);
+		ft_exit2(info);
+	}
 }
 
 void	execute_node(t_info *info, t_tree *node)
