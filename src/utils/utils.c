@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 12:55:33 by raamorim          #+#    #+#             */
-/*   Updated: 2025/07/03 03:49:00 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/08 18:41:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,9 @@ void	change_shlvl(char ***env, char *name)
 		if (ft_strncmp("SHLVL=", (*env)[i], ft_strlen("SHLVL=")) == 0)
 		{
 			free((*env)[i]);
-			(*env)[i] = new_val;
+			(*env)[i] = ft_strdup(new_val);
 		}
 		i++;
 	}
+	free(new_val);
 }
