@@ -12,6 +12,33 @@
 
 #include "../../includes/minishell.h"
 
+static int	is_within_long_range(const char *str)
+{
+	int		negative;
+	size_t	len;
+	char	*limit;
+
+	negative = 0;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			negative = 1;
+		str++;
+	}
+	len = ft_strlen(str);
+	if (len > 19)
+		return (0);
+	if (len < 19)
+		return (1);
+	if (negative == 1)
+		limit = "9223372036854775808";
+	else
+		limit = "9223372036854775807";
+	if (ft_strncmp(str, limit, 19) > 0)
+		return (0);
+	return (1);
+}
+
 static int	ft_strisnum(char *str)
 {
 	size_t	count;
@@ -32,13 +59,13 @@ static int	ft_strisnum(char *str)
 
 static int	validate_exit_args(t_info *info, char **args)
 {
-	if (args[2] && ft_strisnum(args[1]))
+	if (args[2] && ft_strisnum(args[1]) && is_within_long_range(args[1]))
 	{
 		ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
 		update_status(info, 1);
 		return (1);
 	}
-	if (!ft_strisnum(args[1]))
+	if (!ft_strisnum(args[1]) || !is_within_long_range(args[1]))
 	{
 		ft_putstr_fd("Minishell: exit: ", 2);
 		ft_putstr_fd(args[1], 2);
@@ -86,18 +113,5 @@ void	ft_exit(t_info *info)
 	close_fds(0);
 	free(info->io);
 	free(info->redirections);
-	exit(info->exit_status);
-}
-
-void	ft_exit2(t_info *info)
-{
-	free_tree(info->cmd_tree);
-	free_builtins(info->builtins);
-	free_arr(info->my_env);
-	free_arr(info->export_env);
-	free(info->io);
-	free(info->redirections);
-	rl_clear_history();
-	close_fds(0);
 	exit(info->exit_status);
 }

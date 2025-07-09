@@ -59,3 +59,16 @@ void	change_shlvl(char ***env, char *name)
 	}
 	free(new_val);
 }
+
+void	ft_exit2(t_info *info)
+{
+	free_tree(info->cmd_tree);
+	free_builtins(info->builtins);
+	free_arr(info->my_env);
+	free_arr(info->export_env);
+	free(info->io);
+	free(info->redirections);
+	rl_clear_history();
+	close_fds(0);
+	exit(info->exit_status);
+}
