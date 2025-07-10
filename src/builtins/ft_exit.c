@@ -71,7 +71,7 @@ static int	validate_exit_args(t_info *info, char **args)
 		ft_putstr_fd(args[1], 2);
 		ft_putstr_fd(": numeric argument required\n", 2);
 		update_status(info, 2);
-		exit(info->exit_status);
+		ft_exit2(info);
 	}
 	return (0);
 }
