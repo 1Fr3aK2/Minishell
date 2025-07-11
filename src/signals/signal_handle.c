@@ -48,8 +48,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	close_fds(0);
-	exit(130);
+	close(STDIN_FILENO);
 }
 
 void	set_signals_noninteractive(void)

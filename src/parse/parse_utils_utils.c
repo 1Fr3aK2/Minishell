@@ -101,16 +101,34 @@ char	**check_dollar_and_retokenize(char **args, t_info *info)
 	char	**result;
 	int		i;
 	int		status;
+	int		skip_next;
 
+	skip_next = 0;
 	if (!info || !info->my_env || !args)
 		return (args);
 	result = args;
 	i = 0;
 	while (result[i])
 	{
-		if (is_lonely_dollar(result[i++]))
+		if (skip_next)
+		{
+			skip_next = 0;
+			i++;
 			continue ;
-		status = update_token(&result, i - 1, info);
+		}
+		if (ft_strncmp(result[i], "<<", 2) == 0 && result[i][2] == '\0')
+		{
+			// Skip expansion for the next token (heredoc delimiter)
+			skip_next = 1;
+			i++;
+			continue ;
+		}
+		if (is_lonely_dollar(result[i]))
+		{
+			i++;
+			continue ;
+		}
+		status = update_token(&result, i, info);
 		if (status == 0)
 			break ;
 		if (status == 2)
@@ -118,6 +136,7 @@ char	**check_dollar_and_retokenize(char **args, t_info *info)
 			i = 0;
 			continue ;
 		}
+		i++;
 	}
 	return (result);
 }

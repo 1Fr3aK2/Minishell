@@ -63,3 +63,14 @@ void	print_heredoc_eof(t_io *io, char *line)
 		ft_putendl_fd("minishell: warning: here-document delimited by"
 			" end-of-file", 2);
 }
+
+void	process_line(char *line, t_info *info, int fd)
+{
+	char	*temp;
+
+	temp = handle_dollar(line, info);
+	if (!temp)
+		temp = ft_strdup("");
+	ft_putendl_fd(temp, fd);
+	free(temp);
+}

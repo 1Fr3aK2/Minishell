@@ -1,0 +1,3 @@
+ok
+ola
+adeus

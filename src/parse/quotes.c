@@ -85,13 +85,27 @@ char	*remove_quotes(char *str)
 void	remove_all_quotes(char **tokens)
 {
 	int		i;
+	int		skip_next;
 	char	*temp;
 
 	if (!tokens)
 		return ;
 	i = 0;
+	skip_next = 0;
 	while (tokens[i])
 	{
+		if (skip_next)
+		{
+			skip_next = 0;
+			i++;
+			continue ;
+		}
+		if (ft_strncmp(tokens[i], "<<", 2) == 0 && tokens[i][2] == '\0')
+		{
+			skip_next = 1;
+			i++;
+			continue ;
+		}
 		add_space_operators(&tokens[i]);
 		temp = remove_quotes(tokens[i]);
 		if (temp)
@@ -102,3 +116,4 @@ void	remove_all_quotes(char **tokens)
 		i++;
 	}
 }
+

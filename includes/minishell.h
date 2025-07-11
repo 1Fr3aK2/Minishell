@@ -69,6 +69,7 @@ typedef struct s_io
 	int							stdout_backup;
 	int							heredoc_fd;
 	int							stdin_is_heredoc;
+	int							quoted;
 	t_reds						*redirections;
 }								t_io;
 
@@ -102,6 +103,7 @@ typedef struct s_info
 
 extern volatile sig_atomic_t	g_sigint_received;
 
+int	has_quotes(const char *s);
 // builtins/export/export_aux_functions.c
 bool							check_pipeline_redirection(t_tree *node);
 void							handle_regular_assignment(t_info *info,
@@ -293,6 +295,7 @@ void							restore_redirections(int saved_in,
 									int saved_out);
 void							handle_redir_error(t_info *info);
 void							print_heredoc_eof(t_io *io, char *line);
+void							process_line(char *line, t_info *info, int fd);
 
 // redirections/redirections.c
 int								handle_output_redirection(t_io *io,

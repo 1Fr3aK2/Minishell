@@ -12,10 +12,24 @@
 
 #include "../../includes/minishell.h"
 
+int	has_quotes(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if (s[i] == '\'' || s[i] == '\"')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+
 void	handle_heredoc_child(t_io *io, t_info *info, int fd[2])
 {
 	char	*line;
-	char	*temp;
 
 	signal(SIGINT, handle_sigint_heredoc);
 	close(fd[0]);
@@ -23,19 +37,23 @@ void	handle_heredoc_child(t_io *io, t_info *info, int fd[2])
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || (ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
+		if (line == NULL)
+		{
+			info->exit_status = 130;
+			ft_exit(info);
+		}
+		if ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
 				&& ft_strlen(line) == ft_strlen(io->file)))
 		{
 			print_heredoc_eof(io, line);
 			free(line);
 			break ;
 		}
-		temp = handle_dollar(line, info);
-		if (!temp)
-			temp = ft_strdup("");
-		ft_putendl_fd(temp, fd[1]);
+		if (io->quoted)
+			ft_putendl_fd(line, fd[1]);
+		else
+			process_line(line, info, fd[1]);
 		free(line);
-		free(temp);
 	}
 	close(fd[1]);
 	ft_exit2(info);
@@ -101,6 +119,10 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 				init_io(node->io);
 			}
 			update_io_file(node->io, node->args[i + 1]);
+			node->io->quoted = has_quotes(node->args[i + 1]);
+			char *temp = remove_quotes(node->args[i + 1]);
+			free(node->io->file);
+			node->io->file = temp;
 			handle_heredoc_redirection(node->io, info);
 			remove_redir_tokens(node->args, i);
 			return (1);
@@ -109,6 +131,7 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 	}
 	return (0);
 }
+
 
 void	prepare_heredocs(t_tree *node, t_info *info)
 {

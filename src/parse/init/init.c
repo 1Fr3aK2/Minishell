@@ -49,6 +49,7 @@ void	init_io(t_io *io)
 	io->stdout_backup = -1;
 	io->heredoc_fd = -1;
 	io->stdin_is_heredoc = 0;
+	io->quoted = 0;
 	io->file = NULL;
 	io->redirections = NULL;
 }
