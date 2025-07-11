@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/11 17:06:18 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:17:06 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,6 +287,11 @@ void							handle_heredoc_redirection(t_io *io,
 int								process_heredoc_args(t_tree *node,
 									t_info *info);
 void							prepare_heredocs(t_tree *node, t_info *info);
+
+// redirections/more_redir_utils.c
+void							heredoc_loop(t_io *io, t_info *info, int fd[2]);
+int								setup_heredoc_io(t_tree *node, t_info *info,
+									int i);
 
 // redirections/redir_utils.c
 void							restore_io(t_io *io);

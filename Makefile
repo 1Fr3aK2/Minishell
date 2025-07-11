@@ -22,6 +22,7 @@ SRCS =  src/main.c \
 		src/parse/parse.c \
 		src/parse/parse_utils.c \
 		src/parse/parse_utils_utils.c \
+		src/parse/more_parse_utils.c \
 		src/parse/quotes.c \
 		src/parse/utils_quotes.c \
 		src/parse/tree/syntax_tree.c \
@@ -31,6 +32,7 @@ SRCS =  src/main.c \
 		src/processes/processes.c\
 		src/processes/utils.c\
 		src/redirections/heredocs.c\
+		src/redirections/more_redir_utils.c\
 		src/redirections/redirections.c\
 		src/redirections/redir_utils.c\
 		src/redirections/utils_redirections.c\

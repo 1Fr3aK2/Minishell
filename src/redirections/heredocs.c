@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/11 17:06:28 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:17:16 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,10 @@
 
 void	handle_heredoc_child(t_io *io, t_info *info, int fd[2])
 {
-	char	*line;
-
 	signal(SIGINT, handle_sigint_heredoc);
 	close(fd[0]);
 	close_heredoc_backups(io);
-	while (1)
-	{
-		line = readline("> ");
-		if (line == NULL)
-		{
-			info->exit_status = 130;
-			ft_exit(info);
-		}
-		if ((ft_strncmp(line, io->file, ft_strlen(io->file)) == 0
-				&& ft_strlen(line) == ft_strlen(io->file)))
-		{
-			print_heredoc_eof(io, line);
-			free(line);
-			break ;
-		}
-		if (io->quoted)
-			ft_putendl_fd(line, fd[1]);
-		else
-			process_line(line, info, fd[1]);
-		free(line);
-	}
+	heredoc_loop(io, info, fd);
 	close(fd[1]);
 	ft_exit2(info);
 }
@@ -87,8 +65,8 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 
 int	process_heredoc_args(t_tree *node, t_info *info)
 {
-	int		i;
-	char	*temp;
+	int	i;
+	int	status;
 
 	i = 0;
 	while (node->args[i])
@@ -97,19 +75,9 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 		{
 			if (!node->args[i + 1])
 				return (info->exit_status = 2, -1);
-			if (!node->io)
-			{
-				node->io = malloc(sizeof(t_io));
-				if (!node->io)
-					return (-1);
-				init_io(node->io);
-			}
-			update_io_file(node->io, node->args[i + 1]);
-			node->io->quoted = has_quotes(node->args[i + 1]);
-			temp = remove_quotes(node->args[i + 1]);
-			free(node->io->file);
-			node->io->file = temp;
-			handle_heredoc_redirection(node->io, info);
+			status = setup_heredoc_io(node, info, i);
+			if (status == -1)
+				return (-1);
 			remove_redir_tokens(node->args, i);
 			return (1);
 		}

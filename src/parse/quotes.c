@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/18 14:05:59 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/17 15:54:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 17:24:52 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,38 +82,43 @@ char	*remove_quotes(char *str)
 	return (new);
 }
 
+static void	process_quote_removal(char **tokens, int *i, int *skip_next)
+{
+	char	*temp;
+
+	while (tokens[*i])
+	{
+		if (*skip_next)
+		{
+			*skip_next = 0;
+			(*i)++;
+			continue ;
+		}
+		if (ft_strncmp(tokens[*i], "<<", 2) == 0 && tokens[*i][2] == '\0')
+		{
+			*skip_next = 1;
+			(*i)++;
+			continue ;
+		}
+		add_space_operators(&tokens[*i]);
+		temp = remove_quotes(tokens[*i]);
+		if (temp)
+		{
+			free(tokens[*i]);
+			tokens[*i] = temp;
+		}
+		(*i)++;
+	}
+}
+
 void	remove_all_quotes(char **tokens)
 {
-	int		i;
-	int		skip_next;
-	char	*temp;
+	int	i;
+	int	skip_next;
 
 	if (!tokens)
 		return ;
 	i = 0;
 	skip_next = 0;
-	while (tokens[i])
-	{
-		if (skip_next)
-		{
-			skip_next = 0;
-			i++;
-			continue ;
-		}
-		if (ft_strncmp(tokens[i], "<<", 2) == 0 && tokens[i][2] == '\0')
-		{
-			skip_next = 1;
-			i++;
-			continue ;
-		}
-		add_space_operators(&tokens[i]);
-		temp = remove_quotes(tokens[i]);
-		if (temp)
-		{
-			free(tokens[i]);
-			tokens[i] = temp;
-		}
-		i++;
-	}
+	process_quote_removal(tokens, &i, &skip_next);
 }
-

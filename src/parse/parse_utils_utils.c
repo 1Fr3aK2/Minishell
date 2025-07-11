@@ -6,7 +6,7 @@
 /*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 04:43:05 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/11 17:04:45 by dsteiger         ###   ########.fr       */
+/*   Updated: 2025/07/11 17:20:19 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,48 +94,4 @@ int	update_token(char ***result_ptr, int index, t_info *info)
 	free(new);
 	free(original);
 	return (1);
-}
-
-char	**check_dollar_and_retokenize(char **args, t_info *info)
-{
-	char	**result;
-	int		i;
-	int		status;
-	int		skip_next;
-
-	skip_next = 0;
-	if (!info || !info->my_env || !args)
-		return (args);
-	result = args;
-	i = 0;
-	while (result[i])
-	{
-		if (skip_next)
-		{
-			skip_next = 0;
-			i++;
-			continue ;
-		}
-		if (ft_strncmp(result[i], "<<", 2) == 0 && result[i][2] == '\0')
-		{
-			skip_next = 1;
-			i++;
-			continue ;
-		}
-		if (is_lonely_dollar(result[i]))
-		{
-			i++;
-			continue ;
-		}
-		status = update_token(&result, i, info);
-		if (status == 0)
-			break ;
-		if (status == 2)
-		{
-			i = 0;
-			continue ;
-		}
-		i++;
-	}
-	return (result);
 }
