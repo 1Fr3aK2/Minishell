@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/11 04:46:07 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 17:06:18 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ typedef struct s_info
 
 extern volatile sig_atomic_t	g_sigint_received;
 
-int	has_quotes(const char *s);
 // builtins/export/export_aux_functions.c
 bool							check_pipeline_redirection(t_tree *node);
 void							handle_regular_assignment(t_info *info,
@@ -313,6 +312,7 @@ bool							has_redirection(t_tree *node);
 void							exec_redirs(t_tree *node, t_info *info, int *i);
 int								apply_redirections_node(t_tree *node,
 									int *saved_in, int *saved_out);
+int								has_quotes(const char *s);
 
 // signals/sigint_received.c
 void							sigint_received(t_info *info);

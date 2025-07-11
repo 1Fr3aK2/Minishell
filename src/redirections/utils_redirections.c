@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_redirections.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/30 18:30:03 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/03 04:02:38 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 17:05:37 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,20 @@ int	apply_redirections(t_info *info, int *saved_in, int *saved_out)
 			return (-1);
 		close(info->io->fd_out);
 		info->io->fd_out = -1;
+	}
+	return (0);
+}
+
+int	has_quotes(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s && s[i])
+	{
+		if (s[i] == '\'' || s[i] == '\"')
+			return (1);
+		i++;
 	}
 	return (0);
 }

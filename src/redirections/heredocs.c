@@ -3,29 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredocs.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/13 18:01:40 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/11 04:04:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 17:06:28 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	has_quotes(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s && s[i])
-	{
-		if (s[i] == '\'' || s[i] == '\"')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
 
 void	handle_heredoc_child(t_io *io, t_info *info, int fd[2])
 {
@@ -102,7 +87,8 @@ void	handle_heredoc_redirection(t_io *io, t_info *info)
 
 int	process_heredoc_args(t_tree *node, t_info *info)
 {
-	int	i;
+	int		i;
+	char	*temp;
 
 	i = 0;
 	while (node->args[i])
@@ -120,7 +106,7 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 			}
 			update_io_file(node->io, node->args[i + 1]);
 			node->io->quoted = has_quotes(node->args[i + 1]);
-			char *temp = remove_quotes(node->args[i + 1]);
+			temp = remove_quotes(node->args[i + 1]);
 			free(node->io->file);
 			node->io->file = temp;
 			handle_heredoc_redirection(node->io, info);
@@ -131,7 +117,6 @@ int	process_heredoc_args(t_tree *node, t_info *info)
 	}
 	return (0);
 }
-
 
 void	prepare_heredocs(t_tree *node, t_info *info)
 {

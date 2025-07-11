@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
+/*   By: dsteiger <dsteiger@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/11 04:43:05 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/11 04:45:19 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 17:04:45 by dsteiger         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,6 @@ char	**check_dollar_and_retokenize(char **args, t_info *info)
 		}
 		if (ft_strncmp(result[i], "<<", 2) == 0 && result[i][2] == '\0')
 		{
-			// Skip expansion for the next token (heredoc delimiter)
 			skip_next = 1;
 			i++;
 			continue ;
