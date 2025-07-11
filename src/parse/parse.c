@@ -5,40 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 12:55:03 by raamorim          #+#    #+#             */
-/*   Updated: 2025/06/24 01:59:43 by rafael           ###   ########.fr       */
+/*   Created: 2025/03/17 10:39:56 by raamorim          #+#    #+#             */
+/*   Updated: 2025/07/11 04:45:48 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-static void	check_dollar(char **args, t_info *info)
-{
-	int		i;
-	int		j;
-	char	*new;
-
-	if (!info || !info->my_env || !args)
-		return ;
-	i = 0;
-	while (args[i])
-	{
-		j = 0;
-		if (args[i][j] && args[i][j] == '$' && args[i][j + 1] == '\0')
-			return ;
-		new = handle_dollar(args[i], info);
-		if (!new)
-			return ;
-		if (ft_strncmp(new, args[i], ft_strlen(args[i])) != 0)
-		{
-			free(args[i]);
-			args[i] = new;
-		}
-		else
-			free(new);
-		i++;
-	}
-}
 
 t_tree	*build_tree_tokens(char **tokens, t_info *info)
 {
@@ -56,6 +28,7 @@ static void	reset_info(t_info *info)
 		free_tree(info->cmd_tree);
 		info->cmd_tree = NULL;
 	}
+	info->error_msg = false;
 }
 
 void	remove_empty_tokens(char ***tokens)
@@ -74,6 +47,22 @@ void	remove_empty_tokens(char ***tokens)
 	*tokens = new_tokens;
 }
 
+int	copy_tokens(char **dest, char **src, int start)
+{
+	int	i;
+
+	i = 0;
+	while (src[i])
+	{
+		dest[start] = ft_strdup(src[i]);
+		if (!dest[start])
+			return (-1);
+		start++;
+		i++;
+	}
+	return (start);
+}
+
 void	parse(char *input, t_info *info)
 {
 	char	**tokens;
@@ -87,7 +76,7 @@ void	parse(char *input, t_info *info)
 		return ;
 	if (tokens)
 	{
-		check_dollar(tokens, info);
+		tokens = check_dollar_and_retokenize(tokens, info);
 		remove_all_quotes(tokens);
 		remove_empty_tokens(&tokens);
 	}

@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 14:23:02 by raamorim          #+#    #+#             */
-/*   Updated: 2025/07/03 03:50:21 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 04:36:10 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,9 @@ int	is_double_operator(char *str)
 	if (str[0] == str[1] && (str[0] == '>' || str[0] == '<'))
 		return (1);
 	return (0);
+}
+
+int	is_lonely_dollar(char *str)
+{
+	return (str && str[0] == '$' && str[1] == '\0');
 }

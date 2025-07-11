@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/17 11:43:04 by raamorim          #+#    #+#             */
-/*   Updated: 2025/07/06 21:48:25 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 04:06:39 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ static char	**sub_tokens(char **tokens, int start, int end)
 static int	handle_syntax_error(t_tree *node, char **tokens, t_info *info)
 {
 	if (info->error_msg == false)
-		print_syntax_error_token(node, tokens, info);
+	{
+		print_syntax_error_token(node, tokens);
+		info->error_msg = !info->error_msg;
+	}
 	update_status(info, 2);
 	if (node->right)
 		free_tree(node->right);

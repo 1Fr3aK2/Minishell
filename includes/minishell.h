@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 23:23:23 by rafael            #+#    #+#             */
-/*   Updated: 2025/07/07 18:49:43 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 04:46:07 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,6 @@ void							ft_cd(t_info *info);
 
 // builtins/exit.c
 void							ft_exit(t_info *info);
-void							ft_exit2(t_info *info);
 
 // builtins/pwd.c
 void							ft_pwd(t_info *info);
@@ -233,9 +232,22 @@ void							handle_quotes(char *str, char *new, int i,
 char							**new_input(char *input);
 t_io							*alloc_io(void);
 
+// parse/parse_utils_utils.c
+char							**fill_new_args(char **args, char **tmp,
+									int idx, char **new_args);
+char							**retokenize_specific_token(char **args,
+									int token_index);
+int								handle_new_token(char ***result_ptr, int index,
+									char *original, char *new);
+int								update_token(char ***result_ptr, int index,
+									t_info *info);
+char							**check_dollar_and_retokenize(char **args,
+									t_info *info);
+
 // parse/parse.c
 t_tree							*build_tree_tokens(char **tokens, t_info *info);
 void							remove_empty_tokens(char ***tokens);
+int								copy_tokens(char **dest, char **src, int start);
 void							parse(char *input, t_info *info);
 
 // parse/quotes.c
@@ -249,7 +261,7 @@ void							add_space_operators(char **str);
 int								count_non_empty(char **tokens);
 void							copy_non_empty(char **src, char **dst);
 void							print_syntax_error_token(t_tree *node,
-									char **tokens, t_info *info);
+									char **tokens);
 
 // processes/main_process.c
 void							child_process(t_info *info);
@@ -362,17 +374,23 @@ void							*free_str(char **dest, int i);
 // utils/more_utils.c
 void							remove_redir_tokens(char **args, int i);
 int								is_valid_append_token(const char *token);
-
+void							*cleanup_and_return(char **arr1, char **arr2,
+									char **ret);
 // utils/utils_bools.c
 bool							is_quote(char c);
 int								is_operator(const char *str);
 int								is_operator_char(char c);
 int								is_double_operator(char *str);
+int								is_lonely_dollar(char *str);
 
 // utils.c
 char							*reverse_strchr(char *str, int c);
 void							change_shlvl(char ***env, char *name);
-
+void							ft_exit2(t_info *info);
+int								needs_retokenization(char *original,
+									char *expanded);
+int								count_total_tokens(char **args, char **temp,
+									int idx);
 // main.c
 void							start(t_info *info);
 

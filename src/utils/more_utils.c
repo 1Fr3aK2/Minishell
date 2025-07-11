@@ -6,7 +6,7 @@
 /*   By: rafael <rafael@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/20 19:01:35 by dsteiger          #+#    #+#             */
-/*   Updated: 2025/07/03 04:17:06 by rafael           ###   ########.fr       */
+/*   Updated: 2025/07/11 04:37:55 by rafael           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,11 @@ int	is_valid_append_token(const char *token)
 	while (token[count] == '>')
 		count++;
 	return (count == 2);
+}
+
+void	*cleanup_and_return(char **arr1, char **arr2, char **ret)
+{
+	free_arr(arr1);
+	free_arr(arr2);
+	return (ret);
 }
