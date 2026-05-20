@@ -154,7 +154,7 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all \
 
 ## 👥 Authors
 
-- **[1Fr3aK2](https://github.com/1Fr3aK2)**
+- **[1Fr3aK2](https://github.com/1Fr3aK2)** & **[dsteiger42](https://github.com/dsteiger42)**
 - Contributors visible in the [repository graph](https://github.com/1Fr3aK2/Minishell/graphs/contributors)
 
 ---
