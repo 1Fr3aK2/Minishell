@@ -4,6 +4,7 @@
 
 ![Language](https://img.shields.io/badge/language-C-blue?style=flat-square)
 ![School](https://img.shields.io/badge/school-42-black?style=flat-square)
+![Score](https://img.shields.io/badge/score-100%2F100-brightgreen?style=flat-square)
 ![Norm](https://img.shields.io/badge/norminette-compliant-brightgreen?style=flat-square)
 
 ---
@@ -49,8 +50,24 @@ This project was developed as part of the **42 School** cursus and targets a dee
 
 - **Interactive prompt** using GNU `readline` (with command history)
 - **Signal handling** — `Ctrl+C`, `Ctrl+D`, `Ctrl+\` behave like in bash
-- **Syntax tree** — commands are parsed into an AST before execution
+- **AST-based execution** — commands are parsed into an Abstract Syntax Tree before execution
 - **Memory management** — no leaks (readline suppression included via `.readline.supp`)
+
+---
+
+## 🏗️ Technical Implementation
+
+This project goes beyond a simple exercise in C — it involves building the same core primitives that underpin process control in real-world Unix systems.
+
+### Lexer & Parser
+- **Tokenisation** — quote-aware splitting of raw input into a token stream, correctly handling single quotes, double quotes, and unquoted text with distinct expansion rules
+- **AST construction** — tokens are assembled into an Abstract Syntax Tree that represents command pipelines, redirections, and arguments as structured nodes before any execution occurs
+
+### Executor
+- **`fork` / `execve`** — each external command spawns a child process; `execve` replaces the child's image with the target binary resolved via `PATH`
+- **Pipe chaining** — multi-command pipelines (`cmd1 | cmd2 | cmd3`) are handled by creating a chain of `pipe(2)` pairs and carefully connecting `stdin`/`stdout` across forked processes
+- **File descriptor inheritance** — FD duplication and cleanup is managed precisely across forks to avoid leaks and ensure correct I/O routing even in deeply nested pipelines
+- **Environment variable expansion** — `$VAR` and `$?` are expanded at parse time using a copy of the environment maintained throughout the shell session
 
 ---
 
@@ -154,7 +171,10 @@ valgrind --leak-check=full --track-fds=yes --show-leak-kinds=all \
 
 ## 👥 Authors
 
-- **[1Fr3aK2](https://github.com/1Fr3aK2)** & **[dsteiger42](https://github.com/dsteiger42)**
+| Contributor | Responsibilities |
+|---|---|
+| **[1Fr3aK2](https://github.com/1Fr3aK2)** | Lexer, parser, AST construction, executor, pipe chaining, FD management, environment variable expansion |
+| **[dsteiger42](https://github.com/dsteiger42)** | Built-ins, redirections, signal handling |
 
 ---
 
